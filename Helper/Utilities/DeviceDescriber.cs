@@ -61,22 +61,126 @@ namespace PingMyNetwork.Helper.Utilities
         ];
 
         /// <summary>
-        /// Adapter makers that only build one kind of device, matched against the start of the maker
-        /// name. Makers of many kinds (Apple, Samsung, TP-Link) are deliberately absent.
+        /// Adapter makers whose devices on a home network are nearly always one kind, as the
+        /// WifiManager.MacVendors registry names them. A maker matches when the vendor name is it or
+        /// starts with it as whole words, so "Sonos" does not catch "SonoSite"; the first match wins,
+        /// so a maker's specific branch ("Lenovo Mobile") comes before the maker itself.
         /// </summary>
+        /// <remarks>
+        /// Makers of many kinds are deliberately absent: Apple, Samsung, Google, Amazon, Huawei, Xiaomi,
+        /// TP-Link, Asus, HP (printers and PCs), Microsoft (Xbox and Surface), Sharp, Buffalo, and the
+        /// Wi-Fi module makers found inside everything (Hon Hai, AzureWave, Liteon, Fugui). A wrong
+        /// icon is worse than a generic one.
+        /// </remarks>
         private static readonly (string Maker, DeviceKind Type)[] VENDOR_HINTS =
         [
-            ("espressif", DeviceKind.SmartHome),
-            ("tuya", DeviceKind.SmartHome),
+            // Routers, gateways and ISP boxes.
+            ("arcadyan", DeviceKind.Router),
+            ("sagemcom", DeviceKind.Router),
+            ("technicolor", DeviceKind.Router),
+            ("t&w electronics", DeviceKind.Router),
+            ("ubiquiti", DeviceKind.Router),
+            ("netgear", DeviceKind.Router),
+            ("routerboard.com", DeviceKind.Router),
+            ("avm", DeviceKind.Router),
+            ("draytek", DeviceKind.Router),
+            ("zyxel", DeviceKind.Router),
+            ("eero", DeviceKind.Router),
+            ("sercomm", DeviceKind.Router),
+            ("askey", DeviceKind.Router),
+            ("mitrastar", DeviceKind.Router),
+            ("gemtek", DeviceKind.Router),
+            ("compal broadband", DeviceKind.Router),
+            ("cisco", DeviceKind.Router),
+            ("juniper networks", DeviceKind.Router),
+            ("ruckus", DeviceKind.Router),
+            ("fortinet", DeviceKind.Router),
+            ("tenda", DeviceKind.Router),
+            ("cambium networks", DeviceKind.Router),
+
+            // Phones, before the makers whose other branches build computers.
+            ("lenovo mobile", DeviceKind.Phone),
+            ("motorola mobility", DeviceKind.Phone),
+            ("oneplus", DeviceKind.Phone),
+            ("oppo mobile", DeviceKind.Phone),
+            ("vivo mobile", DeviceKind.Phone),
+            ("realme", DeviceKind.Phone),
+            ("honor device", DeviceKind.Phone),
+            ("hmd global", DeviceKind.Phone),
+            ("nothing technology", DeviceKind.Phone),
+            ("fairphone", DeviceKind.Phone),
+
+            // Computers.
+            ("intel", DeviceKind.Computer),
+            ("dell", DeviceKind.Computer),
+            ("lenovo", DeviceKind.Computer),
+            ("compal information", DeviceKind.Computer),
+            ("micro-star", DeviceKind.Computer),
+            ("msi", DeviceKind.Computer),
+            ("asrock", DeviceKind.Computer),
+            ("framework computer", DeviceKind.Computer),
+            ("raspberry pi", DeviceKind.Computer),
+
+            // TVs and streaming boxes.
+            ("roku", DeviceKind.Tv),
+            ("vizio", DeviceKind.Tv),
+            ("tcl king", DeviceKind.Tv),
+            ("tcl new technology", DeviceKind.Tv),
+            ("hisense visual", DeviceKind.Tv),
+            ("hisense electric", DeviceKind.Tv),
+            ("skyworth", DeviceKind.Tv),
+            ("funai", DeviceKind.Tv),
+
+            // Speakers and audio.
+            ("sonos", DeviceKind.Speaker),
+            ("bose", DeviceKind.Speaker),
+            ("sound united", DeviceKind.Speaker),
+            ("bang & olufsen", DeviceKind.Speaker),
+
+            // Printers.
+            ("brother", DeviceKind.Printer),
+            ("seiko epson", DeviceKind.Printer),
+            ("canon", DeviceKind.Printer),
+            ("xerox", DeviceKind.Printer),
+            ("kyocera document", DeviceKind.Printer),
+            ("lexmark", DeviceKind.Printer),
+            ("ricoh", DeviceKind.Printer),
+            ("konica minolta", DeviceKind.Printer),
+            ("zebra technologies", DeviceKind.Printer),
+
+            // Cameras and doorbells.
             ("hikvision", DeviceKind.Camera),
             ("dahua", DeviceKind.Camera),
             ("reolink", DeviceKind.Camera),
-            ("raspberry pi", DeviceKind.Computer),
-            ("roku", DeviceKind.Tv),
-            ("vizio", DeviceKind.Tv),
-            ("sonos", DeviceKind.Speaker),
+            ("ezviz", DeviceKind.Camera),
+            ("wyze", DeviceKind.Camera),
+            ("axis communications", DeviceKind.Camera),
+            ("arlo", DeviceKind.Camera),
+            ("ring", DeviceKind.Camera),
+            ("amcrest", DeviceKind.Camera),
+            ("uniview", DeviceKind.Camera),
+
+            // Network storage.
             ("synology", DeviceKind.Storage),
+            ("qnap", DeviceKind.Storage),
+            ("western digital", DeviceKind.Storage),
+            ("seagate", DeviceKind.Storage),
+
+            // Game consoles.
             ("nintendo", DeviceKind.GameConsole),
+            ("sony interactive", DeviceKind.GameConsole),
+            ("valve", DeviceKind.GameConsole),
+
+            // Smart home.
+            ("espressif", DeviceKind.SmartHome),
+            ("tuya", DeviceKind.SmartHome),
+            ("shelly", DeviceKind.SmartHome),
+            ("signify", DeviceKind.SmartHome),
+            ("philips lighting", DeviceKind.SmartHome),
+            ("ecobee", DeviceKind.SmartHome),
+            ("nest labs", DeviceKind.SmartHome),
+            ("irobot", DeviceKind.SmartHome),
+            ("wiz connected", DeviceKind.SmartHome),
         ];
 
         #endregion
@@ -195,9 +299,26 @@ namespace PingMyNetwork.Helper.Utilities
                 return DeviceKind.Computer;
             }
 
+            return TypeOfVendor(device.Vendor);
+        }
+
+        /// <summary>
+        /// The kind of device an adapter maker builds, when it builds nearly only one kind.
+        /// </summary>
+        /// <param name="vendor">The maker, as WifiManager.MacVendors names it.</param>
+        /// <returns>The kind, or Unknown.</returns>
+        public static DeviceKind TypeOfVendor(string? vendor)
+        {
+            if (string.IsNullOrEmpty(vendor))
+            {
+                return DeviceKind.Unknown;
+            }
+
             foreach ((string maker, DeviceKind type) in VENDOR_HINTS)
             {
-                if (device.Vendor?.StartsWith(maker, StringComparison.OrdinalIgnoreCase) == true)
+                // Whole words only: the maker must end the name or be followed by a non-letter.
+                if (vendor.StartsWith(maker, StringComparison.OrdinalIgnoreCase)
+                    && ((vendor.Length == maker.Length) || !char.IsLetterOrDigit(vendor[maker.Length])))
                 {
                     return type;
                 }
@@ -266,6 +387,30 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(GuessType(new NetworkDevice { HttpTitle = "Mi Router" }) == DeviceKind.Router);
             Debug.Assert(GuessType(new NetworkDevice { Vendor = "Espressif" }) == DeviceKind.SmartHome);
             Debug.Assert(GuessType(new NetworkDevice { Vendor = "Panasonic" }) == DeviceKind.Unknown);
+
+            // Vendor names exactly as the registry has them, including the near misses.
+            Debug.Assert(TypeOfVendor("T&W Electronics") == DeviceKind.Router);
+            Debug.Assert(TypeOfVendor("Sagemcom Broadband") == DeviceKind.Router);
+            Debug.Assert(TypeOfVendor("AVM Audiovisuelles Marketing und Computersysteme") == DeviceKind.Router);
+            Debug.Assert(TypeOfVendor("Compal Broadband Networks") == DeviceKind.Router);
+            Debug.Assert(TypeOfVendor("Compal Information (Kunshan)") == DeviceKind.Computer);
+            Debug.Assert(TypeOfVendor("Lenovo Mobile Communication Technology") == DeviceKind.Phone);
+            Debug.Assert(TypeOfVendor("Lenovo") == DeviceKind.Computer);
+            Debug.Assert(TypeOfVendor("Lenovo (Beijing)") == DeviceKind.Computer);
+            Debug.Assert(TypeOfVendor("Intel") == DeviceKind.Computer);
+            Debug.Assert(TypeOfVendor("Hisense Visual Technology") == DeviceKind.Tv);
+            Debug.Assert(TypeOfVendor("Hisense Communications") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Sonos") == DeviceKind.Speaker);
+            Debug.Assert(TypeOfVendor("SonoSite") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Boser Technology") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Arlotto Comnet") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("RingCube Technologies") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Ring") == DeviceKind.Camera);
+            Debug.Assert(TypeOfVendor("Hpro") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Kyocera Wireless") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Xiaomi Mobile Software") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("Apple") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor(null) == DeviceKind.Unknown);
             Debug.Assert(DisplayName(new NetworkDevice { Vendor = "Arcadyan" }) == "Arcadyan device");
             Debug.Assert(GuessType(new NetworkDevice()) == DeviceKind.Unknown);
 
