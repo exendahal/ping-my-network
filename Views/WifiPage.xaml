@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PingMyNetwork.Views.WifiPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:enums="clr-namespace:PingMyNetwork.Helper.Enums"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:Name="Page"
+    x:DataType="vm:WifiViewModel"
+    ClassId="{x:Static util:Routes.WIFI}">
+
+    <!--
+        Four sections. Narrow windows show one at a time, picked with the chips; wide windows show
+        them all as a dashboard: findings and the signal walk on the left, the channel chart and
+        every network on the right. Code-behind decides which of the two containers and sections
+        are visible; nothing is rebuilt when the width changes.
+    -->
+    <Grid
+        x:Name="PageGrid"
+        Padding="{StaticResource PagePaddingCompact}"
+        RowDefinitions="Auto,Auto,Auto,*"
+        RowSpacing="{StaticResource SpaceM}">
+
+        <!--  Title and what the scan sees.  -->
+        <VerticalStackLayout Grid.Row="0">
+            <Label
+                SemanticProperties.HeadingLevel="Level1"
+                Style="{StaticResource ScreenTitle}"
+                Text="{x:Static res:AppResources.WifiTitle}" />
+            <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
+                <ActivityIndicator
+                    HeightRequest="14"
+                    IsRunning="{Binding IsWaitingForScan}"
+                    IsVisible="{Binding IsWaitingForScan}"
+                    WidthRequest="14" />
+                <Label Style="{StaticResource TextLabel}" Text="{Binding Summary}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!--  Section chips, narrow windows only.  -->
+        <ScrollView
+            x:Name="SectionBar"
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Never"
+            IsVisible="{Binding IsSupported}"
+            Orientation="Horizontal">
+            <HorizontalStackLayout x:Name="SectionChips" Spacing="{StaticResource SpaceS}">
+                <Button
+                    ClassId="Insights"
+                    Command="{Binding ShowSectionCommand}"
+                    CommandParameter="Insights"
+                    Style="{StaticResource Chip}"
+                    Text="{x:Static res:AppResources.WifiSectionInsights}" />
+                <Button
+                    ClassId="SignalWalk"
+                    Command="{Binding ShowSectionCommand}"
+                    CommandParameter="SignalWalk"
+                    Style="{StaticResource Chip}"
+                    Text="{x:Static res:AppResources.WifiSectionSignalWalk}" />
+                <Button
+                    ClassId="Channels"
+                    Command="{Binding ShowSectionCommand}"
+                    CommandParameter="Channels"
+                    Style="{StaticResource Chip}"
+                    Text="{x:Static res:AppResources.WifiSectionChannels}" />
+                <Button
+                    ClassId="Networks"
+                    Command="{Binding ShowSectionCommand}"
+                    CommandParameter="Networks"
+                    Style="{StaticResource Chip}"
+                    Text="{x:Static res:AppResources.WifiSectionNetworks}" />
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!--  Why scanning is held back, and the fix.  -->
+        <Border
+            Grid.Row="2"
+            IsVisible="{Binding HasStatusMessage}"
+            Style="{StaticResource NoticeBanner}">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
+                <Label
+                    FontSize="20"
+                    Style="{StaticResource Icon}"
+                    Text="{x:Static util:MaterialIcon.INFO}"
+                    TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                Dark={StaticResource StatusNoticeDark}}" />
+                <Label
+                    Grid.Column="1"
+                    Style="{StaticResource TextBody}"
+                    Text="{Binding StatusMessage}"
+                    VerticalTextAlignment="Center" />
+                <Button
+                    Grid.Column="2"
+                    Command="{Binding FixScanningCommand}"
+                    IsVisible="{Binding HasStatusAction}"
+                    Style="{StaticResource QuietButton}"
+                    Text="{Binding StatusActionText}" />
+            </Grid>
+        </Border>
+
+        <Grid
+            x:Name="Body"
+            Grid.Row="3"
+            ColumnSpacing="{StaticResource SpaceXl}"
+            IsVisible="{Binding IsSupported}">
+
+            <!--  Left: findings and the signal walk.  -->
+            <ScrollView x:Name="LeftScroll" Orientation="Vertical">
+                <VerticalStackLayout x:Name="LeftStack" Spacing="{StaticResource SpaceL}">
+
+                    <!--  Insights  -->
+                    <VerticalStackLayout x:Name="InsightsView" Spacing="{StaticResource SpaceM}">
+                        <Label
+                            x:Name="InsightsHeading"
+                            SemanticProperties.HeadingLevel="Level2"
+                            Style="{StaticResource TextHeadline}"
+                            Text="{x:Static res:AppResources.WifiSectionInsights}" />
+
+                        <controls:SkeletonView
+                            x:Name="InsightsSkeleton"
+                            HeightRequest="96"
+                            IsVisible="{Binding IsWaitingForScan}" />
+
+                        <Border IsVisible="{Binding ShowAllGood}" Style="{StaticResource Card}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                                <Border
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                      Dark={StaticResource AccentTintDark}}"
+                                    HeightRequest="40"
+                                    StrokeShape="RoundRectangle 20"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Start"
+                                    WidthRequest="40">
+                                    <Label
+                                        FontSize="22"
+                                        HorizontalTextAlignment="Center"
+                                        Style="{StaticResource Icon}"
+                                        Text="{x:Static util:MaterialIcon.CHECK_CIRCLE}"
+                                        TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                    Dark={StaticResource AccentDark}}" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.InsightAllGoodTitle}" />
+                                    <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.InsightAllGoodBody}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Insights}" Spacing="{StaticResource SpaceM}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:WifiInsight">
+                                    <Border Style="{StaticResource Card}">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                                            <Border
+                                                HeightRequest="40"
+                                                StrokeShape="RoundRectangle 20"
+                                                StrokeThickness="0"
+                                                VerticalOptions="Start"
+                                                WidthRequest="40">
+                                                <Border.Triggers>
+                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Fair}">
+                                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FairTintLight}, Dark={StaticResource FairTintDark}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Poor}">
+                                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PoorTintLight}, Dark={StaticResource PoorTintDark}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Bad}">
+                                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BadTintLight}, Dark={StaticResource BadTintDark}}" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label
+                                                    FontSize="22"
+                                                    HorizontalTextAlignment="Center"
+                                                    Style="{StaticResource Icon}"
+                                                    Text="{Binding Icon}">
+                                                    <Label.Triggers>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Fair}">
+                                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Poor}">
+                                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Bad}">
+                                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                <Label Style="{StaticResource TextHeadline}" Text="{Binding Title}" />
+                                                <Label Style="{StaticResource TextBody}" Text="{Binding Body}" />
+                                                <Button
+                                                    Margin="-12,4,0,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WifiViewModel}}, Path=RunInsightCommand, x:DataType=vm:WifiViewModel}"
+                                                    CommandParameter="{Binding .}"
+                                                    HorizontalOptions="Start"
+                                                    IsVisible="{Binding HasAction}"
+                                                    Style="{StaticResource QuietButton}"
+                                                    Text="{Binding ActionText}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!--  Signal walk  -->
+                    <VerticalStackLayout x:Name="WalkView" Spacing="{StaticResource SpaceM}">
+                        <Label
+                            x:Name="WalkHeading"
+                            SemanticProperties.HeadingLevel="Level2"
+                            Style="{StaticResource TextHeadline}"
+                            Text="{x:Static res:AppResources.WifiSectionSignalWalk}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceL}">
+                                    <Grid HeightRequest="120" WidthRequest="120">
+                                        <controls:RingGaugeView
+                                            Fraction="{Binding WalkFraction}"
+                                            Level="{Binding WalkLevel}"
+                                            StrokeWidth="10" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="{StaticResource FontTitle}"
+                                            HorizontalTextAlignment="Center"
+                                            InputTransparent="True"
+                                            Text="{Binding WalkPercentText}"
+                                            TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                        Dark={StaticResource OnSurfaceDark}}"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="{StaticResource SpaceS}"
+                                        VerticalOptions="Center">
+                                        <Label Style="{StaticResource TextHeadline}" Text="{Binding WalkCaption}" />
+                                        <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.SignalWalkBody}" />
+                                        <Button
+                                            Command="{Binding ToggleWalkCommand}"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource PrimaryButton}"
+                                            Text="{Binding WalkButtonText}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+
+                                <GraphicsView
+                                    x:Name="WalkChart"
+                                    HeightRequest="96"
+                                    IsVisible="{Binding IsWalking}"
+                                    SemanticProperties.Description="{Binding WalkCaption}" />
+
+                                <!--  Save the reading here under a place name.  -->
+                                <Border Padding="12,0,4,0" Style="{StaticResource GroupCard}">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceS}">
+                                        <Label
+                                            FontSize="18"
+                                            Style="{StaticResource Icon}"
+                                            Text="{x:Static util:MaterialIcon.PLACE}" />
+                                        <Entry
+                                            Grid.Column="1"
+                                            Completed="OnPlaceCompleted"
+                                            Placeholder="{x:Static res:AppResources.SignalWalkPlacePlaceholder}"
+                                            ReturnType="Done"
+                                            Text="{Binding PlaceName}" />
+                                        <Button
+                                            Grid.Column="2"
+                                            Command="{Binding SaveSpotCommand}"
+                                            Style="{StaticResource QuietButton}"
+                                            Text="{x:Static res:AppResources.SignalWalkSaveSpot}" />
+                                    </Grid>
+                                </Border>
+
+                                <Label
+                                    IsVisible="{Binding HasSpots}"
+                                    Style="{StaticResource TextBody}"
+                                    Text="{Binding SpotsSummary}" />
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Spots}" Spacing="6">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:SignalSpot">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceS}">
+                                                <Ellipse
+                                                    Fill="{AppThemeBinding Light={StaticResource StatusGoodLight},
+                                                                           Dark={StaticResource StatusGoodDark}}"
+                                                    HeightRequest="10"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="10">
+                                                    <Ellipse.Triggers>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Fair}">
+                                                            <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Poor}">
+                                                            <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Bad}">
+                                                            <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
+                                                        </DataTrigger>
+                                                    </Ellipse.Triggers>
+                                                </Ellipse>
+                                                <Label
+                                                    Grid.Column="1"
+                                                    FontSize="{StaticResource FontBody}"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                                <Label
+                                                    Grid.Column="2"
+                                                    Style="{StaticResource TextBody}"
+                                                    Text="{Binding ValueText}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+
+                                <Button
+                                    Margin="-12,0,0,0"
+                                    Command="{Binding ClearSpotsCommand}"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding HasSpots}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.SignalWalkClear}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <BoxView x:Name="LeftClearance" HeightRequest="0" Color="Transparent" />
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!--  Right: the channel chart and every network.  -->
+            <Grid
+                x:Name="RightGrid"
+                RowDefinitions="Auto,*"
+                RowSpacing="{StaticResource SpaceL}">
+
+                <!--  Channels  -->
+                <VerticalStackLayout x:Name="ChannelsView" Spacing="{StaticResource SpaceM}">
+                    <Label
+                        x:Name="ChannelsHeading"
+                        SemanticProperties.HeadingLevel="Level2"
+                        Style="{StaticResource TextHeadline}"
+                        Text="{x:Static res:AppResources.WifiSectionChannels}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding BandOptions}" Spacing="{StaticResource SpaceS}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:BandOption">
+                                        <!--  Both styles come from triggers: a local Style would outrank them.  -->
+                                        <Button
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WifiViewModel}}, Path=ShowBandCommand, x:DataType=vm:WifiViewModel}"
+                                            CommandParameter="{Binding .}"
+                                            Text="{Binding Name}">
+                                            <Button.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" TargetType="Button" Value="True">
+                                                    <Setter Property="Style" Value="{StaticResource ChipSelected}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsSelected}" TargetType="Button" Value="False">
+                                                    <Setter Property="Style" Value="{StaticResource Chip}" />
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                        </Button>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
+
+                            <GraphicsView
+                                x:Name="ChannelChart"
+                                HeightRequest="240"
+                                SemanticProperties.Description="{Binding ChannelSummary}" />
+
+                            <HorizontalStackLayout Spacing="{StaticResource SpaceL}">
+                                <HorizontalStackLayout Spacing="6">
+                                    <BoxView
+                                        CornerRadius="2"
+                                        HeightRequest="4"
+                                        VerticalOptions="Center"
+                                        WidthRequest="16"
+                                        Color="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOwn}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="6">
+                                    <BoxView
+                                        CornerRadius="2"
+                                        HeightRequest="4"
+                                        VerticalOptions="Center"
+                                        WidthRequest="16"
+                                        Color="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                                Dark={StaticResource CaptionDark}}" />
+                                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOther}" />
+                                </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <Label Style="{StaticResource TextBody}" Text="{Binding ChannelSummary}" />
+                            <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsEstimateNote}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!--  All networks  -->
+                <Grid
+                    x:Name="NetworksView"
+                    Grid.Row="1"
+                    RowDefinitions="Auto,*"
+                    RowSpacing="{StaticResource SpaceM}">
+                    <Label
+                        x:Name="NetworksHeading"
+                        SemanticProperties.HeadingLevel="Level2"
+                        Style="{StaticResource TextHeadline}"
+                        Text="{x:Static res:AppResources.WifiSectionNetworks}" />
+                    <CollectionView
+                        Grid.Row="1"
+                        ItemsSource="{Binding Networks}"
+                        SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="vm:WifiNetworkItem">
+                                <Border
+                                    Padding="12,0"
+                                    HeightRequest="64"
+                                    SemanticProperties.Description="{Binding SemanticDescription}"
+                                    Style="{StaticResource RowCard}">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
+                                        <Label
+                                            FontSize="24"
+                                            Style="{StaticResource Icon}"
+                                            Text="{Binding SignalIcon}"
+                                            TextColor="{AppThemeBinding Light={StaticResource StatusGoodLight},
+                                                                        Dark={StaticResource StatusGoodDark}}">
+                                            <Label.Triggers>
+                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Fair}">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Poor}">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Bad}">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Grid
+                                            Grid.Column="1"
+                                            ColumnDefinitions="Auto,Auto,*"
+                                            ColumnSpacing="6"
+                                            RowDefinitions="Auto,Auto"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontFamily="OpenSansSemibold"
+                                                FontSize="{StaticResource FontBody}"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding Name}"
+                                                TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                            Dark={StaticResource OnSurfaceDark}}" />
+                                            <Border
+                                                Grid.Column="1"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                                  Dark={StaticResource AccentTintDark}}"
+                                                IsVisible="{Binding IsOwn}"
+                                                Style="{StaticResource Tag}">
+                                                <Label
+                                                    Style="{StaticResource TagText}"
+                                                    Text="{x:Static res:AppResources.TagConnected}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                                Dark={StaticResource AccentDark}}" />
+                                            </Border>
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="14"
+                                                IsVisible="{Binding IsWeakSecurity}"
+                                                Style="{StaticResource Icon}"
+                                                Text="{x:Static util:MaterialIcon.LOCK}"
+                                                TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},
+                                                                            Dark={StaticResource StatusBadDark}}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="3"
+                                                LineBreakMode="TailTruncation"
+                                                Style="{StaticResource TextLabel}"
+                                                Text="{Binding Subtitle}" />
+                                        </Grid>
+                                        <Label
+                                            Grid.Column="2"
+                                            Style="{StaticResource TextBody}"
+                                            Text="{Binding SignalText}"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.Footer>
+                            <BoxView x:Name="ListClearance" HeightRequest="0" Color="Transparent" />
+                        </CollectionView.Footer>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!--  iOS does not let apps scan for Wi-Fi.  -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            IsVisible="{Binding IsUnsupported}"
+            MaximumWidthRequest="420"
+            Spacing="{StaticResource SpaceM}"
+            VerticalOptions="Center">
+            <Label
+                FontSize="44"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource Icon}"
+                Text="{x:Static util:MaterialIcon.WIFI_FIND}" />
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource TextTitle}"
+                Text="{x:Static res:AppResources.WifiUnsupportedTitle}" />
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource TextBody}"
+                Text="{x:Static res:AppResources.WifiUnsupportedBody}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

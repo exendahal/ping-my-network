@@ -27,17 +27,10 @@
         ContentTemplate="{DataTemplate views:DevicesPage}"
         Route="{x:Static util:Routes.DEVICES}" />
 
-    <ShellContent Title="{x:Static res:AppResources.TabWifi}" Route="{x:Static util:Routes.WIFI}">
-        <ShellContent.ContentTemplate>
-            <DataTemplate>
-                <views:PlannedPage
-                    Body="{x:Static res:AppResources.ComingWifiBody}"
-                    ClassId="{x:Static util:Routes.WIFI}"
-                    Heading="{x:Static res:AppResources.ComingWifiTitle}"
-                    Icon="{x:Static util:MaterialIcon.WIFI_FIND}" />
-            </DataTemplate>
-        </ShellContent.ContentTemplate>
-    </ShellContent>
+    <ShellContent
+        Title="{x:Static res:AppResources.TabWifi}"
+        ContentTemplate="{DataTemplate views:WifiPage}"
+        Route="{x:Static util:Routes.WIFI}" />
 
     <ShellContent Title="{x:Static res:AppResources.TabTools}" Route="{x:Static util:Routes.TOOLS}">
         <ShellContent.ContentTemplate>

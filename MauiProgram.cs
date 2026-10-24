@@ -44,11 +44,13 @@ namespace PingMyNetwork
             builder.Services.AddSingleton<NetworkMonitor>();
             builder.Services.AddSingleton<DeviceStore>();
             builder.Services.AddSingleton<DeviceManager>();
+            builder.Services.AddSingleton<WifiScanner>();
 
             // Singletons so a tab comes back as it was left: Home with what it last knew, Devices
             // with its list, filter and any scan still running.
             builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddSingleton<DevicesViewModel>();
+            builder.Services.AddSingleton<WifiViewModel>();
             builder.Services.AddTransient<NetworkDetailsViewModel>();
             builder.Services.AddTransient<DeviceDetailsViewModel>();
 
@@ -56,11 +58,14 @@ namespace PingMyNetwork
             builder.Services.AddTransient<NetworkDetailsPage>();
             builder.Services.AddTransient<DevicesPage>();
             builder.Services.AddTransient<DeviceDetailsPage>();
+            builder.Services.AddTransient<WifiPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
             DeviceIdentity.SelfCheck();
             DeviceDescriber.SelfCheck();
+            WifiSecurity.SelfCheck();
+            ChannelPlanner.SelfCheck();
 #endif
 
             return builder.Build();

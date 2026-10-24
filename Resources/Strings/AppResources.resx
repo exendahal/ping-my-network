@@ -94,8 +94,6 @@
   <data name="StandardAd" xml:space="preserve"><value>WiGig (802.11ad)</value></data>
   <data name="ComingDevicesTitle" xml:space="preserve"><value>Devices</value></data>
   <data name="ComingDevicesBody" xml:space="preserve"><value>See every device on your network, get alerts when an unknown one joins, and mark the ones you trust.</value></data>
-  <data name="ComingWifiTitle" xml:space="preserve"><value>Wi-Fi analyzer</value></data>
-  <data name="ComingWifiBody" xml:space="preserve"><value>Find crowded channels, weak spots and look-alike networks around you.</value></data>
   <data name="ComingToolsTitle" xml:space="preserve"><value>Tools</value></data>
   <data name="ComingToolsBody" xml:space="preserve"><value>Ping, speed test, traceroute, DNS lookup, port check and Wake-on-LAN.</value></data>
   <data name="ComingBadge" xml:space="preserve"><value>In progress</value></data>
@@ -197,4 +195,56 @@
   <data name="LatencyUnderOne" xml:space="preserve"><value>&lt; 1 ms</value></data>
   <data name="DeviceThisDeviceBody" xml:space="preserve"><value>This is the device you're using now.</value></data>
   <data name="DeviceRouterBody" xml:space="preserve"><value>This is your network's router.</value></data>
+  <data name="WifiTitle" xml:space="preserve"><value>Wi-Fi</value></data>
+  <data name="WifiSectionInsights" xml:space="preserve"><value>Insights</value></data>
+  <data name="WifiSectionSignalWalk" xml:space="preserve"><value>Signal walk</value></data>
+  <data name="WifiSectionChannels" xml:space="preserve"><value>Channels</value></data>
+  <data name="WifiSectionNetworks" xml:space="preserve"><value>All networks</value></data>
+  <data name="WifiScanning" xml:space="preserve"><value>Scanning for networks…</value></data>
+  <data name="WifiNotConnected" xml:space="preserve"><value>Not connected to Wi-Fi</value></data>
+  <data name="WifiSummaryConnectedFormat" xml:space="preserve"><value>{0} · {1} · ch {2}</value></data>
+  <data name="WifiSummaryFormat" xml:space="preserve"><value>{0} · {1} networks nearby</value></data>
+  <data name="WifiPermissionNeeded" xml:space="preserve"><value>Allow access to Wi-Fi to scan for networks around you.</value></data>
+  <data name="WifiLocationOff" xml:space="preserve"><value>Turn on location. Android only shows nearby networks while it's on.</value></data>
+  <data name="WifiThrottled" xml:space="preserve"><value>Android limits Wi-Fi scans, so new results can take up to 30 seconds.</value></data>
+  <data name="WifiUnsupportedTitle" xml:space="preserve"><value>Not available on this device</value></data>
+  <data name="WifiUnsupportedBody" xml:space="preserve"><value>iOS doesn't let apps scan for nearby Wi-Fi networks. Home and Devices still work.</value></data>
+  <data name="ActionAllow" xml:space="preserve"><value>Allow</value></data>
+  <data name="ActionSeeChannels" xml:space="preserve"><value>See channels</value></data>
+  <data name="ActionStartSignalWalk" xml:space="preserve"><value>Start a signal walk</value></data>
+  <data name="InsightAllGoodTitle" xml:space="preserve"><value>No problems found</value></data>
+  <data name="InsightAllGoodBody" xml:space="preserve"><value>Your Wi-Fi looks healthy from here. This updates as the scan runs.</value></data>
+  <data name="InsightWeakSecurityTitle" xml:space="preserve"><value>Your network's security is weak</value></data>
+  <data name="InsightWeakSecurityBody" xml:space="preserve"><value>“{0}” uses {1}, which is easy to break into. Switch your router to WPA2 or WPA3.</value></data>
+  <data name="InsightLookAlikeTitle" xml:space="preserve"><value>A look-alike network is nearby</value></data>
+  <data name="InsightLookAlikeBody" xml:space="preserve"><value>Another network is using the name “{0}” with weaker security. Don't connect to it unless you know whose it is.</value></data>
+  <data name="InsightCrowdedTitle" xml:space="preserve"><value>Channel {0} is crowded</value></data>
+  <data name="InsightCrowdedBody" xml:space="preserve"><value>{0} nearby networks overlap your channel; channel {1} has {2}. Your router may choose its channel automatically, or you can set one in its settings.</value></data>
+  <data name="InsightOtherBandTitle" xml:space="preserve"><value>Your network also has {0}</value></data>
+  <data name="InsightOtherBandBody" xml:space="preserve"><value>You're on 2.4 GHz, which is slower and more crowded. “{0}” on {1} has a usable signal here.</value></data>
+  <data name="InsightStrongerApTitle" xml:space="preserve"><value>A closer access point is available</value></data>
+  <data name="InsightStrongerApBody" xml:space="preserve"><value>Another access point of your network is {0} dB stronger here. Reconnecting may switch to it.</value></data>
+  <data name="InsightWeakSignalTitle" xml:space="preserve"><value>Weak signal here</value></data>
+  <data name="InsightWeakSignalBody" xml:space="preserve"><value>Signal is {0}%. Walls and distance weaken it; a signal walk shows where it's better.</value></data>
+  <data name="InsightOldStandardTitle" xml:space="preserve"><value>Older Wi-Fi standard</value></data>
+  <data name="InsightOldStandardBody" xml:space="preserve"><value>Your connection uses {0}. A Wi-Fi 6 router is faster and copes better with many devices.</value></data>
+  <data name="SignalWalkBody" xml:space="preserve"><value>Walk around and watch the signal. Save a reading in each room to compare them.</value></data>
+  <data name="SignalWalkStart" xml:space="preserve"><value>Start walk</value></data>
+  <data name="SignalWalkStop" xml:space="preserve"><value>Stop walk</value></data>
+  <data name="SignalWalkPlacePlaceholder" xml:space="preserve"><value>Where are you? e.g. Bedroom</value></data>
+  <data name="SignalWalkSaveSpot" xml:space="preserve"><value>Save reading</value></data>
+  <data name="SignalWalkClear" xml:space="preserve"><value>Clear readings</value></data>
+  <data name="SignalWalkSpotFormat" xml:space="preserve"><value>Spot {0}</value></data>
+  <data name="SignalWalkSpotsSummary" xml:space="preserve"><value>Strongest: {0} ({1}). Weakest: {2} ({3}).</value></data>
+  <data name="ChannelsSummaryFormat" xml:space="preserve"><value>You're on channel {0} with {1} overlapping networks. Channel {2} is the quietest, with {3}.</value></data>
+  <data name="ChannelsOnBestFormat" xml:space="preserve"><value>You're on channel {0}, already the quietest here ({1} overlapping networks).</value></data>
+  <data name="ChannelsQuietestFormat" xml:space="preserve"><value>Channel {0} is the quietest here, with {1} overlapping networks.</value></data>
+  <data name="ChannelsLegendOwn" xml:space="preserve"><value>Your network</value></data>
+  <data name="ChannelsLegendOther" xml:space="preserve"><value>Other networks</value></data>
+  <data name="ChannelsEstimateNote" xml:space="preserve"><value>An estimate from the networks this device can see, not measured traffic.</value></data>
+  <data name="HiddenNetworkTitle" xml:space="preserve"><value>Hidden network</value></data>
+  <data name="AccessPointsFormat" xml:space="preserve"><value>{0} access points</value></data>
+  <data name="TagConnected" xml:space="preserve"><value>Connected</value></data>
+  <data name="SecurityOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="SecurityUnknown" xml:space="preserve"><value>Unknown security</value></data>
 </root>

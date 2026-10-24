@@ -181,6 +181,13 @@
     <Color x:Key="HoverLight">#F2F2F7</Color>
     <Color x:Key="HoverDark">#2C2C2E</Color>
 
+    <Color x:Key="FairTintLight">#F3F0E6</Color>
+    <Color x:Key="FairTintDark">#3C361B</Color>
+    <Color x:Key="PoorTintLight">#F7EDE6</Color>
+    <Color x:Key="PoorTintDark">#3C2E1B</Color>
+    <Color x:Key="BadTintLight">#FBE6E8</Color>
+    <Color x:Key="BadTintDark">#3C2222</Color>
+
     <Color x:Key="AccentTintLight">#E9F3EC</Color>
     <Color x:Key="AccentTintDark">#1B2E20</Color>
 

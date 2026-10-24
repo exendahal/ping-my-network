@@ -61,6 +61,24 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} access points.
+        /// </summary>
+        public static string AccessPointsFormat {
+            get {
+                return ResourceManager.GetString("AccessPointsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow.
+        /// </summary>
+        public static string ActionAllow {
+            get {
+                return ResourceManager.GetString("ActionAllow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow location access.
         /// </summary>
         public static string ActionAllowLocation {
@@ -205,11 +223,29 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See channels.
+        /// </summary>
+        public static string ActionSeeChannels {
+            get {
+                return ResourceManager.GetString("ActionSeeChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Share.
         /// </summary>
         public static string ActionShare {
             get {
                 return ResourceManager.GetString("ActionShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start a signal walk.
+        /// </summary>
+        public static string ActionStartSignalWalk {
+            get {
+                return ResourceManager.GetString("ActionStartSignalWalk", resourceCulture);
             }
         }
         
@@ -255,6 +291,60 @@ namespace PingMyNetwork.Resources.Strings {
         public static string BandChannelFormat {
             get {
                 return ResourceManager.GetString("BandChannelFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An estimate from the networks this device can see, not measured traffic..
+        /// </summary>
+        public static string ChannelsEstimateNote {
+            get {
+                return ResourceManager.GetString("ChannelsEstimateNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other networks.
+        /// </summary>
+        public static string ChannelsLegendOther {
+            get {
+                return ResourceManager.GetString("ChannelsLegendOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your network.
+        /// </summary>
+        public static string ChannelsLegendOwn {
+            get {
+                return ResourceManager.GetString("ChannelsLegendOwn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re on channel {0}, already the quietest here ({1} overlapping networks)..
+        /// </summary>
+        public static string ChannelsOnBestFormat {
+            get {
+                return ResourceManager.GetString("ChannelsOnBestFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel {0} is the quietest here, with {1} overlapping networks..
+        /// </summary>
+        public static string ChannelsQuietestFormat {
+            get {
+                return ResourceManager.GetString("ChannelsQuietestFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re on channel {0} with {1} overlapping networks. Channel {2} is the quietest, with {3}..
+        /// </summary>
+        public static string ChannelsSummaryFormat {
+            get {
+                return ResourceManager.GetString("ChannelsSummaryFormat", resourceCulture);
             }
         }
         
@@ -309,24 +399,6 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ComingToolsTitle {
             get {
                 return ResourceManager.GetString("ComingToolsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find crowded channels, weak spots and look-alike networks around you..
-        /// </summary>
-        public static string ComingWifiBody {
-            get {
-                return ResourceManager.GetString("ComingWifiBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wi-Fi analyzer.
-        /// </summary>
-        public static string ComingWifiTitle {
-            get {
-                return ResourceManager.GetString("ComingWifiTitle", resourceCulture);
             }
         }
         
@@ -1222,6 +1294,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hidden network.
+        /// </summary>
+        public static string HiddenNetworkTitle {
+            get {
+                return ResourceManager.GetString("HiddenNetworkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All recognised.
         /// </summary>
         public static string HomeDevicesAllKnown {
@@ -1290,6 +1371,150 @@ namespace PingMyNetwork.Resources.Strings {
         public static string HomeTitle {
             get {
                 return ResourceManager.GetString("HomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Wi-Fi looks healthy from here. This updates as the scan runs..
+        /// </summary>
+        public static string InsightAllGoodBody {
+            get {
+                return ResourceManager.GetString("InsightAllGoodBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No problems found.
+        /// </summary>
+        public static string InsightAllGoodTitle {
+            get {
+                return ResourceManager.GetString("InsightAllGoodTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} nearby networks overlap your channel; channel {1} has {2}. Your router may choose its channel automatically, or you can set one in its settings..
+        /// </summary>
+        public static string InsightCrowdedBody {
+            get {
+                return ResourceManager.GetString("InsightCrowdedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channel {0} is crowded.
+        /// </summary>
+        public static string InsightCrowdedTitle {
+            get {
+                return ResourceManager.GetString("InsightCrowdedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Another network is using the name “{0}” with weaker security. Don&apos;t connect to it unless you know whose it is..
+        /// </summary>
+        public static string InsightLookAlikeBody {
+            get {
+                return ResourceManager.GetString("InsightLookAlikeBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A look-alike network is nearby.
+        /// </summary>
+        public static string InsightLookAlikeTitle {
+            get {
+                return ResourceManager.GetString("InsightLookAlikeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your connection uses {0}. A Wi-Fi 6 router is faster and copes better with many devices..
+        /// </summary>
+        public static string InsightOldStandardBody {
+            get {
+                return ResourceManager.GetString("InsightOldStandardBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older Wi-Fi standard.
+        /// </summary>
+        public static string InsightOldStandardTitle {
+            get {
+                return ResourceManager.GetString("InsightOldStandardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re on 2.4 GHz, which is slower and more crowded. “{0}” on {1} has a usable signal here..
+        /// </summary>
+        public static string InsightOtherBandBody {
+            get {
+                return ResourceManager.GetString("InsightOtherBandBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your network also has {0}.
+        /// </summary>
+        public static string InsightOtherBandTitle {
+            get {
+                return ResourceManager.GetString("InsightOtherBandTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Another access point of your network is {0} dB stronger here. Reconnecting may switch to it..
+        /// </summary>
+        public static string InsightStrongerApBody {
+            get {
+                return ResourceManager.GetString("InsightStrongerApBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A closer access point is available.
+        /// </summary>
+        public static string InsightStrongerApTitle {
+            get {
+                return ResourceManager.GetString("InsightStrongerApTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to “{0}” uses {1}, which is easy to break into. Switch your router to WPA2 or WPA3..
+        /// </summary>
+        public static string InsightWeakSecurityBody {
+            get {
+                return ResourceManager.GetString("InsightWeakSecurityBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your network&apos;s security is weak.
+        /// </summary>
+        public static string InsightWeakSecurityTitle {
+            get {
+                return ResourceManager.GetString("InsightWeakSecurityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signal is {0}%. Walls and distance weaken it; a signal walk shows where it&apos;s better..
+        /// </summary>
+        public static string InsightWeakSignalBody {
+            get {
+                return ResourceManager.GetString("InsightWeakSignalBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weak signal here.
+        /// </summary>
+        public static string InsightWeakSignalTitle {
+            get {
+                return ResourceManager.GetString("InsightWeakSignalTitle", resourceCulture);
             }
         }
         
@@ -1384,6 +1609,24 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string SecurityOpen {
+            get {
+                return ResourceManager.GetString("SecurityOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown security.
+        /// </summary>
+        public static string SecurityUnknown {
+            get {
+                return ResourceManager.GetString("SecurityUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network details.
         /// </summary>
         public static string ShareTitle {
@@ -1443,6 +1686,78 @@ namespace PingMyNetwork.Resources.Strings {
         public static string SignalUnavailable {
             get {
                 return ResourceManager.GetString("SignalUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk around and watch the signal. Save a reading in each room to compare them..
+        /// </summary>
+        public static string SignalWalkBody {
+            get {
+                return ResourceManager.GetString("SignalWalkBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear readings.
+        /// </summary>
+        public static string SignalWalkClear {
+            get {
+                return ResourceManager.GetString("SignalWalkClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where are you? e.g. Bedroom.
+        /// </summary>
+        public static string SignalWalkPlacePlaceholder {
+            get {
+                return ResourceManager.GetString("SignalWalkPlacePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save reading.
+        /// </summary>
+        public static string SignalWalkSaveSpot {
+            get {
+                return ResourceManager.GetString("SignalWalkSaveSpot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spot {0}.
+        /// </summary>
+        public static string SignalWalkSpotFormat {
+            get {
+                return ResourceManager.GetString("SignalWalkSpotFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strongest: {0} ({1}). Weakest: {2} ({3})..
+        /// </summary>
+        public static string SignalWalkSpotsSummary {
+            get {
+                return ResourceManager.GetString("SignalWalkSpotsSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start walk.
+        /// </summary>
+        public static string SignalWalkStart {
+            get {
+                return ResourceManager.GetString("SignalWalkStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop walk.
+        /// </summary>
+        public static string SignalWalkStop {
+            get {
+                return ResourceManager.GetString("SignalWalkStop", resourceCulture);
             }
         }
         
@@ -1699,6 +2014,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        public static string TagConnected {
+            get {
+                return ResourceManager.GetString("TagConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Known.
         /// </summary>
         public static string TagKnown {
@@ -1794,6 +2118,132 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ValueMissing {
             get {
                 return ResourceManager.GetString("ValueMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on location. Android only shows nearby networks while it&apos;s on..
+        /// </summary>
+        public static string WifiLocationOff {
+            get {
+                return ResourceManager.GetString("WifiLocationOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not connected to Wi-Fi.
+        /// </summary>
+        public static string WifiNotConnected {
+            get {
+                return ResourceManager.GetString("WifiNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow access to Wi-Fi to scan for networks around you..
+        /// </summary>
+        public static string WifiPermissionNeeded {
+            get {
+                return ResourceManager.GetString("WifiPermissionNeeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning for networks….
+        /// </summary>
+        public static string WifiScanning {
+            get {
+                return ResourceManager.GetString("WifiScanning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        public static string WifiSectionChannels {
+            get {
+                return ResourceManager.GetString("WifiSectionChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insights.
+        /// </summary>
+        public static string WifiSectionInsights {
+            get {
+                return ResourceManager.GetString("WifiSectionInsights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All networks.
+        /// </summary>
+        public static string WifiSectionNetworks {
+            get {
+                return ResourceManager.GetString("WifiSectionNetworks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signal walk.
+        /// </summary>
+        public static string WifiSectionSignalWalk {
+            get {
+                return ResourceManager.GetString("WifiSectionSignalWalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} · {1} · ch {2}.
+        /// </summary>
+        public static string WifiSummaryConnectedFormat {
+            get {
+                return ResourceManager.GetString("WifiSummaryConnectedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} · {1} networks nearby.
+        /// </summary>
+        public static string WifiSummaryFormat {
+            get {
+                return ResourceManager.GetString("WifiSummaryFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Android limits Wi-Fi scans, so new results can take up to 30 seconds..
+        /// </summary>
+        public static string WifiThrottled {
+            get {
+                return ResourceManager.GetString("WifiThrottled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wi-Fi.
+        /// </summary>
+        public static string WifiTitle {
+            get {
+                return ResourceManager.GetString("WifiTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iOS doesn&apos;t let apps scan for nearby Wi-Fi networks. Home and Devices still work..
+        /// </summary>
+        public static string WifiUnsupportedBody {
+            get {
+                return ResourceManager.GetString("WifiUnsupportedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not available on this device.
+        /// </summary>
+        public static string WifiUnsupportedTitle {
+            get {
+                return ResourceManager.GetString("WifiUnsupportedTitle", resourceCulture);
             }
         }
     }

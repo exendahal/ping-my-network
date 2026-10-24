@@ -68,6 +68,41 @@ namespace PingMyNetwork.Helper.Enums
     }
 
     /// <summary>
+    /// The sections of the Wi-Fi analyzer.
+    /// </summary>
+    public enum WifiSection
+    {
+        Insights,
+        SignalWalk,
+        Channels,
+        Networks,
+    }
+
+    /// <summary>
+    /// How well a Wi-Fi network is protected, weakest first.
+    /// </summary>
+    public enum SecurityLevel
+    {
+        Unknown,
+        Open,
+        Wep,
+        Wpa,
+        Wpa2,
+        Wpa3,
+    }
+
+    /// <summary>
+    /// What an insight's action button does.
+    /// </summary>
+    public enum InsightAction
+    {
+        None,
+        OpenChannels,
+        OpenSignalWalk,
+        OpenWifiSettings,
+    }
+
+    /// <summary>
     /// How the device list is ordered.
     /// </summary>
     public enum DeviceSort

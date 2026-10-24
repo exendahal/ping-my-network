@@ -67,6 +67,18 @@ namespace PingMyNetwork.Helper.Utilities
         public const string CLOSE = "\ue5cd";
         public const string TIMER = "\ue425";
         public const string SORT = "\ue164";
+        public const string SIGNAL_0 = "\uf0b0";
+        public const string SIGNAL_1 = "\uebe4";
+        public const string SIGNAL_2 = "\uebd6";
+        public const string SIGNAL_3 = "\uebe1";
+        public const string SIGNAL_4 = "\ue1d8";
+        public const string WALK = "\ue536";
+        public const string STOP = "\ue047";
+        public const string BAR_CHART = "\ue26b";
+        public const string LIST = "\ue896";
+        public const string INSIGHTS = "\uf092";
+        public const string ADD_LOCATION = "\ue567";
+        public const string PLACE = "\ue55f";
 
         #endregion
     }
