@@ -123,7 +123,7 @@ namespace PingMyNetwork.Controls
                     closed: false);
             }
 
-            if (ShowKnob)
+            if (ShowKnob && (clamped > 0f))
             {
                 DrawKnob(canvas, centre, radius, START_ANGLE - swept, knobRadius);
             }
