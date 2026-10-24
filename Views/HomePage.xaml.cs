@@ -7,48 +7,16 @@ using PingMyNetwork.ViewModels;
 namespace PingMyNetwork.Views
 {
     /// <summary>
-    /// The Home screen. Code-behind holds only view concerns: the gauge animation, status colours
-    /// and the layout for the current width.
+    /// The Home screen. Code-behind holds only view concerns: status colours and the layout for the
+    /// current width. The gauge animates itself (RingGaugeView).
     /// </summary>
     public partial class HomePage : ContentPage
     {
         #region Variables
 
-        private const string RING_ANIMATION = "RingSweep";
-
-        /// <summary>
-        /// Gauge sweep length, as in sill_app.
-        /// </summary>
-        private const uint RING_SWEEP_MS = 600;
-
-        /// <summary>
-        /// Colour cross-fade length, inside the sweep so crossing a level never snaps.
-        /// </summary>
-        private const uint COLOUR_CROSS_FADE_MS = 500;
-
-        /// <summary>
-        /// Cross-fade used instead of the sweep when the system asks for reduced motion.
-        /// </summary>
-        private const uint REDUCED_MOTION_MS = 150;
-
-        /// <summary>
-        /// One frame at 60 fps.
-        /// </summary>
-        private const uint FRAME_RATE_MS = 16;
-
-        /// <summary>
-        /// Gauge stroke width.
-        /// </summary>
-        private const float RING_STROKE = 12f;
-
         private readonly HomeViewModel _ViewModel;
-        private readonly RingGaugeDrawable _Ring = new() { StrokeWidth = RING_STROKE };
 
-        private float _RingFraction;
-        private Color _RingColor = StatusPalette.Neutral;
         private LayoutWidth? _AppliedWidth;
-        private bool _IsShowing;
-        private bool _IsRingQueued;
         private bool _IsTilesQueued;
         private int _TileColumns = 2;
 
@@ -67,7 +35,6 @@ namespace PingMyNetwork.Views
             _ViewModel = viewModel;
             BindingContext = viewModel;
 
-            Ring.Drawable = _Ring;
             HeroSkeleton.Blocks = SkeletonView.HERO;
 
             AppShell.ApplyTransition(this);
@@ -83,10 +50,10 @@ namespace PingMyNetwork.Views
 
             if (Application.Current is not null)
             {
-                Application.Current.RequestedThemeChanged += (_, _) => PaintAll(animated: false);
+                Application.Current.RequestedThemeChanged += (_, _) => PaintAll();
             }
 
-            PaintAll(animated: false);
+            PaintAll();
         }
 
         #endregion
@@ -94,27 +61,13 @@ namespace PingMyNetwork.Views
         #region Methods
 
         /// <summary>
-        /// Starts monitoring and brings the gauge up to date.
+        /// Starts monitoring.
         /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            _IsShowing = true;
             _ViewModel.Start();
-
-            PaintAll(animated: false);
-        }
-
-        /// <summary>
-        /// Stops the gauge animating while the page is hidden.
-        /// </summary>
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            _IsShowing = false;
-            this.AbortAnimation(RING_ANIMATION);
         }
 
         /// <summary>
@@ -126,11 +79,6 @@ namespace PingMyNetwork.Views
         {
             switch (e.PropertyName)
             {
-                case nameof(HomeViewModel.SignalFraction):
-                case nameof(HomeViewModel.SignalLevel):
-                    QueueRing();
-                    break;
-
                 case nameof(HomeViewModel.Level):
                 case nameof(HomeViewModel.Status):
                     PaintStatus();
@@ -143,40 +91,15 @@ namespace PingMyNetwork.Views
         }
 
         /// <summary>
-        /// Animates the gauge once for a snapshot, however many of its values changed. Fraction and
-        /// level arrive as separate notifications; animating on each would restart the sweep from
-        /// its own target and lose the motion.
-        /// </summary>
-        private void QueueRing()
-        {
-            if (_IsRingQueued)
-            {
-                return;
-            }
-
-            _IsRingQueued = true;
-
-            Dispatcher.Dispatch(() =>
-            {
-                _IsRingQueued = false;
-                AnimateRing(_ViewModel.SignalFraction, StatusPalette.For(_ViewModel.SignalLevel), _IsShowing);
-            });
-        }
-
-        /// <summary>
         /// Paints every coloured element, for first show and theme changes.
         /// </summary>
-        /// <param name="animated">Whether the gauge should sweep to its value.</param>
-        private void PaintAll(bool animated)
+        private void PaintAll()
         {
-            _Ring.TrackColor = StatusPalette.Track;
-            _Ring.KnobFill = StatusPalette.CardBackground;
             TransportBadge.BackgroundColor = StatusPalette.Lerp(StatusPalette.CardBackground, StatusPalette.Accent, 0.12f);
             TransportIcon.TextColor = StatusPalette.Accent;
             HeroContent.Opacity = _ViewModel.IsLoading ? 0 : 1;
 
             PaintStatus();
-            AnimateRing(_ViewModel.SignalFraction, StatusPalette.For(_ViewModel.SignalLevel), animated);
         }
 
         /// <summary>
@@ -194,65 +117,6 @@ namespace PingMyNetwork.Views
             StatusChip.Stroke = level == StatusLevel.Notice ? StatusPalette.Track : StatusPalette.OutlineTint(level);
             StatusIconLabel.TextColor = colour;
             StatusTitleLabel.TextColor = colour;
-        }
-
-        /// <summary>
-        /// Moves the sweep and the colour together as one motion, so crossing a level never snaps
-        /// (sill_app's ring animation).
-        /// </summary>
-        /// <param name="targetFraction">Where the arc should end up.</param>
-        /// <param name="targetColor">The colour it should end up.</param>
-        /// <param name="animated">False to jump straight to the target.</param>
-        private void AnimateRing(float targetFraction, Color targetColor, bool animated)
-        {
-            this.AbortAnimation(RING_ANIMATION);
-
-            float fromFraction = _RingFraction;
-            Color fromColor = _RingColor;
-
-            _RingFraction = targetFraction;
-            _RingColor = targetColor;
-
-            if (!animated)
-            {
-                PaintRing(targetFraction, targetColor);
-                return;
-            }
-
-            // Reduced motion: the value still cross-fades so the change is visible, without the sweep.
-            bool reduced = MotionSettings.PrefersReducedMotion;
-            uint length = reduced ? REDUCED_MOTION_MS : RING_SWEEP_MS;
-            double colourEnd = reduced ? 1.0 : (double)COLOUR_CROSS_FADE_MS / RING_SWEEP_MS;
-            Color current = fromColor;
-
-            Animation parent = new();
-
-            parent.Add(0, 1, new Animation(
-                progress => PaintRing((float)progress, current),
-                reduced ? targetFraction : fromFraction,
-                targetFraction,
-                reduced ? Easing.Linear : Easing.CubicOut));
-
-            parent.Add(0, colourEnd, new Animation(
-                progress => current = StatusPalette.Lerp(fromColor, targetColor, (float)progress),
-                0,
-                1,
-                Easing.Linear));
-
-            parent.Commit(this, RING_ANIMATION, rate: FRAME_RATE_MS, length: length);
-        }
-
-        /// <summary>
-        /// Pushes the arc state onto the drawable and redraws only the gauge.
-        /// </summary>
-        /// <param name="fraction">How far round the arc runs.</param>
-        /// <param name="color">The arc colour.</param>
-        private void PaintRing(float fraction, Color color)
-        {
-            _Ring.Fraction = fraction;
-            _Ring.ArcColor = color;
-
-            Ring.Invalidate();
         }
 
         /// <summary>

@@ -70,9 +70,10 @@
                             HeightRequest="148"
                             VerticalOptions="Center"
                             WidthRequest="148">
-                            <GraphicsView
-                                x:Name="Ring"
+                            <controls:RingGaugeView
+                                Fraction="{Binding SignalFraction}"
                                 IsVisible="{Binding HasSignal}"
+                                Level="{Binding SignalLevel}"
                                 SemanticProperties.Description="{Binding SignalCaption}" />
                             <VerticalStackLayout
                                 HorizontalOptions="Center"
