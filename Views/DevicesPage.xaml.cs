@@ -194,7 +194,7 @@ namespace PingMyNetwork.Views
             _ViewModel.IsSelectionShown = isWide;
 
             Split.ColumnDefinitions = isWide
-                ? [new ColumnDefinition(new GridLength(2, GridUnitType.Star)), new ColumnDefinition(new GridLength(3, GridUnitType.Star))]
+                ? [new ColumnDefinition(new GridLength(5, GridUnitType.Star)), new ColumnDefinition(new GridLength(6, GridUnitType.Star))]
                 : [new ColumnDefinition(GridLength.Star)];
             Pane.IsVisible = isWide;
 
