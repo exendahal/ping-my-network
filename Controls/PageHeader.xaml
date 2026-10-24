@@ -7,7 +7,10 @@
     xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
 
     <!--  Back and title for a screen pushed on top of a destination.  -->
-    <Grid Padding="8,8,8,0" ColumnDefinitions="Auto,*">
+    <Grid
+        Padding="8,8,8,0"
+        ColumnDefinitions="Auto,*"
+        MaximumWidthRequest="{StaticResource ReadableMaxWidth}">
         <Button
             Clicked="OnBackClicked"
             SemanticProperties.Description="{x:Static res:AppResources.ActionBack}"

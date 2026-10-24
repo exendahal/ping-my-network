@@ -12,6 +12,7 @@
     <Grid RowDefinitions="Auto,*">
         <Grid
             Grid.Row="0"
+            MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
             Padding="8,8,8,0"
             ColumnDefinitions="Auto,*">
             <Button

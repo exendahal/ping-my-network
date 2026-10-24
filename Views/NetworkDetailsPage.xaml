@@ -16,7 +16,8 @@
             x:Name="Header"
             Grid.Row="0"
             Padding="8,8,8,0"
-            ColumnDefinitions="Auto,*,Auto">
+            ColumnDefinitions="Auto,*,Auto"
+            MaximumWidthRequest="{StaticResource ReadableMaxWidth}">
             <Button
                 Command="{Binding BackCommand}"
                 SemanticProperties.Description="{x:Static res:AppResources.ActionBack}"
