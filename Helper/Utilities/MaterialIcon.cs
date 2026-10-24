@@ -85,6 +85,7 @@ namespace PingMyNetwork.Helper.Utilities
         public const string POWER = "\ue8ac";
         public const string CALCULATE = "\uea5f";
         public const string UPLOAD = "\uf09b";
+        public const string DOWNLOAD = "\uf090";
 
         #endregion
     }

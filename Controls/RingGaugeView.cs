@@ -1,5 +1,6 @@
 using PingMyNetwork.Helper.Enums;
 using PingMyNetwork.Helper.Utilities;
+using PingMyNetwork.Models;
 
 namespace PingMyNetwork.Controls
 {
@@ -57,6 +58,19 @@ namespace PingMyNetwork.Controls
         public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(
             nameof(StrokeWidth), typeof(float), typeof(RingGaugeView), 12f, propertyChanged: OnValueChanged);
 
+        /// <summary>
+        /// Labelled scale marks; set once, not animated.
+        /// </summary>
+        public static readonly BindableProperty TicksProperty = BindableProperty.Create(
+            nameof(Ticks), typeof(IReadOnlyList<GaugeTick>), typeof(RingGaugeView), Array.Empty<GaugeTick>(),
+            propertyChanged: static (bindable, _, value) =>
+            {
+                RingGaugeView gauge = (RingGaugeView)bindable;
+
+                gauge._Drawable.Ticks = (IReadOnlyList<GaugeTick>)value;
+                gauge._Canvas.Invalidate();
+            });
+
         private readonly RingGaugeDrawable _Drawable = new();
         private readonly GraphicsView _Canvas = new();
 
@@ -104,6 +118,15 @@ namespace PingMyNetwork.Controls
         {
             get => (StatusLevel)GetValue(LevelProperty);
             set => SetValue(LevelProperty, value);
+        }
+
+        /// <summary>
+        /// Labelled scale marks, which make the ring a meter.
+        /// </summary>
+        public IReadOnlyList<GaugeTick> Ticks
+        {
+            get => (IReadOnlyList<GaugeTick>)GetValue(TicksProperty);
+            set => SetValue(TicksProperty, value);
         }
 
         /// <summary>
@@ -199,6 +222,7 @@ namespace PingMyNetwork.Controls
             _Drawable.ArcColor = color;
             _Drawable.TrackColor = StatusPalette.Track;
             _Drawable.KnobFill = StatusPalette.CardBackground;
+            _Drawable.TickColor = StatusPalette.Neutral;
 
             _Canvas.Invalidate();
         }

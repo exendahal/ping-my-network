@@ -2239,11 +2239,11 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mbps down.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        public static string SpeedDownloadCaption {
+        public static string SpeedDownload {
             get {
-                return ResourceManager.GetString("SpeedDownloadCaption", resourceCulture);
+                return ResourceManager.GetString("SpeedDownload", resourceCulture);
             }
         }
         
@@ -2284,11 +2284,47 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string SpeedPhaseDownload {
+            get {
+                return ResourceManager.GetString("SpeedPhaseDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latency.
+        /// </summary>
+        public static string SpeedPhaseLatency {
+            get {
+                return ResourceManager.GetString("SpeedPhaseLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string SpeedPhaseUpload {
+            get {
+                return ResourceManager.GetString("SpeedPhaseUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Testing download, then upload….
         /// </summary>
         public static string SpeedRunning {
             get {
                 return ResourceManager.GetString("SpeedRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mbps.
+        /// </summary>
+        public static string SpeedUnit {
+            get {
+                return ResourceManager.GetString("SpeedUnit", resourceCulture);
             }
         }
         

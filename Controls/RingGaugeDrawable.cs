@@ -1,3 +1,5 @@
+using PingMyNetwork.Models;
+
 namespace PingMyNetwork.Controls
 {
     /// <summary>
@@ -71,6 +73,16 @@ namespace PingMyNetwork.Controls
         /// </summary>
         public bool ShowKnob { get; set; } = true;
 
+        /// <summary>
+        /// Labelled marks drawn just inside the arc, turning the ring into a meter. Empty for none.
+        /// </summary>
+        public IReadOnlyList<GaugeTick> Ticks { get; set; } = [];
+
+        /// <summary>
+        /// Colour of the marks and their labels.
+        /// </summary>
+        public Color TickColor { get; set; } = Colors.Gray;
+
         #endregion
 
         #region Methods
@@ -123,12 +135,52 @@ namespace PingMyNetwork.Controls
                     closed: false);
             }
 
+            if (Ticks.Count > 0)
+            {
+                DrawTicks(canvas, centre, radius);
+            }
+
             if (ShowKnob && (clamped > 0f))
             {
                 DrawKnob(canvas, centre, radius, START_ANGLE - swept, knobRadius);
             }
 
             canvas.RestoreState();
+        }
+
+        /// <summary>
+        /// Draws each scale mark as a short line inside the arc, with its value further in.
+        /// </summary>
+        /// <param name="canvas">The canvas to draw on.</param>
+        /// <param name="centre">Centre of the gauge.</param>
+        /// <param name="radius">Radius of the arc.</param>
+        private void DrawTicks(ICanvas canvas, PointF centre, float radius)
+        {
+            float outer = radius - (StrokeWidth / 2f) - 5f;
+            float inner = outer - 6f;
+            float labelRadius = inner - 13f;
+
+            canvas.StrokeSize = 1.5f;
+            canvas.StrokeColor = TickColor;
+            canvas.FontColor = TickColor;
+            canvas.FontSize = 11f;
+
+            foreach (GaugeTick tick in Ticks)
+            {
+                double radians = (START_ANGLE - (SWEEP_DEGREES * tick.Fraction)) * Math.PI / 180.0;
+                float cos = (float)Math.Cos(radians);
+                float sin = (float)Math.Sin(radians);
+
+                canvas.DrawLine(centre.X + (outer * cos), centre.Y - (outer * sin), centre.X + (inner * cos), centre.Y - (inner * sin));
+                canvas.DrawString(
+                    tick.Label,
+                    centre.X + (labelRadius * cos) - 20f,
+                    centre.Y - (labelRadius * sin) - 7f,
+                    40f,
+                    14f,
+                    HorizontalAlignment.Center,
+                    VerticalAlignment.Center);
+            }
         }
 
         /// <summary>

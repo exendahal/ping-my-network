@@ -87,6 +87,7 @@ namespace PingMyNetwork
             ChannelPlanner.SelfCheck();
             SubnetCalculator.SelfCheck();
             PortList.SelfCheck();
+            SpeedScale.SelfCheck();
 #endif
 
             return builder.Build();

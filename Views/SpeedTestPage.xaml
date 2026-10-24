@@ -20,29 +20,40 @@
                 Spacing="{StaticResource SpaceL}">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <!--
+                            A meter rather than a bare ring: the scale says what the number means (fine, but far from
+                            gigabit), and the needle and number move live while the test runs.
+                        -->
                         <Grid
-                            HeightRequest="200"
+                            HeightRequest="260"
                             HorizontalOptions="Center"
-                            WidthRequest="200">
+                            WidthRequest="260">
                             <controls:RingGaugeView
                                 Fraction="{Binding Fraction}"
                                 Level="{Binding Level}"
-                                StrokeWidth="14" />
+                                StrokeWidth="14"
+                                Ticks="{Binding Ticks}" />
                             <VerticalStackLayout
                                 HorizontalOptions="Center"
                                 InputTransparent="True"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource FontDisplay}"
                                     HorizontalTextAlignment="Center"
-                                    Text="{Binding DownloadValue}"
+                                    IsVisible="{Binding HasPhase}"
+                                    Style="{StaticResource TextLabel}"
+                                    Text="{Binding PhaseText}" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource FontHero}"
+                                    HorizontalTextAlignment="Center"
+                                    SemanticProperties.Description="{Binding Verdict}"
+                                    Text="{Binding LiveValue}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
                                                                 Dark={StaticResource OnSurfaceDark}}" />
                                 <Label
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource TextLabel}"
-                                    Text="{x:Static res:AppResources.SpeedDownloadCaption}" />
+                                    Text="{x:Static res:AppResources.SpeedUnit}" />
                             </VerticalStackLayout>
                         </Grid>
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="{StaticResource SpaceS}">
@@ -58,17 +69,93 @@
                                 Style="{StaticResource TextBody}"
                                 Text="{Binding Verdict}" />
                         </HorizontalStackLayout>
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource SpaceM}">
-                            <controls:StatTileView
-                                Caption="{x:Static res:AppResources.SpeedUpload}"
-                                Icon="{x:Static util:MaterialIcon.UPLOAD}"
-                                Value="{Binding UploadText}" />
-                            <controls:StatTileView
+                        <!--
+                            One strip of three centred results rather than three cards: a card's padding and icon left
+                            too little room for "Download" on a phone.
+                        -->
+                        <Border Padding="0,12" Style="{StaticResource GroupCard}">
+                            <Grid ColumnDefinitions="*,Auto,*,Auto,*">
+                            <VerticalStackLayout
+                                Grid.Column="0"
+                                Spacing="2"
+                                HorizontalOptions="Center">
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.DOWNLOAD}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource TextLabel}"
+                                    Text="{x:Static res:AppResources.SpeedDownload}" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource FontTileValue}"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding DownloadText}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                            </VerticalStackLayout>
+                            <BoxView
                                 Grid.Column="1"
-                                Caption="{x:Static res:AppResources.SpeedLatency}"
-                                Icon="{x:Static util:MaterialIcon.TIMER}"
-                                Value="{Binding LatencyText}" />
-                        </Grid>
+                                Color="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                        Dark={StaticResource OutlineDark}}"
+                                WidthRequest="1" />
+                            <VerticalStackLayout
+                                Grid.Column="2"
+                                Spacing="2"
+                                HorizontalOptions="Center">
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.UPLOAD}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource TextLabel}"
+                                    Text="{x:Static res:AppResources.SpeedUpload}" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource FontTileValue}"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding UploadText}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                            </VerticalStackLayout>
+                            <BoxView
+                                Grid.Column="3"
+                                Color="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                        Dark={StaticResource OutlineDark}}"
+                                WidthRequest="1" />
+                            <VerticalStackLayout
+                                Grid.Column="4"
+                                Spacing="2"
+                                HorizontalOptions="Center">
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.TIMER}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource TextLabel}"
+                                    Text="{x:Static res:AppResources.SpeedLatency}" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource FontTileValue}"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding LatencyText}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                            </VerticalStackLayout>
+                            </Grid>
+                        </Border>
                         <Button
                             Command="{Binding RunCommand}"
                             HorizontalOptions="Center"

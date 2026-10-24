@@ -337,7 +337,6 @@
   <data name="SpeedIdle" xml:space="preserve"><value>Tap Start to measure your internet speed.</value></data>
   <data name="SpeedRunning" xml:space="preserve"><value>Testing download, then upload…</value></data>
   <data name="SpeedAgain" xml:space="preserve"><value>Test again</value></data>
-  <data name="SpeedDownloadCaption" xml:space="preserve"><value>Mbps down</value></data>
   <data name="SpeedUpload" xml:space="preserve"><value>Upload</value></data>
   <data name="SpeedLatency" xml:space="preserve"><value>Latency</value></data>
   <data name="SpeedMbpsFormat" xml:space="preserve"><value>{0} Mbps</value></data>
@@ -357,4 +356,9 @@
   <data name="FieldPortSet" xml:space="preserve"><value>Which ports</value></data>
   <data name="QuickPingRouter" xml:space="preserve"><value>Ping router</value></data>
   <data name="ChannelAxisUnit" xml:space="preserve"><value>dBm</value></data>
+  <data name="SpeedPhaseLatency" xml:space="preserve"><value>Latency</value></data>
+  <data name="SpeedPhaseDownload" xml:space="preserve"><value>Download</value></data>
+  <data name="SpeedPhaseUpload" xml:space="preserve"><value>Upload</value></data>
+  <data name="SpeedUnit" xml:space="preserve"><value>Mbps</value></data>
+  <data name="SpeedDownload" xml:space="preserve"><value>Download</value></data>
 </root>

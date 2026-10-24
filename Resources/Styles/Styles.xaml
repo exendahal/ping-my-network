@@ -475,6 +475,7 @@
         Views take sizes, margins and text styles from here rather than hard-coding them.
     -->
 
+    <x:Double x:Key="FontHero">44</x:Double>
     <x:Double x:Key="FontDisplay">34</x:Double>
     <x:Double x:Key="FontTitle">22</x:Double>
     <x:Double x:Key="FontTileValue">19</x:Double>
