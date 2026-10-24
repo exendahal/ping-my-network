@@ -108,7 +108,7 @@
             ColumnSpacing="{StaticResource SpaceXl}"
             IsVisible="{Binding IsSupported}">
 
-            <!--  Left: findings and the signal walk.  -->
+            <!--  Left: findings, the signal walk and the channel chart.  -->
             <ScrollView x:Name="LeftScroll" Orientation="Vertical">
                 <VerticalStackLayout x:Name="LeftStack" Spacing="{StaticResource SpaceL}">
 
@@ -361,89 +361,88 @@
                         </Border>
                     </VerticalStackLayout>
 
+                    <!--  Channels  -->
+                    <VerticalStackLayout x:Name="ChannelsView" Spacing="{StaticResource SpaceM}">
+                        <Label
+                            x:Name="ChannelsHeading"
+                            SemanticProperties.HeadingLevel="Level2"
+                            Style="{StaticResource TextHeadline}"
+                            Text="{x:Static res:AppResources.WifiSectionChannels}" />
+                        <Border Style="{StaticResource Card}">
+                            <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding BandOptions}" Spacing="{StaticResource SpaceS}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:BandOption">
+                                            <!--  Both styles come from triggers: a local Style would outrank them.  -->
+                                            <Button
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WifiViewModel}}, Path=ShowBandCommand, x:DataType=vm:WifiViewModel}"
+                                                CommandParameter="{Binding .}"
+                                                Text="{Binding Name}">
+                                                <Button.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding IsSelected}"
+                                                        TargetType="Button"
+                                                        Value="True">
+                                                        <Setter Property="Style" Value="{StaticResource ChipSelected}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding IsSelected}"
+                                                        TargetType="Button"
+                                                        Value="False">
+                                                        <Setter Property="Style" Value="{StaticResource Chip}" />
+                                                    </DataTrigger>
+                                                </Button.Triggers>
+                                            </Button>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </HorizontalStackLayout>
+
+                                <GraphicsView
+                                    x:Name="ChannelChart"
+                                    HeightRequest="240"
+                                    SemanticProperties.Description="{Binding ChannelSummary}" />
+
+                                <HorizontalStackLayout Spacing="{StaticResource SpaceL}">
+                                    <HorizontalStackLayout Spacing="6">
+                                        <BoxView
+                                            CornerRadius="2"
+                                            HeightRequest="4"
+                                            VerticalOptions="Center"
+                                            WidthRequest="16"
+                                            Color="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                    Dark={StaticResource AccentDark}}" />
+                                        <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOwn}" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <BoxView
+                                            CornerRadius="2"
+                                            HeightRequest="4"
+                                            VerticalOptions="Center"
+                                            WidthRequest="16"
+                                            Color="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                                    Dark={StaticResource CaptionDark}}" />
+                                        <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOther}" />
+                                    </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <Label Style="{StaticResource TextBody}" Text="{Binding ChannelSummary}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsEstimateNote}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </ScrollView>
 
-            <!--  Right: the channel chart and every network.  -->
-            <Grid
-                x:Name="RightGrid"
-                RowDefinitions="Auto,*"
-                RowSpacing="{StaticResource SpaceL}">
-
-                <!--  Channels  -->
-                <VerticalStackLayout x:Name="ChannelsView" Spacing="{StaticResource SpaceM}">
-                    <Label
-                        x:Name="ChannelsHeading"
-                        SemanticProperties.HeadingLevel="Level2"
-                        Style="{StaticResource TextHeadline}"
-                        Text="{x:Static res:AppResources.WifiSectionChannels}" />
-                    <Border Style="{StaticResource Card}">
-                        <VerticalStackLayout Spacing="{StaticResource SpaceM}">
-                            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding BandOptions}" Spacing="{StaticResource SpaceS}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:BandOption">
-                                        <!--  Both styles come from triggers: a local Style would outrank them.  -->
-                                        <Button
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WifiViewModel}}, Path=ShowBandCommand, x:DataType=vm:WifiViewModel}"
-                                            CommandParameter="{Binding .}"
-                                            Text="{Binding Name}">
-                                            <Button.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding IsSelected}"
-                                                    TargetType="Button"
-                                                    Value="True">
-                                                    <Setter Property="Style" Value="{StaticResource ChipSelected}" />
-                                                </DataTrigger>
-                                                <DataTrigger
-                                                    Binding="{Binding IsSelected}"
-                                                    TargetType="Button"
-                                                    Value="False">
-                                                    <Setter Property="Style" Value="{StaticResource Chip}" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
-                                        </Button>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </HorizontalStackLayout>
-
-                            <GraphicsView
-                                x:Name="ChannelChart"
-                                HeightRequest="240"
-                                SemanticProperties.Description="{Binding ChannelSummary}" />
-
-                            <HorizontalStackLayout Spacing="{StaticResource SpaceL}">
-                                <HorizontalStackLayout Spacing="6">
-                                    <BoxView
-                                        CornerRadius="2"
-                                        HeightRequest="4"
-                                        VerticalOptions="Center"
-                                        WidthRequest="16"
-                                        Color="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}" />
-                                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOwn}" />
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Spacing="6">
-                                    <BoxView
-                                        CornerRadius="2"
-                                        HeightRequest="4"
-                                        VerticalOptions="Center"
-                                        WidthRequest="16"
-                                        Color="{AppThemeBinding Light={StaticResource CaptionLight},
-                                                                Dark={StaticResource CaptionDark}}" />
-                                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsLegendOther}" />
-                                </HorizontalStackLayout>
-                            </HorizontalStackLayout>
-
-                            <Label Style="{StaticResource TextBody}" Text="{Binding ChannelSummary}" />
-                            <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ChannelsEstimateNote}" />
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
+            <!--
+                Right: every network, at the column's full height. The list is the longest
+                content on the page, so on wide windows it gets a column of its own.
+            -->
+            <Grid x:Name="RightGrid">
 
                 <!--  All networks  -->
                 <Grid
                     x:Name="NetworksView"
-                    Grid.Row="1"
                     RowDefinitions="Auto,*"
                     RowSpacing="{StaticResource SpaceM}">
                     <Label

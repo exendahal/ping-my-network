@@ -1,4 +1,5 @@
 using MauiWifiManager.Abstractions;
+using PingMyNetwork.Resources.Strings;
 
 namespace PingMyNetwork.Controls
 {
@@ -206,6 +207,8 @@ namespace PingMyNetwork.Controls
                 canvas.DrawLine(plot.X, y, plot.Right, y);
                 canvas.DrawString($"{dbm:0}", bounds.X, y - 7f, LEFT_AXIS - 6f, 14f, HorizontalAlignment.Right, VerticalAlignment.Center);
             }
+
+            canvas.DrawString(AppResources.ChannelAxisUnit, bounds.X, bounds.Y, LEFT_AXIS - 6f, 14f, HorizontalAlignment.Right, VerticalAlignment.Top);
 
             canvas.StrokeColor = AxisColor.WithAlpha(0.5f);
             canvas.DrawLine(plot.X, plot.Bottom, plot.Right, plot.Bottom);

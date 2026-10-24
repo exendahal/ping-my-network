@@ -207,7 +207,7 @@ namespace PingMyNetwork.Views
             _IsWide = isWide;
 
             Body.ColumnDefinitions = isWide
-                ? [new ColumnDefinition(new GridLength(2, GridUnitType.Star)), new ColumnDefinition(new GridLength(3, GridUnitType.Star))]
+                ? [new ColumnDefinition(new GridLength(3, GridUnitType.Star)), new ColumnDefinition(new GridLength(2, GridUnitType.Star))]
                 : [new ColumnDefinition(GridLength.Star)];
             Grid.SetColumn(RightGrid, isWide ? 1 : 0);
 
@@ -229,18 +229,14 @@ namespace PingMyNetwork.Views
             ChannelsView.IsVisible = isWide || (section == WifiSection.Channels);
             NetworksView.IsVisible = isWide || (section == WifiSection.Networks);
 
-            LeftScroll.IsVisible = InsightsView.IsVisible || WalkView.IsVisible;
-            RightGrid.IsVisible = ChannelsView.IsVisible || NetworksView.IsVisible;
+            LeftScroll.IsVisible = InsightsView.IsVisible || WalkView.IsVisible || ChannelsView.IsVisible;
+            RightGrid.IsVisible = NetworksView.IsVisible;
 
             // Narrow: the chip already names the section, so the heading would repeat it.
             InsightsHeading.IsVisible = isWide;
             WalkHeading.IsVisible = isWide;
             ChannelsHeading.IsVisible = isWide;
             NetworksHeading.IsVisible = isWide;
-
-            // A section shown alone takes the whole height; channels alone sits at the top.
-            Grid.SetRow(NetworksView, ChannelsView.IsVisible ? 1 : 0);
-            Grid.SetRowSpan(NetworksView, ChannelsView.IsVisible ? 1 : 2);
 
             Style? chip = ResourceLookup.Get<Style?>("Chip", null);
             Style? selected = ResourceLookup.Get<Style?>("ChipSelected", null);
