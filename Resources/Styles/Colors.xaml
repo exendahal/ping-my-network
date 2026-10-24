@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Kept from the template so the default MAUI styles still resolve.  -->
+    <Color x:Key="Primary">#248A3D</Color>
+    <Color x:Key="PrimaryDark">#30D158</Color>
+    <Color x:Key="PrimaryDarkText">#242424</Color>
+    <Color x:Key="Secondary">#E5E5EA</Color>
+    <Color x:Key="SecondaryDarkText">#98989E</Color>
+    <Color x:Key="Tertiary">#248A3D</Color>
+
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Magenta">#D600AA</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
+    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <!--
+        Apple's semantic system colours, used verbatim so the app reads as native on iOS and
+        consistent everywhere else. These replace the values sampled from the /preview comps:
+        the previews used a warm bone surface, the Human Interface Guidelines use the neutral
+        grouped-background greys below.
+    -->
+
+    <!--  systemGroupedBackground  -->
+    <Color x:Key="PageLight">#F2F2F7</Color>
+    <Color x:Key="PageDark">#000000</Color>
+
+    <!--  secondarySystemGroupedBackground: the colour cards sit in.  -->
+    <Color x:Key="SurfaceLight">#FFFFFF</Color>
+    <Color x:Key="SurfaceDark">#1C1C1E</Color>
+
+    <!--  separator  -->
+    <Color x:Key="OutlineLight">#C6C6C8</Color>
+    <Color x:Key="OutlineDark">#38383A</Color>
+
+    <!--  label  -->
+    <Color x:Key="OnSurfaceLight">#000000</Color>
+    <Color x:Key="OnSurfaceDark">#FFFFFF</Color>
+
+    <!--  secondaryLabel, flattened to opaque against its own background.  -->
+    <Color x:Key="MutedLight">#6C6C70</Color>
+    <Color x:Key="MutedDark">#98989E</Color>
+
+    <!--  tertiaryLabel, for captions that must recede further.  -->
+    <Color x:Key="CaptionLight">#8E8E93</Color>
+    <Color x:Key="CaptionDark">#8E8E93</Color>
+
+    <!--  systemGray5: unfilled gauge and meter track.  -->
+    <Color x:Key="TrackLight">#E5E5EA</Color>
+    <Color x:Key="TrackDark">#2C2C2E</Color>
+
+    <!--  systemGray6: the faint rail behind skeletons.  -->
+    <Color x:Key="RailLight">#F2F2F7</Color>
+    <Color x:Key="RailDark">#2C2C2E</Color>
+
+    <!--
+        The app's tint colour. The Human Interface Guidelines want one stable accent for selection
+        and for interactive text, rather than a colour that changes with the data, so the tab bar
+        and rail use this while the gauge and the meters keep their air quality band colour.
+    -->
+    <Color x:Key="AccentLight">#248A3D</Color>
+    <Color x:Key="AccentDark">#30D158</Color>
+
+    <!--
+        Popup tokens, from "Popup patterns - implementation spec". Popups keep their own set
+        because they float: in dark a popup surface has to be lighter than the page it sits on,
+        which the app's own true-black surfaces deliberately are not. Nothing outside a popup
+        reads these.
+    -->
+
+    <!--  popup.surface: lifts off the page, which is #F7F6F3 light and near-black dark.  -->
+    <Color x:Key="PopupSurfaceLight">#FFFFFF</Color>
+    <Color x:Key="PopupSurfaceDark">#17191B</Color>
+
+    <!--  popup.border: required on every surface in dark, optional on a dialog in light.  -->
+    <Color x:Key="PopupBorderLight">#E8E6E1</Color>
+    <Color x:Key="PopupBorderDark">#26292C</Color>
+
+    <!--  popup.divider  -->
+    <Color x:Key="PopupDividerLight">#EEECE7</Color>
+    <Color x:Key="PopupDividerDark">#24282A</Color>
+
+    <!--  A nested group is one step lighter than the popup in dark.  -->
+    <Color x:Key="PopupGroupLight">#FFFFFF</Color>
+    <Color x:Key="PopupGroupDark">#1E2123</Color>
+
+    <!--  popup.rowSelected: darker than the surface in dark, so it does not read as elevation.  -->
+    <Color x:Key="PopupRowSelectedLight">#F0F6F3</Color>
+    <Color x:Key="PopupRowSelectedDark">#16251E</Color>
+
+    <!--  popup.scrim: a dark page needs the heavier one, having less contrast to gain.  -->
+    <Color x:Key="PopupScrimLight">#6B121416</Color>
+    <Color x:Key="PopupScrimDark">#94000000</Color>
+
+    <!--  accent: fills and strokes.  -->
+    <Color x:Key="PopupAccentLight">#2F8F63</Color>
+    <Color x:Key="PopupAccentDark">#4FAE7F</Color>
+
+    <!--  accent.onLight: accent text and icons, which need more contrast than a fill.  -->
+    <Color x:Key="PopupAccentTextLight">#1E6A47</Color>
+    <Color x:Key="PopupAccentTextDark">#7CC49E</Color>
+
+    <!--  danger  -->
+    <Color x:Key="PopupDangerLight">#A83232</Color>
+    <Color x:Key="PopupDangerDark">#E06B6B</Color>
+
+    <!--  Primary text. Off-white in dark: pure white on near-black halates.  -->
+    <Color x:Key="PopupTextLight">#16181A</Color>
+    <Color x:Key="PopupTextDark">#F2F1EE</Color>
+
+    <!--  Secondary text  -->
+    <Color x:Key="PopupText2Light">#5C6166</Color>
+    <Color x:Key="PopupText2Dark">#9AA0A6</Color>
+
+    <!--  Tertiary and footnote  -->
+    <Color x:Key="PopupText3Light">#8B9096</Color>
+    <Color x:Key="PopupText3Dark">#7C8288</Color>
+
+    <!--  Icon default, accent when a row is selected.  -->
+    <Color x:Key="PopupIconLight">#6B7075</Color>
+    <Color x:Key="PopupIconDark">#9AA0A6</Color>
+
+    <!--  The grab handle, which is the same in both themes.  -->
+    <Color x:Key="PopupHandleLight">#DCD9D2</Color>
+    <Color x:Key="PopupHandleDark">#3A3E42</Color>
+
+    <!--  The filled primary action on a sheet.  -->
+    <Color x:Key="PopupPrimaryLight">#16181A</Color>
+    <Color x:Key="PopupPrimaryDark">#F2F1EE</Color>
+
+    <Color x:Key="PopupOnPrimaryLight">#FFFFFF</Color>
+    <Color x:Key="PopupOnPrimaryDark">#16181A</Color>
+
+    <!--
+        Status colours (PRD 9.1), the same values as StatusPalette in code. Light values are the
+        accessible variants that reach 3:1 on a light surface.
+    -->
+    <Color x:Key="StatusGoodLight">#248A3D</Color>
+    <Color x:Key="StatusGoodDark">#30D158</Color>
+    <Color x:Key="StatusFairLight">#8A6D00</Color>
+    <Color x:Key="StatusFairDark">#FFD60A</Color>
+    <Color x:Key="StatusPoorLight">#B25000</Color>
+    <Color x:Key="StatusPoorDark">#FF9F0A</Color>
+    <Color x:Key="StatusBadLight">#D70015</Color>
+    <Color x:Key="StatusBadDark">#FF453A</Color>
+    <Color x:Key="StatusNoticeLight">#8944AB</Color>
+    <Color x:Key="StatusNoticeDark">#BF5AF2</Color>
+
+    <!--  Soft fills behind status text: mostly the card colour, tinted towards the status.  -->
+    <Color x:Key="NoticeTintLight">#F3ECF6</Color>
+    <Color x:Key="NoticeTintDark">#2C2232</Color>
+    <!--  Pointer-over fill for tappable cards and rows on desktop.  -->
+    <Color x:Key="HoverLight">#F2F2F7</Color>
+    <Color x:Key="HoverDark">#2C2C2E</Color>
+
+    <Color x:Key="AccentTintLight">#E9F3EC</Color>
+    <Color x:Key="AccentTintDark">#1B2E20</Color>
+
+</ResourceDictionary>

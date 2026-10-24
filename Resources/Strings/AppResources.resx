@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="TabHome" xml:space="preserve"><value>Home</value></data>
+  <data name="TabDevices" xml:space="preserve"><value>Devices</value></data>
+  <data name="TabWifi" xml:space="preserve"><value>Wi-Fi</value></data>
+  <data name="TabTools" xml:space="preserve"><value>Tools</value></data>
+  <data name="HomeTitle" xml:space="preserve"><value>Home</value></data>
+  <data name="StatusChecking" xml:space="preserve"><value>Checking connection…</value></data>
+  <data name="StatusOnline" xml:space="preserve"><value>Online</value></data>
+  <data name="StatusCaptivePortal" xml:space="preserve"><value>Sign-in required</value></data>
+  <data name="StatusNoInternet" xml:space="preserve"><value>No internet</value></data>
+  <data name="StatusOffline" xml:space="preserve"><value>Not connected</value></data>
+  <data name="StatusWifiOff" xml:space="preserve"><value>Wi-Fi is off</value></data>
+  <data name="StatusOnlineDetail" xml:space="preserve"><value>This network has working internet access.</value></data>
+  <data name="StatusCaptivePortalDetail" xml:space="preserve"><value>Connected, but this network wants you to sign in on a web page first.</value></data>
+  <data name="StatusNoInternetDetail" xml:space="preserve"><value>Connected to the network, but the internet can't be reached.</value></data>
+  <data name="StatusOfflineDetail" xml:space="preserve"><value>This device isn't connected to any network.</value></data>
+  <data name="StatusWifiOffDetail" xml:space="preserve"><value>Turn on Wi-Fi to see your network.</value></data>
+  <data name="ActionOpenWifiSettings" xml:space="preserve"><value>Open Wi-Fi settings</value></data>
+  <data name="ActionOpenSignInPage" xml:space="preserve"><value>Open sign-in page</value></data>
+  <data name="ActionNetworkDetails" xml:space="preserve"><value>Network details</value></data>
+  <data name="ActionRetry" xml:space="preserve"><value>Check again</value></data>
+  <data name="ConnectionWifi" xml:space="preserve"><value>Wi-Fi</value></data>
+  <data name="ConnectionEthernet" xml:space="preserve"><value>Ethernet</value></data>
+  <data name="ConnectionCellular" xml:space="preserve"><value>Mobile data</value></data>
+  <data name="ConnectionUnknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="HiddenNetworkName" xml:space="preserve"><value>Network name hidden</value></data>
+  <data name="HiddenNetworkNameDetail" xml:space="preserve"><value>Windows only shares the Wi-Fi name with apps that have location access.</value></data>
+  <data name="ActionAllowLocation" xml:space="preserve"><value>Allow location access</value></data>
+  <data name="MeteredBadge" xml:space="preserve"><value>Metered</value></data>
+  <data name="SignalCaption" xml:space="preserve"><value>Signal</value></data>
+  <data name="SignalUnavailable" xml:space="preserve"><value>Not available</value></data>
+  <data name="SignalExcellent" xml:space="preserve"><value>Excellent</value></data>
+  <data name="SignalGood" xml:space="preserve"><value>Good</value></data>
+  <data name="SignalFair" xml:space="preserve"><value>Fair</value></data>
+  <data name="SignalWeak" xml:space="preserve"><value>Weak</value></data>
+  <data name="TileGatewayLatency" xml:space="preserve"><value>Router latency</value></data>
+  <data name="TileBandChannel" xml:space="preserve"><value>Band · channel</value></data>
+  <data name="TileWifiStandard" xml:space="preserve"><value>Wi-Fi standard</value></data>
+  <data name="TileLinkSpeed" xml:space="preserve"><value>Link speed</value></data>
+  <data name="TileIpAddress" xml:space="preserve"><value>IP address</value></data>
+  <data name="ValueMissing" xml:space="preserve"><value>—</value></data>
+  <data name="LatencyFormat" xml:space="preserve"><value>{0:0} ms</value></data>
+  <data name="LinkSpeedFormat" xml:space="preserve"><value>{0} Mbps</value></data>
+  <data name="DbmFormat" xml:space="preserve"><value>{0} dBm</value></data>
+  <data name="PercentFormat" xml:space="preserve"><value>{0}%</value></data>
+  <data name="BandChannelFormat" xml:space="preserve"><value>{0} · ch {1}</value></data>
+  <data name="SignalSemanticFormat" xml:space="preserve"><value>Signal {0}, {1} percent</value></data>
+  <data name="LastCheckedFormat" xml:space="preserve"><value>Checked at {0:t}</value></data>
+  <data name="DetailsTitle" xml:space="preserve"><value>Network details</value></data>
+  <data name="DetailsSectionConnection" xml:space="preserve"><value>Connection</value></data>
+  <data name="DetailsSectionAddressing" xml:space="preserve"><value>IPv4</value></data>
+  <data name="DetailsSectionIpv6" xml:space="preserve"><value>IPv6</value></data>
+  <data name="DetailsSectionDns" xml:space="preserve"><value>DNS servers</value></data>
+  <data name="DetailsSsid" xml:space="preserve"><value>Network name</value></data>
+  <data name="DetailsBssid" xml:space="preserve"><value>Access point (BSSID)</value></data>
+  <data name="DetailsSecurity" xml:space="preserve"><value>Security</value></data>
+  <data name="DetailsConnectionType" xml:space="preserve"><value>Connection type</value></data>
+  <data name="DetailsBand" xml:space="preserve"><value>Band</value></data>
+  <data name="DetailsChannel" xml:space="preserve"><value>Channel</value></data>
+  <data name="DetailsChannelWidth" xml:space="preserve"><value>Channel width</value></data>
+  <data name="DetailsStandard" xml:space="preserve"><value>Wi-Fi standard</value></data>
+  <data name="DetailsLinkSpeed" xml:space="preserve"><value>Link speed</value></data>
+  <data name="DetailsSignal" xml:space="preserve"><value>Signal</value></data>
+  <data name="DetailsIpAddress" xml:space="preserve"><value>IP address</value></data>
+  <data name="DetailsSubnetMask" xml:space="preserve"><value>Subnet mask</value></data>
+  <data name="DetailsPrefix" xml:space="preserve"><value>Prefix length</value></data>
+  <data name="DetailsBroadcast" xml:space="preserve"><value>Broadcast address</value></data>
+  <data name="DetailsGateway" xml:space="preserve"><value>Router (gateway)</value></data>
+  <data name="DetailsDhcp" xml:space="preserve"><value>DHCP server</value></data>
+  <data name="DetailsIpv6Address" xml:space="preserve"><value>Address</value></data>
+  <data name="DetailsNoDns" xml:space="preserve"><value>No DNS servers reported</value></data>
+  <data name="DetailsCopyHint" xml:space="preserve"><value>Tap a value to copy it.</value></data>
+  <data name="DetailsCopied" xml:space="preserve"><value>Copied {0}</value></data>
+  <data name="ActionShare" xml:space="preserve"><value>Share</value></data>
+  <data name="ActionBack" xml:space="preserve"><value>Back</value></data>
+  <data name="ShareTitle" xml:space="preserve"><value>Network details</value></data>
+  <data name="ChannelWidthFormat" xml:space="preserve"><value>{0} MHz</value></data>
+  <data name="PrefixFormat" xml:space="preserve"><value>/{0}</value></data>
+  <data name="Band24" xml:space="preserve"><value>2.4 GHz</value></data>
+  <data name="Band5" xml:space="preserve"><value>5 GHz</value></data>
+  <data name="Band6" xml:space="preserve"><value>6 GHz</value></data>
+  <data name="StandardLegacy" xml:space="preserve"><value>Wi-Fi 3 or older</value></data>
+  <data name="Standard4" xml:space="preserve"><value>Wi-Fi 4 (802.11n)</value></data>
+  <data name="Standard5" xml:space="preserve"><value>Wi-Fi 5 (802.11ac)</value></data>
+  <data name="Standard6" xml:space="preserve"><value>Wi-Fi 6 (802.11ax)</value></data>
+  <data name="Standard7" xml:space="preserve"><value>Wi-Fi 7 (802.11be)</value></data>
+  <data name="StandardShortFormat" xml:space="preserve"><value>Wi-Fi {0}</value></data>
+  <data name="StandardShortLegacy" xml:space="preserve"><value>Older Wi-Fi</value></data>
+  <data name="StandardAd" xml:space="preserve"><value>WiGig (802.11ad)</value></data>
+  <data name="ComingDevicesTitle" xml:space="preserve"><value>Devices</value></data>
+  <data name="ComingDevicesBody" xml:space="preserve"><value>See every device on your network, get alerts when an unknown one joins, and mark the ones you trust.</value></data>
+  <data name="ComingWifiTitle" xml:space="preserve"><value>Wi-Fi analyzer</value></data>
+  <data name="ComingWifiBody" xml:space="preserve"><value>Find crowded channels, weak spots and look-alike networks around you.</value></data>
+  <data name="ComingToolsTitle" xml:space="preserve"><value>Tools</value></data>
+  <data name="ComingToolsBody" xml:space="preserve"><value>Ping, speed test, traceroute, DNS lookup, port check and Wake-on-LAN.</value></data>
+  <data name="ComingBadge" xml:space="preserve"><value>In progress</value></data>
+  <data name="DeviceUnnamed" xml:space="preserve"><value>Unnamed device</value></data>
+  <data name="DeviceTypeUnknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="DeviceTypeRouter" xml:space="preserve"><value>Router</value></data>
+  <data name="DeviceTypeComputer" xml:space="preserve"><value>Computer</value></data>
+  <data name="DeviceTypePhone" xml:space="preserve"><value>Phone</value></data>
+  <data name="DeviceTypeTablet" xml:space="preserve"><value>Tablet</value></data>
+  <data name="DeviceTypeTv" xml:space="preserve"><value>TV or streaming</value></data>
+  <data name="DeviceTypeSpeaker" xml:space="preserve"><value>Speaker</value></data>
+  <data name="DeviceTypePrinter" xml:space="preserve"><value>Printer</value></data>
+  <data name="DeviceTypeCamera" xml:space="preserve"><value>Camera</value></data>
+  <data name="DeviceTypeStorage" xml:space="preserve"><value>Storage (NAS)</value></data>
+  <data name="DeviceTypeGameConsole" xml:space="preserve"><value>Game console</value></data>
+  <data name="DeviceTypeSmartHome" xml:space="preserve"><value>Smart home</value></data>
+  <data name="DevicesTitle" xml:space="preserve"><value>Devices</value></data>
+  <data name="DevicesScan" xml:space="preserve"><value>Scan</value></data>
+  <data name="DevicesStop" xml:space="preserve"><value>Stop</value></data>
+  <data name="DevicesScanningFormat" xml:space="preserve"><value>Scanning… {0} found</value></data>
+  <data name="DevicesIdentifying" xml:space="preserve"><value>Identifying devices…</value></data>
+  <data name="DevicesSummaryFormat" xml:space="preserve"><value>{0} · {1} online · scanned {2:t}</value></data>
+  <data name="DevicesSummaryNoScan" xml:space="preserve"><value>Not scanned yet</value></data>
+  <data name="DevicesSearchPlaceholder" xml:space="preserve"><value>Search by name, address or maker</value></data>
+  <data name="FilterAll" xml:space="preserve"><value>All</value></data>
+  <data name="FilterOnline" xml:space="preserve"><value>Online</value></data>
+  <data name="FilterUnknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="FilterNew" xml:space="preserve"><value>New</value></data>
+  <data name="SortAddress" xml:space="preserve"><value>Address</value></data>
+  <data name="SortName" xml:space="preserve"><value>Name</value></data>
+  <data name="SortLastSeen" xml:space="preserve"><value>Last seen</value></data>
+  <data name="SortLabel" xml:space="preserve"><value>Sort</value></data>
+  <data name="DevicesMarkAllKnown" xml:space="preserve"><value>Mark all as known</value></data>
+  <data name="TagThisDevice" xml:space="preserve"><value>This device</value></data>
+  <data name="TagRouter" xml:space="preserve"><value>Router</value></data>
+  <data name="TagNew" xml:space="preserve"><value>New</value></data>
+  <data name="TagUnknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="TagKnown" xml:space="preserve"><value>Known</value></data>
+  <data name="DeviceOfflineFormat" xml:space="preserve"><value>Offline · last seen {0:g}</value></data>
+  <data name="DeviceSubtitleFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="DevicesEmptyTitle" xml:space="preserve"><value>Find what's on your network</value></data>
+  <data name="DevicesEmptyBody" xml:space="preserve"><value>Scan to see every device connected right now. Nothing leaves your network.</value></data>
+  <data name="DevicesNoMatchTitle" xml:space="preserve"><value>No devices match</value></data>
+  <data name="DevicesNoMatchBody" xml:space="preserve"><value>Try another filter or search.</value></data>
+  <data name="DevicesOfflineTitle" xml:space="preserve"><value>Not connected</value></data>
+  <data name="DevicesOfflineBody" xml:space="preserve"><value>Connect to a Wi-Fi or wired network to see its devices.</value></data>
+  <data name="DevicesLimitsNote" xml:space="preserve"><value>Only devices that answer ping are found. Android 10+ and iOS hide other devices' MAC addresses.</value></data>
+  <data name="DevicesSelectPrompt" xml:space="preserve"><value>Select a device to see its details.</value></data>
+  <data name="ActionCopyAddress" xml:space="preserve"><value>Copy address</value></data>
+  <data name="ActionMarkKnown" xml:space="preserve"><value>Mark as known</value></data>
+  <data name="ActionMarkUnknown" xml:space="preserve"><value>Mark as unknown</value></data>
+  <data name="ActionOpenDetails" xml:space="preserve"><value>Open details</value></data>
+  <data name="ActionPing" xml:space="preserve"><value>Ping</value></data>
+  <data name="ActionOpenWebPage" xml:space="preserve"><value>Open web page</value></data>
+  <data name="ActionForget" xml:space="preserve"><value>Forget device</value></data>
+  <data name="ActionForgetConfirm" xml:space="preserve"><value>Tap again to forget</value></data>
+  <data name="DeviceDetailsTitle" xml:space="preserve"><value>Device</value></data>
+  <data name="DeviceNameLabel" xml:space="preserve"><value>Name</value></data>
+  <data name="DeviceNamePlaceholder" xml:space="preserve"><value>Add a name</value></data>
+  <data name="DeviceTypeLabel" xml:space="preserve"><value>Type</value></data>
+  <data name="DeviceSectionIdentity" xml:space="preserve"><value>Identity</value></data>
+  <data name="DeviceSectionNetwork" xml:space="preserve"><value>On this network</value></data>
+  <data name="DeviceSectionPorts" xml:space="preserve"><value>Open ports</value></data>
+  <data name="DeviceHostName" xml:space="preserve"><value>Host name</value></data>
+  <data name="DeviceNetBios" xml:space="preserve"><value>NetBIOS name</value></data>
+  <data name="DeviceMac" xml:space="preserve"><value>MAC address</value></data>
+  <data name="DeviceMacPrivate" xml:space="preserve"><value>{0} (private address)</value></data>
+  <data name="DeviceFriendlyName" xml:space="preserve"><value>Device name</value></data>
+  <data name="DeviceManufacturer" xml:space="preserve"><value>Manufacturer</value></data>
+  <data name="DeviceModel" xml:space="preserve"><value>Model</value></data>
+  <data name="DeviceWebTitle" xml:space="preserve"><value>Web page</value></data>
+  <data name="DeviceIpAddress" xml:space="preserve"><value>IP address</value></data>
+  <data name="DeviceLatency" xml:space="preserve"><value>Latency</value></data>
+  <data name="DeviceFirstSeen" xml:space="preserve"><value>First seen</value></data>
+  <data name="DeviceLastSeen" xml:space="preserve"><value>Last seen</value></data>
+  <data name="DeviceNoPorts" xml:space="preserve"><value>No common ports open</value></data>
+  <data name="DeviceLookingUp" xml:space="preserve"><value>Looking up details…</value></data>
+  <data name="DeviceKnownBody" xml:space="preserve"><value>You've marked this device as one you recognise.</value></data>
+  <data name="DeviceUnknownBody" xml:space="preserve"><value>You haven't marked this device as known yet.</value></data>
+  <data name="PingResultFormat" xml:space="preserve"><value>{0:0} ms average · {1:0}% loss</value></data>
+  <data name="PingNoReply" xml:space="preserve"><value>No reply</value></data>
+  <data name="PortUnknownFormat" xml:space="preserve"><value>Port {0}</value></data>
+  <data name="DeviceVendorFormat" xml:space="preserve"><value>{0} device</value></data>
+  <data name="DeviceVendor" xml:space="preserve"><value>Adapter maker</value></data>
+  <data name="AppName" xml:space="preserve"><value>Ping My Network</value></data>
+  <data name="HomeDevicesFormat" xml:space="preserve"><value>{0} devices on this network</value></data>
+  <data name="HomeDevicesOneFormat" xml:space="preserve"><value>{0} device on this network</value></data>
+  <data name="HomeDevicesReviewFormat" xml:space="preserve"><value>{0} to review</value></data>
+  <data name="HomeDevicesNewFormat" xml:space="preserve"><value>{0} new</value></data>
+  <data name="HomeDevicesAllKnown" xml:space="preserve"><value>All recognised</value></data>
+  <data name="HomeDevicesNotScanned" xml:space="preserve"><value>See what's connected</value></data>
+  <data name="HomeDevicesNotScannedBody" xml:space="preserve"><value>Scan your network to find every device on it.</value></data>
+  <data name="ActionOpenDevices" xml:space="preserve"><value>Open devices</value></data>
+  <data name="DevicesReviewTitleFormat" xml:space="preserve"><value>{0} devices to review</value></data>
+  <data name="DevicesReviewOneTitle" xml:space="preserve"><value>1 device to review</value></data>
+  <data name="DevicesReviewBody" xml:space="preserve"><value>Mark the ones you recognise, so anything new stands out.</value></data>
+  <data name="ActionReview" xml:space="preserve"><value>Review</value></data>
+  <data name="DevicePrivateAddress" xml:space="preserve"><value>Private address</value></data>
+  <data name="LatencyUnderOne" xml:space="preserve"><value>&lt; 1 ms</value></data>
+  <data name="DeviceThisDeviceBody" xml:space="preserve"><value>This is the device you're using now.</value></data>
+  <data name="DeviceRouterBody" xml:space="preserve"><value>This is your network's router.</value></data>
+</root>

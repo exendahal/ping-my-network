@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.SettingsRow"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
+
+    <!--
+        One row of an inset grouped list, the shape the Human Interface Guidelines use for device
+        and preference screens: a leading label, a trailing value or switch, and a chevron only
+        when tapping the row actually leads somewhere.
+    -->
+    <Grid
+        Padding="16,0"
+        ColumnDefinitions="Auto,*,Auto,Auto"
+        ColumnSpacing="12"
+        MinimumHeightRequest="44">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Grid.GestureRecognizers>
+
+        <Label
+            x:Name="IconLabel"
+            Grid.Column="0"
+            FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
+            FontSize="19"
+            IsVisible="False"
+            VerticalOptions="Center"
+            WidthRequest="26" />
+
+        <Label
+            x:Name="TitleLabel"
+            Grid.Column="1"
+            Margin="0,12"
+            FontSize="17"
+            VerticalOptions="Center" />
+
+        <Label
+            x:Name="ValueLabel"
+            Grid.Column="2"
+            FontSize="17"
+            IsVisible="False"
+            LineBreakMode="TailTruncation"
+            TextColor="{AppThemeBinding Light={StaticResource MutedLight},
+                                        Dark={StaticResource MutedDark}}"
+            VerticalOptions="Center" />
+
+        <Label
+            x:Name="ChevronLabel"
+            Grid.Column="3"
+            FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
+            FontSize="18"
+            IsVisible="False"
+            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                        Dark={StaticResource CaptionDark}}"
+            VerticalOptions="Center" />
+
+        <Switch
+            x:Name="RowSwitch"
+            Grid.Column="3"
+            IsVisible="False"
+            Toggled="OnToggled"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentView>

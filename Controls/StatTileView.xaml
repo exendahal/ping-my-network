@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.StatTileView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
+
+    <!--
+        One figure with its caption (from sill_app). A grid rather than a stack, so a long value
+        truncates inside the tile instead of pushing the tile wider than its column.
+    -->
+    <Border
+        Padding="16,13"
+        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                          Dark={StaticResource SurfaceDark}}"
+        Stroke="{AppThemeBinding Light={StaticResource OutlineLight},
+                                 Dark={StaticResource OutlineDark}}"
+        StrokeShape="RoundRectangle 12"
+        StrokeThickness="1">
+        <Grid>
+            <Grid
+                x:Name="StatLayout"
+                ColumnDefinitions="Auto,*"
+                ColumnSpacing="6"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="5">
+                <Label
+                    x:Name="IconLabel"
+                    FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
+                    FontSize="15"
+                    IsVisible="False"
+                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                Dark={StaticResource AccentDark}}"
+                    VerticalOptions="Center" />
+                <Label
+                    x:Name="CaptionLabel"
+                    Grid.Column="1"
+                    FontSize="{StaticResource FontLabel}"
+                    LineBreakMode="TailTruncation"
+                    TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                Dark={StaticResource CaptionDark}}" />
+                <Label
+                    x:Name="ValueLabel"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    FontAttributes="Bold"
+                    FontSize="{StaticResource FontTitle}"
+                    LineBreakMode="TailTruncation"
+                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                Dark={StaticResource OnSurfaceDark}}" />
+            </Grid>
+
+            <controls:SkeletonView x:Name="Skeleton" IsVisible="False" />
+        </Grid>
+    </Border>
+</ContentView>

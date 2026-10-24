@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simpleShell:SimpleShell
+    x:Class="PingMyNetwork.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:simpleShell="clr-namespace:SimpleToolkit.SimpleShell;assembly=SimpleToolkit.SimpleShell"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:views="clr-namespace:PingMyNetwork.Views"
+    BackgroundColor="{AppThemeBinding Light={StaticResource PageLight},
+                                      Dark={StaticResource PageDark}}">
+
+    <!--
+        SimpleShell rather than the built-in Shell (from sill_app). The navigation chrome lives in
+        SimpleShell.Content as one instance that survives every route change, while the built-in
+        Shell made each page carry its own copy and rebuilt it on every switch, which flickered.
+    -->
+
+    <ShellContent
+        Title="{x:Static res:AppResources.TabHome}"
+        ContentTemplate="{DataTemplate views:HomePage}"
+        Route="{x:Static util:Routes.HOME}" />
+
+    <ShellContent
+        Title="{x:Static res:AppResources.TabDevices}"
+        ContentTemplate="{DataTemplate views:DevicesPage}"
+        Route="{x:Static util:Routes.DEVICES}" />
+
+    <ShellContent Title="{x:Static res:AppResources.TabWifi}" Route="{x:Static util:Routes.WIFI}">
+        <ShellContent.ContentTemplate>
+            <DataTemplate>
+                <views:PlannedPage
+                    Body="{x:Static res:AppResources.ComingWifiBody}"
+                    ClassId="{x:Static util:Routes.WIFI}"
+                    Heading="{x:Static res:AppResources.ComingWifiTitle}"
+                    Icon="{x:Static util:MaterialIcon.WIFI_FIND}" />
+            </DataTemplate>
+        </ShellContent.ContentTemplate>
+    </ShellContent>
+
+    <ShellContent Title="{x:Static res:AppResources.TabTools}" Route="{x:Static util:Routes.TOOLS}">
+        <ShellContent.ContentTemplate>
+            <DataTemplate>
+                <views:PlannedPage
+                    Body="{x:Static res:AppResources.ComingToolsBody}"
+                    ClassId="{x:Static util:Routes.TOOLS}"
+                    Heading="{x:Static res:AppResources.ComingToolsTitle}"
+                    Icon="{x:Static util:MaterialIcon.HANDYMAN}" />
+            </DataTemplate>
+        </ShellContent.ContentTemplate>
+    </ShellContent>
+
+    <!--  Visual structure: the pages are hosted here, with the navigation drawn over them.  -->
+    <simpleShell:SimpleShell.Content>
+        <Grid ColumnDefinitions="Auto,*">
+
+            <!--  Wide windows navigate from a rail; narrow ones use the floating bar below.  -->
+            <controls:SideRail
+                x:Name="Rail"
+                Grid.Column="0"
+                IsVisible="False" />
+
+            <simpleShell:SimpleNavigationHost Grid.Column="1" />
+
+            <!--  Floats over the page content, which leaves room for it.  -->
+            <controls:BottomTabBar
+                x:Name="TabBar"
+                Grid.Column="1"
+                VerticalOptions="End" />
+        </Grid>
+    </simpleShell:SimpleShell.Content>
+
+</simpleShell:SimpleShell>

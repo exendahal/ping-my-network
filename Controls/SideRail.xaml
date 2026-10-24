@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.SideRail"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
+
+    <!--
+        The wide layout's navigation (from sill_app): the same destinations as the phone tab bar,
+        moved to a rail so the horizontal space goes to content. Each pill's ClassId is its route.
+    -->
+    <Grid
+        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                          Dark={StaticResource SurfaceDark}}"
+        WidthRequest="{StaticResource RailWidth}">
+
+        <BoxView
+            HorizontalOptions="End"
+            WidthRequest="1"
+            Color="{AppThemeBinding Light={StaticResource OutlineLight},
+                                    Dark={StaticResource OutlineDark}}" />
+
+        <VerticalStackLayout
+            x:Name="Items"
+            Padding="10,14"
+            Spacing="6">
+
+            <Border
+                Padding="0,9"
+                ClassId="{x:Static util:Routes.HOME}"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnItemTapped" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout SemanticProperties.Description="{x:Static res:AppResources.TabHome}" Spacing="3">
+                    <Label Style="{StaticResource RailIcon}" Text="{x:Static util:MaterialIcon.HOME}" />
+                    <Label Style="{StaticResource NavCaption}" Text="{x:Static res:AppResources.TabHome}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Padding="0,9"
+                ClassId="{x:Static util:Routes.DEVICES}"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnItemTapped" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout SemanticProperties.Description="{x:Static res:AppResources.TabDevices}" Spacing="3">
+                    <Label Style="{StaticResource RailIcon}" Text="{x:Static util:MaterialIcon.DEVICES}" />
+                    <Label Style="{StaticResource NavCaption}" Text="{x:Static res:AppResources.TabDevices}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Padding="0,9"
+                ClassId="{x:Static util:Routes.WIFI}"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnItemTapped" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout SemanticProperties.Description="{x:Static res:AppResources.TabWifi}" Spacing="3">
+                    <Label Style="{StaticResource RailIcon}" Text="{x:Static util:MaterialIcon.WIFI}" />
+                    <Label Style="{StaticResource NavCaption}" Text="{x:Static res:AppResources.TabWifi}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Padding="0,9"
+                ClassId="{x:Static util:Routes.TOOLS}"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnItemTapped" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout SemanticProperties.Description="{x:Static res:AppResources.TabTools}" Spacing="3">
+                    <Label Style="{StaticResource RailIcon}" Text="{x:Static util:MaterialIcon.HANDYMAN}" />
+                    <Label Style="{StaticResource NavCaption}" Text="{x:Static res:AppResources.TabTools}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>
