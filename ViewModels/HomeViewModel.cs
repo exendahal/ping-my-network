@@ -27,6 +27,7 @@ namespace PingMyNetwork.ViewModels
         private readonly DeviceManager _Devices;
 
         private bool _IsDevicesQueued;
+        private bool _HasAskedPermissions;
 
         #endregion
 
@@ -264,6 +265,32 @@ namespace PingMyNetwork.ViewModels
         {
             _Monitor.Start();
             _ = LoadDevicesAsync();
+            _ = AskPermissionsOnceAsync();
+        }
+
+        /// <summary>
+        /// Asks once per session for what the library needs to read the Wi-Fi name and scan.
+        /// Android hides the network name from apps without location access, so Home would
+        /// otherwise show "Network name hidden" on first launch.
+        /// </summary>
+        /// <remarks>
+        /// ponytail: asked straight away on Home. The PRD's first-run screen, which explains why
+        /// before asking, replaces this when it is built.
+        /// </remarks>
+        /// <returns>A task that completes once answered.</returns>
+        private async Task AskPermissionsOnceAsync()
+        {
+            if (_HasAskedPermissions || !(OperatingSystem.IsAndroid() || OperatingSystem.IsIOS()))
+            {
+                return;
+            }
+
+            _HasAskedPermissions = true;
+
+            await _Wifi.RequestPermissionsAsync();
+
+            // The first read ran without permission; read again with it.
+            _Monitor.Refresh();
         }
 
         /// <summary>

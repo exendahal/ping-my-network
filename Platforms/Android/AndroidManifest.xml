@@ -1,6 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+	<!--
+		usesCleartextTraffic: device details read each device's own web page title and UPnP
+		description over plain http:// on the local network. Android's network security config cannot
+		limit cleartext to private address ranges (it matches host names, not IP ranges), so it is
+		allowed app-wide; every internet endpoint the app calls (speed test, internet check) uses
+		https:// except the platform's own captive portal probe.
+	-->
+	<application
+		android:allowBackup="true"
+		android:icon="@mipmap/appicon"
+		android:roundIcon="@mipmap/appicon_round"
+		android:supportsRtl="true"
+		android:usesCleartextTraffic="true"></application>
+
+	<!--  Network and Wi-Fi state: Home, network details, connecting.  -->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+	<!--  Android only reveals the Wi-Fi name and scan results to apps with location access.  -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+	<!--  Android 13+: Wi-Fi scanning without using the result for location.  -->
+	<uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" android:usesPermissionFlags="neverForLocation" />
+
+	<!--  mDNS / Bonjour answers arrive as multicast.  -->
+	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
+	<!--  Ping, speed test, device details.  -->
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>
