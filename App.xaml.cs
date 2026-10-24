@@ -85,6 +85,16 @@ namespace PingMyNetwork
             window.Stopped += (_, _) => _Monitor.Stop();
             window.Resumed += (_, _) => _Monitor.Start();
 
+#if DEBUG
+            // Lets design QA open a screen without clicking through the app:
+            // set PMN_ROUTE=//tools/ping before launching.
+            if (Environment.GetEnvironmentVariable("PMN_ROUTE") is { Length: > 0 } route)
+            {
+                window.Created += (_, _) => shell.Dispatcher.DispatchDelayed(
+                    TimeSpan.FromSeconds(1), async () => await shell.GoToAsync(route, animate: false));
+            }
+#endif
+
             return window;
         }
 
