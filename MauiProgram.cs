@@ -1,9 +1,11 @@
-﻿using MauiWifiManager;
+using MauiWifiManager;
+using MauiWifiManager.Abstractions;
 using Microsoft.Extensions.Logging;
 using PingMyNetwork.Helper.Utilities;
 using PingMyNetwork.Implementation;
 using PingMyNetwork.ViewModels;
 using PingMyNetwork.Views;
+using WifiManager.MacVendors;
 using SimpleToolkit.SimpleShell;
 
 namespace PingMyNetwork
@@ -38,6 +40,9 @@ namespace PingMyNetwork
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("MaterialIcons-Regular.ttf", MaterialIcon.FONT_FAMILY);
                 });
+
+            // Device makers come from the IEEE registry package, which the library leaves out to stay small.
+            MacVendor.SetLookup(MacVendorRegistry.Lookup);
 
             // The library's own interface, so a fake can stand in for demo mode and tests later.
             builder.Services.AddSingleton<IWifiNetworkService>(_ => CrossWifiManager.Current);

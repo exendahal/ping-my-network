@@ -69,6 +69,9 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="SimpleToolkit.SimpleShell" Version="6.0.1" />
+
+		<!-- Device makers. Published separately from the library, so every configuration uses the package. -->
+		<PackageReference Include="WifiManager.MacVendors" Version="1.0.0" />
 	</ItemGroup>
 
 	<!--
