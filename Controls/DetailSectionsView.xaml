@@ -6,7 +6,6 @@
     xmlns:controls="clr-namespace:PingMyNetwork.Controls"
     xmlns:models="clr-namespace:PingMyNetwork.Models"
     xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
-    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
     x:Name="Root">
 
     <!--
@@ -37,10 +36,9 @@
                                     -->
                                     <Grid
                                         Padding="16,10"
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight},
-                                                                          Dark={StaticResource SurfaceDark}}"
                                         ColumnDefinitions="*,Auto"
                                         ColumnSpacing="{StaticResource SpaceM}"
+                                        Style="{StaticResource ListRow}"
                                         MinimumHeightRequest="{StaticResource TouchTarget}"
                                         RowDefinitions="Auto,Auto"
                                         SemanticProperties.Description="{Binding Value}"
@@ -59,16 +57,6 @@
                                             Text="{Binding Value}"
                                             TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
                                                                         Dark={StaticResource OnSurfaceDark}}" />
-                                        <Label
-                                            Grid.Column="1"
-                                            Grid.RowSpan="2"
-                                            FontSize="16"
-                                            IsVisible="{Binding IsCopyable}"
-                                            Style="{StaticResource Icon}"
-                                            Text="{x:Static util:MaterialIcon.COPY}"
-                                            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
-                                                                        Dark={StaticResource CaptionDark}}"
-                                            VerticalOptions="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
