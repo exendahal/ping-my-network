@@ -93,7 +93,13 @@ namespace PingMyNetwork.Views
                 _PaneViewModel.Attach();
             }
 
-            await _ViewModel.AppearAsync();
+            // The list shows what it last knew straight away; loading and scanning wait for the slide.
+            await AppShell.WhenSettledAsync();
+
+            if (_IsShowing)
+            {
+                await _ViewModel.AppearAsync();
+            }
         }
 
         /// <summary>

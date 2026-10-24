@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using MauiWifiManager.Abstractions;
 using PingMyNetwork.Controls;
 using PingMyNetwork.Helper.Enums;
@@ -32,6 +32,8 @@ namespace PingMyNetwork.Views
         private readonly SignalHistoryDrawable _History = new();
 
         private bool? _IsWide;
+
+        private bool _IsShowing;
         private WifiFrequencyBand? _GrownBand;
 
         #endregion
@@ -79,11 +81,18 @@ namespace PingMyNetwork.Views
 
             // Subscribed per appearance, not in the constructor: the view model outlives the page,
             // and a second page instance must not leave a stale handler behind.
+            _IsShowing = true;
             _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
-            UpdateChart();
 
-            await _ViewModel.AppearAsync();
+            // The chart's entrance and the scan wait for the slide, so neither costs it frames.
+            await AppShell.WhenSettledAsync();
+
+            if (_IsShowing)
+            {
+                UpdateChart();
+                await _ViewModel.AppearAsync();
+            }
         }
 
         /// <summary>
@@ -93,6 +102,7 @@ namespace PingMyNetwork.Views
         {
             base.OnDisappearing();
 
+            _IsShowing = false;
             this.AbortAnimation(CHART_ANIMATION);
             _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             await _ViewModel.DisappearAsync();

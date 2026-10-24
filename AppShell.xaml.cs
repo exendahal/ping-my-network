@@ -1,4 +1,5 @@
-﻿using PingMyNetwork.Helper.Utilities;
+﻿using Microsoft.Maui.Platform;
+using PingMyNetwork.Helper.Utilities;
 using PingMyNetwork.Views;
 using SimpleToolkit.SimpleShell;
 using SimpleToolkit.SimpleShell.Extensions;
@@ -56,6 +57,22 @@ namespace PingMyNetwork
 
         private bool _ChromeShown = true;
 
+        /// <summary>
+        /// Longest a page waits for a switch to settle, should the transition never report back.
+        /// </summary>
+        private const int SETTLE_TIMEOUT_MS = 600;
+
+        /// <summary>
+        /// Idle time after launch before the other tabs are built, then between each of them.
+        /// </summary>
+        private const int WARM_UP_GAP_MS = 1200;
+
+        /// <summary>
+        /// Completes when the current tab switch has finished sliding in. Starts completed, since
+        /// the first screen does not slide.
+        /// </summary>
+        private static TaskCompletionSource _Settled = Completed();
+
         #endregion
 
         #region Constructor
@@ -91,6 +108,8 @@ namespace PingMyNetwork
 
             ApplyAccent();
             ApplyLayout();
+
+            Loaded += (_, _) => WarmUpTabs();
         }
 
         #endregion
@@ -178,6 +197,8 @@ namespace PingMyNetwork
                 },
                 finished: static args =>
                 {
+                    _Settled.TrySetResult();
+
                     // Reset both axes, so a page reused later never inherits a stale offset.
                     Rest(args.OriginPage);
                     Rest(args.DestinationPage);
@@ -194,14 +215,80 @@ namespace PingMyNetwork
         }
 
         /// <summary>
-        /// Switches to a tab the chrome asked for. Shell-level animation stays off: the custom
+        /// Completes once the current tab switch has finished, so a page can start loading data
+        /// without competing with the slide for frames. Navigate first, load after.
+        /// </summary>
+        /// <returns>A task that completes when the switch has settled.</returns>
+        public static async Task WhenSettledAsync()
+        {
+            Task settled = _Settled.Task;
+
+            if (!settled.IsCompleted)
+            {
+                await Task.WhenAny(settled, Task.Delay(SETTLE_TIMEOUT_MS));
+            }
+        }
+
+        /// <summary>
+        /// Switches to a tab the chrome asked for. The tab lights up at once, before the shell has
+        /// done any work, so a tap never looks ignored. Shell-level animation stays off: the custom
         /// transition does the motion, while the chrome itself stays put.
         /// </summary>
         /// <param name="sender">The tab bar or rail.</param>
         /// <param name="route">The destination's route.</param>
         private async void OnRouteRequested(object? sender, string route)
         {
+            string[] segments = (CurrentState?.Location?.OriginalString ?? string.Empty).Split('/', StringSplitOptions.RemoveEmptyEntries);
+
+            // Already there: a second tap must not rebuild or re-slide the screen.
+            if ((segments.Length == 1) && (segments[0] == route))
+            {
+                return;
+            }
+
+            TabBar.ActiveRoute = route;
+            Rail.ActiveRoute = route;
+            _Settled = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
             await GoToAsync($"//{route}", animate: false);
+        }
+
+        /// <summary>
+        /// Builds the other tab pages, native views included, while the app is idle after launch,
+        /// one at a time, so the first visit to each is as quick as every later one. Without this
+        /// the first visit created a large page's platform views during its slide and starved it.
+        /// </summary>
+        private async void WarmUpTabs()
+        {
+            IMauiContext? context = Handler?.MauiContext;
+
+            if (context is null)
+            {
+                return;
+            }
+
+            foreach (Type type in new[] { typeof(DevicesPage), typeof(WifiPage), typeof(ToolsPage) })
+            {
+                await Task.Delay(WARM_UP_GAP_MS);
+
+                if (context.Services.GetService(type) is Page { Handler: null } page)
+                {
+                    _ = page.ToPlatform(context);
+                }
+            }
+        }
+
+        /// <summary>
+        /// A source that has already completed.
+        /// </summary>
+        /// <returns>The source.</returns>
+        private static TaskCompletionSource Completed()
+        {
+            TaskCompletionSource source = new();
+
+            source.SetResult();
+
+            return source;
         }
 
         /// <summary>

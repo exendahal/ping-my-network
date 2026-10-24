@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using PingMyNetwork.Controls;
 using PingMyNetwork.Helper.Enums;
 using PingMyNetwork.Helper.Utilities;
@@ -19,6 +19,8 @@ namespace PingMyNetwork.Views
         private LayoutWidth? _AppliedWidth;
         private bool _IsTilesQueued;
         private int _TileColumns = 2;
+
+        private bool _IsShowing;
 
         #endregion
 
@@ -62,16 +64,24 @@ namespace PingMyNetwork.Views
         /// <summary>
         /// Starts monitoring.
         /// </summary>
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            _IsShowing = true;
 
             // Subscribed per appearance: the view model outlives the page.
             _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             PaintAll();
 
-            _ViewModel.Start();
+            // The page shows what it last knew straight away; fresh data waits for the slide.
+            await AppShell.WhenSettledAsync();
+
+            if (_IsShowing)
+            {
+                _ViewModel.Start();
+            }
         }
 
         /// <summary>
@@ -81,6 +91,7 @@ namespace PingMyNetwork.Views
         {
             base.OnDisappearing();
 
+            _IsShowing = false;
             _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
         }
 
