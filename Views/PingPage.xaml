@@ -21,26 +21,27 @@
                 Spacing="{StaticResource SpaceL}">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="{StaticResource SpaceM}">
-                        <Border
-                            Padding="12,0,4,0"
-                            Style="{StaticResource GroupCard}">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
-                                <Label
-                                    FontSize="18"
-                                    Style="{StaticResource Icon}"
-                                    Text="{x:Static util:MaterialIcon.NETWORK_PING}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label
+                                Margin="4,0"
+                                Style="{StaticResource TextLabel}"
+                                Text="{x:Static res:AppResources.FieldHost}" />
+                            <Border Padding="12,0,4,0" Style="{StaticResource GroupCard}">
                                 <Entry
-                                    Grid.Column="1"
                                     IsSpellCheckEnabled="False"
                                     IsTextPredictionEnabled="False"
                                     Keyboard="Url"
                                     Placeholder="{x:Static res:AppResources.ToolHostPlaceholder}"
                                     ReturnCommand="{Binding RunCommand}"
                                     ReturnType="Go"
-                                    SemanticProperties.Description="{x:Static res:AppResources.ToolHostPlaceholder}"
+                                    SemanticProperties.Description="{x:Static res:AppResources.FieldHost}"
                                     Text="{Binding Host}" />
-                            </Grid>
-                        </Border>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Label
+                            Margin="4,0,4,-6"
+                            Style="{StaticResource TextLabel}"
+                            Text="{x:Static res:AppResources.FieldPingCount}" />
                         <FlexLayout BindableLayout.ItemsSource="{Binding Counts}" Wrap="Wrap">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:ChoiceOption">

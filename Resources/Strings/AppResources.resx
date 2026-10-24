@@ -271,7 +271,7 @@
   <data name="ToolStop" xml:space="preserve"><value>Stop</value></data>
   <data name="ToolFailed" xml:space="preserve"><value>Something went wrong. Try again.</value></data>
   <data name="ToolHostRequired" xml:space="preserve"><value>Enter a host name or IP address.</value></data>
-  <data name="ToolHostPlaceholder" xml:space="preserve"><value>Host name or IP address</value></data>
+  <data name="ToolHostPlaceholder" xml:space="preserve"><value>e.g. 192.168.1.1 or example.com</value></data>
   <data name="PingCountFormat" xml:space="preserve"><value>{0} pings</value></data>
   <data name="PingContinuous" xml:space="preserve"><value>Until stopped</value></data>
   <data name="PingLost" xml:space="preserve"><value>Lost</value></data>
@@ -291,10 +291,10 @@
   <data name="TracerouteNoReplyHint" xml:space="preserve"><value>This router does not answer traceroute; that is normal.</value></data>
   <data name="TracerouteFooter" xml:space="preserve"><value>Each line is a router your traffic passes through. A long jump in time shows where a slowdown starts.</value></data>
   <data name="DnsLookUp" xml:space="preserve"><value>Look up</value></data>
-  <data name="DnsNamePlaceholder" xml:space="preserve"><value>Domain name, e.g. example.com</value></data>
+  <data name="DnsNamePlaceholder" xml:space="preserve"><value>e.g. example.com</value></data>
   <data name="DnsNameRequired" xml:space="preserve"><value>Enter a domain name.</value></data>
-  <data name="DnsServerPlaceholder" xml:space="preserve"><value>DNS server (optional)</value></data>
-  <data name="DnsServerNetworkFormat" xml:space="preserve"><value>DNS server (your network's: {0})</value></data>
+  <data name="DnsServerPlaceholder" xml:space="preserve"><value>Automatic</value></data>
+  <data name="DnsServerNetworkFormat" xml:space="preserve"><value>Your network's ({0})</value></data>
   <data name="DnsTtlFormat" xml:space="preserve"><value>TTL {0}</value></data>
   <data name="DnsSummaryFormat" xml:space="preserve"><value>{0} records from {1} in {2} ms</value></data>
   <data name="DnsNotFoundFormat" xml:space="preserve"><value>{0} does not exist ({1})</value></data>
@@ -306,7 +306,7 @@
   <data name="PortsCheck" xml:space="preserve"><value>Check</value></data>
   <data name="PortsCommonFormat" xml:space="preserve"><value>Common ({0})</value></data>
   <data name="PortsCustom" xml:space="preserve"><value>Custom</value></data>
-  <data name="PortsCustomPlaceholder" xml:space="preserve"><value>Ports, e.g. 22, 80, 8000-8100</value></data>
+  <data name="PortsCustomPlaceholder" xml:space="preserve"><value>e.g. 22, 80, 8000-8100</value></data>
   <data name="PortsInvalidFormat" xml:space="preserve"><value>Enter ports from 1 to 65535, separated by commas, with ranges like 8000-8100. Up to {0} ports.</value></data>
   <data name="PortsUnknownService" xml:space="preserve"><value>Unknown service</value></data>
   <data name="PortsOpen" xml:space="preserve"><value>Open</value></data>
@@ -314,12 +314,12 @@
   <data name="PortsDoneFormat" xml:space="preserve"><value>{0} of {1} ports open</value></data>
   <data name="PortsFooter" xml:space="preserve"><value>Only check devices you own or have permission to test.</value></data>
   <data name="WakeSend" xml:space="preserve"><value>Wake</value></data>
-  <data name="WakeMacPlaceholder" xml:space="preserve"><value>MAC address, e.g. AA:BB:CC:DD:EE:FF</value></data>
+  <data name="WakeMacPlaceholder" xml:space="preserve"><value>e.g. AA:BB:CC:DD:EE:FF</value></data>
   <data name="WakeSentFormat" xml:space="preserve"><value>Wake-up packet sent to {0}.</value></data>
   <data name="WakeAwake" xml:space="preserve"><value>Online</value></data>
   <data name="WakeDevices" xml:space="preserve"><value>Devices on this network</value></data>
   <data name="WakeFooter" xml:space="preserve"><value>The computer must have Wake-on-LAN turned on and be connected by cable. It does not reply, so check after a minute.</value></data>
-  <data name="SubnetPlaceholder" xml:space="preserve"><value>Address and prefix, e.g. 192.168.1.10/24</value></data>
+  <data name="SubnetPlaceholder" xml:space="preserve"><value>e.g. 192.168.1.10/24</value></data>
   <data name="SubnetInvalid" xml:space="preserve"><value>Enter an IPv4 address with a prefix (/24) or a mask (255.255.255.0).</value></data>
   <data name="SubnetSectionRange" xml:space="preserve"><value>Address range</value></data>
   <data name="SubnetSectionMask" xml:space="preserve"><value>Mask</value></data>
@@ -346,4 +346,13 @@
   <data name="SpeedVerdictSlow" xml:space="preserve"><value>Slow: video calls and streaming may stutter.</value></data>
   <data name="SpeedFooter" xml:space="preserve"><value>Uses Cloudflare's speed test and about 30 MB of data.</value></data>
   <data name="WakeDevicesHint" xml:space="preserve"><value>Tap one to use its MAC address.</value></data>
+  <data name="FieldHost" xml:space="preserve"><value>Host or IP address</value></data>
+  <data name="FieldDomain" xml:space="preserve"><value>Domain</value></data>
+  <data name="FieldDnsServer" xml:space="preserve"><value>DNS server</value></data>
+  <data name="FieldPorts" xml:space="preserve"><value>Ports</value></data>
+  <data name="FieldMac" xml:space="preserve"><value>MAC address</value></data>
+  <data name="FieldSubnet" xml:space="preserve"><value>Address and prefix or mask</value></data>
+  <data name="FieldPingCount" xml:space="preserve"><value>How many</value></data>
+  <data name="FieldRecordType" xml:space="preserve"><value>Record type</value></data>
+  <data name="FieldPortSet" xml:space="preserve"><value>Which ports</value></data>
 </root>

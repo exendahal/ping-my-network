@@ -9,17 +9,19 @@
 
     <ScrollView>
         <!--
-            Two groups so the list reads as "find a problem" and "do a job" rather than seven
-            equal choices. Code-behind sets how many cards share a row at the window's width.
+            Two grouped lists, so the choice reads as "find a problem" or "do a job" rather than
+            seven equal cards. Stacked on narrow windows; side by side on wide ones (code-behind).
         -->
-        <VerticalStackLayout
-            x:Name="PageStack"
+        <Grid
+            x:Name="PageGrid"
             Padding="{StaticResource PagePaddingCompact}"
+            ColumnSpacing="{StaticResource SpaceXl}"
             HorizontalOptions="Center"
             MaximumWidthRequest="{StaticResource ContentMaxWidth}"
-            Spacing="{StaticResource SpaceM}">
+            RowDefinitions="Auto,Auto,Auto"
+            RowSpacing="{StaticResource SpaceL}">
 
-            <VerticalStackLayout Margin="0,0,0,8">
+            <VerticalStackLayout x:Name="Header">
                 <Label
                     SemanticProperties.HeadingLevel="Level1"
                     Style="{StaticResource ScreenTitle}"
@@ -27,292 +29,364 @@
                 <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolsSubtitle}" />
             </VerticalStackLayout>
 
-            <Label
-                SemanticProperties.HeadingLevel="Level2"
-                Style="{StaticResource TextHeadline}"
-                Text="{x:Static res:AppResources.ToolsDiagnose}" />
-            <Grid
-                x:Name="DiagnoseGrid"
-                ColumnSpacing="{StaticResource SpaceM}"
-                RowSpacing="{StaticResource SpaceM}">
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_PING}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolPingTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolPingBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+            <VerticalStackLayout x:Name="DiagnoseGroup" Spacing="{StaticResource SpaceS}">
+                <Label
+                    Margin="4,0"
+                    SemanticProperties.HeadingLevel="Level2"
+                    Style="{StaticResource TextHeadline}"
+                    Text="{x:Static res:AppResources.ToolsDiagnose}" />
+                <Border Style="{StaticResource GroupCard}">
+                    <VerticalStackLayout
+                        BackgroundColor="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                          Dark={StaticResource OutlineDark}}"
+                        Spacing="1">
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_PING}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolPingTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolPingBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.NETWORK_PING}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolPingTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolPingBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.NETWORK_PING}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolPingTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolPingBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
-                </Border>
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_TRACEROUTE}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolTracerouteTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolTracerouteBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_TRACEROUTE}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolTracerouteTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolTracerouteBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.ROUTE}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolTracerouteTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolTracerouteBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.ROUTE}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolTracerouteTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolTracerouteBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
-                </Border>
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_DNS}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolDnsTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolDnsBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_DNS}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolDnsTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolDnsBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.DNS}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolDnsTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolDnsBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.DNS}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolDnsTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolDnsBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
-                </Border>
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_PORTS}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolPortsTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolPortsBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_PORTS}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolPortsTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolPortsBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.RADAR}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolPortsTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolPortsBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.RADAR}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolPortsTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolPortsBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                    </VerticalStackLayout>
                 </Border>
-            </Grid>
+            </VerticalStackLayout>
 
-            <Label
-                Margin="0,8,0,0"
-                SemanticProperties.HeadingLevel="Level2"
-                Style="{StaticResource TextHeadline}"
-                Text="{x:Static res:AppResources.ToolsUtilities}" />
-            <Grid
-                x:Name="UtilityGrid"
-                ColumnSpacing="{StaticResource SpaceM}"
-                RowSpacing="{StaticResource SpaceM}">
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_SPEED}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolSpeedTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolSpeedBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+            <VerticalStackLayout x:Name="UtilityGroup" Spacing="{StaticResource SpaceS}">
+                <Label
+                    Margin="4,0"
+                    SemanticProperties.HeadingLevel="Level2"
+                    Style="{StaticResource TextHeadline}"
+                    Text="{x:Static res:AppResources.ToolsUtilities}" />
+                <Border Style="{StaticResource GroupCard}">
+                    <VerticalStackLayout
+                        BackgroundColor="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                          Dark={StaticResource OutlineDark}}"
+                        Spacing="1">
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_SPEED}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolSpeedTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolSpeedBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.SPEED}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolSpeedTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolSpeedBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.SPEED}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolSpeedTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolSpeedBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
-                </Border>
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_WAKE}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolWakeTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolWakeBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_WAKE}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolWakeTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolWakeBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.POWER}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolWakeTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolWakeBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.POWER}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolWakeTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolWakeBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
-                </Border>
-                <Border
-                    ClassId="{x:Static util:Routes.TOOL_SUBNET}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ToolSubnetTitle}"
-                    SemanticProperties.Hint="{x:Static res:AppResources.ToolSubnetBody}"
-                    Style="{StaticResource TappableCard}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToolTapped" />
-                    </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            HeightRequest="44"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            VerticalOptions="Start"
-                            WidthRequest="44">
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                        <Grid
+                            Padding="16,12"
+                            ClassId="{x:Static util:Routes.TOOL_SUBNET}"
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            SemanticProperties.Description="{x:Static res:AppResources.ToolSubnetTitle}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.ToolSubnetBody}"
+                            Style="{StaticResource ListRow}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToolTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.CALCULATE}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="1"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{x:Static res:AppResources.ToolSubnetTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ToolSubnetBody}" />
+                            </VerticalStackLayout>
                             <Label
-                                FontSize="22"
-                                HorizontalOptions="Center"
+                                Grid.Column="2"
+                                FontSize="18"
                                 Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.CALCULATE}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource TextHeadline}" Text="{x:Static res:AppResources.ToolSubnetTitle}" />
-                            <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.ToolSubnetBody}" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                    </Grid>
+                                Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                            Dark={StaticResource CaptionDark}}" />
+                        </Grid>
+                    </VerticalStackLayout>
                 </Border>
-            </Grid>
-        </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>

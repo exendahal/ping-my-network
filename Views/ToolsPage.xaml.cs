@@ -65,7 +65,7 @@ namespace PingMyNetwork.Views
         }
 
         /// <summary>
-        /// One card per row on phones, two on medium windows, three on wide ones.
+        /// Stacks the two groups on narrow windows and sets them side by side on wide ones.
         /// </summary>
         private void ApplyLayout()
         {
@@ -73,13 +73,13 @@ namespace PingMyNetwork.Views
             LayoutWidth width = LayoutWidthUtility.From(windowWidth);
             Thickness padding = LayoutWidthUtility.PagePadding(windowWidth);
 
-            PageStack.Padding = width == LayoutWidth.Compact
+            PageGrid.Padding = width == LayoutWidth.Compact
                 ? new Thickness(padding.Left, padding.Top, padding.Right, TAB_BAR_CLEARANCE)
                 : padding;
 
             // The scroll view measures with unlimited width on Windows; a definite width lets the
-            // descriptions wrap inside their cards.
-            PageStack.WidthRequest = Math.Min(Width, PageStack.MaximumWidthRequest);
+            // descriptions wrap inside their rows.
+            PageGrid.WidthRequest = Math.Min(Width, PageGrid.MaximumWidthRequest);
 
             if (width == _AppliedWidth)
             {
@@ -88,36 +88,16 @@ namespace PingMyNetwork.Views
 
             _AppliedWidth = width;
 
-            int columns = width switch
-            {
-                LayoutWidth.Compact => 1,
-                LayoutWidth.Medium => 2,
-                _ => 3,
-            };
+            bool isWide = width >= LayoutWidth.Expanded;
 
-            Flow(DiagnoseGrid, columns);
-            Flow(UtilityGrid, columns);
-        }
+            PageGrid.ColumnDefinitions = isWide
+                ? [new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star)]
+                : [new ColumnDefinition(GridLength.Star)];
 
-        /// <summary>
-        /// Places a grid's cards left to right, top to bottom, in equal columns.
-        /// </summary>
-        /// <param name="grid">The grid.</param>
-        /// <param name="columns">Cards per row.</param>
-        private static void Flow(Grid grid, int columns)
-        {
-            int rows = (grid.Children.Count + columns - 1) / columns;
-
-            grid.ColumnDefinitions = [.. Enumerable.Range(0, columns).Select(_ => new ColumnDefinition(GridLength.Star))];
-            grid.RowDefinitions = [.. Enumerable.Range(0, rows).Select(_ => new RowDefinition(GridLength.Auto))];
-
-            for (var i = 0; i < grid.Children.Count; i++)
-            {
-                BindableObject card = (BindableObject)grid.Children[i];
-
-                Grid.SetColumn(card, i % columns);
-                Grid.SetRow(card, i / columns);
-            }
+            Grid.SetColumnSpan(Header, isWide ? 2 : 1);
+            Grid.SetRow(DiagnoseGroup, 1);
+            Grid.SetRow(UtilityGroup, isWide ? 1 : 2);
+            Grid.SetColumn(UtilityGroup, isWide ? 1 : 0);
         }
 
         #endregion

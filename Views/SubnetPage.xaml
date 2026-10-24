@@ -20,25 +20,22 @@
                 Spacing="{StaticResource SpaceL}">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="{StaticResource SpaceM}">
-                        <Border
-                            Padding="12,0,4,0"
-                            Style="{StaticResource GroupCard}">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
-                                <Label
-                                    FontSize="18"
-                                    Style="{StaticResource Icon}"
-                                    Text="{x:Static util:MaterialIcon.CALCULATE}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label
+                                Margin="4,0"
+                                Style="{StaticResource TextLabel}"
+                                Text="{x:Static res:AppResources.FieldSubnet}" />
+                            <Border Padding="12,0,4,0" Style="{StaticResource GroupCard}">
                                 <Entry
-                                    Grid.Column="1"
                                     IsSpellCheckEnabled="False"
                                     IsTextPredictionEnabled="False"
                                     Keyboard="Url"
                                     Placeholder="{x:Static res:AppResources.SubnetPlaceholder}"
                                     ReturnType="Done"
-                                    SemanticProperties.Description="{x:Static res:AppResources.SubnetPlaceholder}"
+                                    SemanticProperties.Description="{x:Static res:AppResources.FieldSubnet}"
                                     Text="{Binding Input}" />
-                            </Grid>
-                        </Border>
+                            </Border>
+                        </VerticalStackLayout>
                         <Label
                             IsVisible="{Binding IsInvalid}"
                             Style="{StaticResource TextLabel}"
