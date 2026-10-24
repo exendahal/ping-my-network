@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.DetailSectionsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    x:Name="Root">
+
+    <!--
+        Titled cards of label and value rows, tap a row to copy its value. A handful of short,
+        bounded sections, so a bindable layout rather than a virtualised list.
+    -->
+    <VerticalStackLayout x:Name="SectionList">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="models:DetailSection">
+                <VerticalStackLayout>
+                    <Label Style="{StaticResource SectionHeader}" Text="{Binding Title}" />
+
+                    <!--
+                        Rows sit on the outline colour with 1 unit between them, so the hairlines
+                        appear only between rows, never doubled at the edges.
+                    -->
+                    <Border Style="{StaticResource GroupCard}">
+                        <VerticalStackLayout
+                            BackgroundColor="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                              Dark={StaticResource OutlineDark}}"
+                            BindableLayout.ItemsSource="{Binding Rows}"
+                            Spacing="1">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:DetailRow">
+                                    <Grid
+                                        Padding="16,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                                                          Dark={StaticResource SurfaceDark}}"
+                                        ColumnDefinitions="*,Auto,Auto"
+                                        ColumnSpacing="{StaticResource SpaceM}"
+                                        MinimumHeightRequest="{StaticResource TouchTarget}"
+                                        SemanticProperties.Description="{Binding Value}"
+                                        SemanticProperties.Hint="{x:Static res:AppResources.DetailsCopyHint}">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=CopyCommand, x:DataType=controls:DetailSectionsView}" CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+                                        <Label
+                                            Margin="0,12"
+                                            FontSize="{StaticResource FontBody}"
+                                            Text="{Binding Title}"
+                                            TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                        Dark={StaticResource OnSurfaceDark}}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="{StaticResource FontBody}"
+                                            HorizontalTextAlignment="End"
+                                            LineBreakMode="CharacterWrap"
+                                            MaximumWidthRequest="320"
+                                            Text="{Binding Value}"
+                                            TextColor="{AppThemeBinding Light={StaticResource MutedLight},
+                                                                        Dark={StaticResource MutedDark}}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="16"
+                                            IsVisible="{Binding IsCopyable}"
+                                            Style="{StaticResource Icon}"
+                                            Text="{x:Static util:MaterialIcon.COPY}"
+                                            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                                        Dark={StaticResource CaptionDark}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </VerticalStackLayout>
+</ContentView>

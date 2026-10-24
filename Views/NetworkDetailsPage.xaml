@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PingMyNetwork.Views.NetworkDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:NetworkDetailsViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!--  Header: back, title, share.  -->
+        <Grid
+            x:Name="Header"
+            Grid.Row="0"
+            Padding="8,8,8,0"
+            ColumnDefinitions="Auto,*,Auto">
+            <Button
+                Command="{Binding BackCommand}"
+                SemanticProperties.Description="{x:Static res:AppResources.ActionBack}"
+                Style="{StaticResource IconButton}"
+                Text="{x:Static util:MaterialIcon.ARROW_BACK}"
+                ToolTipProperties.Text="{x:Static res:AppResources.ActionBack}" />
+            <Label
+                Grid.Column="1"
+                Margin="4,0"
+                SemanticProperties.HeadingLevel="Level1"
+                Style="{StaticResource TextTitle}"
+                Text="{x:Static res:AppResources.DetailsTitle}"
+                VerticalOptions="Center" />
+            <Button
+                Grid.Column="2"
+                Command="{Binding ShareCommand}"
+                SemanticProperties.Description="{x:Static res:AppResources.ActionShare}"
+                Style="{StaticResource IconButton}"
+                Text="{x:Static util:MaterialIcon.SHARE}"
+                ToolTipProperties.Text="{x:Static res:AppResources.ActionShare}" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                x:Name="Body"
+                Padding="16,4,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}">
+
+                <Label
+                    Margin="16,4,16,0"
+                    Style="{StaticResource TextLabel}"
+                    Text="{x:Static res:AppResources.DetailsCopyHint}" />
+
+                <controls:DetailSectionsView CopyCommand="{Binding CopyCommand}" Sections="{Binding Sections}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Copy confirmation, above the content near the bottom edge.  -->
+        <Border
+            Grid.Row="1"
+            Margin="0,0,0,24"
+            Padding="16,10"
+            BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                              Dark={StaticResource SurfaceDark}}"
+            HorizontalOptions="Center"
+            InputTransparent="True"
+            IsVisible="{Binding IsCopiedVisible}"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="0"
+            VerticalOptions="End">
+            <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
+                <Label
+                    FontSize="16"
+                    Style="{StaticResource Icon}"
+                    Text="{x:Static util:MaterialIcon.CHECK_CIRCLE}"
+                    TextColor="{AppThemeBinding Light={StaticResource AccentDark},
+                                                Dark={StaticResource AccentDark}}" />
+                <Label
+                    FontSize="{StaticResource FontLabel}"
+                    Text="{Binding CopiedText}"
+                    TextColor="{AppThemeBinding Light={StaticResource White},
+                                                Dark={StaticResource OnSurfaceDark}}"
+                    VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>
