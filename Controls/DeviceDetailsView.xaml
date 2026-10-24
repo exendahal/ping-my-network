@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.DeviceDetailsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:DeviceDetailsViewModel">
+
+    <!--  One device in full. Hosted by the pushed page on narrow windows and the pane on wide ones.  -->
+    <Grid>
+        <ScrollView IsVisible="{Binding HasDevice}" Orientation="Vertical">
+            <VerticalStackLayout
+                x:Name="Body"
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceM}">
+
+                <!--  Who it is, whether it's known, and what you can do with it.  -->
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceL}">
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                HeightRequest="56"
+                                StrokeShape="RoundRectangle 28"
+                                StrokeThickness="0"
+                                VerticalOptions="Center"
+                                WidthRequest="56">
+                                <Label
+                                    FontSize="28"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{Binding Icon}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="2"
+                                    SemanticProperties.HeadingLevel="Level1"
+                                    Style="{StaticResource TextTitle}"
+                                    Text="{Binding Name}" />
+                                <Label Style="{StaticResource TextBody}" Text="{Binding Subtitle}" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                            <Label
+                                x:Name="KnownIcon"
+                                FontSize="18"
+                                Style="{StaticResource Icon}"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Column="1"
+                                Style="{StaticResource TextBody}"
+                                Text="{Binding KnownText}" />
+                        </Grid>
+
+                        <FlexLayout
+                            AlignItems="Center"
+                            Direction="Row"
+                            Wrap="Wrap">
+                            <Button
+                                x:Name="ToggleKnownButton"
+                                Margin="0,0,8,8"
+                                Command="{Binding ToggleKnownCommand}"
+                                IsVisible="{Binding CanToggleKnown}"
+                                Text="{Binding ToggleKnownText}" />
+                            <Button
+                                Margin="0,0,8,8"
+                                Command="{Binding PingCommand}"
+                                Style="{StaticResource QuietButton}"
+                                Text="{x:Static res:AppResources.ActionPing}" />
+                            <Button
+                                Margin="0,0,8,8"
+                                Command="{Binding OpenWebPageCommand}"
+                                IsVisible="{Binding HasWebPage}"
+                                Style="{StaticResource QuietButton}"
+                                Text="{x:Static res:AppResources.ActionOpenWebPage}" />
+                        </FlexLayout>
+
+                        <HorizontalStackLayout IsVisible="{Binding IsPinging}" Spacing="{StaticResource SpaceS}">
+                            <ActivityIndicator
+                                HeightRequest="16"
+                                IsRunning="{Binding IsPinging}"
+                                WidthRequest="16" />
+                            <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.ActionPing}" />
+                        </HorizontalStackLayout>
+                        <Label
+                            IsVisible="{Binding HasPingResult}"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding PingResult}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  What the user says about it.  -->
+                <Border Style="{StaticResource GroupCard}">
+                    <VerticalStackLayout>
+                        <Grid
+                            Padding="16,4"
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceM}">
+                            <Label
+                                FontSize="{StaticResource FontBody}"
+                                Text="{x:Static res:AppResources.DeviceNameLabel}"
+                                VerticalOptions="Center" />
+                            <Entry
+                                x:Name="NameEntry"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Completed="OnNameCommitted"
+                                HorizontalTextAlignment="End"
+                                Placeholder="{x:Static res:AppResources.DeviceNamePlaceholder}"
+                                ReturnType="Done"
+                                Text="{Binding EditableName}"
+                                Unfocused="OnNameCommitted" />
+                        </Grid>
+                        <BoxView Style="{StaticResource RowSeparator}" />
+                        <Grid
+                            Padding="16,4"
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceM}">
+                            <Label
+                                FontSize="{StaticResource FontBody}"
+                                Text="{x:Static res:AppResources.DeviceTypeLabel}"
+                                VerticalOptions="Center" />
+                            <Picker
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="End"
+                                ItemsSource="{Binding TypeOptions}"
+                                SelectedIndex="{Binding TypeIndex}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  A fresh lookup refreshes the cards in place; the cards stay readable meanwhile.  -->
+                <HorizontalStackLayout IsVisible="{Binding IsLookingUp}" Spacing="{StaticResource SpaceS}">
+                    <ActivityIndicator
+                        HeightRequest="16"
+                        IsRunning="{Binding IsLookingUp}"
+                        WidthRequest="16" />
+                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.DeviceLookingUp}" />
+                </HorizontalStackLayout>
+
+                <controls:DetailSectionsView CopyCommand="{Binding CopyCommand}" Sections="{Binding Sections}" />
+
+                <Button
+                    x:Name="ForgetButton"
+                    Margin="0,8,0,0"
+                    Command="{Binding ForgetCommand}"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource QuietButton}"
+                    Text="{Binding ForgetText}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Wide windows before anything is picked.  -->
+        <VerticalStackLayout
+            x:Name="EmptyState"
+            IsVisible="False"
+            Spacing="{StaticResource SpaceS}"
+            VerticalOptions="Center">
+            <Label
+                FontSize="40"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource Icon}"
+                Text="{x:Static util:MaterialIcon.DEVICES}" />
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource TextBody}"
+                Text="{x:Static res:AppResources.DevicesSelectPrompt}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>

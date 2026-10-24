@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PingMyNetwork.Views.DevicesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:DevicesViewModel"
+    ClassId="{x:Static util:Routes.DEVICES}">
+
+    <!--  List on the left; on wide windows, the selected device's details on the right.  -->
+    <Grid x:Name="Split" ColumnDefinitions="*">
+
+        <Grid
+            x:Name="ListColumn"
+            Padding="{StaticResource PagePaddingCompact}"
+            RowDefinitions="Auto,Auto,Auto,*"
+            RowSpacing="{StaticResource SpaceM}">
+
+            <!--  Title, summary and the scan button.  -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label
+                        SemanticProperties.HeadingLevel="Level1"
+                        Style="{StaticResource ScreenTitle}"
+                        Text="{x:Static res:AppResources.DevicesTitle}" />
+                    <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
+                        <ActivityIndicator
+                            HeightRequest="14"
+                            IsRunning="{Binding IsBusy}"
+                            IsVisible="{Binding IsBusy}"
+                            WidthRequest="14" />
+                        <Label
+                            SemanticProperties.Description="{Binding Summary}"
+                            Style="{StaticResource TextLabel}"
+                            Text="{Binding Summary}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding ScanOrStopCommand}"
+                    IsVisible="{Binding IsConnected}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{Binding ScanButtonText}"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <!--  Search and sort.  -->
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="{StaticResource SpaceS}"
+                IsVisible="{Binding IsConnected}">
+                <Border Padding="12,0" Style="{StaticResource GroupCard}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                        <Label
+                            FontSize="18"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.SEARCH}" />
+                        <Entry
+                            x:Name="SearchEntry"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            ClearButtonVisibility="WhileEditing"
+                            Placeholder="{x:Static res:AppResources.DevicesSearchPlaceholder}"
+                            Text="{Binding SearchText}" />
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    Padding="12,0,4,0"
+                    Style="{StaticResource GroupCard}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceXs}">
+                        <Label
+                            FontSize="18"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.SORT}" />
+                        <Picker
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            ItemsSource="{Binding SortOptions}"
+                            MinimumWidthRequest="110"
+                            SelectedIndex="{Binding SortIndex}"
+                            SemanticProperties.Description="{x:Static res:AppResources.SortLabel}"
+                            ToolTipProperties.Text="{x:Static res:AppResources.SortLabel}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--  Filters and bulk action.  -->
+            <Grid Grid.Row="2" IsVisible="{Binding IsConnected}">
+                <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                    <HorizontalStackLayout x:Name="Chips" Spacing="{StaticResource SpaceS}">
+                        <Button
+                            ClassId="All"
+                            Command="{Binding SetFilterCommand}"
+                            CommandParameter="All"
+                            Style="{StaticResource Chip}"
+                            Text="{Binding AllCaption}" />
+                        <Button
+                            ClassId="Online"
+                            Command="{Binding SetFilterCommand}"
+                            CommandParameter="Online"
+                            Style="{StaticResource Chip}"
+                            Text="{Binding OnlineCaption}" />
+                        <Button
+                            ClassId="Unknown"
+                            Command="{Binding SetFilterCommand}"
+                            CommandParameter="Unknown"
+                            Style="{StaticResource Chip}"
+                            Text="{Binding UnknownCaption}" />
+                        <Button
+                            ClassId="New"
+                            Command="{Binding SetFilterCommand}"
+                            CommandParameter="New"
+                            Style="{StaticResource Chip}"
+                            Text="{Binding NewCaption}" />
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </Grid>
+
+            <!--  The list, and the states that stand in for it.  -->
+            <Grid Grid.Row="3" RowDefinitions="Auto,*">
+
+                <!--
+                    One banner for everything unreviewed, instead of a tag on every row: when most
+                    rows are highlighted, the highlight stops meaning anything.
+                -->
+                <Border
+                    Margin="0,0,0,12"
+                    IsVisible="{Binding HasUnknown}"
+                    Style="{StaticResource NoticeBanner}">
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        ColumnSpacing="{StaticResource SpaceM}"
+                        RowDefinitions="Auto,Auto,Auto">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.HELP}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                        Dark={StaticResource StatusNoticeDark}}"
+                            VerticalOptions="Start" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextHeadline}"
+                            Text="{Binding ReviewTitle}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{x:Static res:AppResources.DevicesReviewBody}" />
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="-12,4,0,0">
+                            <Button
+                                Command="{Binding SetFilterCommand}"
+                                CommandParameter="Unknown"
+                                IsVisible="{Binding CanReview}"
+                                Style="{StaticResource QuietButton}"
+                                Text="{x:Static res:AppResources.ActionReview}" />
+                            <Button
+                                Command="{Binding MarkAllKnownCommand}"
+                                Style="{StaticResource QuietButton}"
+                                Text="{x:Static res:AppResources.DevicesMarkAllKnown}" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+                <CollectionView
+                    x:Name="DeviceList"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Devices}"
+                    SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <!--  Fixed height and a flat tree: rows stay cheap to recycle while scrolling.  -->
+                        <DataTemplate x:DataType="vm:DeviceItem">
+                            <Border
+                                x:Name="Row"
+                                Padding="12,0"
+                                HeightRequest="68"
+                                Opacity="{Binding RowOpacity}"
+                                SemanticProperties.Description="{Binding SemanticDescription}"
+                                Style="{StaticResource RowCard}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenCommand}" />
+                                </Border.GestureRecognizers>
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Command="{Binding OpenCommand}" Text="{x:Static res:AppResources.ActionOpenDetails}" />
+                                        <MenuFlyoutItem Command="{Binding ToggleKnownCommand}" Text="{Binding ToggleKnownText}" />
+                                        <MenuFlyoutItem Command="{Binding CopyAddressCommand}" Text="{x:Static res:AppResources.ActionCopyAddress}" />
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
+                                <Border.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsSelected}"
+                                        TargetType="Border"
+                                        Value="True">
+                                        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
+                                    <Grid
+                                        HeightRequest="40"
+                                        VerticalOptions="Center"
+                                        WidthRequest="40">
+                                    <Border
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                          Dark={StaticResource AccentTintDark}}"
+                                        StrokeShape="RoundRectangle 20"
+                                        StrokeThickness="0">
+                                        <Border.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsUnknown}"
+                                                TargetType="Border"
+                                                Value="True">
+                                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource NoticeTintLight}, Dark={StaticResource NoticeTintDark}}" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Center"
+                                            Style="{StaticResource Icon}"
+                                            Text="{Binding Icon}"
+                                            TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                        Dark={StaticResource AccentDark}}">
+                                            <Label.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsUnknown}"
+                                                    TargetType="Label"
+                                                    Value="True">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusNoticeLight}, Dark={StaticResource StatusNoticeDark}}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Border>
+                                    <!--  Attention dot: not yet reviewed. The row's screen-reader text says so too.  -->
+                                    <Border
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                                          Dark={StaticResource StatusNoticeDark}}"
+                                        HeightRequest="12"
+                                        HorizontalOptions="End"
+                                        IsVisible="{Binding IsUnknown}"
+                                        Stroke="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                                                 Dark={StaticResource SurfaceDark}}"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="2"
+                                        VerticalOptions="Start"
+                                        WidthRequest="12" />
+                                    </Grid>
+
+                                    <Grid
+                                        Grid.Column="1"
+                                        RowDefinitions="Auto,Auto"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="OpenSansSemibold"
+                                            FontSize="{StaticResource FontBody}"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Name}"
+                                            TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                        Dark={StaticResource OnSurfaceDark}}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            LineBreakMode="TailTruncation"
+                                            Style="{StaticResource TextLabel}"
+                                            Text="{Binding Subtitle}" />
+                                    </Grid>
+
+                                    <HorizontalStackLayout
+                                        Grid.Column="2"
+                                        Spacing="6"
+                                        VerticalOptions="Center">
+                                        <Border
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                              Dark={StaticResource AccentTintDark}}"
+                                            IsVisible="{Binding HasRoleTag}"
+                                            Style="{StaticResource Tag}">
+                                            <Label
+                                                Style="{StaticResource TagText}"
+                                                Text="{Binding RoleTag}"
+                                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                            Dark={StaticResource AccentDark}}" />
+                                        </Border>
+                                        <Border
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource NoticeTintLight},
+                                                                              Dark={StaticResource NoticeTintDark}}"
+                                            IsVisible="{Binding IsNew}"
+                                            Style="{StaticResource Tag}">
+                                            <Label
+                                                Style="{StaticResource TagText}"
+                                                Text="{x:Static res:AppResources.TagNew}"
+                                                TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                                            Dark={StaticResource StatusNoticeDark}}" />
+                                        </Border>
+                                        <Label
+                                            FontSize="18"
+                                            Style="{StaticResource Icon}"
+                                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
+                                            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                                                        Dark={StaticResource CaptionDark}}" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.Footer>
+                        <Label
+                            x:Name="LimitsNote"
+                            Margin="4,16,4,0"
+                            Style="{StaticResource TextLabel}"
+                            Text="{x:Static res:AppResources.DevicesLimitsNote}" />
+                    </CollectionView.Footer>
+                </CollectionView>
+
+                <!--  First results on their way: placeholder rows in the shape of real ones.  -->
+                <VerticalStackLayout
+                    x:Name="SkeletonRows"
+                    Grid.Row="1"
+                    IsVisible="{Binding ShowSkeleton}"
+                    Spacing="8"
+                    VerticalOptions="Start" />
+
+                <!--  Nothing scanned yet.  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    IsVisible="{Binding ShowEmpty}"
+                    MaximumWidthRequest="420"
+                    Spacing="{StaticResource SpaceM}"
+                    VerticalOptions="Center">
+                    <Label
+                        FontSize="44"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource Icon}"
+                        Text="{x:Static util:MaterialIcon.DEVICES}"
+                        TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                    Dark={StaticResource AccentDark}}" />
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource TextTitle}"
+                        Text="{x:Static res:AppResources.DevicesEmptyTitle}" />
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource TextBody}"
+                        Text="{x:Static res:AppResources.DevicesEmptyBody}" />
+                </VerticalStackLayout>
+
+                <!--  Devices exist, but none pass the filter.  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    IsVisible="{Binding ShowNoMatch}"
+                    Spacing="{StaticResource SpaceS}"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource TextHeadline}"
+                        Text="{x:Static res:AppResources.DevicesNoMatchTitle}" />
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource TextBody}"
+                        Text="{x:Static res:AppResources.DevicesNoMatchBody}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!--  No network at all.  -->
+            <VerticalStackLayout
+                x:Name="OfflineState"
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                IsVisible="{Binding IsOffline}"
+                MaximumWidthRequest="420"
+                Spacing="{StaticResource SpaceM}"
+                VerticalOptions="Center">
+                <Label
+                    FontSize="44"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource Icon}"
+                    Text="{x:Static util:MaterialIcon.WIFI_OFF}" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource TextTitle}"
+                    Text="{x:Static res:AppResources.DevicesOfflineTitle}" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource TextBody}"
+                    Text="{x:Static res:AppResources.DevicesOfflineBody}" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  Wide windows: details beside the list.  -->
+        <Grid
+            x:Name="Pane"
+            Grid.Column="1"
+            IsVisible="False">
+            <BoxView
+                HorizontalOptions="Start"
+                WidthRequest="1"
+                Color="{AppThemeBinding Light={StaticResource OutlineLight},
+                                        Dark={StaticResource OutlineDark}}" />
+            <controls:DeviceDetailsView
+                x:Name="PaneDetails"
+                Padding="8,24,8,0"
+                ShowEmptyState="True" />
+        </Grid>
+    </Grid>
+</ContentPage>
