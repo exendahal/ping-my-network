@@ -186,7 +186,7 @@ namespace PingMyNetwork.ViewModels
                     (AppResources.DetailsConnectionType, NetworkFormat.ConnectionType(snapshot.ConnectionType)),
                     (AppResources.DetailsSsid, isWifi ? snapshot.Ssid ?? AppResources.HiddenNetworkName : null),
                     (AppResources.DetailsBssid, snapshot.Bssid),
-                    (AppResources.DetailsSecurity, snapshot.Security),
+                    (AppResources.DetailsSecurity, WifiSecurity.Describe(snapshot.Security)),
                     (AppResources.DetailsSignal, isWifi ? signal : null),
                     (AppResources.DetailsBand, NetworkFormat.Band(snapshot.Band)),
                     (AppResources.DetailsChannel, snapshot.Channel?.ToString()),

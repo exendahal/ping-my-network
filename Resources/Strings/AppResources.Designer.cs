@@ -1411,6 +1411,24 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to “{0}” also accepts the original WPA or TKIP, so the weakest device sets the protection for everyone. Set your router to WPA2 (AES) only, or WPA2/WPA3..
+        /// </summary>
+        public static string InsightLegacyWpaBody {
+            get {
+                return ResourceManager.GetString("InsightLegacyWpaBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Older WPA is still allowed.
+        /// </summary>
+        public static string InsightLegacyWpaTitle {
+            get {
+                return ResourceManager.GetString("InsightLegacyWpaTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Another network is using the name “{0}” with weaker security. Don&apos;t connect to it unless you know whose it is..
         /// </summary>
         public static string InsightLookAlikeBody {
@@ -1519,6 +1537,24 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to “{0}” has Wi-Fi Protected Setup on. Its PIN can be guessed, which gets around your password. Turn WPS off in your router&apos;s settings..
+        /// </summary>
+        public static string InsightWpsBody {
+            get {
+                return ResourceManager.GetString("InsightWpsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WPS is turned on.
+        /// </summary>
+        public static string InsightWpsTitle {
+            get {
+                return ResourceManager.GetString("InsightWpsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checked at {0:t}.
         /// </summary>
         public static string LastCheckedFormat {
@@ -1609,6 +1645,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Enterprise.
+        /// </summary>
+        public static string SecurityEnterpriseFormat {
+            get {
+                return ResourceManager.GetString("SecurityEnterpriseFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string SecurityOpen {
@@ -1623,6 +1668,24 @@ namespace PingMyNetwork.Resources.Strings {
         public static string SecurityUnknown {
             get {
                 return ResourceManager.GetString("SecurityUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} · WPS on.
+        /// </summary>
+        public static string SecurityWithWpsFormat {
+            get {
+                return ResourceManager.GetString("SecurityWithWpsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WPA/WPA2 (mixed).
+        /// </summary>
+        public static string SecurityWpaMixed {
+            get {
+                return ResourceManager.GetString("SecurityWpaMixed", resourceCulture);
             }
         }
         

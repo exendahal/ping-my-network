@@ -64,6 +64,8 @@ namespace PingMyNetwork.Helper.Utilities
             SecurityLevel security = WifiSecurity.Classify(connection.Security);
 
             AddWeakSecurity(insights, ssid, security, connection.Security);
+            AddLegacyWpa(insights, ssid, connection.Security);
+            AddWps(insights, ssid, connection.Security);
             AddLookAlike(insights, ssid, security, networks);
             AddCrowded(insights, connection, networks, family);
             AddOtherBand(insights, connection, networks, family);
@@ -92,7 +94,43 @@ namespace PingMyNetwork.Helper.Utilities
                 StatusLevel.Bad,
                 MaterialIcon.LOCK,
                 AppResources.InsightWeakSecurityTitle,
-                NetworkFormat.Text(AppResources.InsightWeakSecurityBody, ssid, securityText)));
+                NetworkFormat.Text(AppResources.InsightWeakSecurityBody, ssid, WifiSecurity.Describe(securityText))));
+        }
+
+        /// <summary>
+        /// WPA2/WPA3 that still accepts the original WPA or TKIP, which weakens it for everyone.
+        /// </summary>
+        /// <param name="insights">The findings so far.</param>
+        /// <param name="ssid">The user's network.</param>
+        /// <param name="securityText">How the platform names its security.</param>
+        private static void AddLegacyWpa(List<WifiInsight> insights, string ssid, string? securityText)
+        {
+            if (WifiSecurity.AllowsLegacyWpa(securityText))
+            {
+                insights.Add(new WifiInsight(
+                    StatusLevel.Fair,
+                    MaterialIcon.LOCK,
+                    AppResources.InsightLegacyWpaTitle,
+                    NetworkFormat.Text(AppResources.InsightLegacyWpaBody, ssid)));
+            }
+        }
+
+        /// <summary>
+        /// Wi-Fi Protected Setup is on, whose PIN method gets around a strong password.
+        /// </summary>
+        /// <param name="insights">The findings so far.</param>
+        /// <param name="ssid">The user's network.</param>
+        /// <param name="securityText">How the platform names its security.</param>
+        private static void AddWps(List<WifiInsight> insights, string ssid, string? securityText)
+        {
+            if (WifiSecurity.HasWps(securityText))
+            {
+                insights.Add(new WifiInsight(
+                    StatusLevel.Fair,
+                    MaterialIcon.WARNING,
+                    AppResources.InsightWpsTitle,
+                    NetworkFormat.Text(AppResources.InsightWpsBody, ssid)));
+            }
         }
 
         /// <summary>

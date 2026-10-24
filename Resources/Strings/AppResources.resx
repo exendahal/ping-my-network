@@ -247,4 +247,11 @@
   <data name="TagConnected" xml:space="preserve"><value>Connected</value></data>
   <data name="SecurityOpen" xml:space="preserve"><value>Open</value></data>
   <data name="SecurityUnknown" xml:space="preserve"><value>Unknown security</value></data>
+  <data name="SecurityWpaMixed" xml:space="preserve"><value>WPA/WPA2 (mixed)</value></data>
+  <data name="SecurityWithWpsFormat" xml:space="preserve"><value>{0} · WPS on</value></data>
+  <data name="SecurityEnterpriseFormat" xml:space="preserve"><value>{0} Enterprise</value></data>
+  <data name="InsightLegacyWpaTitle" xml:space="preserve"><value>Older WPA is still allowed</value></data>
+  <data name="InsightLegacyWpaBody" xml:space="preserve"><value>“{0}” also accepts the original WPA or TKIP, so the weakest device sets the protection for everyone. Set your router to WPA2 (AES) only, or WPA2/WPA3.</value></data>
+  <data name="InsightWpsTitle" xml:space="preserve"><value>WPS is turned on</value></data>
+  <data name="InsightWpsBody" xml:space="preserve"><value>“{0}” has Wi-Fi Protected Setup on. Its PIN can be guessed, which gets around your password. Turn WPS off in your router's settings.</value></data>
 </root>

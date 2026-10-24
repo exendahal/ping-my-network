@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using PingMyNetwork.Helper.Enums;
+using PingMyNetwork.Resources.Strings;
 
 namespace PingMyNetwork.Helper.Utilities
 {
@@ -66,6 +67,71 @@ namespace PingMyNetwork.Helper.Utilities
         }
 
         /// <summary>
+        /// Whether a WPA2 or WPA3 network still lets old devices in with the original WPA or the
+        /// TKIP cipher ("mixed mode"), which weakens it for everyone. Android reports this as a
+        /// separate [WPA-...] entry or a TKIP cipher; Windows does not report it.
+        /// </summary>
+        /// <param name="security">The platform's security text.</param>
+        /// <returns>True for mixed mode.</returns>
+        public static bool AllowsLegacyWpa(string? security)
+        {
+            if ((security is null) || (Classify(security) < SecurityLevel.Wpa2))
+            {
+                return false;
+            }
+
+            string text = security.ToUpperInvariant();
+
+            return text.Contains("[WPA-", StringComparison.Ordinal) || text.Contains("TKIP", StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// Whether Wi-Fi Protected Setup is switched on. Its PIN method can be brute-forced, which
+        /// gets around even a strong password. Android reports it; Windows does not.
+        /// </summary>
+        /// <param name="security">The platform's security text.</param>
+        /// <returns>True when WPS is advertised.</returns>
+        public static bool HasWps(string? security)
+        {
+            return security?.Contains("[WPS]", StringComparison.OrdinalIgnoreCase) == true;
+        }
+
+        /// <summary>
+        /// The protection in words people recognise, e.g. "WPA2" or "WPA/WPA2 (mixed) · WPS on",
+        /// instead of the platform's raw text.
+        /// </summary>
+        /// <param name="security">The platform's security text.</param>
+        /// <returns>The description, or null when there is no text.</returns>
+        public static string? Describe(string? security)
+        {
+            if (string.IsNullOrWhiteSpace(security))
+            {
+                return null;
+            }
+
+            SecurityLevel level = Classify(security);
+            string text = security.ToUpperInvariant();
+            string name = level switch
+            {
+                SecurityLevel.Open => AppResources.SecurityOpen,
+                SecurityLevel.Wep => "WEP",
+                SecurityLevel.Wpa => "WPA",
+                SecurityLevel.Wpa2 when AllowsLegacyWpa(security) => AppResources.SecurityWpaMixed,
+                SecurityLevel.Wpa2 => "WPA2",
+                SecurityLevel.Wpa3 when text.Contains("PSK", StringComparison.Ordinal) => "WPA2/WPA3",
+                SecurityLevel.Wpa3 => "WPA3",
+                _ => security,
+            };
+
+            if (text.Contains("EAP", StringComparison.Ordinal) || text.Contains("ENTERPRISE", StringComparison.Ordinal))
+            {
+                name = NetworkFormat.Text(AppResources.SecurityEnterpriseFormat, name);
+            }
+
+            return HasWps(security) ? NetworkFormat.Text(AppResources.SecurityWithWpsFormat, name) : name;
+        }
+
+        /// <summary>
         /// Whether a level is weak enough to warn about: open, WEP or the original WPA.
         /// </summary>
         /// <param name="level">The level.</param>
@@ -90,6 +156,14 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(Classify("[WPA-PSK-TKIP][ESS]") == SecurityLevel.Wpa);
             Debug.Assert(Classify("[ESS]") == SecurityLevel.Open);
             Debug.Assert(Classify(null) == SecurityLevel.Unknown);
+
+            const string MIXED = "[WPA-PSK-TKIP+CCMP-128][WPA2-PSK-TKIP+CCMP-128][RSN-PSK-TKIP+CCMP-128][ESS][WPS]";
+            Debug.Assert(AllowsLegacyWpa(MIXED));
+            Debug.Assert(HasWps(MIXED));
+            Debug.Assert(!AllowsLegacyWpa("[WPA2-PSK-CCMP][RSN-PSK-CCMP][ESS]"));
+            Debug.Assert(!AllowsLegacyWpa("WPA2-PSK"));
+            Debug.Assert(Describe("WPA2-PSK") == "WPA2");
+            Debug.Assert(Describe("[RSN-PSK+SAE-CCMP][ESS]") == "WPA2/WPA3");
         }
 
         #endregion
