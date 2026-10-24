@@ -56,198 +56,198 @@
                 Grid.Row="1"
                 Spacing="{StaticResource SpaceL}">
 
-            <!--  Hero: signal gauge, network name, and whether the internet works.  -->
-            <Border x:Name="HeroCard" Style="{StaticResource Card}">
-                <Grid>
-                    <Grid
-                        x:Name="HeroContent"
-                        ColumnDefinitions="Auto,*"
-                        ColumnSpacing="{StaticResource SpaceXl}">
-
-                        <!--  Gauge, or the transport icon when there is no signal reading.  -->
+                <!--  Hero: signal gauge, network name, and whether the internet works.  -->
+                <Border x:Name="HeroCard" Style="{StaticResource Card}">
+                    <Grid>
                         <Grid
-                            Grid.Column="0"
-                            HeightRequest="148"
-                            VerticalOptions="Center"
-                            WidthRequest="148">
-                            <controls:RingGaugeView
-                                Fraction="{Binding SignalFraction}"
-                                IsVisible="{Binding HasSignal}"
-                                Level="{Binding SignalLevel}"
-                                SemanticProperties.Description="{Binding SignalCaption}" />
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                InputTransparent="True"
-                                IsVisible="{Binding HasSignal}"
-                                VerticalOptions="Center">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource FontDisplay}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding SignalText}"
-                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
-                                                                Dark={StaticResource OnSurfaceDark}}" />
-                                <Label
-                                    HorizontalTextAlignment="Center"
-                                    Style="{StaticResource TextLabel}"
-                                    Text="{x:Static res:AppResources.SignalCaption}" />
-                            </VerticalStackLayout>
-                            <Border
-                                x:Name="TransportBadge"
-                                HeightRequest="104"
-                                IsVisible="{Binding ShowTransportIcon}"
-                                HorizontalOptions="Center"
-                                StrokeShape="RoundRectangle 52"
-                                StrokeThickness="0"
+                            x:Name="HeroContent"
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceXl}">
+
+                            <!--  Gauge, or the transport icon when there is no signal reading.  -->
+                            <Grid
+                                Grid.Column="0"
+                                HeightRequest="148"
                                 VerticalOptions="Center"
-                                WidthRequest="104">
+                                WidthRequest="148">
+                                <controls:RingGaugeView
+                                    Fraction="{Binding SignalFraction}"
+                                    IsVisible="{Binding HasSignal}"
+                                    Level="{Binding SignalLevel}"
+                                    SemanticProperties.Description="{Binding SignalCaption}" />
+                                <VerticalStackLayout
+                                    HorizontalOptions="Center"
+                                    InputTransparent="True"
+                                    IsVisible="{Binding HasSignal}"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="{StaticResource FontDisplay}"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding SignalText}"
+                                        TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                    Dark={StaticResource OnSurfaceDark}}" />
+                                    <Label
+                                        HorizontalTextAlignment="Center"
+                                        Style="{StaticResource TextLabel}"
+                                        Text="{x:Static res:AppResources.SignalCaption}" />
+                                </VerticalStackLayout>
+                                <Border
+                                    x:Name="TransportBadge"
+                                    HeightRequest="104"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding ShowTransportIcon}"
+                                    StrokeShape="RoundRectangle 52"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center"
+                                    WidthRequest="104">
+                                    <Label
+                                        x:Name="TransportIcon"
+                                        FontSize="48"
+                                        HorizontalTextAlignment="Center"
+                                        Style="{StaticResource Icon}"
+                                        Text="{Binding ConnectionIcon}" />
+                                </Border>
+                            </Grid>
+
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="{StaticResource SpaceS}"
+                                VerticalOptions="Center">
+
                                 <Label
-                                    x:Name="TransportIcon"
-                                    FontSize="48"
-                                    HorizontalTextAlignment="Center"
-                                    Style="{StaticResource Icon}"
-                                    Text="{Binding ConnectionIcon}" />
-                            </Border>
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="2"
+                                    Style="{StaticResource TextTitle}"
+                                    Text="{Binding NetworkName}" />
+
+                                <!--  Status chip: icon and words, never colour alone.  -->
+                                <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
+                                    <Border
+                                        x:Name="StatusChip"
+                                        Padding="10,4"
+                                        StrokeShape="RoundRectangle 12"
+                                        StrokeThickness="1">
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                x:Name="StatusIconLabel"
+                                                FontSize="16"
+                                                Style="{StaticResource Icon}"
+                                                Text="{Binding StatusIcon}" />
+                                            <Label
+                                                x:Name="StatusTitleLabel"
+                                                FontFamily="OpenSansSemibold"
+                                                FontSize="{StaticResource FontLabel}"
+                                                Text="{Binding StatusTitle}"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                    <Border
+                                        Padding="10,4"
+                                        IsVisible="{Binding IsMetered}"
+                                        Stroke="{AppThemeBinding Light={StaticResource OutlineLight},
+                                                                 Dark={StaticResource OutlineDark}}"
+                                        StrokeShape="RoundRectangle 12"
+                                        StrokeThickness="1">
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                FontSize="16"
+                                                Style="{StaticResource Icon}"
+                                                Text="{x:Static util:MaterialIcon.METERED}" />
+                                            <Label
+                                                Style="{StaticResource TextLabel}"
+                                                Text="{x:Static res:AppResources.MeteredBadge}"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </HorizontalStackLayout>
+
+                                <Label
+                                    IsVisible="{Binding HasSignal}"
+                                    Style="{StaticResource TextBody}"
+                                    Text="{Binding SignalCaption}" />
+
+                                <Label
+                                    IsVisible="{Binding HasStatusDetail}"
+                                    Style="{StaticResource TextBody}"
+                                    Text="{Binding StatusDetail}" />
+
+                                <Button
+                                    Command="{Binding PrimaryActionCommand}"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding HasPrimaryAction}"
+                                    Style="{StaticResource PrimaryButton}"
+                                    Text="{Binding PrimaryActionText}" />
+
+                                <!--  Windows withholds the Wi-Fi name from apps without location access.  -->
+                                <VerticalStackLayout IsVisible="{Binding IsNameHidden}" Spacing="{StaticResource SpaceXs}">
+                                    <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.HiddenNetworkNameDetail}" />
+                                    <Button
+                                        Command="{Binding RevealNameCommand}"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding CanRevealName}"
+                                        Style="{StaticResource QuietButton}"
+                                        Text="{x:Static res:AppResources.ActionAllowLocation}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
                         </Grid>
 
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="{StaticResource SpaceS}"
-                            VerticalOptions="Center">
+                        <controls:SkeletonView
+                            x:Name="HeroSkeleton"
+                            HeightRequest="148"
+                            IsVisible="{Binding IsLoading}" />
+                    </Grid>
+                </Border>
 
-                            <Label
-                                LineBreakMode="TailTruncation"
-                                MaxLines="2"
-                                Style="{StaticResource TextTitle}"
-                                Text="{Binding NetworkName}" />
-
-                            <!--  Status chip: icon and words, never colour alone.  -->
-                            <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
-                                <Border
-                                    x:Name="StatusChip"
-                                    Padding="10,4"
-                                    StrokeShape="RoundRectangle 12"
-                                    StrokeThickness="1">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label
-                                            x:Name="StatusIconLabel"
-                                            FontSize="16"
-                                            Style="{StaticResource Icon}"
-                                            Text="{Binding StatusIcon}" />
-                                        <Label
-                                            x:Name="StatusTitleLabel"
-                                            FontFamily="OpenSansSemibold"
-                                            FontSize="{StaticResource FontLabel}"
-                                            Text="{Binding StatusTitle}"
-                                            VerticalTextAlignment="Center" />
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <Border
-                                    Padding="10,4"
-                                    IsVisible="{Binding IsMetered}"
-                                    StrokeShape="RoundRectangle 12"
-                                    StrokeThickness="1"
-                                    Stroke="{AppThemeBinding Light={StaticResource OutlineLight},
-                                                             Dark={StaticResource OutlineDark}}">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label
-                                            FontSize="16"
-                                            Style="{StaticResource Icon}"
-                                            Text="{x:Static util:MaterialIcon.METERED}" />
-                                        <Label
-                                            Style="{StaticResource TextLabel}"
-                                            Text="{x:Static res:AppResources.MeteredBadge}"
-                                            VerticalTextAlignment="Center" />
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </HorizontalStackLayout>
-
-                            <Label
-                                IsVisible="{Binding HasSignal}"
-                                Style="{StaticResource TextBody}"
-                                Text="{Binding SignalCaption}" />
-
-                            <Label
-                                IsVisible="{Binding HasStatusDetail}"
-                                Style="{StaticResource TextBody}"
-                                Text="{Binding StatusDetail}" />
-
-                            <Button
-                                Command="{Binding PrimaryActionCommand}"
-                                HorizontalOptions="Start"
-                                IsVisible="{Binding HasPrimaryAction}"
-                                Style="{StaticResource PrimaryButton}"
-                                Text="{Binding PrimaryActionText}" />
-
-                            <!--  Windows withholds the Wi-Fi name from apps without location access.  -->
-                            <VerticalStackLayout IsVisible="{Binding IsNameHidden}" Spacing="{StaticResource SpaceXs}">
-                                <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.HiddenNetworkNameDetail}" />
-                                <Button
-                                    Command="{Binding RevealNameCommand}"
-                                    HorizontalOptions="Start"
-                                    IsVisible="{Binding CanRevealName}"
-                                    Style="{StaticResource QuietButton}"
-                                    Text="{x:Static res:AppResources.ActionAllowLocation}" />
-                            </VerticalStackLayout>
+                <!--  What is on the network, and whether anything needs a look. Opens Devices.  -->
+                <Border
+                    IsVisible="{Binding IsConnected}"
+                    SemanticProperties.Description="{Binding DevicesTitle}"
+                    SemanticProperties.Hint="{x:Static res:AppResources.ActionOpenDevices}"
+                    Style="{StaticResource TappableCard}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenDevicesCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceL}">
+                        <Grid HeightRequest="48" WidthRequest="48">
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                  Dark={StaticResource AccentTintDark}}"
+                                StrokeShape="RoundRectangle 24"
+                                StrokeThickness="0">
+                                <Label
+                                    FontSize="24"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.DEVICES}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}" />
+                            </Border>
+                            <!--  Attention dot: some devices still need the user to review them.  -->
+                            <Border
+                                BackgroundColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                                  Dark={StaticResource StatusNoticeDark}}"
+                                HeightRequest="14"
+                                HorizontalOptions="End"
+                                IsVisible="{Binding HasDevicesToReview}"
+                                Stroke="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                                         Dark={StaticResource SurfaceDark}}"
+                                StrokeShape="RoundRectangle 7"
+                                StrokeThickness="2"
+                                VerticalOptions="Start"
+                                WidthRequest="14" />
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Style="{StaticResource TextHeadline}" Text="{Binding DevicesTitle}" />
+                            <Label Style="{StaticResource TextBody}" Text="{Binding DevicesSubtitle}" />
                         </VerticalStackLayout>
+                        <Label
+                            Grid.Column="2"
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
                     </Grid>
-
-                    <controls:SkeletonView
-                        x:Name="HeroSkeleton"
-                        HeightRequest="148"
-                        IsVisible="{Binding IsLoading}" />
-                </Grid>
-            </Border>
-
-            <!--  What is on the network, and whether anything needs a look. Opens Devices.  -->
-            <Border
-                IsVisible="{Binding IsConnected}"
-                SemanticProperties.Description="{Binding DevicesTitle}"
-                SemanticProperties.Hint="{x:Static res:AppResources.ActionOpenDevices}"
-                Style="{StaticResource TappableCard}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenDevicesCommand}" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceL}">
-                    <Grid HeightRequest="48" WidthRequest="48">
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
-                            StrokeShape="RoundRectangle 24"
-                            StrokeThickness="0">
-                            <Label
-                                FontSize="24"
-                                HorizontalTextAlignment="Center"
-                                Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.DEVICES}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
-                        </Border>
-                        <!--  Attention dot: some devices still need the user to review them.  -->
-                        <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
-                                                              Dark={StaticResource StatusNoticeDark}}"
-                            HeightRequest="14"
-                            HorizontalOptions="End"
-                            IsVisible="{Binding HasDevicesToReview}"
-                            Stroke="{AppThemeBinding Light={StaticResource SurfaceLight},
-                                                     Dark={StaticResource SurfaceDark}}"
-                            StrokeShape="RoundRectangle 7"
-                            StrokeThickness="2"
-                            VerticalOptions="Start"
-                            WidthRequest="14" />
-                    </Grid>
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Style="{StaticResource TextHeadline}" Text="{Binding DevicesTitle}" />
-                        <Label Style="{StaticResource TextBody}" Text="{Binding DevicesSubtitle}" />
-                    </VerticalStackLayout>
-                    <Label
-                        Grid.Column="2"
-                        FontSize="20"
-                        Style="{StaticResource Icon}"
-                        Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
-                </Grid>
-            </Border>
+                </Border>
             </VerticalStackLayout>
 
             <VerticalStackLayout
@@ -255,49 +255,49 @@
                 Grid.Row="2"
                 Spacing="{StaticResource SpaceL}">
 
-            <!--  Tiles. Code-behind places the visible ones into as many columns as the width allows.  -->
-            <Grid
-                x:Name="Tiles"
-                ColumnSpacing="{StaticResource SpaceM}"
-                IsVisible="{Binding IsConnected}"
-                RowSpacing="{StaticResource SpaceM}">
-                <controls:StatTileView
-                    Caption="{x:Static res:AppResources.TileGatewayLatency}"
-                    Icon="{x:Static util:MaterialIcon.TIMER}"
-                    IsLoading="{Binding IsLatencyLoading}"
-                    Value="{Binding LatencyText}" />
-                <controls:StatTileView
-                    Caption="{x:Static res:AppResources.TileBandChannel}"
-                    Icon="{x:Static util:MaterialIcon.WIFI}"
-                    IsVisible="{Binding IsWifi}"
-                    Value="{Binding BandChannelText}" />
-                <controls:StatTileView
-                    Caption="{x:Static res:AppResources.TileWifiStandard}"
-                    Icon="{x:Static util:MaterialIcon.ROUTER}"
-                    IsVisible="{Binding IsWifi}"
-                    Value="{Binding StandardText}" />
-                <controls:StatTileView
-                    Caption="{x:Static res:AppResources.TileLinkSpeed}"
-                    Icon="{x:Static util:MaterialIcon.SPEED}"
-                    IsVisible="{Binding HasLinkSpeed}"
-                    Value="{Binding LinkSpeedText}" />
-                <controls:StatTileView
-                    Caption="{x:Static res:AppResources.TileIpAddress}"
-                    Icon="{x:Static util:MaterialIcon.LAN}"
-                    Value="{Binding IpText}" />
-            </Grid>
+                <!--  Tiles. Code-behind places the visible ones into as many columns as the width allows.  -->
+                <Grid
+                    x:Name="Tiles"
+                    ColumnSpacing="{StaticResource SpaceM}"
+                    IsVisible="{Binding IsConnected}"
+                    RowSpacing="{StaticResource SpaceM}">
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileGatewayLatency}"
+                        Icon="{x:Static util:MaterialIcon.TIMER}"
+                        IsLoading="{Binding IsLatencyLoading}"
+                        Value="{Binding LatencyText}" />
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileBandChannel}"
+                        Icon="{x:Static util:MaterialIcon.WIFI}"
+                        IsVisible="{Binding IsWifi}"
+                        Value="{Binding BandChannelText}" />
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileWifiStandard}"
+                        Icon="{x:Static util:MaterialIcon.ROUTER}"
+                        IsVisible="{Binding IsWifi}"
+                        Value="{Binding StandardText}" />
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileLinkSpeed}"
+                        Icon="{x:Static util:MaterialIcon.SPEED}"
+                        IsVisible="{Binding HasLinkSpeed}"
+                        Value="{Binding LinkSpeedText}" />
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileIpAddress}"
+                        Icon="{x:Static util:MaterialIcon.LAN}"
+                        Value="{Binding IpText}" />
+                </Grid>
 
-            <!--  Way into everything else about the connection.  -->
-            <Border
-                x:Name="DetailsCard"
-                IsVisible="{Binding IsConnected}"
-                Style="{StaticResource GroupCard}">
-                <controls:SettingsRow
-                    Icon="{x:Static util:MaterialIcon.INFO}"
-                    ShowChevron="True"
-                    Tapped="OnDetailsTapped"
-                    Title="{x:Static res:AppResources.ActionNetworkDetails}" />
-            </Border>
+                <!--  Way into everything else about the connection.  -->
+                <Border
+                    x:Name="DetailsCard"
+                    IsVisible="{Binding IsConnected}"
+                    Style="{StaticResource GroupCard}">
+                    <controls:SettingsRow
+                        Title="{x:Static res:AppResources.ActionNetworkDetails}"
+                        Icon="{x:Static util:MaterialIcon.INFO}"
+                        ShowChevron="True"
+                        Tapped="OnDetailsTapped" />
+                </Border>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>
