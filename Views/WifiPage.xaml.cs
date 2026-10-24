@@ -51,11 +51,11 @@ namespace PingMyNetwork.Views
 
             ChannelChart.Drawable = _Chart;
             WalkChart.Drawable = _History;
-            InsightsSkeleton.Blocks = SkeletonView.BLOCK;
+            InsightsSkeletonFirst.Blocks = SkeletonView.INSIGHT;
+            InsightsSkeletonSecond.Blocks = SkeletonView.INSIGHT;
 
             AppShell.ApplyTransition(this);
 
-            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             SizeChanged += (_, _) => ApplyLayout();
 
             if (Application.Current is not null)
@@ -77,6 +77,12 @@ namespace PingMyNetwork.Views
         {
             base.OnAppearing();
 
+            // Subscribed per appearance, not in the constructor: the view model outlives the page,
+            // and a second page instance must not leave a stale handler behind.
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            UpdateChart();
+
             await _ViewModel.AppearAsync();
         }
 
@@ -88,6 +94,7 @@ namespace PingMyNetwork.Views
             base.OnDisappearing();
 
             this.AbortAnimation(CHART_ANIMATION);
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             await _ViewModel.DisappearAsync();
         }
 
@@ -189,7 +196,7 @@ namespace PingMyNetwork.Views
             // The lists scroll to the bottom edge; their last item leaves room for the tab bar.
             PageGrid.Padding = new Thickness(padding.Left, padding.Top, padding.Right, 0);
             double clearance = LayoutWidthUtility.From(windowWidth) == LayoutWidth.Compact ? TAB_BAR_CLEARANCE : padding.Bottom;
-            LeftClearance.HeightRequest = clearance;
+            LeftStack.Padding = new Thickness(0, 0, 0, clearance);
             ListClearance.HeightRequest = clearance;
 
             if (isWide == _IsWide)

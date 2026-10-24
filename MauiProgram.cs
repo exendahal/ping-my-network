@@ -126,6 +126,13 @@ namespace PingMyNetwork
                 handler.PlatformView.BackgroundTintList =
                     Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
             });
+
+            // An Android picker is a text field too, with the same underline.
+            Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("Flat", static (handler, _) =>
+            {
+                handler.PlatformView.BackgroundTintList =
+                    Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+            });
 #endif
         }
 

@@ -45,7 +45,7 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     FontAttributes="Bold"
-                    FontSize="{StaticResource FontTitle}"
+                    FontSize="{StaticResource FontTileValue}"
                     LineBreakMode="TailTruncation"
                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
                                                 Dark={StaticResource OnSurfaceDark}}" />

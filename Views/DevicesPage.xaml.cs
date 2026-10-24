@@ -34,6 +34,7 @@ namespace PingMyNetwork.Views
 
         private bool _IsWide;
         private bool _IsShowing;
+        private bool _IsOpening;
 
         #endregion
 
@@ -60,8 +61,6 @@ namespace PingMyNetwork.Views
 
             AppShell.ApplyTransition(this);
 
-            _ViewModel.DeviceOpened += OnDeviceOpened;
-            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             _PaneViewModel.Forgotten += (_, _) => _ViewModel.SelectedDevice = null;
             SizeChanged += (_, _) => ApplyLayout();
 
@@ -81,6 +80,14 @@ namespace PingMyNetwork.Views
 
             _IsShowing = true;
 
+            // Subscribed per appearance, not in the constructor: the view model outlives the page,
+            // and a second page instance must not leave a handler that opens the device again.
+            _ViewModel.DeviceOpened -= OnDeviceOpened;
+            _ViewModel.DeviceOpened += OnDeviceOpened;
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            PaintChips();
+
             if (_IsWide)
             {
                 _PaneViewModel.Attach();
@@ -97,6 +104,8 @@ namespace PingMyNetwork.Views
             base.OnDisappearing();
 
             _IsShowing = false;
+            _ViewModel.DeviceOpened -= OnDeviceOpened;
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _PaneViewModel.Detach();
         }
 
@@ -113,7 +122,22 @@ namespace PingMyNetwork.Views
                 return;
             }
 
-            await Shell.Current.GoToAsync($"{Routes.DEVICE_DETAILS}?id={item.Id}");
+            // Taps arriving while the details page is still opening would each push another copy.
+            if (_IsOpening)
+            {
+                return;
+            }
+
+            _IsOpening = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync($"{Routes.DEVICE_DETAILS}?id={item.Id}");
+            }
+            finally
+            {
+                _IsOpening = false;
+            }
         }
 
         /// <summary>
@@ -158,7 +182,8 @@ namespace PingMyNetwork.Views
 
             // The list scrolls to the bottom edge; its footer leaves room for the tab bar instead.
             ListColumn.Padding = new Thickness(padding.Left, padding.Top, padding.Right, 0);
-            LimitsNote.Margin = new Thickness(4, 16, 4, isWide ? padding.Bottom : TAB_BAR_CLEARANCE);
+            // The last row already carries an 8-unit bottom margin.
+            LimitsNote.Margin = new Thickness(4, 8, 4, isWide ? padding.Bottom : TAB_BAR_CLEARANCE);
 
             if (isWide == _IsWide)
             {

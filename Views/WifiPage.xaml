@@ -120,10 +120,15 @@
                             Style="{StaticResource TextHeadline}"
                             Text="{x:Static res:AppResources.WifiSectionInsights}" />
 
-                        <controls:SkeletonView
-                            x:Name="InsightsSkeleton"
-                            HeightRequest="96"
-                            IsVisible="{Binding IsWaitingForScan}" />
+                        <!--  First scan on its way: two placeholder cards in the shape of real insights.  -->
+                        <VerticalStackLayout IsVisible="{Binding IsWaitingForScan}" Spacing="{StaticResource SpaceM}">
+                            <Border Style="{StaticResource Card}">
+                                <controls:SkeletonView x:Name="InsightsSkeletonFirst" HeightRequest="72" />
+                            </Border>
+                            <Border Style="{StaticResource Card}">
+                                <controls:SkeletonView x:Name="InsightsSkeletonSecond" HeightRequest="72" />
+                            </Border>
+                        </VerticalStackLayout>
 
                         <Border IsVisible="{Binding ShowAllGood}" Style="{StaticResource Card}">
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
@@ -162,13 +167,22 @@
                                                 VerticalOptions="Start"
                                                 WidthRequest="40">
                                                 <Border.Triggers>
-                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Fair}">
+                                                    <DataTrigger
+                                                        Binding="{Binding Level}"
+                                                        TargetType="Border"
+                                                        Value="{x:Static enums:StatusLevel.Fair}">
                                                         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FairTintLight}, Dark={StaticResource FairTintDark}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Poor}">
+                                                    <DataTrigger
+                                                        Binding="{Binding Level}"
+                                                        TargetType="Border"
+                                                        Value="{x:Static enums:StatusLevel.Poor}">
                                                         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PoorTintLight}, Dark={StaticResource PoorTintDark}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Level}" TargetType="Border" Value="{x:Static enums:StatusLevel.Bad}">
+                                                    <DataTrigger
+                                                        Binding="{Binding Level}"
+                                                        TargetType="Border"
+                                                        Value="{x:Static enums:StatusLevel.Bad}">
                                                         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BadTintLight}, Dark={StaticResource BadTintDark}}" />
                                                     </DataTrigger>
                                                 </Border.Triggers>
@@ -178,13 +192,22 @@
                                                     Style="{StaticResource Icon}"
                                                     Text="{Binding Icon}">
                                                     <Label.Triggers>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Fair}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Label"
+                                                            Value="{x:Static enums:StatusLevel.Fair}">
                                                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Poor}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Label"
+                                                            Value="{x:Static enums:StatusLevel.Poor}">
                                                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Bad}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Label"
+                                                            Value="{x:Static enums:StatusLevel.Bad}">
                                                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
                                                         </DataTrigger>
                                                     </Label.Triggers>
@@ -292,13 +315,22 @@
                                                     VerticalOptions="Center"
                                                     WidthRequest="10">
                                                     <Ellipse.Triggers>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Fair}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Ellipse"
+                                                            Value="{x:Static enums:StatusLevel.Fair}">
                                                             <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Poor}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Ellipse"
+                                                            Value="{x:Static enums:StatusLevel.Poor}">
                                                             <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Level}" TargetType="Ellipse" Value="{x:Static enums:StatusLevel.Bad}">
+                                                        <DataTrigger
+                                                            Binding="{Binding Level}"
+                                                            TargetType="Ellipse"
+                                                            Value="{x:Static enums:StatusLevel.Bad}">
                                                             <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
                                                         </DataTrigger>
                                                     </Ellipse.Triggers>
@@ -329,7 +361,6 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <BoxView x:Name="LeftClearance" HeightRequest="0" Color="Transparent" />
                 </VerticalStackLayout>
             </ScrollView>
 
@@ -357,10 +388,16 @@
                                             CommandParameter="{Binding .}"
                                             Text="{Binding Name}">
                                             <Button.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected}" TargetType="Button" Value="True">
+                                                <DataTrigger
+                                                    Binding="{Binding IsSelected}"
+                                                    TargetType="Button"
+                                                    Value="True">
                                                     <Setter Property="Style" Value="{StaticResource ChipSelected}" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsSelected}" TargetType="Button" Value="False">
+                                                <DataTrigger
+                                                    Binding="{Binding IsSelected}"
+                                                    TargetType="Button"
+                                                    Value="False">
                                                     <Setter Property="Style" Value="{StaticResource Chip}" />
                                                 </DataTrigger>
                                             </Button.Triggers>
@@ -418,12 +455,11 @@
                         Grid.Row="1"
                         ItemsSource="{Binding Networks}"
                         SelectionMode="None">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
-                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="vm:WifiNetworkItem">
+                                <!--  Row gap as a bottom margin; ItemSpacing stutters on Android.  -->
                                 <Border
+                                    Margin="0,0,0,8"
                                     Padding="12,0"
                                     HeightRequest="64"
                                     SemanticProperties.Description="{Binding SemanticDescription}"
@@ -436,13 +472,22 @@
                                             TextColor="{AppThemeBinding Light={StaticResource StatusGoodLight},
                                                                         Dark={StaticResource StatusGoodDark}}">
                                             <Label.Triggers>
-                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Fair}">
+                                                <DataTrigger
+                                                    Binding="{Binding Level}"
+                                                    TargetType="Label"
+                                                    Value="{x:Static enums:StatusLevel.Fair}">
                                                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Poor}">
+                                                <DataTrigger
+                                                    Binding="{Binding Level}"
+                                                    TargetType="Label"
+                                                    Value="{x:Static enums:StatusLevel.Poor}">
                                                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusPoorLight}, Dark={StaticResource StatusPoorDark}}" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Level}" TargetType="Label" Value="{x:Static enums:StatusLevel.Bad}">
+                                                <DataTrigger
+                                                    Binding="{Binding Level}"
+                                                    TargetType="Label"
+                                                    Value="{x:Static enums:StatusLevel.Bad}">
                                                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusBadLight}, Dark={StaticResource StatusBadDark}}" />
                                                 </DataTrigger>
                                             </Label.Triggers>
@@ -497,7 +542,8 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.Footer>
-                            <BoxView x:Name="ListClearance" HeightRequest="0" Color="Transparent" />
+                            <!--  Empty spacer; a BoxView here is drawn grey on Android.  -->
+                            <ContentView x:Name="ListClearance" HeightRequest="0" />
                         </CollectionView.Footer>
                     </CollectionView>
                 </Grid>

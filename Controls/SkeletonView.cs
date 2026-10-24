@@ -61,6 +61,17 @@ namespace PingMyNetwork.Controls
         ];
 
         /// <summary>
+        /// An insight card: icon circle, title, and two lines of explanation.
+        /// </summary>
+        public static readonly IReadOnlyList<RectF> INSIGHT =
+        [
+            new RectF(0f, 0.04f, 0.11f, 0.36f),
+            new RectF(0.16f, 0.06f, 0.52f, 0.18f),
+            new RectF(0.16f, 0.40f, 0.82f, 0.14f),
+            new RectF(0.16f, 0.66f, 0.60f, 0.14f),
+        ];
+
+        /// <summary>
         /// A single block filling the canvas, for a chart area.
         /// </summary>
         public static readonly IReadOnlyList<RectF> BLOCK =
@@ -87,7 +98,23 @@ namespace PingMyNetwork.Controls
             Content = _Canvas;
             InputTransparent = true;
 
+            ApplyTheme();
+
             PropertyChanged += OnSelfPropertyChanged;
+
+            // A skeleton visible from the start never sees IsVisible change, so it starts when it
+            // reaches the screen; one left on a page the user moved away from stops there too.
+            Loaded += (_, _) => Sync();
+            Unloaded += (_, _) => Stop();
+
+            if (Application.Current is not null)
+            {
+                Application.Current.RequestedThemeChanged += (_, _) =>
+                {
+                    ApplyTheme();
+                    _Canvas.Invalidate();
+                };
+            }
         }
 
         #endregion
@@ -119,12 +146,18 @@ namespace PingMyNetwork.Controls
         /// <param name="e">The property that changed.</param>
         private void OnSelfPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(IsVisible))
+            if (e.PropertyName == nameof(IsVisible))
             {
-                return;
+                Sync();
             }
+        }
 
-            if (IsVisible)
+        /// <summary>
+        /// Runs the sweep exactly while the skeleton is on screen and visible.
+        /// </summary>
+        private void Sync()
+        {
+            if (IsVisible && IsLoaded)
             {
                 Start();
             }

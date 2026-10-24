@@ -39,7 +39,6 @@ namespace PingMyNetwork.Views
 
             AppShell.ApplyTransition(this);
 
-            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
             SizeChanged += (_, _) => ApplyLayout();
 
             // A tile appearing or disappearing (Wi-Fi only tiles, unknown link speed) re-flows the rest.
@@ -67,7 +66,22 @@ namespace PingMyNetwork.Views
         {
             base.OnAppearing();
 
+            // Subscribed per appearance: the view model outlives the page.
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            _ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            PaintAll();
+
             _ViewModel.Start();
+        }
+
+        /// <summary>
+        /// Stops following the view model while hidden.
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
         }
 
         /// <summary>
@@ -204,8 +218,13 @@ namespace PingMyNetwork.Views
 
             for (var i = 0; i < visible.Count; i++)
             {
+                bool isAloneOnLastRow = (i == visible.Count - 1) && (i % _TileColumns == 0);
+
                 Grid.SetColumn(visible[i], i % _TileColumns);
                 Grid.SetRow(visible[i], i / _TileColumns);
+
+                // A tile alone on the last row spans it, which also gives long values room.
+                Grid.SetColumnSpan(visible[i], isAloneOnLastRow ? _TileColumns : 1);
             }
         }
 

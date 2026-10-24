@@ -31,43 +31,44 @@
                             Spacing="1">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:DetailRow">
+                                    <!--
+                                        Title above value: long values (IPv6, MAC, dates) then never
+                                        squeeze the title onto two lines on a phone.
+                                    -->
                                     <Grid
-                                        Padding="16,0"
+                                        Padding="16,10"
                                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight},
                                                                           Dark={StaticResource SurfaceDark}}"
-                                        ColumnDefinitions="*,Auto,Auto"
+                                        ColumnDefinitions="*,Auto"
                                         ColumnSpacing="{StaticResource SpaceM}"
                                         MinimumHeightRequest="{StaticResource TouchTarget}"
+                                        RowDefinitions="Auto,Auto"
                                         SemanticProperties.Description="{Binding Value}"
                                         SemanticProperties.Hint="{x:Static res:AppResources.DetailsCopyHint}">
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=CopyCommand, x:DataType=controls:DetailSectionsView}" CommandParameter="{Binding .}" />
                                         </Grid.GestureRecognizers>
                                         <Label
-                                            Margin="0,12"
+                                            Style="{StaticResource TextLabel}"
+                                            Text="{Binding Title}" />
+                                        <Label
+                                            Grid.Row="1"
                                             FontSize="{StaticResource FontBody}"
-                                            Text="{Binding Title}"
+                                            IsVisible="{Binding IsCopyable}"
+                                            LineBreakMode="CharacterWrap"
+                                            Text="{Binding Value}"
                                             TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
-                                                                        Dark={StaticResource OnSurfaceDark}}"
-                                            VerticalOptions="Center" />
+                                                                        Dark={StaticResource OnSurfaceDark}}" />
                                         <Label
                                             Grid.Column="1"
-                                            FontSize="{StaticResource FontBody}"
-                                            HorizontalTextAlignment="End"
-                                            LineBreakMode="CharacterWrap"
-                                            MaximumWidthRequest="320"
-                                            Text="{Binding Value}"
-                                            TextColor="{AppThemeBinding Light={StaticResource MutedLight},
-                                                                        Dark={StaticResource MutedDark}}"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="2"
+                                            Grid.RowSpan="2"
                                             FontSize="16"
                                             IsVisible="{Binding IsCopyable}"
                                             Style="{StaticResource Icon}"
                                             Text="{x:Static util:MaterialIcon.COPY}"
                                             TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
-                                                                        Dark={StaticResource CaptionDark}}" />
+                                                                        Dark={StaticResource CaptionDark}}"
+                                            VerticalOptions="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

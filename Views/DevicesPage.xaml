@@ -174,17 +174,19 @@
                 <CollectionView
                     x:Name="DeviceList"
                     Grid.Row="1"
+                    IsVisible="{Binding HasRows}"
                     ItemsSource="{Binding Devices}"
                     SelectionMode="None">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
-                    </CollectionView.ItemsLayout>
-
                     <CollectionView.ItemTemplate>
                         <!--  Fixed height and a flat tree: rows stay cheap to recycle while scrolling.  -->
                         <DataTemplate x:DataType="vm:DeviceItem">
+                            <!--
+                                The gap between rows is the row's own bottom margin rather than
+                                LinearItemsLayout.ItemSpacing, which made scrolling stutter on Android.
+                            -->
                             <Border
                                 x:Name="Row"
+                                Margin="0,0,0,8"
                                 Padding="12,0"
                                 HeightRequest="68"
                                 Opacity="{Binding RowOpacity}"
@@ -215,49 +217,49 @@
                                         HeightRequest="40"
                                         VerticalOptions="Center"
                                         WidthRequest="40">
-                                    <Border
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                                          Dark={StaticResource AccentTintDark}}"
-                                        StrokeShape="RoundRectangle 20"
-                                        StrokeThickness="0">
-                                        <Border.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding IsUnknown}"
-                                                TargetType="Border"
-                                                Value="True">
-                                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource NoticeTintLight}, Dark={StaticResource NoticeTintDark}}" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Label
-                                            FontSize="20"
-                                            HorizontalTextAlignment="Center"
-                                            Style="{StaticResource Icon}"
-                                            Text="{Binding Icon}"
-                                            TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                        Dark={StaticResource AccentDark}}">
-                                            <Label.Triggers>
+                                        <Border
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                              Dark={StaticResource AccentTintDark}}"
+                                            StrokeShape="RoundRectangle 20"
+                                            StrokeThickness="0">
+                                            <Border.Triggers>
                                                 <DataTrigger
                                                     Binding="{Binding IsUnknown}"
-                                                    TargetType="Label"
+                                                    TargetType="Border"
                                                     Value="True">
-                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusNoticeLight}, Dark={StaticResource StatusNoticeDark}}" />
+                                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource NoticeTintLight}, Dark={StaticResource NoticeTintDark}}" />
                                                 </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
-                                    </Border>
-                                    <!--  Attention dot: not yet reviewed. The row's screen-reader text says so too.  -->
-                                    <Border
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
-                                                                          Dark={StaticResource StatusNoticeDark}}"
-                                        HeightRequest="12"
-                                        HorizontalOptions="End"
-                                        IsVisible="{Binding IsUnknown}"
-                                        Stroke="{AppThemeBinding Light={StaticResource SurfaceLight},
-                                                                 Dark={StaticResource SurfaceDark}}"
-                                        StrokeShape="RoundRectangle 6"
-                                        StrokeThickness="2"
-                                        VerticalOptions="Start"
-                                        WidthRequest="12" />
+                                            </Border.Triggers>
+                                            <Label
+                                                FontSize="20"
+                                                HorizontalTextAlignment="Center"
+                                                Style="{StaticResource Icon}"
+                                                Text="{Binding Icon}"
+                                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                            Dark={StaticResource AccentDark}}">
+                                                <Label.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding IsUnknown}"
+                                                        TargetType="Label"
+                                                        Value="True">
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusNoticeLight}, Dark={StaticResource StatusNoticeDark}}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+                                        <!--  Attention dot: not yet reviewed. The row's screen-reader text says so too.  -->
+                                        <Border
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                                              Dark={StaticResource StatusNoticeDark}}"
+                                            HeightRequest="12"
+                                            HorizontalOptions="End"
+                                            IsVisible="{Binding IsUnknown}"
+                                            Stroke="{AppThemeBinding Light={StaticResource SurfaceLight},
+                                                                     Dark={StaticResource SurfaceDark}}"
+                                            StrokeShape="RoundRectangle 6"
+                                            StrokeThickness="2"
+                                            VerticalOptions="Start"
+                                            WidthRequest="12" />
                                     </Grid>
 
                                     <Grid

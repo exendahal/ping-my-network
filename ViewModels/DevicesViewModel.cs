@@ -151,6 +151,13 @@ namespace PingMyNetwork.ViewModels
         public partial bool ShowSkeleton { get; set; }
 
         /// <summary>
+        /// Whether the list has rows to show. Hidden otherwise, so its footer note does not sit
+        /// under the skeleton or the empty states.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool HasRows { get; set; }
+
+        /// <summary>
         /// The invitation to scan, before any device is known.
         /// </summary>
         [ObservableProperty]
@@ -567,6 +574,7 @@ namespace PingMyNetwork.ViewModels
             ShowSkeleton = IsConnected && (total == 0) && _Manager.IsScanning;
             ShowEmpty = IsConnected && (total == 0) && !_Manager.IsScanning;
             ShowNoMatch = (total > 0) && (visible == 0);
+            HasRows = visible > 0;
         }
 
         /// <summary>

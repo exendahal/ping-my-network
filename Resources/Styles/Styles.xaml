@@ -477,6 +477,7 @@
 
     <x:Double x:Key="FontDisplay">34</x:Double>
     <x:Double x:Key="FontTitle">22</x:Double>
+    <x:Double x:Key="FontTileValue">19</x:Double>
     <x:Double x:Key="FontHeadline">17</x:Double>
     <x:Double x:Key="FontBody">15</x:Double>
     <x:Double x:Key="FontLabel">13</x:Double>
