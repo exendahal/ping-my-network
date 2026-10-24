@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.PageHeader"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
+
+    <!--  Back and title for a screen pushed on top of a destination.  -->
+    <Grid Padding="8,8,8,0" ColumnDefinitions="Auto,*">
+        <Button
+            Clicked="OnBackClicked"
+            SemanticProperties.Description="{x:Static res:AppResources.ActionBack}"
+            Style="{StaticResource IconButton}"
+            Text="{x:Static util:MaterialIcon.ARROW_BACK}"
+            ToolTipProperties.Text="{x:Static res:AppResources.ActionBack}" />
+        <Label
+            x:Name="TitleLabel"
+            Grid.Column="1"
+            Margin="4,0"
+            LineBreakMode="TailTruncation"
+            SemanticProperties.HeadingLevel="Level1"
+            Style="{StaticResource TextTitle}"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentView>

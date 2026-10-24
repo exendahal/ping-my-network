@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ToolPage
+    x:Class="PingMyNetwork.Views.WakeOnLanPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:views="clr-namespace:PingMyNetwork.Views"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:WakeOnLanViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolWakeTitle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceL}">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <Border
+                            Padding="12,0,4,0"
+                            Style="{StaticResource GroupCard}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                                <Label
+                                    FontSize="18"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.POWER}" />
+                                <Entry
+                                    Grid.Column="1"
+                                    IsSpellCheckEnabled="False"
+                                    IsTextPredictionEnabled="False"
+                                    Keyboard="Text"
+                                    Placeholder="{x:Static res:AppResources.WakeMacPlaceholder}"
+                                    ReturnCommand="{Binding RunCommand}"
+                                    ReturnType="Go"
+                                    SemanticProperties.Description="{x:Static res:AppResources.WakeMacPlaceholder}"
+                                    Text="{Binding MacAddress}" />
+                            </Grid>
+                        </Border>
+                        <Button
+                            Command="{Binding RunCommand}"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource PrimaryButton}"
+                            Text="{Binding RunButtonText}" />
+                        <Label
+                            IsVisible="{Binding HasSent}"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding SentText}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusGoodLight},
+                                                        Dark={StaticResource StatusGoodDark}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Why the last run failed.  -->
+                <Border
+                    IsVisible="{Binding HasError}"
+                    Style="{StaticResource NoticeBanner}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.ERROR}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},
+                                                        Dark={StaticResource StatusBadDark}}" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding ErrorText}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Label
+                    Margin="4,0"
+                    Style="{StaticResource TextLabel}"
+                    Text="{x:Static res:AppResources.WakeFooter}" />
+                <VerticalStackLayout IsVisible="{Binding HasDevices}" Spacing="{StaticResource SpaceM}">
+                    <Label
+                        Margin="4,0"
+                        SemanticProperties.HeadingLevel="Level2"
+                        Style="{StaticResource TextHeadline}"
+                        Text="{x:Static res:AppResources.WakeDevices}" />
+                    <Label
+                        Margin="4,-8,4,0"
+                        Style="{StaticResource TextLabel}"
+                        Text="{x:Static res:AppResources.WakeDevicesHint}" />
+                    <Border Style="{StaticResource GroupCard}">
+                        <VerticalStackLayout Padding="0,4" BindableLayout.ItemsSource="{Binding Devices}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:ResultRow">
+                                    <controls:ResultRowView>
+                                        <controls:ResultRowView.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WakeOnLanViewModel}}, Path=PickCommand, x:DataType=vm:WakeOnLanViewModel}" CommandParameter="{Binding .}" />
+                                        </controls:ResultRowView.GestureRecognizers>
+                                    </controls:ResultRowView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</views:ToolPage>

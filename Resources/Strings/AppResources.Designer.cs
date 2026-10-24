@@ -358,51 +358,6 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In progress.
-        /// </summary>
-        public static string ComingBadge {
-            get {
-                return ResourceManager.GetString("ComingBadge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to See every device on your network, get alerts when an unknown one joins, and mark the ones you trust..
-        /// </summary>
-        public static string ComingDevicesBody {
-            get {
-                return ResourceManager.GetString("ComingDevicesBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Devices.
-        /// </summary>
-        public static string ComingDevicesTitle {
-            get {
-                return ResourceManager.GetString("ComingDevicesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ping, speed test, traceroute, DNS lookup, port check and Wake-on-LAN..
-        /// </summary>
-        public static string ComingToolsBody {
-            get {
-                return ResourceManager.GetString("ComingToolsBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tools.
-        /// </summary>
-        public static string ComingToolsTitle {
-            get {
-                return ResourceManager.GetString("ComingToolsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Mobile data.
         /// </summary>
         public static string ConnectionCellular {
@@ -1240,6 +1195,123 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Look up.
+        /// </summary>
+        public static string DnsLookUp {
+            get {
+                return ResourceManager.GetString("DnsLookUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Domain name, e.g. example.com.
+        /// </summary>
+        public static string DnsNamePlaceholder {
+            get {
+                return ResourceManager.GetString("DnsNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a domain name..
+        /// </summary>
+        public static string DnsNameRequired {
+            get {
+                return ResourceManager.GetString("DnsNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No {0} records ({1}).
+        /// </summary>
+        public static string DnsNoRecordsFormat {
+            get {
+                return ResourceManager.GetString("DnsNoRecordsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} does not exist ({1}).
+        /// </summary>
+        public static string DnsNotFoundFormat {
+            get {
+                return ResourceManager.GetString("DnsNotFoundFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS server (your network&apos;s: {0}).
+        /// </summary>
+        public static string DnsServerNetworkFormat {
+            get {
+                return ResourceManager.GetString("DnsServerNetworkFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS server (optional).
+        /// </summary>
+        public static string DnsServerPlaceholder {
+            get {
+                return ResourceManager.GetString("DnsServerPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} records from {1} in {2} ms.
+        /// </summary>
+        public static string DnsSummaryFormat {
+            get {
+                return ResourceManager.GetString("DnsSummaryFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TTL {0}.
+        /// </summary>
+        public static string DnsTtlFormat {
+            get {
+                return ResourceManager.GetString("DnsTtlFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} d.
+        /// </summary>
+        public static string DurationDaysFormat {
+            get {
+                return ResourceManager.GetString("DurationDaysFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} h.
+        /// </summary>
+        public static string DurationHoursFormat {
+            get {
+                return ResourceManager.GetString("DurationHoursFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} min.
+        /// </summary>
+        public static string DurationMinutesFormat {
+            get {
+                return ResourceManager.GetString("DurationMinutesFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} s.
+        /// </summary>
+        public static string DurationSecondsFormat {
+            get {
+                return ResourceManager.GetString("DurationSecondsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string FilterAll {
@@ -1609,6 +1681,78 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string PingAverage {
+            get {
+                return ResourceManager.GetString("PingAverage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Until stopped.
+        /// </summary>
+        public static string PingContinuous {
+            get {
+                return ResourceManager.GetString("PingContinuous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} pings.
+        /// </summary>
+        public static string PingCountFormat {
+            get {
+                return ResourceManager.GetString("PingCountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jitter.
+        /// </summary>
+        public static string PingJitter {
+            get {
+                return ResourceManager.GetString("PingJitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last reply.
+        /// </summary>
+        public static string PingLast {
+            get {
+                return ResourceManager.GetString("PingLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost.
+        /// </summary>
+        public static string PingLoss {
+            get {
+                return ResourceManager.GetString("PingLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}% ({1} of {2}).
+        /// </summary>
+        public static string PingLossFormat {
+            get {
+                return ResourceManager.GetString("PingLossFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost.
+        /// </summary>
+        public static string PingLost {
+            get {
+                return ResourceManager.GetString("PingLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No reply.
         /// </summary>
         public static string PingNoReply {
@@ -1618,11 +1762,128 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fastest / slowest.
+        /// </summary>
+        public static string PingRange {
+            get {
+                return ResourceManager.GetString("PingRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} / {1} ms.
+        /// </summary>
+        public static string PingRangeFormat {
+            get {
+                return ResourceManager.GetString("PingRangeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0:0} ms average · {1:0}% loss.
         /// </summary>
         public static string PingResultFormat {
             get {
                 return ResourceManager.GetString("PingResultFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinging {0}: average {1}, {2} lost..
+        /// </summary>
+        public static string PingSummaryFormat {
+            get {
+                return ResourceManager.GetString("PingSummaryFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check.
+        /// </summary>
+        public static string PortsCheck {
+            get {
+                return ResourceManager.GetString("PortsCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Common ({0}).
+        /// </summary>
+        public static string PortsCommonFormat {
+            get {
+                return ResourceManager.GetString("PortsCommonFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string PortsCustom {
+            get {
+                return ResourceManager.GetString("PortsCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ports, e.g. 22, 80, 8000-8100.
+        /// </summary>
+        public static string PortsCustomPlaceholder {
+            get {
+                return ResourceManager.GetString("PortsCustomPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} of {1} ports open.
+        /// </summary>
+        public static string PortsDoneFormat {
+            get {
+                return ResourceManager.GetString("PortsDoneFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only check devices you own or have permission to test..
+        /// </summary>
+        public static string PortsFooter {
+            get {
+                return ResourceManager.GetString("PortsFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter ports from 1 to 65535, separated by commas, with ranges like 8000-8100. Up to {0} ports..
+        /// </summary>
+        public static string PortsInvalidFormat {
+            get {
+                return ResourceManager.GetString("PortsInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string PortsOpen {
+            get {
+                return ResourceManager.GetString("PortsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checked {0} of {1} · {2} open.
+        /// </summary>
+        public static string PortsProgressFormat {
+            get {
+                return ResourceManager.GetString("PortsProgressFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown service.
+        /// </summary>
+        public static string PortsUnknownService {
+            get {
+                return ResourceManager.GetString("PortsUnknownService", resourceCulture);
             }
         }
         
@@ -1870,6 +2131,105 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test again.
+        /// </summary>
+        public static string SpeedAgain {
+            get {
+                return ResourceManager.GetString("SpeedAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mbps down.
+        /// </summary>
+        public static string SpeedDownloadCaption {
+            get {
+                return ResourceManager.GetString("SpeedDownloadCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses Cloudflare&apos;s speed test and about 30 MB of data..
+        /// </summary>
+        public static string SpeedFooter {
+            get {
+                return ResourceManager.GetString("SpeedFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tap Start to measure your internet speed..
+        /// </summary>
+        public static string SpeedIdle {
+            get {
+                return ResourceManager.GetString("SpeedIdle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latency.
+        /// </summary>
+        public static string SpeedLatency {
+            get {
+                return ResourceManager.GetString("SpeedLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Mbps.
+        /// </summary>
+        public static string SpeedMbpsFormat {
+            get {
+                return ResourceManager.GetString("SpeedMbpsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing download, then upload….
+        /// </summary>
+        public static string SpeedRunning {
+            get {
+                return ResourceManager.GetString("SpeedRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string SpeedUpload {
+            get {
+                return ResourceManager.GetString("SpeedUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast enough for 4K streaming and video calls..
+        /// </summary>
+        public static string SpeedVerdictFast {
+            get {
+                return ResourceManager.GetString("SpeedVerdictFast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fine for HD streaming and video calls..
+        /// </summary>
+        public static string SpeedVerdictOk {
+            get {
+                return ResourceManager.GetString("SpeedVerdictOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slow: video calls and streaming may stutter..
+        /// </summary>
+        public static string SpeedVerdictSlow {
+            get {
+                return ResourceManager.GetString("SpeedVerdictSlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wi-Fi 4 (802.11n).
         /// </summary>
         public static string Standard4 {
@@ -2041,6 +2401,141 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Broadcast.
+        /// </summary>
+        public static string SubnetBroadcast {
+            get {
+                return ResourceManager.GetString("SubnetBroadcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First usable.
+        /// </summary>
+        public static string SubnetFirstHost {
+            get {
+                return ResourceManager.GetString("SubnetFirstHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usable addresses.
+        /// </summary>
+        public static string SubnetHosts {
+            get {
+                return ResourceManager.GetString("SubnetHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter an IPv4 address with a prefix (/24) or a mask (255.255.255.0)..
+        /// </summary>
+        public static string SubnetInvalid {
+            get {
+                return ResourceManager.GetString("SubnetInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last usable.
+        /// </summary>
+        public static string SubnetLastHost {
+            get {
+                return ResourceManager.GetString("SubnetLastHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnet mask.
+        /// </summary>
+        public static string SubnetMask {
+            get {
+                return ResourceManager.GetString("SubnetMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        public static string SubnetNetwork {
+            get {
+                return ResourceManager.GetString("SubnetNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address and prefix, e.g. 192.168.1.10/24.
+        /// </summary>
+        public static string SubnetPlaceholder {
+            get {
+                return ResourceManager.GetString("SubnetPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prefix length.
+        /// </summary>
+        public static string SubnetPrefix {
+            get {
+                return ResourceManager.GetString("SubnetPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string SubnetPrivate {
+            get {
+                return ResourceManager.GetString("SubnetPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string SubnetPublic {
+            get {
+                return ResourceManager.GetString("SubnetPublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scope.
+        /// </summary>
+        public static string SubnetScope {
+            get {
+                return ResourceManager.GetString("SubnetScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mask.
+        /// </summary>
+        public static string SubnetSectionMask {
+            get {
+                return ResourceManager.GetString("SubnetSectionMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address range.
+        /// </summary>
+        public static string SubnetSectionRange {
+            get {
+                return ResourceManager.GetString("SubnetSectionRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wildcard mask.
+        /// </summary>
+        public static string SubnetWildcard {
+            get {
+                return ResourceManager.GetString("SubnetWildcard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Devices.
         /// </summary>
         public static string TabDevices {
@@ -2176,11 +2671,344 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Look up the addresses and records behind a name..
+        /// </summary>
+        public static string ToolDnsBody {
+            get {
+                return ResourceManager.GetString("ToolDnsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS lookup.
+        /// </summary>
+        public static string ToolDnsTitle {
+            get {
+                return ResourceManager.GetString("ToolDnsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. Try again..
+        /// </summary>
+        public static string ToolFailed {
+            get {
+                return ResourceManager.GetString("ToolFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host name or IP address.
+        /// </summary>
+        public static string ToolHostPlaceholder {
+            get {
+                return ResourceManager.GetString("ToolHostPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a host name or IP address..
+        /// </summary>
+        public static string ToolHostRequired {
+            get {
+                return ResourceManager.GetString("ToolHostRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check that a device or website answers, and how fast..
+        /// </summary>
+        public static string ToolPingBody {
+            get {
+                return ResourceManager.GetString("ToolPingBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping.
+        /// </summary>
+        public static string ToolPingTitle {
+            get {
+                return ResourceManager.GetString("ToolPingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find which services a device has open..
+        /// </summary>
+        public static string ToolPortsBody {
+            get {
+                return ResourceManager.GetString("ToolPortsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port check.
+        /// </summary>
+        public static string ToolPortsTitle {
+            get {
+                return ResourceManager.GetString("ToolPortsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diagnose.
+        /// </summary>
+        public static string ToolsDiagnose {
+            get {
+                return ResourceManager.GetString("ToolsDiagnose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure your internet download and upload speed..
+        /// </summary>
+        public static string ToolSpeedBody {
+            get {
+                return ResourceManager.GetString("ToolSpeedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed test.
+        /// </summary>
+        public static string ToolSpeedTitle {
+            get {
+                return ResourceManager.GetString("ToolSpeedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test and troubleshoot your network.
+        /// </summary>
+        public static string ToolsSubtitle {
+            get {
+                return ResourceManager.GetString("ToolsSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string ToolStart {
+            get {
+                return ResourceManager.GetString("ToolStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string ToolsTitle {
+            get {
+                return ResourceManager.GetString("ToolsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string ToolStop {
+            get {
+                return ResourceManager.GetString("ToolStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work out a network&apos;s address range and mask..
+        /// </summary>
+        public static string ToolSubnetBody {
+            get {
+                return ResourceManager.GetString("ToolSubnetBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnet calculator.
+        /// </summary>
+        public static string ToolSubnetTitle {
+            get {
+                return ResourceManager.GetString("ToolSubnetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utilities.
+        /// </summary>
+        public static string ToolsUtilities {
+            get {
+                return ResourceManager.GetString("ToolsUtilities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See every router between you and a website..
+        /// </summary>
+        public static string ToolTracerouteBody {
+            get {
+                return ResourceManager.GetString("ToolTracerouteBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute.
+        /// </summary>
+        public static string ToolTracerouteTitle {
+            get {
+                return ResourceManager.GetString("ToolTracerouteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on a sleeping computer over the network..
+        /// </summary>
+        public static string ToolWakeBody {
+            get {
+                return ResourceManager.GetString("ToolWakeBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake-on-LAN.
+        /// </summary>
+        public static string ToolWakeTitle {
+            get {
+                return ResourceManager.GetString("ToolWakeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Each line is a router your traffic passes through. A long jump in time shows where a slowdown starts..
+        /// </summary>
+        public static string TracerouteFooter {
+            get {
+                return ResourceManager.GetString("TracerouteFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No reply.
+        /// </summary>
+        public static string TracerouteNoReply {
+            get {
+                return ResourceManager.GetString("TracerouteNoReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This router does not answer traceroute; that is normal..
+        /// </summary>
+        public static string TracerouteNoReplyHint {
+            get {
+                return ResourceManager.GetString("TracerouteNoReplyHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} did not answer within {1} hops.
+        /// </summary>
+        public static string TracerouteNotReachedFormat {
+            get {
+                return ResourceManager.GetString("TracerouteNotReachedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reached {0} in {1} hops.
+        /// </summary>
+        public static string TracerouteReachedFormat {
+            get {
+                return ResourceManager.GetString("TracerouteReachedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracing the route to {0}….
+        /// </summary>
+        public static string TracerouteRunningFormat {
+            get {
+                return ResourceManager.GetString("TracerouteRunningFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped.
+        /// </summary>
+        public static string TracerouteStopped {
+            get {
+                return ResourceManager.GetString("TracerouteStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to —.
         /// </summary>
         public static string ValueMissing {
             get {
                 return ResourceManager.GetString("ValueMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        public static string WakeAwake {
+            get {
+                return ResourceManager.GetString("WakeAwake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devices on this network.
+        /// </summary>
+        public static string WakeDevices {
+            get {
+                return ResourceManager.GetString("WakeDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tap one to use its MAC address..
+        /// </summary>
+        public static string WakeDevicesHint {
+            get {
+                return ResourceManager.GetString("WakeDevicesHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The computer must have Wake-on-LAN turned on and be connected by cable. It does not reply, so check after a minute..
+        /// </summary>
+        public static string WakeFooter {
+            get {
+                return ResourceManager.GetString("WakeFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC address, e.g. AA:BB:CC:DD:EE:FF.
+        /// </summary>
+        public static string WakeMacPlaceholder {
+            get {
+                return ResourceManager.GetString("WakeMacPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake.
+        /// </summary>
+        public static string WakeSend {
+            get {
+                return ResourceManager.GetString("WakeSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake-up packet sent to {0}..
+        /// </summary>
+        public static string WakeSentFormat {
+            get {
+                return ResourceManager.GetString("WakeSentFormat", resourceCulture);
             }
         }
         

@@ -54,11 +54,28 @@ namespace PingMyNetwork
             builder.Services.AddTransient<NetworkDetailsViewModel>();
             builder.Services.AddTransient<DeviceDetailsViewModel>();
 
+            // Each tool opens fresh, and stops whatever it was doing when it closes.
+            builder.Services.AddTransient<PingViewModel>();
+            builder.Services.AddTransient<TracerouteViewModel>();
+            builder.Services.AddTransient<DnsLookupViewModel>();
+            builder.Services.AddTransient<PortCheckViewModel>();
+            builder.Services.AddTransient<SpeedTestViewModel>();
+            builder.Services.AddTransient<WakeOnLanViewModel>();
+            builder.Services.AddTransient<SubnetViewModel>();
+
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<NetworkDetailsPage>();
             builder.Services.AddTransient<DevicesPage>();
             builder.Services.AddTransient<DeviceDetailsPage>();
             builder.Services.AddTransient<WifiPage>();
+            builder.Services.AddTransient<ToolsPage>();
+            builder.Services.AddTransient<PingPage>();
+            builder.Services.AddTransient<TraceroutePage>();
+            builder.Services.AddTransient<DnsLookupPage>();
+            builder.Services.AddTransient<PortCheckPage>();
+            builder.Services.AddTransient<SpeedTestPage>();
+            builder.Services.AddTransient<WakeOnLanPage>();
+            builder.Services.AddTransient<SubnetPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
@@ -66,6 +83,8 @@ namespace PingMyNetwork
             DeviceDescriber.SelfCheck();
             WifiSecurity.SelfCheck();
             ChannelPlanner.SelfCheck();
+            SubnetCalculator.SelfCheck();
+            PortList.SelfCheck();
 #endif
 
             return builder.Build();

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ToolPage
+    x:Class="PingMyNetwork.Views.TraceroutePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:views="clr-namespace:PingMyNetwork.Views"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:TracerouteViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolTracerouteTitle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceL}">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <Border
+                            Padding="12,0,4,0"
+                            Style="{StaticResource GroupCard}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                                <Label
+                                    FontSize="18"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.ROUTE}" />
+                                <Entry
+                                    Grid.Column="1"
+                                    IsSpellCheckEnabled="False"
+                                    IsTextPredictionEnabled="False"
+                                    Keyboard="Url"
+                                    Placeholder="{x:Static res:AppResources.ToolHostPlaceholder}"
+                                    ReturnCommand="{Binding RunCommand}"
+                                    ReturnType="Go"
+                                    SemanticProperties.Description="{x:Static res:AppResources.ToolHostPlaceholder}"
+                                    Text="{Binding Host}" />
+                            </Grid>
+                        </Border>
+                        <Button
+                            Command="{Binding RunCommand}"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource PrimaryButton}"
+                            Text="{Binding RunButtonText}" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Why the last run failed.  -->
+                <Border
+                    IsVisible="{Binding HasError}"
+                    Style="{StaticResource NoticeBanner}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.ERROR}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},
+                                                        Dark={StaticResource StatusBadDark}}" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding ErrorText}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+                <VerticalStackLayout IsVisible="{Binding HasResults}" Spacing="{StaticResource SpaceM}">
+                    <Label
+                        Margin="4,0"
+                        SemanticProperties.HeadingLevel="Level2"
+                        Style="{StaticResource TextHeadline}"
+                        Text="{Binding Summary}" />
+                    <Border Style="{StaticResource GroupCard}">
+                        <VerticalStackLayout Padding="0,4" BindableLayout.ItemsSource="{Binding Hops}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:ResultRow">
+                                    <controls:ResultRowView />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+                <Label
+                    Margin="4,0"
+                    Style="{StaticResource TextLabel}"
+                    Text="{x:Static res:AppResources.TracerouteFooter}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</views:ToolPage>

@@ -92,11 +92,6 @@
   <data name="StandardShortFormat" xml:space="preserve"><value>Wi-Fi {0}</value></data>
   <data name="StandardShortLegacy" xml:space="preserve"><value>Older Wi-Fi</value></data>
   <data name="StandardAd" xml:space="preserve"><value>WiGig (802.11ad)</value></data>
-  <data name="ComingDevicesTitle" xml:space="preserve"><value>Devices</value></data>
-  <data name="ComingDevicesBody" xml:space="preserve"><value>See every device on your network, get alerts when an unknown one joins, and mark the ones you trust.</value></data>
-  <data name="ComingToolsTitle" xml:space="preserve"><value>Tools</value></data>
-  <data name="ComingToolsBody" xml:space="preserve"><value>Ping, speed test, traceroute, DNS lookup, port check and Wake-on-LAN.</value></data>
-  <data name="ComingBadge" xml:space="preserve"><value>In progress</value></data>
   <data name="DeviceUnnamed" xml:space="preserve"><value>Unnamed device</value></data>
   <data name="DeviceTypeUnknown" xml:space="preserve"><value>Unknown</value></data>
   <data name="DeviceTypeRouter" xml:space="preserve"><value>Router</value></data>
@@ -254,4 +249,101 @@
   <data name="InsightLegacyWpaBody" xml:space="preserve"><value>“{0}” also accepts the original WPA or TKIP, so the weakest device sets the protection for everyone. Set your router to WPA2 (AES) only, or WPA2/WPA3.</value></data>
   <data name="InsightWpsTitle" xml:space="preserve"><value>WPS is turned on</value></data>
   <data name="InsightWpsBody" xml:space="preserve"><value>“{0}” has Wi-Fi Protected Setup on. Its PIN can be guessed, which gets around your password. Turn WPS off in your router's settings.</value></data>
+  <data name="ToolsTitle" xml:space="preserve"><value>Tools</value></data>
+  <data name="ToolsSubtitle" xml:space="preserve"><value>Test and troubleshoot your network</value></data>
+  <data name="ToolsDiagnose" xml:space="preserve"><value>Diagnose</value></data>
+  <data name="ToolsUtilities" xml:space="preserve"><value>Utilities</value></data>
+  <data name="ToolPingTitle" xml:space="preserve"><value>Ping</value></data>
+  <data name="ToolPingBody" xml:space="preserve"><value>Check that a device or website answers, and how fast.</value></data>
+  <data name="ToolTracerouteTitle" xml:space="preserve"><value>Traceroute</value></data>
+  <data name="ToolTracerouteBody" xml:space="preserve"><value>See every router between you and a website.</value></data>
+  <data name="ToolDnsTitle" xml:space="preserve"><value>DNS lookup</value></data>
+  <data name="ToolDnsBody" xml:space="preserve"><value>Look up the addresses and records behind a name.</value></data>
+  <data name="ToolPortsTitle" xml:space="preserve"><value>Port check</value></data>
+  <data name="ToolPortsBody" xml:space="preserve"><value>Find which services a device has open.</value></data>
+  <data name="ToolSpeedTitle" xml:space="preserve"><value>Speed test</value></data>
+  <data name="ToolSpeedBody" xml:space="preserve"><value>Measure your internet download and upload speed.</value></data>
+  <data name="ToolWakeTitle" xml:space="preserve"><value>Wake-on-LAN</value></data>
+  <data name="ToolWakeBody" xml:space="preserve"><value>Turn on a sleeping computer over the network.</value></data>
+  <data name="ToolSubnetTitle" xml:space="preserve"><value>Subnet calculator</value></data>
+  <data name="ToolSubnetBody" xml:space="preserve"><value>Work out a network's address range and mask.</value></data>
+  <data name="ToolStart" xml:space="preserve"><value>Start</value></data>
+  <data name="ToolStop" xml:space="preserve"><value>Stop</value></data>
+  <data name="ToolFailed" xml:space="preserve"><value>Something went wrong. Try again.</value></data>
+  <data name="ToolHostRequired" xml:space="preserve"><value>Enter a host name or IP address.</value></data>
+  <data name="ToolHostPlaceholder" xml:space="preserve"><value>Host name or IP address</value></data>
+  <data name="PingCountFormat" xml:space="preserve"><value>{0} pings</value></data>
+  <data name="PingContinuous" xml:space="preserve"><value>Until stopped</value></data>
+  <data name="PingLost" xml:space="preserve"><value>Lost</value></data>
+  <data name="PingLast" xml:space="preserve"><value>Last reply</value></data>
+  <data name="PingAverage" xml:space="preserve"><value>Average</value></data>
+  <data name="PingJitter" xml:space="preserve"><value>Jitter</value></data>
+  <data name="PingRange" xml:space="preserve"><value>Fastest / slowest</value></data>
+  <data name="PingLoss" xml:space="preserve"><value>Lost</value></data>
+  <data name="PingRangeFormat" xml:space="preserve"><value>{0} / {1} ms</value></data>
+  <data name="PingLossFormat" xml:space="preserve"><value>{0}% ({1} of {2})</value></data>
+  <data name="PingSummaryFormat" xml:space="preserve"><value>Pinging {0}: average {1}, {2} lost.</value></data>
+  <data name="TracerouteRunningFormat" xml:space="preserve"><value>Tracing the route to {0}…</value></data>
+  <data name="TracerouteReachedFormat" xml:space="preserve"><value>Reached {0} in {1} hops</value></data>
+  <data name="TracerouteNotReachedFormat" xml:space="preserve"><value>{0} did not answer within {1} hops</value></data>
+  <data name="TracerouteStopped" xml:space="preserve"><value>Stopped</value></data>
+  <data name="TracerouteNoReply" xml:space="preserve"><value>No reply</value></data>
+  <data name="TracerouteNoReplyHint" xml:space="preserve"><value>This router does not answer traceroute; that is normal.</value></data>
+  <data name="TracerouteFooter" xml:space="preserve"><value>Each line is a router your traffic passes through. A long jump in time shows where a slowdown starts.</value></data>
+  <data name="DnsLookUp" xml:space="preserve"><value>Look up</value></data>
+  <data name="DnsNamePlaceholder" xml:space="preserve"><value>Domain name, e.g. example.com</value></data>
+  <data name="DnsNameRequired" xml:space="preserve"><value>Enter a domain name.</value></data>
+  <data name="DnsServerPlaceholder" xml:space="preserve"><value>DNS server (optional)</value></data>
+  <data name="DnsServerNetworkFormat" xml:space="preserve"><value>DNS server (your network's: {0})</value></data>
+  <data name="DnsTtlFormat" xml:space="preserve"><value>TTL {0}</value></data>
+  <data name="DnsSummaryFormat" xml:space="preserve"><value>{0} records from {1} in {2} ms</value></data>
+  <data name="DnsNotFoundFormat" xml:space="preserve"><value>{0} does not exist ({1})</value></data>
+  <data name="DnsNoRecordsFormat" xml:space="preserve"><value>No {0} records ({1})</value></data>
+  <data name="DurationDaysFormat" xml:space="preserve"><value>{0} d</value></data>
+  <data name="DurationHoursFormat" xml:space="preserve"><value>{0} h</value></data>
+  <data name="DurationMinutesFormat" xml:space="preserve"><value>{0} min</value></data>
+  <data name="DurationSecondsFormat" xml:space="preserve"><value>{0} s</value></data>
+  <data name="PortsCheck" xml:space="preserve"><value>Check</value></data>
+  <data name="PortsCommonFormat" xml:space="preserve"><value>Common ({0})</value></data>
+  <data name="PortsCustom" xml:space="preserve"><value>Custom</value></data>
+  <data name="PortsCustomPlaceholder" xml:space="preserve"><value>Ports, e.g. 22, 80, 8000-8100</value></data>
+  <data name="PortsInvalidFormat" xml:space="preserve"><value>Enter ports from 1 to 65535, separated by commas, with ranges like 8000-8100. Up to {0} ports.</value></data>
+  <data name="PortsUnknownService" xml:space="preserve"><value>Unknown service</value></data>
+  <data name="PortsOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="PortsProgressFormat" xml:space="preserve"><value>Checked {0} of {1} · {2} open</value></data>
+  <data name="PortsDoneFormat" xml:space="preserve"><value>{0} of {1} ports open</value></data>
+  <data name="PortsFooter" xml:space="preserve"><value>Only check devices you own or have permission to test.</value></data>
+  <data name="WakeSend" xml:space="preserve"><value>Wake</value></data>
+  <data name="WakeMacPlaceholder" xml:space="preserve"><value>MAC address, e.g. AA:BB:CC:DD:EE:FF</value></data>
+  <data name="WakeSentFormat" xml:space="preserve"><value>Wake-up packet sent to {0}.</value></data>
+  <data name="WakeAwake" xml:space="preserve"><value>Online</value></data>
+  <data name="WakeDevices" xml:space="preserve"><value>Devices on this network</value></data>
+  <data name="WakeFooter" xml:space="preserve"><value>The computer must have Wake-on-LAN turned on and be connected by cable. It does not reply, so check after a minute.</value></data>
+  <data name="SubnetPlaceholder" xml:space="preserve"><value>Address and prefix, e.g. 192.168.1.10/24</value></data>
+  <data name="SubnetInvalid" xml:space="preserve"><value>Enter an IPv4 address with a prefix (/24) or a mask (255.255.255.0).</value></data>
+  <data name="SubnetSectionRange" xml:space="preserve"><value>Address range</value></data>
+  <data name="SubnetSectionMask" xml:space="preserve"><value>Mask</value></data>
+  <data name="SubnetNetwork" xml:space="preserve"><value>Network</value></data>
+  <data name="SubnetFirstHost" xml:space="preserve"><value>First usable</value></data>
+  <data name="SubnetLastHost" xml:space="preserve"><value>Last usable</value></data>
+  <data name="SubnetBroadcast" xml:space="preserve"><value>Broadcast</value></data>
+  <data name="SubnetHosts" xml:space="preserve"><value>Usable addresses</value></data>
+  <data name="SubnetMask" xml:space="preserve"><value>Subnet mask</value></data>
+  <data name="SubnetWildcard" xml:space="preserve"><value>Wildcard mask</value></data>
+  <data name="SubnetPrefix" xml:space="preserve"><value>Prefix length</value></data>
+  <data name="SubnetScope" xml:space="preserve"><value>Scope</value></data>
+  <data name="SubnetPrivate" xml:space="preserve"><value>Private</value></data>
+  <data name="SubnetPublic" xml:space="preserve"><value>Public</value></data>
+  <data name="SpeedIdle" xml:space="preserve"><value>Tap Start to measure your internet speed.</value></data>
+  <data name="SpeedRunning" xml:space="preserve"><value>Testing download, then upload…</value></data>
+  <data name="SpeedAgain" xml:space="preserve"><value>Test again</value></data>
+  <data name="SpeedDownloadCaption" xml:space="preserve"><value>Mbps down</value></data>
+  <data name="SpeedUpload" xml:space="preserve"><value>Upload</value></data>
+  <data name="SpeedLatency" xml:space="preserve"><value>Latency</value></data>
+  <data name="SpeedMbpsFormat" xml:space="preserve"><value>{0} Mbps</value></data>
+  <data name="SpeedVerdictFast" xml:space="preserve"><value>Fast enough for 4K streaming and video calls.</value></data>
+  <data name="SpeedVerdictOk" xml:space="preserve"><value>Fine for HD streaming and video calls.</value></data>
+  <data name="SpeedVerdictSlow" xml:space="preserve"><value>Slow: video calls and streaming may stutter.</value></data>
+  <data name="SpeedFooter" xml:space="preserve"><value>Uses Cloudflare's speed test and about 30 MB of data.</value></data>
+  <data name="WakeDevicesHint" xml:space="preserve"><value>Tap one to use its MAC address.</value></data>
 </root>

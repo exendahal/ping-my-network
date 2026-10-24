@@ -72,6 +72,13 @@ namespace PingMyNetwork
             // a back control and do not compete with the tabs.
             Routing.RegisterRoute(Routes.NETWORK_DETAILS, typeof(NetworkDetailsPage));
             Routing.RegisterRoute(Routes.DEVICE_DETAILS, typeof(DeviceDetailsPage));
+            Routing.RegisterRoute(Routes.TOOL_PING, typeof(PingPage));
+            Routing.RegisterRoute(Routes.TOOL_TRACEROUTE, typeof(TraceroutePage));
+            Routing.RegisterRoute(Routes.TOOL_DNS, typeof(DnsLookupPage));
+            Routing.RegisterRoute(Routes.TOOL_PORTS, typeof(PortCheckPage));
+            Routing.RegisterRoute(Routes.TOOL_SPEED, typeof(SpeedTestPage));
+            Routing.RegisterRoute(Routes.TOOL_WAKE, typeof(WakeOnLanPage));
+            Routing.RegisterRoute(Routes.TOOL_SUBNET, typeof(SubnetPage));
 
             TabBar.RouteRequested += OnRouteRequested;
             Rail.RouteRequested += OnRouteRequested;

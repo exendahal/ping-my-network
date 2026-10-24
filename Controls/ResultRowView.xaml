@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="PingMyNetwork.Controls.ResultRowView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    x:DataType="models:ResultRow">
+
+    <!--
+        One result line. Padding instead of item spacing: spacing in a list layout stutters while
+        scrolling on Android.
+    -->
+    <Grid
+        Padding="16,10"
+        ColumnDefinitions="Auto,*,Auto"
+        ColumnSpacing="{StaticResource SpaceM}">
+        <Label
+            FontFamily="OpenSansSemibold"
+            FontSize="{StaticResource FontLabel}"
+            IsVisible="{Binding HasLeading}"
+            LineBreakMode="TailTruncation"
+            Text="{Binding Leading}"
+            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                        Dark={StaticResource CaptionDark}}"
+            VerticalOptions="Center"
+            WidthRequest="44" />
+        <VerticalStackLayout
+            Grid.Column="1"
+            Spacing="2"
+            VerticalOptions="Center">
+            <Label
+                FontSize="{StaticResource FontBody}"
+                LineBreakMode="CharacterWrap"
+                Text="{Binding Title}"
+                TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                            Dark={StaticResource OnSurfaceDark}}" />
+            <Label
+                IsVisible="{Binding HasSubtitle}"
+                LineBreakMode="TailTruncation"
+                Style="{StaticResource TextLabel}"
+                Text="{Binding Subtitle}" />
+        </VerticalStackLayout>
+        <Label
+            x:Name="TrailingLabel"
+            Grid.Column="2"
+            FontFamily="OpenSansSemibold"
+            FontSize="{StaticResource FontLabel}"
+            Text="{Binding Trailing}"
+            TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
+                                        Dark={StaticResource CaptionDark}}"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentView>

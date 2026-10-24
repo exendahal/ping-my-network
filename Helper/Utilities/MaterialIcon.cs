@@ -79,6 +79,12 @@ namespace PingMyNetwork.Helper.Utilities
         public const string INSIGHTS = "\uf092";
         public const string ADD_LOCATION = "\ue567";
         public const string PLACE = "\ue55f";
+        public const string NETWORK_PING = "\uebca";
+        public const string ROUTE = "\ueacd";
+        public const string RADAR = "\uf04e";
+        public const string POWER = "\ue8ac";
+        public const string CALCULATE = "\uea5f";
+        public const string UPLOAD = "\uf09b";
 
         #endregion
     }

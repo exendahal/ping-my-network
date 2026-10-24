@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ToolPage
+    x:Class="PingMyNetwork.Views.PingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:views="clr-namespace:PingMyNetwork.Views"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:PingViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolPingTitle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceL}">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <Border
+                            Padding="12,0,4,0"
+                            Style="{StaticResource GroupCard}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                                <Label
+                                    FontSize="18"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.NETWORK_PING}" />
+                                <Entry
+                                    Grid.Column="1"
+                                    IsSpellCheckEnabled="False"
+                                    IsTextPredictionEnabled="False"
+                                    Keyboard="Url"
+                                    Placeholder="{x:Static res:AppResources.ToolHostPlaceholder}"
+                                    ReturnCommand="{Binding RunCommand}"
+                                    ReturnType="Go"
+                                    SemanticProperties.Description="{x:Static res:AppResources.ToolHostPlaceholder}"
+                                    Text="{Binding Host}" />
+                            </Grid>
+                        </Border>
+                        <FlexLayout BindableLayout.ItemsSource="{Binding Counts}" Wrap="Wrap">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:ChoiceOption">
+                                    <!--  Both styles come from triggers: a local Style would outrank them.  -->
+                                    <Button
+                                        Margin="0,0,8,8"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PingViewModel}}, Path=SelectCountCommand, x:DataType=vm:PingViewModel}"
+                                        CommandParameter="{Binding Key}"
+                                        Text="{Binding Name}">
+                                        <Button.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="Button"
+                                                Value="True">
+                                                <Setter Property="Style" Value="{StaticResource ChipSelected}" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="Button"
+                                                Value="False">
+                                                <Setter Property="Style" Value="{StaticResource Chip}" />
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                        <Button
+                            Command="{Binding RunCommand}"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource PrimaryButton}"
+                            Text="{Binding RunButtonText}" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Why the last run failed.  -->
+                <Border
+                    IsVisible="{Binding HasError}"
+                    Style="{StaticResource NoticeBanner}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.ERROR}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},
+                                                        Dark={StaticResource StatusBadDark}}" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding ErrorText}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+                <VerticalStackLayout IsVisible="{Binding HasResults}" Spacing="{StaticResource SpaceM}">
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Style="{StaticResource TextLabel}" Text="{x:Static res:AppResources.PingLast}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="{StaticResource FontTitle}"
+                                        Text="{Binding LastText}"
+                                        TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                    Dark={StaticResource OnSurfaceDark}}" />
+                                </VerticalStackLayout>
+                                <ActivityIndicator
+                                    Grid.Column="1"
+                                    HeightRequest="20"
+                                    IsRunning="{Binding IsRunning}"
+                                    IsVisible="{Binding IsRunning}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20"
+                                    Color="{AppThemeBinding Light={StaticResource AccentLight},
+                                                            Dark={StaticResource AccentDark}}" />
+                            </Grid>
+                            <GraphicsView
+                                x:Name="Chart"
+                                HeightRequest="120"
+                                SemanticProperties.Description="{Binding Summary}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="{StaticResource SpaceM}"
+                        RowDefinitions="Auto,Auto"
+                        RowSpacing="{StaticResource SpaceM}">
+                        <controls:StatTileView
+                            Caption="{x:Static res:AppResources.PingAverage}"
+                            Icon="{x:Static util:MaterialIcon.TIMER}"
+                            Value="{Binding AverageText}" />
+                        <controls:StatTileView
+                            Grid.Column="1"
+                            Caption="{x:Static res:AppResources.PingJitter}"
+                            Icon="{x:Static util:MaterialIcon.INSIGHTS}"
+                            Value="{Binding JitterText}" />
+                        <controls:StatTileView
+                            Grid.Row="1"
+                            Caption="{x:Static res:AppResources.PingRange}"
+                            Icon="{x:Static util:MaterialIcon.BAR_CHART}"
+                            Value="{Binding RangeText}" />
+                        <controls:StatTileView
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Caption="{x:Static res:AppResources.PingLoss}"
+                            Icon="{x:Static util:MaterialIcon.WARNING}"
+                            Value="{Binding LossText}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</views:ToolPage>

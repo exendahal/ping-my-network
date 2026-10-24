@@ -23,6 +23,17 @@ namespace PingMyNetwork.Helper.Utilities
         public const string DEVICE_DETAILS = "device";
 
         /// <summary>
+        /// The tools, each pushed on top of Tools.
+        /// </summary>
+        public const string TOOL_PING = "ping";
+        public const string TOOL_TRACEROUTE = "traceroute";
+        public const string TOOL_DNS = "dns";
+        public const string TOOL_PORTS = "ports";
+        public const string TOOL_SPEED = "speedtest";
+        public const string TOOL_WAKE = "wake";
+        public const string TOOL_SUBNET = "subnet";
+
+        /// <summary>
         /// The top-level destinations in tab order, which is also the order transitions follow.
         /// </summary>
         public static readonly IReadOnlyList<string> TABS = [HOME, DEVICES, WIFI, TOOLS];

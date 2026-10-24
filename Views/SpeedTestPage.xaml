@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:ToolPage
+    x:Class="PingMyNetwork.Views.SpeedTestPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:views="clr-namespace:PingMyNetwork.Views"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:SpeedTestViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolSpeedTitle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceL}">
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="{StaticResource SpaceM}">
+                        <Grid
+                            HeightRequest="200"
+                            HorizontalOptions="Center"
+                            WidthRequest="200">
+                            <controls:RingGaugeView
+                                Fraction="{Binding Fraction}"
+                                Level="{Binding Level}"
+                                StrokeWidth="14" />
+                            <VerticalStackLayout
+                                HorizontalOptions="Center"
+                                InputTransparent="True"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource FontDisplay}"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding DownloadValue}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}" />
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource TextLabel}"
+                                    Text="{x:Static res:AppResources.SpeedDownloadCaption}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="{StaticResource SpaceS}">
+                            <ActivityIndicator
+                                HeightRequest="18"
+                                IsRunning="{Binding IsRunning}"
+                                IsVisible="{Binding IsRunning}"
+                                WidthRequest="18"
+                                Color="{AppThemeBinding Light={StaticResource AccentLight},
+                                                        Dark={StaticResource AccentDark}}" />
+                            <Label
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource TextBody}"
+                                Text="{Binding Verdict}" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource SpaceM}">
+                            <controls:StatTileView
+                                Caption="{x:Static res:AppResources.SpeedUpload}"
+                                Icon="{x:Static util:MaterialIcon.UPLOAD}"
+                                Value="{Binding UploadText}" />
+                            <controls:StatTileView
+                                Grid.Column="1"
+                                Caption="{x:Static res:AppResources.SpeedLatency}"
+                                Icon="{x:Static util:MaterialIcon.TIMER}"
+                                Value="{Binding LatencyText}" />
+                        </Grid>
+                        <Button
+                            Command="{Binding RunCommand}"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource PrimaryButton}"
+                            Text="{Binding RunButtonText}" />
+                    </VerticalStackLayout>
+                </Border>
+                <!--  Why the last run failed.  -->
+                <Border
+                    IsVisible="{Binding HasError}"
+                    Style="{StaticResource NoticeBanner}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.ERROR}"
+                            TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},
+                                                        Dark={StaticResource StatusBadDark}}" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding ErrorText}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+                <Label
+                    Margin="4,0"
+                    Style="{StaticResource TextLabel}"
+                    Text="{x:Static res:AppResources.SpeedFooter}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsMetered}"
+                            TargetType="Label"
+                            Value="True">
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource StatusFairLight}, Dark={StaticResource StatusFairDark}}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</views:ToolPage>
