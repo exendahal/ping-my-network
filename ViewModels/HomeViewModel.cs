@@ -337,7 +337,7 @@ namespace PingMyNetwork.ViewModels
         }
 
         /// <summary>
-        /// Opens network details.
+        /// Opens the device list.
         /// </summary>
         /// <returns>A task that completes once navigation finishes.</returns>
         [RelayCommand]
@@ -354,6 +354,17 @@ namespace PingMyNetwork.ViewModels
         private async Task OpenDetailsAsync()
         {
             await Shell.Current.GoToAsync(Routes.NETWORK_DETAILS);
+        }
+
+        /// <summary>
+        /// Opens a tool on top of Home, so back comes straight here.
+        /// </summary>
+        /// <param name="route">The tool's route.</param>
+        /// <returns>A task that completes once navigation finishes.</returns>
+        [RelayCommand]
+        private async Task OpenToolAsync(string route)
+        {
+            await Shell.Current.GoToAsync(route);
         }
 
         /// <summary>

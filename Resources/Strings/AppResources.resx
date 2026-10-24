@@ -355,4 +355,5 @@
   <data name="FieldPingCount" xml:space="preserve"><value>How many</value></data>
   <data name="FieldRecordType" xml:space="preserve"><value>Record type</value></data>
   <data name="FieldPortSet" xml:space="preserve"><value>Which ports</value></data>
+  <data name="QuickPingRouter" xml:space="preserve"><value>Ping router</value></data>
 </root>

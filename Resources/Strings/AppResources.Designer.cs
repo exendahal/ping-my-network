@@ -2862,5 +2862,13 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("FieldPortSet", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Ping router.
+        /// </summary>
+        public static string QuickPingRouter {
+            get {
+                return ResourceManager.GetString("QuickPingRouter", resourceCulture);
+            }
+        }
     }
 }
