@@ -61,28 +61,30 @@
                                 Text="{Binding KnownText}" />
                         </Grid>
 
-                        <FlexLayout
-                            AlignItems="Center"
-                            Direction="Row"
-                            Wrap="Wrap">
+                        <!--
+                            A stack, not a wrapping FlexLayout: inside a scrolling stack the
+                            FlexLayout measured its height for one width and laid out for another,
+                            which left a tall empty gap between the rows of buttons.
+                        -->
+                        <VerticalStackLayout Spacing="{StaticResource SpaceS}">
                             <Button
                                 x:Name="ToggleKnownButton"
-                                Margin="0,0,8,8"
                                 Command="{Binding ToggleKnownCommand}"
+                                HorizontalOptions="Start"
                                 IsVisible="{Binding CanToggleKnown}"
                                 Text="{Binding ToggleKnownText}" />
-                            <Button
-                                Margin="0,0,8,8"
-                                Command="{Binding PingCommand}"
-                                Style="{StaticResource QuietButton}"
-                                Text="{x:Static res:AppResources.ActionPing}" />
-                            <Button
-                                Margin="0,0,8,8"
-                                Command="{Binding OpenWebPageCommand}"
-                                IsVisible="{Binding HasWebPage}"
-                                Style="{StaticResource QuietButton}"
-                                Text="{x:Static res:AppResources.ActionOpenWebPage}" />
-                        </FlexLayout>
+                            <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
+                                <Button
+                                    Command="{Binding PingCommand}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.ActionPing}" />
+                                <Button
+                                    Command="{Binding OpenWebPageCommand}"
+                                    IsVisible="{Binding HasWebPage}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.ActionOpenWebPage}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
 
                         <HorizontalStackLayout IsVisible="{Binding IsPinging}" Spacing="{StaticResource SpaceS}">
                             <ActivityIndicator
