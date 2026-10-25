@@ -331,7 +331,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You&apos;re on channel {0}, already the quietest here ({1} overlapping networks)..
+        ///   Looks up a localized string similar to You&apos;re on channel {0}, already the quietest here ({1})..
         /// </summary>
         public static string ChannelsOnBestFormat {
             get {
@@ -340,7 +340,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Channel {0} is the quietest here, with {1} overlapping networks..
+        ///   Looks up a localized string similar to Channel {0} is the quietest here, with {1}..
         /// </summary>
         public static string ChannelsQuietestFormat {
             get {
@@ -349,7 +349,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You&apos;re on channel {0} with {1} overlapping networks. Channel {2} is the quietest, with {3}..
+        ///   Looks up a localized string similar to You&apos;re on channel {0} with {1}. Channel {2} is the quietest, with {3}..
         /// </summary>
         public static string ChannelsSummaryFormat {
             get {
@@ -3918,6 +3918,42 @@ namespace PingMyNetwork.Resources.Strings {
         public static string DetailsPublicIp {
             get {
                 return ResourceManager.GetString("DetailsPublicIp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no overlapping networks.
+        /// </summary>
+        public static string OverlapNone {
+            get {
+                return ResourceManager.GetString("OverlapNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 overlapping network.
+        /// </summary>
+        public static string OverlapOne {
+            get {
+                return ResourceManager.GetString("OverlapOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} overlapping networks.
+        /// </summary>
+        public static string OverlapManyFormat {
+            get {
+                return ResourceManager.GetString("OverlapManyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} record from {1} in {2} ms.
+        /// </summary>
+        public static string DnsSummaryOneFormat {
+            get {
+                return ResourceManager.GetString("DnsSummaryOneFormat", resourceCulture);
             }
         }
     }

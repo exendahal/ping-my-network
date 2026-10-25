@@ -231,9 +231,9 @@
   <data name="SignalWalkClear" xml:space="preserve"><value>Clear readings</value></data>
   <data name="SignalWalkSpotFormat" xml:space="preserve"><value>Spot {0}</value></data>
   <data name="SignalWalkSpotsSummary" xml:space="preserve"><value>Strongest: {0} ({1}). Weakest: {2} ({3}).</value></data>
-  <data name="ChannelsSummaryFormat" xml:space="preserve"><value>You're on channel {0} with {1} overlapping networks. Channel {2} is the quietest, with {3}.</value></data>
-  <data name="ChannelsOnBestFormat" xml:space="preserve"><value>You're on channel {0}, already the quietest here ({1} overlapping networks).</value></data>
-  <data name="ChannelsQuietestFormat" xml:space="preserve"><value>Channel {0} is the quietest here, with {1} overlapping networks.</value></data>
+  <data name="ChannelsSummaryFormat" xml:space="preserve"><value>You're on channel {0} with {1}. Channel {2} is the quietest, with {3}.</value></data>
+  <data name="ChannelsOnBestFormat" xml:space="preserve"><value>You're on channel {0}, already the quietest here ({1}).</value></data>
+  <data name="ChannelsQuietestFormat" xml:space="preserve"><value>Channel {0} is the quietest here, with {1}.</value></data>
   <data name="ChannelsLegendOwn" xml:space="preserve"><value>Your network</value></data>
   <data name="ChannelsLegendOther" xml:space="preserve"><value>Other networks</value></data>
   <data name="ChannelsEstimateNote" xml:space="preserve"><value>An estimate from the networks this device can see, not measured traffic.</value></data>
@@ -433,4 +433,8 @@
   <data name="WhichNetworkDifferent" xml:space="preserve"><value>A different place</value></data>
   <data name="DetailsSectionInternet" xml:space="preserve"><value>Internet</value></data>
   <data name="DetailsPublicIp" xml:space="preserve"><value>Public IP address</value></data>
+  <data name="OverlapNone" xml:space="preserve"><value>no overlapping networks</value></data>
+  <data name="OverlapOne" xml:space="preserve"><value>1 overlapping network</value></data>
+  <data name="OverlapManyFormat" xml:space="preserve"><value>{0} overlapping networks</value></data>
+  <data name="DnsSummaryOneFormat" xml:space="preserve"><value>{0} record from {1} in {2} ms</value></data>
 </root>

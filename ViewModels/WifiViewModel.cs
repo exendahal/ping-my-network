@@ -580,7 +580,7 @@ namespace PingMyNetwork.ViewModels
         {
             NetworkSnapshot connection = _Monitor.Current;
             List<NetworkData> networks = _Scanner.GetNetworks();
-            string family = ChannelPlanner.FamilyOf(connection.Ssid);
+            IReadOnlyCollection<string> family = ChannelPlanner.OwnFamilies(connection.Ssid, connection.Bssid, networks);
 
             LoadSpots(connection.Ssid);
             NoteScanReading(connection, networks);
@@ -675,8 +675,8 @@ namespace PingMyNetwork.ViewModels
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="networks">The latest scan.</param>
-        /// <param name="family">The user's network family.</param>
-        private void ApplyChart(NetworkSnapshot connection, List<NetworkData> networks, string family)
+        /// <param name="family">The user's networks.</param>
+        private void ApplyChart(NetworkSnapshot connection, List<NetworkData> networks, IReadOnlyCollection<string> family)
         {
             List<WifiFrequencyBand> bands = networks
                 .Select(network => network.FrequencyBand)

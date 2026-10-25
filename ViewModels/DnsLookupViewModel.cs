@@ -159,7 +159,11 @@ namespace PingMyNetwork.ViewModels
                 ? NetworkFormat.Text(AppResources.DnsNotFoundFormat, result.Name, result.Server)
                 : result.Records.Count == 0
                     ? NetworkFormat.Text(AppResources.DnsNoRecordsFormat, TypeName(type), result.Server)
-                    : NetworkFormat.Text(AppResources.DnsSummaryFormat, result.Records.Count, result.Server, result.ElapsedMs);
+                    : NetworkFormat.Text(
+                        result.Records.Count == 1 ? AppResources.DnsSummaryOneFormat : AppResources.DnsSummaryFormat,
+                        result.Records.Count,
+                        result.Server,
+                        result.ElapsedMs);
         }
 
         /// <summary>

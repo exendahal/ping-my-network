@@ -247,6 +247,22 @@ namespace PingMyNetwork.Helper.Utilities
         }
 
         /// <summary>
+        /// A count of overlapping networks in words: "no overlapping networks", "1 overlapping
+        /// network", "3 overlapping networks".
+        /// </summary>
+        /// <param name="count">How many.</param>
+        /// <returns>The phrase.</returns>
+        public static string Overlapping(int count)
+        {
+            return count switch
+            {
+                0 => AppResources.OverlapNone,
+                1 => AppResources.OverlapOne,
+                _ => Text(AppResources.OverlapManyFormat, count),
+            };
+        }
+
+        /// <summary>
         /// Shortens a registered company name to what people call their provider:
         /// "WorldLink Communications Pvt. Ltd." becomes "WorldLink Communications".
         /// </summary>
