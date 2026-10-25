@@ -371,6 +371,7 @@
                         Icon="{x:Static util:MaterialIcon.LAN}"
                         Value="{Binding IpText}" />
                     <controls:StatTileView
+                        x:Name="ProviderTile"
                         Caption="{x:Static res:AppResources.TileProvider}"
                         Icon="{x:Static util:MaterialIcon.PUBLIC}"
                         IsVisible="{Binding HasProvider}"

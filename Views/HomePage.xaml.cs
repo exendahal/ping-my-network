@@ -207,11 +207,12 @@ namespace PingMyNetwork.Views
 
         /// <summary>
         /// Places the visible tiles left to right, top to bottom, in equal columns, so there is
-        /// never a gap where a hidden tile would have been.
+        /// never a gap where a hidden tile would have been. The provider tile takes a whole row
+        /// at the end, since provider names are too long for a column.
         /// </summary>
         private void ArrangeTiles()
         {
-            List<View> visible = Tiles.Children.OfType<View>().Where(tile => tile.IsVisible).ToList();
+            List<View> visible = Tiles.Children.OfType<View>().Where(tile => tile.IsVisible && (tile != ProviderTile)).ToList();
             int rows = (visible.Count + _TileColumns - 1) / _TileColumns;
 
             Tiles.ColumnDefinitions.Clear();
@@ -222,10 +223,14 @@ namespace PingMyNetwork.Views
                 Tiles.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
             }
 
-            for (var i = 0; i < rows; i++)
+            for (var i = 0; i <= rows; i++)
             {
                 Tiles.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             }
+
+            Grid.SetColumn(ProviderTile, 0);
+            Grid.SetRow(ProviderTile, rows);
+            Grid.SetColumnSpan(ProviderTile, _TileColumns);
 
             for (var i = 0; i < visible.Count; i++)
             {
