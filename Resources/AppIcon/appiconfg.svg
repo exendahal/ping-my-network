@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-    Ping My Network mark: a signal fan rising from this device, with three devices the scan found on
-    the outer ring. Flat shapes only, so the MAUI resizer rasterizes it cleanly at every size.
-    Centred on the 456 canvas; the build scales it into the adaptive-icon safe zone (ForegroundScale).
+    Ping My Network mark: a Wi-Fi router whose status lights are a heartbeat, for "is my network
+    alive?". White on transparent, so Android's themed icons can tint it. Centred on the 456 canvas;
+    the build scales it into the adaptive-icon safe zone (ForegroundScale).
 -->
 <svg width="456" height="456" viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round">
-        <!-- Inner and outer signal arcs, 45° to 135° around the centre dot. -->
-        <path d="M 178.5 276.5 A 70 70 0 0 1 277.5 276.5" />
-        <path d="M 129 227 A 140 140 0 0 1 327 227" />
-    </g>
-    <g fill="#FFFFFF">
-        <!-- This device. -->
-        <circle cx="228" cy="326" r="30" />
-        <!-- Devices found on the network, on the 205-unit ring at 135°, 90° and 45°. -->
-        <circle cx="83" cy="181" r="22" />
-        <circle cx="228" cy="121" r="22" />
-        <circle cx="373" cy="181" r="22" />
+    <!-- On the app's 100-unit sketch grid, scaled to 75% of the canvas width. -->
+    <defs>
+        <!-- The pulse is cut out of the router, so it stays a hole in Android's single-colour themed icon. -->
+        <mask id="pulse" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+            <rect x="0" y="0" width="100" height="100" fill="#FFFFFF" />
+            <path d="M20 71 H37 L43 62 L50 80 L56 64 L61 71 H80" fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+        </mask>
+    </defs>
+    <g transform="translate(15.5 -0.65) scale(4.25)">
+        <rect x="10" y="56" width="80" height="30" rx="10" fill="#FFFFFF" mask="url(#pulse)" />
+        <g fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round">
+            <path d="M40 40 A14 14 0 0 1 60 40" />
+            <path d="M30 30 A28 28 0 0 1 70 30" />
+        </g>
     </g>
 </svg>
