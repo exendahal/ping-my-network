@@ -11,14 +11,29 @@ namespace PingMyNetwork.Implementation
     /// <remarks>
     /// ponytail: one JSON file instead of the PRD's SQLite. A household network has tens of devices,
     /// so reading and writing the whole file costs less than a database dependency. Move to SQLite
-    /// when history (PRD 6.12) makes the file large. The file is also what Android Auto Backup and the
-    /// sync folder (PRD 6.16) will carry.
+    /// when history (PRD 6.12) makes the file large.
+    ///
+    /// Backup (PRD 6.16), with no account and no server of our own: Android Auto Backup carries the
+    /// file to the user's Google account. On iOS and Mac a copy also goes to the user's iCloud
+    /// key-value store, which restores it on a reinstall or a new device signed in to the same
+    /// Apple ID, and the file is part of the normal iCloud device backup.
     /// </remarks>
     public sealed class DeviceStore
     {
         #region Variables
 
         private const string FILE_NAME = "devices.json";
+
+        /// <summary>
+        /// Key of the iCloud copy.
+        /// </summary>
+        private const string CLOUD_KEY = "devices";
+
+        /// <summary>
+        /// iCloud's key-value store holds at most 1 MB per value; a larger file is only backed up
+        /// with the device backup.
+        /// </summary>
+        private const int CLOUD_MAX_BYTES = 1_000_000;
 
         private readonly string _Path = Path.Combine(FileSystem.AppDataDirectory, FILE_NAME);
         private readonly SemaphoreSlim _WriteGate = new(1, 1);
@@ -47,6 +62,12 @@ namespace PingMyNetwork.Implementation
         /// <returns>The networks, or an empty list when there is no file or it cannot be read.</returns>
         public async Task<List<NetworkRecord>> LoadAsync()
         {
+            if (!File.Exists(_Path) && (ReadCloudCopy() is byte[] restored))
+            {
+                // A reinstall or a new device: start from the iCloud copy.
+                await SaveAsync(restored);
+            }
+
             if (!File.Exists(_Path))
             {
                 return [];
@@ -95,6 +116,7 @@ namespace PingMyNetwork.Implementation
             {
                 await File.WriteAllBytesAsync(temporary, json);
                 File.Move(temporary, _Path, overwrite: true);
+                WriteCloudCopy(json);
             }
             catch (IOException exception)
             {
@@ -104,6 +126,42 @@ namespace PingMyNetwork.Implementation
             {
                 _WriteGate.Release();
             }
+        }
+
+        /// <summary>
+        /// Reads the iCloud copy of the file, on iOS and Mac.
+        /// </summary>
+        /// <returns>The file's contents, or null when there is none.</returns>
+        private static byte[]? ReadCloudCopy()
+        {
+#if IOS || MACCATALYST
+            Foundation.NSUbiquitousKeyValueStore cloud = Foundation.NSUbiquitousKeyValueStore.DefaultStore;
+
+            cloud.Synchronize();
+
+            return cloud.GetData(CLOUD_KEY)?.ToArray();
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Puts a copy of the file in the user's iCloud, on iOS and Mac.
+        /// </summary>
+        /// <param name="json">The file's contents.</param>
+        private static void WriteCloudCopy(byte[] json)
+        {
+#if IOS || MACCATALYST
+            if (json.Length > CLOUD_MAX_BYTES)
+            {
+                return;
+            }
+
+            Foundation.NSUbiquitousKeyValueStore cloud = Foundation.NSUbiquitousKeyValueStore.DefaultStore;
+
+            cloud.SetData(CLOUD_KEY, Foundation.NSData.FromArray(json));
+            cloud.Synchronize();
+#endif
         }
 
         /// <summary>

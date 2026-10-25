@@ -3713,5 +3713,41 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("SettingsAlertsFooterApple", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string SettingsBackup {
+            get {
+                return ResourceManager.GetString("SettingsBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your networks, device names and Known devices are backed up to your Google account automatically, like other app data. They come back when you reinstall the app or set up a new phone from that backup..
+        /// </summary>
+        public static string SettingsBackupAndroid {
+            get {
+                return ResourceManager.GetString("SettingsBackupAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your networks, device names and Known devices are saved to your iCloud. They come back when you reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID..
+        /// </summary>
+        public static string SettingsBackupApple {
+            get {
+                return ResourceManager.GetString("SettingsBackupApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your networks, device names and Known devices are saved on this PC..
+        /// </summary>
+        public static string SettingsBackupWindows {
+            get {
+                return ResourceManager.GetString("SettingsBackupWindows", resourceCulture);
+            }
+        }
     }
 }

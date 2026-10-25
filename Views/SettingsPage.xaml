@@ -70,6 +70,22 @@
                 </Border>
                 <Label Style="{StaticResource SectionFooter}" Text="{x:Static res:AppResources.SettingsPrivacyFooter}" />
 
+                <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsBackup}" />
+                <Border Padding="16,12" Style="{StaticResource GroupCard}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Label
+                            FontSize="19"
+                            Style="{StaticResource Icon}"
+                            Text="{x:Static util:MaterialIcon.BACKUP}"
+                            VerticalOptions="Start"
+                            WidthRequest="26" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource TextBody}"
+                            Text="{Binding BackupText}" />
+                    </Grid>
+                </Border>
+
                 <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAbout}" />
                 <Border Style="{StaticResource GroupCard}">
                     <controls:SettingsRow

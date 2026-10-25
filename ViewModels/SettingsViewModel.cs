@@ -9,7 +9,7 @@ using PingMyNetwork.Resources.Strings;
 namespace PingMyNetwork.ViewModels
 {
     /// <summary>
-    /// Settings: theme, new-device alerts, permissions and the app's version.
+    /// Settings: theme, new-device alerts, permissions, backup and the app's version.
     /// </summary>
     public sealed partial class SettingsViewModel : ObservableObject
     {
@@ -66,6 +66,13 @@ namespace PingMyNetwork.ViewModels
         public string AlertsFooter { get; } = OperatingSystem.IsAndroid()
             ? AppResources.SettingsAlertsFooterAndroid
             : AppResources.SettingsAlertsFooterApple;
+
+        /// <summary>
+        /// Where this platform backs up the app's data.
+        /// </summary>
+        public string BackupText { get; } = OperatingSystem.IsAndroid() ? AppResources.SettingsBackupAndroid
+            : OperatingSystem.IsIOS() || OperatingSystem.IsMacCatalyst() ? AppResources.SettingsBackupApple
+            : AppResources.SettingsBackupWindows;
 
         /// <summary>
         /// The app's version, e.g. "1.0 (1)".

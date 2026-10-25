@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<!--
+		allowBackup: Android Auto Backup copies the app's files (devices.json: networks, device
+		names, Known status) and preferences (settings, signal walk places) to the user's Google
+		account, and restores them on reinstall or a new phone. Caches are left out by default.
+
 		usesCleartextTraffic: device details read each device's own web page title and UPnP
 		description over plain http:// on the local network. Android's network security config cannot
 		limit cleartext to private address ranges (it matches host names, not IP ranges), so it is

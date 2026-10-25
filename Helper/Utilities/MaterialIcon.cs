@@ -87,6 +87,7 @@ namespace PingMyNetwork.Helper.Utilities
         public const string UPLOAD = "\uf09b";
         public const string DOWNLOAD = "\uf090";
         public const string NOTIFICATIONS = "\ue7f4";
+        public const string BACKUP = "\ue864";
         public const string NEARBY = "\ue1b7";
 
         #endregion
