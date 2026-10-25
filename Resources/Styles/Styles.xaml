@@ -347,11 +347,8 @@
                             <Setter Property="ThumbColor" Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
-                    <VisualState x:Name="Off">
-                        <VisualState.Setters>
-                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
-                        </VisualState.Setters>
-                    </VisualState>
+                    <!--  No thumb change for Off: an Off setter stayed applied after switching on, greying the thumb.  -->
+                    <VisualState x:Name="Off" />
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
