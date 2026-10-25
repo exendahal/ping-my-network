@@ -178,11 +178,16 @@ namespace PingMyNetwork.Controls
             RowSwitch.IsVisible = ShowSwitch;
             RowSwitch.IsToggled = IsToggled;
 
-            TitleLabel.TextColor = IsDestructive
-                ? StatusPalette.For(Helper.Enums.StatusLevel.Bad)
-                : (Application.Current?.RequestedTheme == AppTheme.Dark
-                    ? Colors.White
-                    : Colors.Black);
+            // A theme binding, not the theme of the moment: the row must follow a theme change
+            // made while it is on screen, as Settings' own theme choice does.
+            if (IsDestructive)
+            {
+                TitleLabel.TextColor = StatusPalette.For(Helper.Enums.StatusLevel.Bad);
+            }
+            else
+            {
+                TitleLabel.SetAppThemeColor(Label.TextColorProperty, Colors.Black, Colors.White);
+            }
 
             // The live accent, so the icons change as soon as "Use system colors" is flipped.
             if (IsDestructive)
