@@ -3814,7 +3814,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your own networks are backed up and alert you to new devices. Guest networks stay on this phone..
+        ///   Looks up a localized string similar to Your own networks are backed up and alert you to new devices. Guest networks stay on this device..
         /// </summary>
         public static string OwnershipBody {
             get {

@@ -421,7 +421,7 @@
   <data name="OwnershipMine" xml:space="preserve"><value>My network</value></data>
   <data name="OwnershipGuest" xml:space="preserve"><value>Guest network</value></data>
   <data name="OwnershipQuestionFormat" xml:space="preserve"><value>Is {0} your network?</value></data>
-  <data name="OwnershipBody" xml:space="preserve"><value>Your own networks are backed up and alert you to new devices. Guest networks stay on this phone.</value></data>
+  <data name="OwnershipBody" xml:space="preserve"><value>Your own networks are backed up and alert you to new devices. Guest networks stay on this device.</value></data>
   <data name="OwnershipYes" xml:space="preserve"><value>Yes, it's mine</value></data>
   <data name="OwnershipNo" xml:space="preserve"><value>No, guest network</value></data>
   <data name="OwnershipToggleHint" xml:space="preserve"><value>Switches between my network and guest network</value></data>
