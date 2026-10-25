@@ -31,7 +31,7 @@
 		<ApplicationTitle>Ping My Network</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.pingmynetwork</ApplicationId>
+		<ApplicationId>com.exendahal.pingmynetwork</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
