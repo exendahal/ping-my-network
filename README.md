@@ -2,10 +2,6 @@
 
 A free network utility for Android, iOS, Windows and Mac. It answers the questions people ask about their network: *Who is on my Wi-Fi? Is my internet actually working? Why is it slow? Which channel should my router use?*
 
-It is also the flagship app for [maui_wifi_manager](https://github.com/exendahal/maui_wifi_manager) ([`WifiManager.Maui`](https://www.nuget.org/packages/WifiManager.Maui/) on NuGet): every screen is built on the library's public API, so .NET MAUI developers can see what it does on each platform.
-
-> **Status:** in active development. Not yet on any app store.
-
 ## Features
 
 ### Connection health
