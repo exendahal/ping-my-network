@@ -26,6 +26,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- iOS shares the Wi-Fi name only with apps that have location access. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Ping My Network reads the name of the Wi-Fi you are connected to. Your location is never used or stored.</string>
 	<!-- Device scans, ping and mDNS names on the local network (iOS 14+ local network privacy). -->
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Ping My Network finds the devices on your network and names them.</string>

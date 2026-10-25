@@ -111,4 +111,15 @@ namespace PingMyNetwork.Helper.Enums
         Name,
         LastSeen,
     }
+
+    /// <summary>
+    /// What keeps the app from reading the Wi-Fi name.
+    /// </summary>
+    public enum LocationProblem
+    {
+        None,
+        PermissionMissing,
+        ServicesOff,
+    }
+
 }

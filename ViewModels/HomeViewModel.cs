@@ -28,6 +28,7 @@ namespace PingMyNetwork.ViewModels
 
         private bool _IsDevicesQueued;
         private bool _HasAskedPermissions;
+        private LocationProblem _LocationProblem;
 
         #endregion
 
@@ -135,10 +136,22 @@ namespace PingMyNetwork.ViewModels
         public partial bool IsNameHidden { get; set; }
 
         /// <summary>
-        /// Whether the app can send the user somewhere to reveal the name. Only Windows has a
-        /// single setting for it.
+        /// Why the name is hidden, e.g. "Location is turned off".
         /// </summary>
-        public bool CanRevealName => OperatingSystem.IsWindows();
+        [ObservableProperty]
+        public partial string HiddenNameDetail { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The button that fixes it, e.g. "Turn on location".
+        /// </summary>
+        [ObservableProperty]
+        public partial string HiddenNameAction { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Whether there is a fix to offer.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool HasHiddenNameAction { get; set; }
 
         /// <summary>
         /// The internet provider, e.g. "WorldLink Communications".
@@ -339,13 +352,25 @@ namespace PingMyNetwork.ViewModels
         }
 
         /// <summary>
-        /// Opens the system page that lets the app read the Wi-Fi name.
+        /// Fixes whatever hides the Wi-Fi name: asks for location access, or opens the page where
+        /// location is switched on.
         /// </summary>
         /// <returns>A task that completes once handed over.</returns>
         [RelayCommand]
         private async Task RevealNameAsync()
         {
-            await Launcher.Default.OpenAsync(PlatformLinks.WindowsLocationSettings);
+            if (_LocationProblem == LocationProblem.ServicesOff)
+            {
+                await LocationAccess.OpenServiceSettingsAsync();
+                return;
+            }
+
+            if (await LocationAccess.RequestAsync())
+            {
+                // Android 13+ also wants nearby Wi-Fi access for scanning; the library asks for both.
+                await _Wifi.RequestPermissionsAsync();
+                _Monitor.Refresh();
+            }
         }
 
         /// <summary>
@@ -404,6 +429,11 @@ namespace PingMyNetwork.ViewModels
             IsMetered = snapshot.IsMetered;
             IsNameHidden = snapshot.IsSsidHidden;
 
+            if (snapshot.IsSsidHidden)
+            {
+                _ = ExplainHiddenNameAsync();
+            }
+
             ApplyStatus(snapshot.Status);
             ApplyName(snapshot);
             ApplySignal(snapshot);
@@ -432,6 +462,26 @@ namespace PingMyNetwork.ViewModels
             LastCheckedText = isFirstRead
                 ? string.Empty
                 : NetworkFormat.Text(AppResources.LastCheckedFormat, snapshot.CheckedAt.LocalDateTime);
+        }
+
+        /// <summary>
+        /// Works out why the Wi-Fi name is hidden and offers the fix.
+        /// </summary>
+        /// <returns>A task that completes once shown.</returns>
+        private async Task ExplainHiddenNameAsync()
+        {
+            _LocationProblem = await LocationAccess.CheckAsync();
+
+            (HiddenNameDetail, HiddenNameAction) = _LocationProblem switch
+            {
+                LocationProblem.ServicesOff => (AppResources.HiddenNameLocationOff, AppResources.ActionTurnOnLocation),
+                LocationProblem.PermissionMissing => (
+                    OperatingSystem.IsWindows() ? AppResources.HiddenNetworkNameDetail : AppResources.HiddenNameNoPermission,
+                    AppResources.ActionAllowLocation),
+                _ => (AppResources.HiddenNameUnknown, string.Empty),
+            };
+
+            HasHiddenNameAction = HiddenNameAction.Length > 0;
         }
 
         /// <summary>

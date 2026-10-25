@@ -288,7 +288,10 @@ namespace PingMyNetwork.Implementation
         /// <returns>The snapshot.</returns>
         private static NetworkSnapshot FromWifi(NetworkData data)
         {
-            string? ssid = string.IsNullOrWhiteSpace(data.Ssid) ? null : data.Ssid.Trim('"');
+            // Android reports "<unknown ssid>" when location access or location services are off.
+            string? ssid = string.IsNullOrWhiteSpace(data.Ssid) || data.Ssid.Equals("<unknown ssid>", StringComparison.OrdinalIgnoreCase)
+                ? null
+                : data.Ssid.Trim('"');
 
             return new NetworkSnapshot
             {

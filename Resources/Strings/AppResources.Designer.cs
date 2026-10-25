@@ -3371,5 +3371,41 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("TileProvider", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on location.
+        /// </summary>
+        public static string ActionTurnOnLocation {
+            get {
+                return ResourceManager.GetString("ActionTurnOnLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location is turned off, so your phone hides the Wi-Fi name and nearby networks from apps. Your location itself is never used..
+        /// </summary>
+        public static string HiddenNameLocationOff {
+            get {
+                return ResourceManager.GetString("HiddenNameLocationOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The app needs location access to read the Wi-Fi name. Your location itself is never used..
+        /// </summary>
+        public static string HiddenNameNoPermission {
+            get {
+                return ResourceManager.GetString("HiddenNameNoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The system didn&apos;t share the Wi-Fi name..
+        /// </summary>
+        public static string HiddenNameUnknown {
+            get {
+                return ResourceManager.GetString("HiddenNameUnknown", resourceCulture);
+            }
+        }
     }
 }

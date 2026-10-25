@@ -179,15 +179,15 @@
                                     Style="{StaticResource PrimaryButton}"
                                     Text="{Binding PrimaryActionText}" />
 
-                                <!--  Windows withholds the Wi-Fi name from apps without location access.  -->
+                                <!--  The system withholds the Wi-Fi name without location access, or with location off.  -->
                                 <VerticalStackLayout IsVisible="{Binding IsNameHidden}" Spacing="{StaticResource SpaceXs}">
-                                    <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.HiddenNetworkNameDetail}" />
+                                    <Label Style="{StaticResource TextBody}" Text="{Binding HiddenNameDetail}" />
                                     <Button
                                         Command="{Binding RevealNameCommand}"
                                         HorizontalOptions="Start"
-                                        IsVisible="{Binding CanRevealName}"
+                                        IsVisible="{Binding HasHiddenNameAction}"
                                         Style="{StaticResource QuietButton}"
-                                        Text="{x:Static res:AppResources.ActionAllowLocation}" />
+                                        Text="{Binding HiddenNameAction}" />
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Grid>

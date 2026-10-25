@@ -372,4 +372,8 @@
   <data name="ToolWakeHelp" xml:space="preserve"><value>Wake-on-LAN turns on a sleeping or switched-off computer by sending it a special "magic packet". The computer must have Wake-on-LAN enabled in its settings or BIOS, be wired to the network in most cases, and be on the same network as this device. You need its MAC address.</value></data>
   <data name="ToolSubnetHelp" xml:space="preserve"><value>The subnet calculator works out a network's address range from an address and its mask or prefix (like /24): the first and last usable address, the broadcast address and how many devices fit. It starts with your current network, and works offline.</value></data>
   <data name="TileProvider" xml:space="preserve"><value>Internet provider</value></data>
+  <data name="ActionTurnOnLocation" xml:space="preserve"><value>Turn on location</value></data>
+  <data name="HiddenNameLocationOff" xml:space="preserve"><value>Location is turned off, so your phone hides the Wi-Fi name and nearby networks from apps. Your location itself is never used.</value></data>
+  <data name="HiddenNameNoPermission" xml:space="preserve"><value>The app needs location access to read the Wi-Fi name. Your location itself is never used.</value></data>
+  <data name="HiddenNameUnknown" xml:space="preserve"><value>The system didn't share the Wi-Fi name.</value></data>
 </root>
