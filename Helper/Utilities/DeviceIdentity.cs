@@ -46,6 +46,67 @@ namespace PingMyNetwork.Helper.Utilities
         }
 
         /// <summary>
+        /// Whether two sightings share an identifier that names one device, leaving out the IP
+        /// address, which every home network hands out the same way (192.168.1.x).
+        /// </summary>
+        /// <param name="first">One sighting.</param>
+        /// <param name="second">The other.</param>
+        /// <returns>True when a MAC, mDNS, NetBIOS or host name is equal.</returns>
+        public static bool MatchesStrongly(NetworkDevice first, NetworkDevice second)
+        {
+            return (Decide(first.MacAddress, second.MacAddress) == true)
+                || (Decide(first.MdnsName, second.MdnsName) == true)
+                || (Decide(first.NetBiosName, second.NetBiosName) == true)
+                || (Decide(first.HostName, second.HostName) == true);
+        }
+
+        /// <summary>
+        /// Whether two access points are radios of the same router. A router's 2.4 and 5 GHz
+        /// radios, and its extra networks, take neighbouring addresses: the same first five
+        /// bytes, apart from the "locally administered" bit some routers set on extra networks.
+        /// </summary>
+        /// <param name="first">One BSSID.</param>
+        /// <param name="second">The other.</param>
+        /// <returns>True when they come from one router.</returns>
+        public static bool IsSameRouter(string first, string second)
+        {
+            if (!TryParseMac(first, out byte[] a) || !TryParseMac(second, out byte[] b))
+            {
+                return false;
+            }
+
+            return ((a[0] | 0x02) == (b[0] | 0x02)) && a.AsSpan(1, 4).SequenceEqual(b.AsSpan(1, 4));
+        }
+
+        /// <summary>
+        /// Reads a MAC address written with colons or dashes.
+        /// </summary>
+        /// <param name="text">The address.</param>
+        /// <param name="bytes">Its six bytes.</param>
+        /// <returns>True when it is a MAC address.</returns>
+        private static bool TryParseMac(string text, out byte[] bytes)
+        {
+            string[] parts = text.Split(':', '-');
+
+            bytes = new byte[6];
+
+            if (parts.Length != 6)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < 6; i++)
+            {
+                if (!byte.TryParse(parts[i], System.Globalization.NumberStyles.HexNumber, null, out bytes[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Compares one identifier, when both sightings have it.
         /// </summary>
         /// <param name="first">The first sighting's value.</param>
@@ -67,6 +128,18 @@ namespace PingMyNetwork.Helper.Utilities
         [Conditional("DEBUG")]
         public static void SelfCheck()
         {
+            // A router's two bands, and an extra network with the locally administered bit set.
+            Debug.Assert(IsSameRouter("A4:2B:B0:11:22:30", "a4:2b:b0:11:22:34"));
+            Debug.Assert(IsSameRouter("A4:2B:B0:11:22:30", "A6:2B:B0:11:22:31"));
+
+            // Two routers of the same make in two homes.
+            Debug.Assert(!IsSameRouter("A4:2B:B0:11:22:30", "A4:2B:B0:11:98:30"));
+            Debug.Assert(!IsSameRouter("A4:2B:B0:11:22:30", "not a mac"));
+
+            // A shared address is not a shared device; a shared name is.
+            Debug.Assert(!MatchesStrongly(new NetworkDevice { IpAddress = "192.168.1.5" }, new NetworkDevice { IpAddress = "192.168.1.5" }));
+            Debug.Assert(MatchesStrongly(new NetworkDevice { MdnsName = "Anna's iPhone" }, new NetworkDevice { MdnsName = "anna's iphone" }));
+
             NetworkDevice phone = new() { IpAddress = "192.168.1.20", HostName = "galaxy-s24.lan" };
 
             // Same host name on a new address is the same phone.

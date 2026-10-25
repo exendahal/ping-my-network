@@ -64,6 +64,7 @@ namespace PingMyNetwork.Implementation
         private List<NetworkRecord>? _Networks;
         private NetworkRecord? _Network;
         private string? _NetworkKey;
+        private List<NetworkRecord> _Candidates = [];
         private CancellationTokenSource? _ScanCancel;
         private Task _ScanTask = Task.CompletedTask;
 
@@ -165,6 +166,22 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// The remembered networks with this Wi-Fi name and router address, when the phone is on an
+        /// access point none of them has been seen on. The user picks one, or says it is a
+        /// different place (<see cref="ChooseNetworkAsync"/>). Empty otherwise.
+        /// </summary>
+        public IReadOnlyList<NetworkRecord> Candidates
+        {
+            get
+            {
+                lock (_Gate)
+                {
+                    return [.. _Candidates];
+                }
+            }
+        }
+
+        /// <summary>
         /// Why the last scan could not run, or null.
         /// </summary>
         public WifiErrorCodes? LastError { get; private set; }
@@ -246,8 +263,25 @@ namespace PingMyNetwork.Implementation
                 return;
             }
 
+            NetworkRecord? record = BeginScan(key, network);
+
+            // A remembered name on a new access point: work out which network this is from the
+            // devices on it, and only ask the user when that does not settle it.
+            if ((record is null) && (await GuessNetworkAsync(network) is string choice))
+            {
+                Choose(choice.Length > 0 ? choice : null, network);
+                SwitchTo(network);
+                record = BeginScan(key, network);
+            }
+
+            if (record is null)
+            {
+                // Which network this is waits for the user; scanning now could mix two together.
+                Changed?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+
             CancellationTokenSource cancel = new();
-            NetworkRecord record = BeginScan(key, network);
 
             _ScanCancel = cancel;
             LastError = null;
@@ -409,6 +443,138 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Answers which network the phone is on, when a remembered Wi-Fi name shows up on an
+        /// access point none of its networks has been seen on.
+        /// </summary>
+        /// <param name="id">The remembered network it is, or null for a different place with the
+        /// same name, which starts a network of its own.</param>
+        /// <returns>A task that completes once saved.</returns>
+        public async Task ChooseNetworkAsync(string? id)
+        {
+            NetworkSnapshot network = _Monitor.Current;
+
+            if (!Choose(id, network))
+            {
+                return;
+            }
+
+            SwitchTo(network);
+            Changed?.Invoke(this, EventArgs.Empty);
+            NetworkSwitched?.Invoke(this, EventArgs.Empty);
+            await SaveAsync();
+        }
+
+        /// <summary>
+        /// Files the current access point under a remembered network, or starts a new network for a
+        /// different place with the same name.
+        /// </summary>
+        /// <param name="id">The remembered network, or null for a different place.</param>
+        /// <param name="network">The connection.</param>
+        /// <returns>False when there was nothing to choose.</returns>
+        private bool Choose(string? id, NetworkSnapshot network)
+        {
+            lock (_Gate)
+            {
+                if ((_Candidates.Count == 0) || (NetworkKey(network) is not string key))
+                {
+                    return false;
+                }
+
+                NetworkRecord? record = _Candidates.FirstOrDefault(candidate => candidate.Id == id);
+
+                if (record is null)
+                {
+                    record = new NetworkRecord { Key = key, Name = network.Ssid ?? string.Empty };
+                    _Networks!.Add(record);
+                }
+
+                Remember(record, network.Bssid);
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Sweeps the network without saving anything and compares what answers with each
+        /// remembered network of the same name, by identifiers that name a device (MAC, mDNS,
+        /// NetBIOS, host name), never by address.
+        /// </summary>
+        /// <remarks>
+        /// ponytail: the guess sweeps once and the scan that follows sweeps again, about 10 s more
+        /// on the rare visit to a new access point. Fold the guess's answers into the scan if that
+        /// ever matters.
+        /// </remarks>
+        /// <param name="network">The connection.</param>
+        /// <returns>The id of the network it is, an empty string for a different place, or null
+        /// when the devices do not settle it and the user is asked.</returns>
+        private async Task<string?> GuessNetworkAsync(NetworkSnapshot network)
+        {
+            List<NetworkRecord> candidates;
+
+            lock (_Gate)
+            {
+                candidates = [.. _Candidates];
+            }
+
+            if (candidates.Count == 0)
+            {
+                return null;
+            }
+
+            CancellationTokenSource cancel = new();
+            NetworkRecord probe = new();
+
+            _ScanCancel = cancel;
+            IsScanning = true;
+            Changed?.Invoke(this, EventArgs.Empty);
+
+            try
+            {
+                await _Wifi.DiscoverDevicesAsync(new SweepProgress(device => Merge(device, network, probe)), cancel.Token);
+                await NameFromMdnsAsync(probe, cancel.Token);
+            }
+            finally
+            {
+                IsScanning = false;
+            }
+
+            if (cancel.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            lock (_Gate)
+            {
+                List<NetworkDevice> named = probe.Devices
+                    .Where(device => !device.IsThisDevice && !device.IsGateway && MatchesAnyStrongly(device))
+                    .ToList();
+                List<(NetworkRecord Record, int Shared)> overlap = candidates
+                    .Select(candidate => (candidate, named.Count(device => candidate.Devices.Any(known => DeviceIdentity.MatchesStrongly(known, device)))))
+                    .OrderByDescending(pair => pair.Item2)
+                    .ToList();
+
+                // At least two devices in common with one network, and none with any other.
+                if ((overlap[0].Shared >= 2) && ((overlap.Count == 1) || (overlap[1].Shared == 0)))
+                {
+                    return overlap[0].Record.Id;
+                }
+
+                // Two or more devices that name themselves, and none seen on any network of this name.
+                if ((named.Count >= 2) && (overlap[0].Shared == 0))
+                {
+                    return string.Empty;
+                }
+
+                return null;
+            }
+
+            static bool MatchesAnyStrongly(NetworkDevice device)
+            {
+                return (device.MacAddress ?? device.MdnsName ?? device.NetBiosName ?? device.HostName) is not null;
+            }
+        }
+
+        /// <summary>
         /// Gives a device the user's own name, or clears it with an empty name.
         /// </summary>
         /// <param name="id">The device's id.</param>
@@ -474,12 +640,10 @@ namespace PingMyNetwork.Implementation
         /// <param name="snapshot">The new connection.</param>
         private async void OnSnapshotChanged(object? sender, NetworkSnapshot snapshot)
         {
-            string? key = NetworkKey(snapshot);
-
             lock (_Gate)
             {
                 // Not loaded yet: the first screen to appear loads the right network.
-                if ((_Networks is null) || (key == _NetworkKey))
+                if ((_Networks is null) || (Resolve(snapshot).Identity == _NetworkKey))
                 {
                     return;
                 }
@@ -511,14 +675,19 @@ namespace PingMyNetwork.Implementation
         /// <returns>True when that is a different network from the one shown before.</returns>
         private bool SwitchTo(NetworkSnapshot network)
         {
-            string? key = NetworkKey(network);
-
             lock (_Gate)
             {
-                bool isSwitch = key != _NetworkKey;
+                (string? identity, NetworkRecord? record, List<NetworkRecord> candidates) = Resolve(network);
+                bool isSwitch = identity != _NetworkKey;
 
-                _NetworkKey = key;
-                _Network = key is null ? null : _Networks!.FirstOrDefault(record => record.Key == key);
+                _NetworkKey = identity;
+                _Network = record;
+                _Candidates = candidates;
+
+                if (record is not null)
+                {
+                    Remember(record, network.Bssid);
+                }
 
                 foreach (NetworkDevice device in _Network?.Devices ?? [])
                 {
@@ -650,12 +819,20 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         /// <param name="key">The network's key.</param>
         /// <param name="network">The connection.</param>
-        /// <returns>The record being scanned.</returns>
-        private NetworkRecord BeginScan(string key, NetworkSnapshot network)
+        /// <returns>The record being scanned, or null while the user is asked which network this is.</returns>
+        private NetworkRecord? BeginScan(string key, NetworkSnapshot network)
         {
             lock (_Gate)
             {
-                NetworkRecord? record = _Networks!.FirstOrDefault(candidate => candidate.Key == key);
+                (string? identity, NetworkRecord? record, List<NetworkRecord> candidates) = Resolve(network);
+
+                if (candidates.Count > 0)
+                {
+                    _NetworkKey = identity;
+                    _Candidates = candidates;
+                    _Network = null;
+                    return null;
+                }
 
                 if (record is null)
                 {
@@ -663,8 +840,10 @@ namespace PingMyNetwork.Implementation
                     _Networks!.Add(record);
                 }
 
+                Remember(record, network.Bssid);
                 record.Name = network.Ssid ?? NetworkFormat.ConnectionType(network.ConnectionType);
-                _NetworkKey = key;
+                _NetworkKey = record.Id;
+                _Candidates = [];
 
                 foreach (NetworkDevice device in record.Devices)
                 {
@@ -676,6 +855,69 @@ namespace PingMyNetwork.Implementation
                 _Network = record;
 
                 return record;
+            }
+        }
+
+        /// <summary>
+        /// Works out which remembered network the phone is on. Two places can share a Wi-Fi name
+        /// and a router address (192.168.1.1 is everywhere), so each network also remembers the
+        /// access points (BSSIDs) it has been seen on.
+        /// </summary>
+        /// <remarks>
+        /// Windows does not report the access point, so there the name and router address decide,
+        /// as before. Caller holds the lock.
+        /// </remarks>
+        /// <param name="network">The connection.</param>
+        /// <returns>What to show: its identity, the record (null for a network not seen before),
+        /// and the networks to ask about when the access point is new to all of them.</returns>
+        private (string? Identity, NetworkRecord? Record, List<NetworkRecord> Candidates) Resolve(NetworkSnapshot network)
+        {
+            if (NetworkKey(network) is not string key)
+            {
+                return (null, null, []);
+            }
+
+            List<NetworkRecord> candidates = _Networks!.Where(record => record.Key == key).ToList();
+            string? bssid = network.Bssid;
+
+            if (candidates.Count == 0)
+            {
+                return ($"new:{key}", null, []);
+            }
+
+            if (bssid is null)
+            {
+                return (candidates[0].Id, candidates[0], []);
+            }
+
+            // An access point it has been on, or another radio of the same router (the other band).
+            NetworkRecord? known = candidates.FirstOrDefault(record => record.AccessPoints.Contains(bssid, StringComparer.OrdinalIgnoreCase))
+                ?? candidates.FirstOrDefault(record => record.AccessPoints.Any(point => DeviceIdentity.IsSameRouter(point, bssid)));
+
+            if (known is not null)
+            {
+                return (known.Id, known, []);
+            }
+
+            // Remembered before access points were: it takes this one as its first.
+            if ((candidates.Count == 1) && (candidates[0].AccessPoints.Count == 0))
+            {
+                return (candidates[0].Id, candidates[0], []);
+            }
+
+            return ($"ask:{key}|{bssid}", null, candidates);
+        }
+
+        /// <summary>
+        /// Remembers an access point as part of a network. Caller holds the lock.
+        /// </summary>
+        /// <param name="record">The network.</param>
+        /// <param name="bssid">The access point, or null when the platform does not say.</param>
+        private static void Remember(NetworkRecord record, string? bssid)
+        {
+            if ((bssid is not null) && !record.AccessPoints.Contains(bssid, StringComparer.OrdinalIgnoreCase))
+            {
+                record.AccessPoints.Add(bssid);
             }
         }
 

@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:models="clr-namespace:PingMyNetwork.Models"
     xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
     xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
     xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
@@ -163,6 +164,62 @@
             <Grid Grid.Row="3" RowDefinitions="Auto,*">
 
                 <VerticalStackLayout>
+
+                    <!--
+                        A remembered Wi-Fi name on an access point none of its networks has been
+                        seen on: two places can share a name, so the user says which one this is.
+                    -->
+                    <Border
+                        Margin="0,0,0,12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                          Dark={StaticResource AccentTintDark}}"
+                        IsVisible="{Binding AskWhichNetwork}"
+                        Style="{StaticResource NoticeBanner}">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            RowDefinitions="Auto,Auto,Auto">
+                            <Label
+                                FontSize="20"
+                                Style="{StaticResource Icon}"
+                                Text="{x:Static util:MaterialIcon.WIFI_FIND}"
+                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                            Dark={StaticResource AccentDark}}"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Column="1"
+                                Style="{StaticResource TextHeadline}"
+                                Text="{Binding WhichNetworkQuestion}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource TextBody}"
+                                Text="{x:Static res:AppResources.WhichNetworkBody}" />
+                            <VerticalStackLayout
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="-12,4,0,0">
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding NetworkChoices}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:NetworkChoice">
+                                            <Button
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DevicesViewModel}}, Path=ChooseNetworkCommand, x:DataType=vm:DevicesViewModel}"
+                                                CommandParameter="{Binding Id}"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource QuietButton}"
+                                                Text="{Binding Description}" />
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                                <Button
+                                    Command="{Binding ChooseNetworkCommand}"
+                                    CommandParameter=""
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.WhichNetworkDifferent}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
 
                     <!--  Asked once per network, after its first scan.  -->
                     <Border

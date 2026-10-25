@@ -3866,5 +3866,41 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("OwnershipMakeMine", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which {0} is this?.
+        /// </summary>
+        public static string WhichNetworkQuestionFormat {
+            get {
+                return ResourceManager.GetString("WhichNetworkQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re on an access point the app hasn&apos;t seen before. Two places can use the same Wi-Fi name, so pick the network it belongs to. Your answer is remembered..
+        /// </summary>
+        public static string WhichNetworkBody {
+            get {
+                return ResourceManager.GetString("WhichNetworkBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The one with {0} devices, last scanned {1:d}.
+        /// </summary>
+        public static string WhichNetworkChoiceFormat {
+            get {
+                return ResourceManager.GetString("WhichNetworkChoiceFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A different place.
+        /// </summary>
+        public static string WhichNetworkDifferent {
+            get {
+                return ResourceManager.GetString("WhichNetworkDifferent", resourceCulture);
+            }
+        }
     }
 }

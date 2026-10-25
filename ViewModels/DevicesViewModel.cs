@@ -179,6 +179,25 @@ namespace PingMyNetwork.ViewModels
         public partial bool ShowNoMatch { get; set; }
 
         /// <summary>
+        /// The remembered networks this one might be, when a known Wi-Fi name is on an access point
+        /// none of them has been seen on.
+        /// </summary>
+        [ObservableProperty]
+        public partial IReadOnlyList<NetworkChoice> NetworkChoices { get; set; } = [];
+
+        /// <summary>
+        /// Whether to ask which network this is.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool AskWhichNetwork { get; set; }
+
+        /// <summary>
+        /// The question, e.g. "Which flyoderr_5 is this?".
+        /// </summary>
+        [ObservableProperty]
+        public partial string WhichNetworkQuestion { get; set; } = string.Empty;
+
+        /// <summary>
         /// Whether to ask if this network is the user's own, after its first scan.
         /// </summary>
         [ObservableProperty]
@@ -319,6 +338,21 @@ namespace PingMyNetwork.ViewModels
         private Task MarkAllKnownAsync()
         {
             return _Manager.MarkAllKnownAsync();
+        }
+
+        /// <summary>
+        /// Answers which network this is: one of the remembered ones, or a different place when
+        /// the id is empty. Then scans it.
+        /// </summary>
+        /// <param name="id">The remembered network's id, or empty for a different place.</param>
+        /// <returns>A task that completes once the scan has started.</returns>
+        [RelayCommand]
+        private async Task ChooseNetworkAsync(string id)
+        {
+            await _Manager.ChooseNetworkAsync(string.IsNullOrEmpty(id) ? null : id);
+
+            _HasScannedThisSession = true;
+            _ = _Manager.ScanAsync();
         }
 
         /// <summary>
@@ -629,6 +663,23 @@ namespace PingMyNetwork.ViewModels
             IsBusy = _Manager.IsScanning || _Manager.IsIdentifying;
             ScanButtonText = _Manager.IsScanning ? AppResources.DevicesStop : AppResources.DevicesScan;
             NetworkName = _Manager.NetworkName ?? _Monitor.Current.Ssid ?? string.Empty;
+
+            IReadOnlyList<NetworkRecord> candidates = _Manager.Candidates;
+
+            AskWhichNetwork = candidates.Count > 0;
+            WhichNetworkQuestion = NetworkFormat.Text(AppResources.WhichNetworkQuestionFormat, _Monitor.Current.Ssid ?? NetworkName);
+
+            if (!candidates.Select(candidate => candidate.Id).SequenceEqual(NetworkChoices.Select(choice => choice.Id)))
+            {
+                NetworkChoices = candidates
+                    .Select(candidate => new NetworkChoice(
+                        candidate.Id,
+                        NetworkFormat.Text(
+                            AppResources.WhichNetworkChoiceFormat,
+                            candidate.Devices.Count,
+                            candidate.LastScan?.LocalDateTime ?? DateTime.Now)))
+                    .ToList();
+            }
 
             bool? isMine = _Manager.IsMine;
 
