@@ -371,4 +371,5 @@
   <data name="ToolSpeedHelp" xml:space="preserve"><value>The speed test measures how fast your internet connection downloads and uploads, and its latency, using Cloudflare's servers. It uses about 30 MB of data. Results depend on your Wi-Fi signal too, so test close to the router to see what your provider delivers.</value></data>
   <data name="ToolWakeHelp" xml:space="preserve"><value>Wake-on-LAN turns on a sleeping or switched-off computer by sending it a special "magic packet". The computer must have Wake-on-LAN enabled in its settings or BIOS, be wired to the network in most cases, and be on the same network as this device. You need its MAC address.</value></data>
   <data name="ToolSubnetHelp" xml:space="preserve"><value>The subnet calculator works out a network's address range from an address and its mask or prefix (like /24): the first and last usable address, the broadcast address and how many devices fit. It starts with your current network, and works offline.</value></data>
+  <data name="TileProvider" xml:space="preserve"><value>Internet provider</value></data>
 </root>

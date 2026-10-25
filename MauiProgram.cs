@@ -93,6 +93,7 @@ namespace PingMyNetwork
             SubnetCalculator.SelfCheck();
             PortList.SelfCheck();
             SpeedScale.SelfCheck();
+            NetworkFormat.SelfCheck();
 #endif
 
             return builder.Build();

@@ -3362,5 +3362,14 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("ToolSubnetHelp", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet provider.
+        /// </summary>
+        public static string TileProvider {
+            get {
+                return ResourceManager.GetString("TileProvider", resourceCulture);
+            }
+        }
     }
 }

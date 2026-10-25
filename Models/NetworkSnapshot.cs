@@ -121,6 +121,16 @@ namespace PingMyNetwork.Models
         public IReadOnlyList<string> DnsServers { get; init; } = [];
 
         /// <summary>
+        /// The internet provider, e.g. "WorldLink Communications", once looked up.
+        /// </summary>
+        public string? Provider { get; init; }
+
+        /// <summary>
+        /// The address the internet sees this network as, once looked up.
+        /// </summary>
+        public string? PublicIp { get; init; }
+
+        /// <summary>
         /// Whether the connection is metered or data-limited.
         /// </summary>
         public bool IsMetered { get; init; }

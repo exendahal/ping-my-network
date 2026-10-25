@@ -141,6 +141,18 @@ namespace PingMyNetwork.ViewModels
         public bool CanRevealName => OperatingSystem.IsWindows();
 
         /// <summary>
+        /// The internet provider, e.g. "WorldLink Communications".
+        /// </summary>
+        [ObservableProperty]
+        public partial string ProviderText { get; set; } = AppResources.ValueMissing;
+
+        /// <summary>
+        /// Whether the provider is known, which decides whether its tile shows.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool HasProvider { get; set; }
+
+        /// <summary>
         /// Whether a signal reading exists for the gauge.
         /// </summary>
         [ObservableProperty]
@@ -415,6 +427,8 @@ namespace PingMyNetwork.ViewModels
                 ? NetworkFormat.Text(AppResources.LinkSpeedFormat, speed)
                 : AppResources.ValueMissing;
             IpText = snapshot.IpAddress ?? AppResources.ValueMissing;
+            HasProvider = snapshot.Provider is not null;
+            ProviderText = snapshot.Provider ?? AppResources.ValueMissing;
             LastCheckedText = isFirstRead
                 ? string.Empty
                 : NetworkFormat.Text(AppResources.LastCheckedFormat, snapshot.CheckedAt.LocalDateTime);

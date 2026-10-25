@@ -33,8 +33,25 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         private const int GATEWAY_PING_COUNT = 3;
 
+        /// <summary>
+        /// Cloudflare's own description of the caller: provider, public address, city. The speed
+        /// test already uses Cloudflare, so the provider lookup adds no new third party.
+        /// </summary>
+        private static readonly Uri PROVIDER_URI = new("https://speed.cloudflare.com/meta");
+
+        /// <summary>
+        /// For the provider lookup. One client for the app's life, as HttpClient intends.
+        /// </summary>
+        private static readonly HttpClient _Http = CreateHttpClient();
+
         private readonly IWifiNetworkService _Wifi;
         private readonly object _Gate = new();
+
+        /// <summary>
+        /// The last provider lookup and the network it was for, so a refresh on the same network
+        /// does not ask again.
+        /// </summary>
+        private (string Network, string? Provider, string? PublicIp)? _ProviderCache;
 
         private NetworkSnapshot _Current = NetworkSnapshot.Initial;
         private CancellationTokenSource? _RefreshCancel;
@@ -209,7 +226,8 @@ namespace PingMyNetwork.Implementation
 
                 await Task.WhenAll(
                     MeasureGatewayAsync(snapshot.Gateway, token),
-                    FillFromScanAsync(snapshot, token));
+                    FillFromScanAsync(snapshot, token),
+                    status == ConnectionStatus.Online ? FillProviderAsync(snapshot, token) : Task.CompletedTask);
             }
             catch (OperationCanceledException)
             {
@@ -528,6 +546,55 @@ namespace PingMyNetwork.Implementation
                     SignalPercent = NetworkFormat.SignalPercent(match.RssiDbm, null) ?? current.SignalPercent,
                 },
                 token);
+        }
+
+        /// <summary>
+        /// Looks up the internet provider and public address, once per network.
+        /// </summary>
+        /// <param name="snapshot">The connection as first read.</param>
+        /// <param name="token">Cancels the lookup.</param>
+        /// <returns>A task that completes once published.</returns>
+        private async Task FillProviderAsync(NetworkSnapshot snapshot, CancellationToken token)
+        {
+            string network = $"{snapshot.ConnectionType}|{snapshot.Ssid}|{snapshot.Gateway}";
+
+            if (_ProviderCache is not { } cached || (cached.Network != network))
+            {
+                try
+                {
+                    using HttpResponseMessage response = await _Http.GetAsync(PROVIDER_URI, token);
+                    using System.Text.Json.JsonDocument json = System.Text.Json.JsonDocument.Parse(
+                        await response.Content.ReadAsStringAsync(token));
+                    System.Text.Json.JsonElement root = json.RootElement;
+
+                    cached = (
+                        network,
+                        root.TryGetProperty("asOrganization", out System.Text.Json.JsonElement provider) ? NetworkFormat.Provider(provider.GetString()) : null,
+                        root.TryGetProperty("clientIp", out System.Text.Json.JsonElement ip) ? ip.GetString() : null);
+                    _ProviderCache = cached;
+                }
+                catch (Exception exception) when (exception is HttpRequestException or System.Text.Json.JsonException or TaskCanceledException)
+                {
+                    // Nothing to show; the tile stays hidden. A cancelled refresh lands here too.
+                    return;
+                }
+            }
+
+            Update(current => current with { Provider = cached.Provider, PublicIp = cached.PublicIp }, token);
+        }
+
+        /// <summary>
+        /// The client for the provider lookup. Cloudflare answers with an empty object unless the
+        /// request says it comes from its speed test page.
+        /// </summary>
+        /// <returns>The client.</returns>
+        private static HttpClient CreateHttpClient()
+        {
+            HttpClient client = new() { Timeout = TimeSpan.FromSeconds(8) };
+
+            client.DefaultRequestHeaders.Referrer = new Uri("https://speed.cloudflare.com/");
+
+            return client;
         }
 
         /// <summary>

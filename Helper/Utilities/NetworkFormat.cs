@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -244,6 +245,45 @@ namespace PingMyNetwork.Helper.Utilities
         {
             return string.Format(CultureInfo.CurrentCulture, format, args);
         }
+
+        /// <summary>
+        /// Shortens a registered company name to what people call their provider:
+        /// "WorldLink Communications Pvt. Ltd." becomes "WorldLink Communications".
+        /// </summary>
+        /// <param name="organization">The name from the address registry.</param>
+        /// <returns>The short name, or null.</returns>
+        public static string? Provider(string? organization)
+        {
+            if (string.IsNullOrWhiteSpace(organization))
+            {
+                return null;
+            }
+
+            string name = CompanySuffix().Replace(organization.Trim(), string.Empty).Trim().TrimEnd(',', '.').Trim();
+
+            return name.Length > 0 ? name : organization.Trim();
+        }
+
+        /// <summary>
+        /// Runs the formatting rules against known cases. Called at startup in Debug builds.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void SelfCheck()
+        {
+            Debug.Assert(Provider("WorldLink Communications Pvt. Ltd.") == "WorldLink Communications");
+            Debug.Assert(Provider("Comcast Cable Communications, LLC") == "Comcast Cable Communications");
+            Debug.Assert(Provider("Deutsche Telekom AG") == "Deutsche Telekom");
+            Debug.Assert(Provider("Google LLC") == "Google");
+            Debug.Assert(Provider("Ltd") == "Ltd");
+            Debug.Assert(Provider(" ") is null);
+        }
+
+        /// <summary>
+        /// Legal endings of company names, with the punctuation before them.
+        /// </summary>
+        /// <returns>The compiled pattern.</returns>
+        [GeneratedRegex(@"[,\s]+(pvt\.?\s*ltd\.?|private limited|pty\.?\s*ltd\.?|ltd\.?|limited|llc|inc\.?|corp\.?|corporation|gmbh|ag|s\.?a\.?|b\.?v\.?|plc)$", RegexOptions.IgnoreCase)]
+        private static partial Regex CompanySuffix();
 
         /// <summary>
         /// Matches a MAC address written with colons or dashes.

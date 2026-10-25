@@ -370,6 +370,11 @@
                         Caption="{x:Static res:AppResources.TileIpAddress}"
                         Icon="{x:Static util:MaterialIcon.LAN}"
                         Value="{Binding IpText}" />
+                    <controls:StatTileView
+                        Caption="{x:Static res:AppResources.TileProvider}"
+                        Icon="{x:Static util:MaterialIcon.PUBLIC}"
+                        IsVisible="{Binding HasProvider}"
+                        Value="{Binding ProviderText}" />
                 </Grid>
 
                 <!--  Way into everything else about the connection.  -->
