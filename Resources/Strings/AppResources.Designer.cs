@@ -3407,5 +3407,68 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("HiddenNameUnknown", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string SettingsAppearance {
+            get {
+                return ResourceManager.GetString("SettingsAppearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string ThemeSystem {
+            get {
+                return ResourceManager.GetString("ThemeSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string ThemeLight {
+            get {
+                return ResourceManager.GetString("ThemeLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string ThemeDark {
+            get {
+                return ResourceManager.GetString("ThemeDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SettingsAbout {
+            get {
+                return ResourceManager.GetString("SettingsAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string SettingsVersion {
+            get {
+                return ResourceManager.GetString("SettingsVersion", resourceCulture);
+            }
+        }
     }
 }

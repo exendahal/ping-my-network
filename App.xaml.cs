@@ -42,6 +42,8 @@ namespace PingMyNetwork
 
             _Monitor = monitor;
 
+            AppSettings.ApplyTheme(this);
+
 #if DEBUG
             // Lets design QA capture both themes without changing the system setting:
             // set PMN_THEME=Light or PMN_THEME=Dark before launching.

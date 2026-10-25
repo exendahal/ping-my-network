@@ -23,6 +23,11 @@ namespace PingMyNetwork.Helper.Utilities
         public const string DEVICE_DETAILS = "device";
 
         /// <summary>
+        /// Pushed on top of Home.
+        /// </summary>
+        public const string SETTINGS = "settings";
+
+        /// <summary>
         /// The tools, each pushed on top of Tools.
         /// </summary>
         public const string TOOL_PING = "ping";

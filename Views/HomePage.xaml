@@ -37,14 +37,20 @@
                         Text="{x:Static res:AppResources.HomeTitle}" />
                     <Label Style="{StaticResource TextLabel}" Text="{Binding LastCheckedText}" />
                 </VerticalStackLayout>
-                <Button
-                    Grid.Column="1"
-                    Command="{Binding RefreshCommand}"
-                    SemanticProperties.Description="{x:Static res:AppResources.ActionRetry}"
-                    Style="{StaticResource IconButton}"
-                    Text="{x:Static util:MaterialIcon.REFRESH}"
-                    ToolTipProperties.Text="{x:Static res:AppResources.ActionRetry}"
-                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Button
+                        Command="{Binding RefreshCommand}"
+                        SemanticProperties.Description="{x:Static res:AppResources.ActionRetry}"
+                        Style="{StaticResource IconButton}"
+                        Text="{x:Static util:MaterialIcon.REFRESH}"
+                        ToolTipProperties.Text="{x:Static res:AppResources.ActionRetry}" />
+                    <Button
+                        Command="{Binding OpenSettingsCommand}"
+                        SemanticProperties.Description="{x:Static res:AppResources.SettingsTitle}"
+                        Style="{StaticResource IconButton}"
+                        Text="{x:Static util:MaterialIcon.SETTINGS}"
+                        ToolTipProperties.Text="{x:Static res:AppResources.SettingsTitle}" />
+                </HorizontalStackLayout>
             </Grid>
 
             <!--

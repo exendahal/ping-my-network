@@ -376,4 +376,11 @@
   <data name="HiddenNameLocationOff" xml:space="preserve"><value>Location is turned off, so your phone hides the Wi-Fi name and nearby networks from apps. Your location itself is never used.</value></data>
   <data name="HiddenNameNoPermission" xml:space="preserve"><value>The app needs location access to read the Wi-Fi name. Your location itself is never used.</value></data>
   <data name="HiddenNameUnknown" xml:space="preserve"><value>The system didn't share the Wi-Fi name.</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Settings</value></data>
+  <data name="SettingsAppearance" xml:space="preserve"><value>Appearance</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>System</value></data>
+  <data name="ThemeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="SettingsAbout" xml:space="preserve"><value>About</value></data>
+  <data name="SettingsVersion" xml:space="preserve"><value>Version</value></data>
 </root>

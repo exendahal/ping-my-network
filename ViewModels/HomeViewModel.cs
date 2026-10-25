@@ -374,6 +374,16 @@ namespace PingMyNetwork.ViewModels
         }
 
         /// <summary>
+        /// Opens Settings.
+        /// </summary>
+        /// <returns>A task that completes once navigation finishes.</returns>
+        [RelayCommand]
+        private async Task OpenSettingsAsync()
+        {
+            await Shell.Current.GoToAsync(Routes.SETTINGS);
+        }
+
+        /// <summary>
         /// Opens the device list.
         /// </summary>
         /// <returns>A task that completes once navigation finishes.</returns>

@@ -122,4 +122,13 @@ namespace PingMyNetwork.Helper.Enums
         ServicesOff,
     }
 
+    /// <summary>
+    /// The app's colour scheme, as picked in Settings.
+    /// </summary>
+    public enum ThemeChoice
+    {
+        System,
+        Light,
+        Dark,
+    }
 }
