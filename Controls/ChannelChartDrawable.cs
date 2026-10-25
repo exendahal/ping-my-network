@@ -10,7 +10,8 @@ namespace PingMyNetwork.Controls
     /// <param name="RssiDbm">How strong it is here.</param>
     /// <param name="IsOwn">Whether it is one of the user's own access points.</param>
     /// <param name="Label">Name drawn over the peak, or null for none.</param>
-    public sealed record ChannelCurve(int Channel, int RssiDbm, bool IsOwn, string? Label);
+    /// <param name="WidthMhz">How wide it is, where the platform reports it; 20 MHz otherwise.</param>
+    public sealed record ChannelCurve(int Channel, int RssiDbm, bool IsOwn, string? Label, int WidthMhz = 20);
 
     /// <summary>
     /// Every network on one band, drawn as a curve across the channels it occupies with its height
@@ -18,8 +19,9 @@ namespace PingMyNetwork.Controls
     /// </summary>
     /// <remarks>
     /// On 2.4 GHz channels are 5 MHz apart and a network is 20 MHz wide, so each curve spans five
-    /// channel numbers and overlaps its neighbours, which is exactly what the chart is for. On 5 and
-    /// 6 GHz channels are listed side by side (only those in use), since they do not overlap that way.
+    /// channel numbers and overlaps its neighbours, which is exactly what the chart is for. On 5 GHz
+    /// every 20 MHz channel is listed side by side, empty ones included, so the free channels show;
+    /// 6 GHz has 59 channels, too many for a phone, so only those in use are listed.
     /// Text other than axis labels lives in real labels outside the chart, for screen readers.
     /// </remarks>
     public sealed class ChannelChartDrawable : IDrawable
@@ -55,6 +57,21 @@ namespace PingMyNetwork.Controls
         /// Gridlines, in dBm.
         /// </summary>
         private static readonly float[] GRID_DBM = [-50f, -70f, -90f];
+
+        /// <summary>
+        /// The 20 MHz channels of the 5 GHz band (UNII-1 to UNII-3).
+        /// </summary>
+        private static readonly int[] CHANNELS_5GHZ =
+        [
+            36, 40, 44, 48, 52, 56, 60, 64,
+            100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144,
+            149, 153, 157, 161, 165,
+        ];
+
+        /// <summary>
+        /// Width of one channel label; labels closer than this would overlap, so some are skipped.
+        /// </summary>
+        private const float LABEL_WIDTH = 22f;
 
         #endregion
 
@@ -135,7 +152,8 @@ namespace PingMyNetwork.Controls
         /// <summary>
         /// The channel positions along the x axis.
         /// </summary>
-        /// <returns>On 2.4 GHz every channel from 1 to 13; otherwise the channels in use.</returns>
+        /// <returns>On 2.4 GHz every channel from 1 to 13, on 5 GHz every 20 MHz channel, on 6 GHz the
+        /// channels in use.</returns>
         private List<int> Slots()
         {
             if (Band == WifiFrequencyBand.Band2_4GHz)
@@ -148,6 +166,11 @@ namespace PingMyNetwork.Controls
             if (SuggestedChannel is int suggested)
             {
                 used = used.Append(suggested);
+            }
+
+            if (Band == WifiFrequencyBand.Band5GHz)
+            {
+                used = used.Concat(CHANNELS_5GHZ);
             }
 
             return used.Distinct().Order().ToList();
@@ -225,8 +248,8 @@ namespace PingMyNetwork.Controls
         {
             float centre = XOf(plot, slots, curve.Channel);
             float halfWidth = Band == WifiFrequencyBand.Band2_4GHz
-                ? XOf(plot, slots, curve.Channel + 2f) - centre
-                : (plot.Width / Math.Max(1, slots.Count)) * 0.45f;
+                ? XOf(plot, slots, curve.Channel + (2f * Math.Max(1, curve.WidthMhz / 20))) - centre
+                : (plot.Width / Math.Max(1, slots.Count)) * Math.Max(1, curve.WidthMhz / 20) * 0.6f;
             float peak = YOf(plot, MIN_DBM + ((curve.RssiDbm - MIN_DBM) * Progress));
             Color colour = curve.IsOwn ? OwnColor : OtherColor;
 
@@ -267,11 +290,26 @@ namespace PingMyNetwork.Controls
         {
             canvas.FontSize = 10f;
 
-            foreach (int channel in slots)
+            // Channels with a network, and the suggestion, are labelled first; the empty ones fill
+            // in wherever a label still fits, so a narrow phone shows every other one.
+            HashSet<int> used = [.. Curves.Select(curve => curve.Channel)];
+            IEnumerable<int> order = slots
+                .OrderByDescending(channel => (channel == SuggestedChannel) || used.Contains(channel))
+                .ThenBy(channel => channel);
+            List<float> placed = [];
+
+            foreach (int channel in order)
             {
                 float x = XOf(plot, slots, channel);
+
+                if (placed.Any(other => Math.Abs(other - x) < LABEL_WIDTH))
+                {
+                    continue;
+                }
+
                 bool isSuggested = channel == SuggestedChannel;
 
+                placed.Add(x);
                 canvas.FontColor = isSuggested ? OwnColor : AxisColor;
                 canvas.Font = isSuggested ? Microsoft.Maui.Graphics.Font.DefaultBold : Microsoft.Maui.Graphics.Font.Default;
                 canvas.DrawString(channel.ToString(), x - 16f, plot.Bottom + 4f, 32f, 14f, HorizontalAlignment.Center, VerticalAlignment.Top);

@@ -702,7 +702,12 @@ namespace PingMyNetwork.ViewModels
                 {
                     bool isOwn = ChannelPlanner.IsOwn(network, family);
 
-                    return new ChannelCurve(network.ChannelNumber!.Value, network.RssiDbm!.Value, isOwn, isOwn ? network.Ssid : null);
+                    return new ChannelCurve(
+                        network.ChannelNumber!.Value,
+                        network.RssiDbm!.Value,
+                        isOwn,
+                        isOwn ? network.Ssid : null,
+                        network.ChannelWidthMhz ?? 20);
                 })
                 .ToList();
 
