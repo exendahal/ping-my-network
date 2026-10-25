@@ -327,10 +327,15 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
     </Style>
 
-    <!--  On is the accent track with a white thumb, as on both platforms; off is a grey thumb.  -->
+    <!--
+        On is an accent thumb on a pale accent track, the Material look: Android's switch thumb is
+        larger than its track, so a white thumb vanished on a white card in the light theme. Off
+        is a grey thumb. The grey is the base value rather than an Off state setter, which stayed
+        applied after switching on.
+    -->
     <Style TargetType="Switch">
-        <Setter Property="OnColor" Value="{DynamicResource Accent}" />
-        <Setter Property="ThumbColor" Value="{StaticResource White}" />
+        <Setter Property="OnColor" Value="{DynamicResource AccentTint}" />
+        <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray300}}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -343,11 +348,10 @@
                     </VisualState>
                     <VisualState x:Name="On">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{DynamicResource Accent}" />
-                            <Setter Property="ThumbColor" Value="{StaticResource White}" />
+                            <Setter Property="OnColor" Value="{DynamicResource AccentTint}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource Accent}" />
                         </VisualState.Setters>
                     </VisualState>
-                    <!--  No thumb change for Off: an Off setter stayed applied after switching on, greying the thumb.  -->
                     <VisualState x:Name="Off" />
                 </VisualStateGroup>
             </VisualStateGroupList>
