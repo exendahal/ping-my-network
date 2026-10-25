@@ -35,6 +35,32 @@ namespace PingMyNetwork.Implementation
         private readonly object _Gate = new();
         private readonly SemaphoreSlim _LoadGate = new(1, 1);
 
+        /// <summary>
+        /// How long the mDNS pass listens for answers to each service type.
+        /// </summary>
+        private static readonly TimeSpan MDNS_LISTEN = TimeSpan.FromSeconds(3);
+
+        /// <summary>
+        /// Services that phones, computers, TVs, speakers and printers commonly advertise. Their
+        /// instance names ("Anna's iPhone", "Living Room TV") are the friendliest names a device gives.
+        /// </summary>
+        private static readonly string[] MDNS_TYPES =
+        [
+            "_companion-link._tcp",
+            "_device-info._tcp",
+            "_apple-mobdev2._tcp",
+            "_airplay._tcp",
+            "_raop._tcp",
+            "_googlecast._tcp",
+            "_spotify-connect._tcp",
+            "_hap._tcp",
+            "_ipp._tcp",
+            "_printer._tcp",
+            "_smb._tcp",
+            "_workstation._tcp",
+            "_amzn-wplay._tcp",
+        ];
+
         private List<NetworkRecord>? _Networks;
         private NetworkRecord? _Network;
         private string? _NetworkKey;
@@ -183,7 +209,7 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
-        /// Runs one scan: the sweep, then details for devices seen for the first time.
+        /// Runs one scan: the sweep, then mDNS names, then details for devices seen for the first time.
         /// </summary>
         /// <returns>A task that completes when the scan and the details lookups are done.</returns>
         private async Task ScanCoreAsync()
@@ -243,6 +269,7 @@ namespace PingMyNetwork.Implementation
                 Changed?.Invoke(this, EventArgs.Empty);
             }
 
+            await NameFromMdnsAsync(record, cancel.Token);
             await SaveAsync();
             await IdentifyNewDevicesAsync(cancel.Token);
         }
@@ -455,6 +482,61 @@ namespace PingMyNetwork.Implementation
 
                 return isSwitch;
             }
+        }
+
+        /// <summary>
+        /// Asks the network which devices advertise common services over mDNS, and uses the names
+        /// they give themselves. Phones and computers rarely answer NetBIOS or reverse DNS, but
+        /// Apple devices, TVs, speakers and printers do advertise this way.
+        /// </summary>
+        /// <param name="record">The network being scanned.</param>
+        /// <param name="token">Cancels the lookups.</param>
+        /// <returns>A task that completes once every service type has been asked.</returns>
+        private async Task NameFromMdnsAsync(NetworkRecord record, CancellationToken token)
+        {
+            List<NetworkServiceInfo> services = [];
+
+            try
+            {
+                WifiManagerResponse<List<NetworkServiceInfo>>[] answers = await Task.WhenAll(
+                    MDNS_TYPES.Select(type => _Wifi.BrowseServicesAsync(type, MDNS_LISTEN, token)));
+
+                services = answers.SelectMany(answer => answer.Data ?? []).ToList();
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            if (services.Count == 0)
+            {
+                return;
+            }
+
+            lock (_Gate)
+            {
+                foreach (NetworkServiceInfo service in services.Where(service => service.IpAddress is not null))
+                {
+                    if (record.Devices.FirstOrDefault(device => device.IpAddress == service.IpAddress) is not NetworkDevice device)
+                    {
+                        continue;
+                    }
+
+                    // Cast devices put their real name in "fn"; the instance name is a serial number.
+                    device.MdnsName ??= service.Properties.GetValueOrDefault("fn")
+                        ?? DeviceDescriber.CleanServiceName(service.Name);
+                    device.HostName ??= service.HostName?.TrimEnd('.');
+                    device.MdnsModel ??= service.Properties.GetValueOrDefault("model")
+                        ?? service.Properties.GetValueOrDefault("md");
+
+                    if (!device.IsTypeSetByUser)
+                    {
+                        device.Type = DeviceDescriber.GuessType(device);
+                    }
+                }
+            }
+
+            Changed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -693,6 +775,8 @@ namespace PingMyNetwork.Implementation
             older.HostName = device.HostName ?? older.HostName;
             older.NetBiosName = device.NetBiosName ?? older.NetBiosName;
             older.FriendlyName = device.FriendlyName ?? older.FriendlyName;
+            older.MdnsName = device.MdnsName ?? older.MdnsName;
+            older.MdnsModel = device.MdnsModel ?? older.MdnsModel;
             older.Manufacturer = device.Manufacturer ?? older.Manufacturer;
             older.Vendor = device.Vendor ?? older.Vendor;
             older.ModelName = device.ModelName ?? older.ModelName;

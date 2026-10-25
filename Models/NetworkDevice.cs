@@ -55,6 +55,16 @@ namespace PingMyNetwork.Models
         public string? FriendlyName { get; set; }
 
         /// <summary>
+        /// Name the device advertises over mDNS / Bonjour, e.g. "Anna's iPhone".
+        /// </summary>
+        public string? MdnsName { get; set; }
+
+        /// <summary>
+        /// Model the device advertises over mDNS, e.g. "iPhone15,2" or "MacBookPro18,1".
+        /// </summary>
+        public string? MdnsModel { get; set; }
+
+        /// <summary>
         /// Manufacturer from UPnP.
         /// </summary>
         public string? Manufacturer { get; set; }

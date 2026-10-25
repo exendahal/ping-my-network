@@ -199,6 +199,7 @@ namespace PingMyNetwork.Helper.Utilities
             return FirstOf(
                 device.CustomName,
                 device.FriendlyName,
+                device.MdnsName,
                 device.NetBiosName,
                 ShortHostName(device.HostName),
                 model,
@@ -206,6 +207,25 @@ namespace PingMyNetwork.Helper.Utilities
                 ?? (device.Type != DeviceKind.Unknown ? TypeName(device.Type)
                     : device.Vendor is not null ? NetworkFormat.Text(AppResources.DeviceVendorFormat, device.Vendor)
                     : AppResources.DeviceUnnamed);
+        }
+
+        /// <summary>
+        /// Tidies an mDNS instance name. AirPlay speakers prefix theirs with a MAC address
+        /// ("A1B2C3D4E5F6@Kitchen"), which is dropped.
+        /// </summary>
+        /// <param name="instance">The instance name.</param>
+        /// <returns>The name, or null when nothing readable is left.</returns>
+        public static string? CleanServiceName(string? instance)
+        {
+            if (string.IsNullOrWhiteSpace(instance))
+            {
+                return null;
+            }
+
+            int at = instance.IndexOf('@');
+            string name = (at >= 0 ? instance[(at + 1)..] : instance).Trim();
+
+            return name.Length > 0 ? name : null;
         }
 
         /// <summary>
@@ -255,6 +275,8 @@ namespace PingMyNetwork.Helper.Utilities
                 device.HostName,
                 device.NetBiosName,
                 device.FriendlyName,
+                device.MdnsName,
+                device.MdnsModel,
                 device.Manufacturer,
                 device.ModelName,
                 device.HttpTitle).ToLowerInvariant();
@@ -380,6 +402,9 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(ShortHostName("galaxy-s24.lan") == "galaxy-s24");
             Debug.Assert(ShortHostName("nas.home.arpa") == "nas");
             Debug.Assert(ShortHostName("printer") == "printer");
+            Debug.Assert(CleanServiceName("A1B2C3D4E5F6@Kitchen") == "Kitchen");
+            Debug.Assert(CleanServiceName("Anna's iPhone") == "Anna's iPhone");
+            Debug.Assert(CleanServiceName(" ") is null);
 
             Debug.Assert(GuessType(new NetworkDevice { HostName = "Galaxy-S24.lan" }) == DeviceKind.Phone);
             Debug.Assert(GuessType(new NetworkDevice { OpenPorts = [9100] }) == DeviceKind.Printer);

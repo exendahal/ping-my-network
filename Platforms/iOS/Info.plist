@@ -26,6 +26,25 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Device scans, ping and mDNS names on the local network (iOS 14+ local network privacy). -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Ping My Network finds the devices on your network and names them.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_companion-link._tcp</string>
+		<string>_device-info._tcp</string>
+		<string>_apple-mobdev2._tcp</string>
+		<string>_airplay._tcp</string>
+		<string>_raop._tcp</string>
+		<string>_googlecast._tcp</string>
+		<string>_spotify-connect._tcp</string>
+		<string>_hap._tcp</string>
+		<string>_ipp._tcp</string>
+		<string>_printer._tcp</string>
+		<string>_smb._tcp</string>
+		<string>_workstation._tcp</string>
+		<string>_amzn-wplay._tcp</string>
+	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 </dict>
