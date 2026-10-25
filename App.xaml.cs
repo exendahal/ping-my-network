@@ -49,7 +49,11 @@ namespace PingMyNetwork
 
             // The live accent follows the theme, and the setting (SettingsViewModel).
             SystemAccent.Apply(this);
-            RequestedThemeChanged += (_, _) => SystemAccent.Apply(this);
+            RequestedThemeChanged += (_, _) =>
+            {
+                SystemAccent.Apply(this);
+                ApplySystemBars();
+            };
 
             Resources.MergedDictionaries.Add(new Resources.Styles.AppStyles());
 
@@ -103,7 +107,11 @@ namespace PingMyNetwork
                 _Monitor.Start();
                 _Alerts.Start();
             };
-            window.Created += (_, _) => _Alerts.Start();
+            window.Created += (_, _) =>
+            {
+                _Alerts.Start();
+                ApplySystemBars();
+            };
 
             // First launch: explain and ask for permissions before the screens need them.
             if (!AppSettings.IsOnboarded)
@@ -128,6 +136,31 @@ namespace PingMyNetwork
 #endif
 
             return window;
+        }
+
+        /// <summary>
+        /// Gives Android's status and navigation bars icons that read on the app's background.
+        /// Android picks them from the system's theme, so a light app theme on a phone in dark
+        /// mode got white clock and battery icons on a light page.
+        /// </summary>
+        private void ApplySystemBars()
+        {
+#if ANDROID
+            if (Platform.CurrentActivity?.Window is not Android.Views.Window window)
+            {
+                return;
+            }
+
+            if (AndroidX.Core.View.WindowCompat.GetInsetsController(window, window.DecorView) is not AndroidX.Core.View.WindowInsetsControllerCompat bars)
+            {
+                return;
+            }
+
+            bool isLight = RequestedTheme != AppTheme.Dark;
+
+            bars.AppearanceLightStatusBars = isLight;
+            bars.AppearanceLightNavigationBars = isLight;
+#endif
         }
 
         /// <summary>
