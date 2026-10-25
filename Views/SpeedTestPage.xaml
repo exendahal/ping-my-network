@@ -62,8 +62,7 @@
                                 IsRunning="{Binding IsRunning}"
                                 IsVisible="{Binding IsRunning}"
                                 WidthRequest="18"
-                                Color="{AppThemeBinding Light={StaticResource AccentLight},
-                                                        Dark={StaticResource AccentDark}}" />
+                                Color="{DynamicResource Accent}" />
                             <Label
                                 HorizontalTextAlignment="Center"
                                 Style="{StaticResource TextBody}"
@@ -84,8 +83,7 @@
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.DOWNLOAD}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}" />
+                                    TextColor="{DynamicResource Accent}" />
                                 <Label
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource TextLabel}"
@@ -112,8 +110,7 @@
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.UPLOAD}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}" />
+                                    TextColor="{DynamicResource Accent}" />
                                 <Label
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource TextLabel}"
@@ -140,8 +137,7 @@
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.TIMER}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}" />
+                                    TextColor="{DynamicResource Accent}" />
                                 <Label
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource TextLabel}"

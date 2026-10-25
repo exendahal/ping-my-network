@@ -30,8 +30,7 @@
                     FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
                     FontSize="15"
                     IsVisible="False"
-                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                Dark={StaticResource AccentDark}}"
+                    TextColor="{DynamicResource Accent}"
                     VerticalOptions="Center" />
                 <Label
                     x:Name="CaptionLabel"

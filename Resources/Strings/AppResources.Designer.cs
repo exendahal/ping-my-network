@@ -3760,7 +3760,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uses the colors Android picks from your wallpaper (Material You) instead of the app&apos;s green. Applies the next time you open the app..
+        ///   Looks up a localized string similar to Uses the colors Android picks from your wallpaper (Material You) instead of the app&apos;s green..
         /// </summary>
         public static string SettingsSystemColorsAndroid {
             get {
@@ -3769,7 +3769,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uses your Windows accent color instead of the app&apos;s green. Applies the next time you open the app..
+        ///   Looks up a localized string similar to Uses your Windows accent color instead of the app&apos;s green..
         /// </summary>
         public static string SettingsSystemColorsWindows {
             get {
@@ -3778,7 +3778,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uses the system blue tint instead of the app&apos;s green. Applies the next time you open the app..
+        ///   Looks up a localized string similar to Uses the system blue tint instead of the app&apos;s green..
         /// </summary>
         public static string SettingsSystemColorsApple {
             get {

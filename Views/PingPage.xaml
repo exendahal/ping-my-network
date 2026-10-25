@@ -114,8 +114,7 @@
                                     IsVisible="{Binding IsRunning}"
                                     VerticalOptions="Center"
                                     WidthRequest="20"
-                                    Color="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
+                                    Color="{DynamicResource Accent}" />
                             </Grid>
                             <GraphicsView
                                 x:Name="Chart"

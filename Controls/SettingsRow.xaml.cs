@@ -184,7 +184,15 @@ namespace PingMyNetwork.Controls
                     ? Colors.White
                     : Colors.Black);
 
-            IconLabel.TextColor = IsDestructive ? StatusPalette.For(Helper.Enums.StatusLevel.Bad) : StatusPalette.Accent;
+            // The live accent, so the icons change as soon as "Use system colors" is flipped.
+            if (IsDestructive)
+            {
+                IconLabel.TextColor = StatusPalette.For(Helper.Enums.StatusLevel.Bad);
+            }
+            else
+            {
+                IconLabel.SetDynamicResource(Label.TextColorProperty, "Accent");
+            }
 
             // Anything still to be built says so by looking unavailable, rather than by doing
             // nothing when tapped.

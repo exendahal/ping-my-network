@@ -60,10 +60,8 @@ namespace PingMyNetwork.Views
 
             SizeChanged += (_, _) => ApplyLayout();
 
-            if (Application.Current is not null)
-            {
-                Application.Current.RequestedThemeChanged += (_, _) => PaintCharts();
-            }
+            // Raised on a theme change too, after the accent for the new theme is in place.
+            SystemAccent.Changed += (_, _) => PaintCharts();
 
             PaintCharts();
         }

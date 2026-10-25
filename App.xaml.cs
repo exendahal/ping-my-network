@@ -47,12 +47,9 @@ namespace PingMyNetwork
 
             AppSettings.ApplyTheme(this);
 
-            // Styles and pages read the accent once, when they are built, so the system's accent
-            // goes in first and the styles are loaded after it.
-            if (AppSettings.UseSystemColors)
-            {
-                SystemAccent.Apply(this);
-            }
+            // The live accent follows the theme, and the setting (SettingsViewModel).
+            SystemAccent.Apply(this);
+            RequestedThemeChanged += (_, _) => SystemAccent.Apply(this);
 
             Resources.MergedDictionaries.Add(new Resources.Styles.AppStyles());
 
@@ -149,10 +146,7 @@ namespace PingMyNetwork
                 VerticalOptions = LayoutOptions.Center,
             };
 
-            mark.SetAppThemeColor(
-                Label.TextColorProperty,
-                ResourceLookup.Get("AccentLight", Colors.Green),
-                ResourceLookup.Get("AccentDark", Colors.Green));
+            mark.SetDynamicResource(Label.TextColorProperty, "Accent");
 
             TitleBar titleBar = new()
             {

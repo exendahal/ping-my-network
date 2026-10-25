@@ -329,7 +329,7 @@
 
     <!--  On is the accent track with a white thumb, as on both platforms; off is a grey thumb.  -->
     <Style TargetType="Switch">
-        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="OnColor" Value="{DynamicResource Accent}" />
         <Setter Property="ThumbColor" Value="{StaticResource White}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -343,7 +343,7 @@
                     </VisualState>
                     <VisualState x:Name="On">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                            <Setter Property="OnColor" Value="{DynamicResource Accent}" />
                             <Setter Property="ThumbColor" Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -555,7 +555,7 @@
         without an outline, so it reads as a button and never as an information card.
     -->
     <Style x:Key="ActionTile" TargetType="Border">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentTintLight}, Dark={StaticResource AccentTintDark}}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource AccentTint}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 16" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -640,7 +640,7 @@
     </Style>
 
     <Style x:Key="PrimaryButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Accent}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="{StaticResource FontBody}" />
@@ -651,7 +651,7 @@
 
     <Style x:Key="QuietButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="TextColor" Value="{DynamicResource Accent}" />
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
         <Setter Property="FontSize" Value="{StaticResource FontBody}" />
         <Setter Property="Padding" Value="12,8" />
@@ -697,9 +697,9 @@
     </Style>
 
     <Style x:Key="ChipSelected" TargetType="Button" BasedOn="{StaticResource Chip}">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentTintLight}, Dark={StaticResource AccentTintDark}}" />
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource AccentTint}" />
+        <Setter Property="BorderColor" Value="{DynamicResource Accent}" />
+        <Setter Property="TextColor" Value="{DynamicResource Accent}" />
         <Setter Property="FontFamily" Value="OpenSansSemibold" />
     </Style>
 

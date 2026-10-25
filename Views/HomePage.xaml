@@ -217,8 +217,7 @@
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceL}">
                         <Grid HeightRequest="48" WidthRequest="48">
                             <Border
-                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                                  Dark={StaticResource AccentTintDark}}"
+                                BackgroundColor="{DynamicResource AccentTint}"
                                 StrokeShape="RoundRectangle 24"
                                 StrokeThickness="0">
                                 <Label
@@ -226,8 +225,7 @@
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.DEVICES}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}" />
+                                    TextColor="{DynamicResource Accent}" />
                             </Border>
                             <!--  Attention dot: some devices still need the user to review them.  -->
                             <Border
@@ -274,8 +272,7 @@
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.SPEED}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
+                                TextColor="{DynamicResource Accent}" />
                             <Label
                                 FontFamily="OpenSansSemibold"
                                 FontSize="{StaticResource FontLabel}"
@@ -300,8 +297,7 @@
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.NETWORK_PING}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
+                                TextColor="{DynamicResource Accent}" />
                             <Label
                                 FontFamily="OpenSansSemibold"
                                 FontSize="{StaticResource FontLabel}"
@@ -326,8 +322,7 @@
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.ROUTE}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}" />
+                                TextColor="{DynamicResource Accent}" />
                             <Label
                                 FontFamily="OpenSansSemibold"
                                 FontSize="{StaticResource FontLabel}"

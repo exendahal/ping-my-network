@@ -6,31 +6,59 @@ namespace PingMyNetwork.Helper.Utilities
     /// iOS and Mac.
     /// </summary>
     /// <remarks>
-    /// Pages read the accent as static resources when they are built, so the swap happens once at
-    /// launch, before the first page exists. Changing the setting therefore applies on the next
-    /// launch.
+    /// Screens use the live resources "Accent" and "AccentTint" (DynamicResource), which hold the
+    /// colour for the current theme. <see cref="Apply"/> refreshes them whenever the theme or the
+    /// setting changes, so every screen follows straight away. Code that paints the accent itself
+    /// listens to <see cref="Changed"/>.
     /// </remarks>
     public static class SystemAccent
     {
+        #region Variables
+
+        private static readonly string[] KEYS = ["AccentLight", "AccentDark", "AccentTintLight", "AccentTintDark"];
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Raised after the accent changed, for code that paints it rather than binding to it.
+        /// </summary>
+        public static event EventHandler? Changed;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
-        /// Replaces the app's green accent with the system's, where the system has one.
+        /// Settles the accent: the system's when "Use system colors" is on and the system has one,
+        /// otherwise the app's green, in the shade for the current theme.
         /// </summary>
-        /// <param name="app">The application, whose resources are replaced.</param>
+        /// <param name="app">The application, whose resources are set.</param>
         public static void Apply(Application app)
         {
-            if (Read() is not (Color light, Color dark))
+            // Without overrides, the green from Colors.xaml shows through.
+            foreach (string key in KEYS)
             {
-                return;
+                app.Resources.Remove(key);
             }
 
-            app.Resources["AccentLight"] = light;
-            app.Resources["AccentDark"] = dark;
+            if (AppSettings.UseSystemColors && (Read() is (Color light, Color dark)))
+            {
+                app.Resources["AccentLight"] = light;
+                app.Resources["AccentDark"] = dark;
 
-            // The soft fills behind accent icons are the accent faintly over the card colour.
-            app.Resources["AccentTintLight"] = Blend(light, ResourceLookup.Get("SurfaceLight", Colors.White), 0.12f);
-            app.Resources["AccentTintDark"] = Blend(dark, ResourceLookup.Get("SurfaceDark", Colors.Black), 0.18f);
+                // The soft fills behind accent icons are the accent faintly over the card colour.
+                app.Resources["AccentTintLight"] = Blend(light, ResourceLookup.Get("SurfaceLight", Colors.White), 0.12f);
+                app.Resources["AccentTintDark"] = Blend(dark, ResourceLookup.Get("SurfaceDark", Colors.Black), 0.18f);
+            }
+
+            bool isDark = app.RequestedTheme == AppTheme.Dark;
+
+            app.Resources["Accent"] = ResourceLookup.Get(isDark ? "AccentDark" : "AccentLight", Colors.Green);
+            app.Resources["AccentTint"] = ResourceLookup.Get(isDark ? "AccentTintDark" : "AccentTintLight", Colors.Green);
+
+            Changed?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>

@@ -103,10 +103,8 @@ namespace PingMyNetwork
             Rail.RouteRequested += OnRouteRequested;
             Navigated += OnNavigated;
 
-            if (Application.Current is not null)
-            {
-                Application.Current.RequestedThemeChanged += (_, _) => ApplyAccent();
-            }
+            // The accent changes with the theme and with "Use system colors"; both raise this.
+            SystemAccent.Changed += (_, _) => ApplyAccent();
 
             ApplyAccent();
             ApplyLayout();

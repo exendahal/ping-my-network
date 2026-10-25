@@ -116,12 +116,17 @@ namespace PingMyNetwork.ViewModels
         }
 
         /// <summary>
-        /// Remembers the colour choice; it applies on the next launch.
+        /// Switches between the system's colours and the app's green, straight away.
         /// </summary>
         /// <param name="value">The switch's new state.</param>
         partial void OnUseSystemColorsChanged(bool value)
         {
             AppSettings.UseSystemColors = value;
+
+            if (Application.Current is Application app)
+            {
+                SystemAccent.Apply(app);
+            }
         }
 
         /// <summary>

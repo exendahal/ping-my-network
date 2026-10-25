@@ -49,10 +49,8 @@ namespace PingMyNetwork.Views
                 ((BindableObject)tile).PropertyChanged += OnTilePropertyChanged;
             }
 
-            if (Application.Current is not null)
-            {
-                Application.Current.RequestedThemeChanged += (_, _) => PaintAll();
-            }
+            // Raised on a theme change too, after the accent for the new theme is in place.
+            SystemAccent.Changed += (_, _) => PaintAll();
 
             PaintAll();
         }

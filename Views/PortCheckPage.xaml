@@ -120,8 +120,7 @@
                     <ProgressBar
                         IsVisible="{Binding IsRunning}"
                         Progress="{Binding Progress}"
-                        ProgressColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                        Dark={StaticResource AccentDark}}" />
+                        ProgressColor="{DynamicResource Accent}" />
                     <Border Style="{StaticResource GroupCard}">
                         <VerticalStackLayout Padding="0,4" BindableLayout.ItemsSource="{Binding OpenPorts}">
                             <BindableLayout.ItemTemplate>

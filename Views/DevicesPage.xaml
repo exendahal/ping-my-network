@@ -47,22 +47,19 @@
                         IsVisible="{Binding HasOwnership}"
                         Spacing="{StaticResource SpaceXs}">
                         <Border
-                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                              Dark={StaticResource AccentTintDark}}"
+                            BackgroundColor="{DynamicResource AccentTint}"
                             Style="{StaticResource Tag}">
                             <HorizontalStackLayout Spacing="4">
                                 <Label
                                     FontSize="14"
                                     Style="{StaticResource Icon}"
                                     Text="{Binding OwnershipIcon}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}"
+                                    TextColor="{DynamicResource Accent}"
                                     VerticalOptions="Center" />
                                 <Label
                                     Style="{StaticResource TagText}"
                                     Text="{Binding OwnershipText}"
-                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                Dark={StaticResource AccentDark}}"
+                                    TextColor="{DynamicResource Accent}"
                                     VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Border>
@@ -171,8 +168,7 @@
                     -->
                     <Border
                         Margin="0,0,0,12"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                          Dark={StaticResource AccentTintDark}}"
+                        BackgroundColor="{DynamicResource AccentTint}"
                         IsVisible="{Binding AskWhichNetwork}"
                         Style="{StaticResource NoticeBanner}">
                         <Grid
@@ -183,8 +179,7 @@
                                 FontSize="20"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.WIFI_FIND}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}"
+                                TextColor="{DynamicResource Accent}"
                                 VerticalOptions="Start" />
                             <Label
                                 Grid.Column="1"
@@ -224,8 +219,7 @@
                     <!--  Asked once per network, after its first scan.  -->
                     <Border
                         Margin="0,0,0,12"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                          Dark={StaticResource AccentTintDark}}"
+                        BackgroundColor="{DynamicResource AccentTint}"
                         IsVisible="{Binding AskOwnership}"
                         Style="{StaticResource NoticeBanner}">
                         <Grid
@@ -236,8 +230,7 @@
                                 FontSize="20"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.HOME}"
-                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                            Dark={StaticResource AccentDark}}"
+                                TextColor="{DynamicResource Accent}"
                                 VerticalOptions="Start" />
                             <Label
                                 Grid.Column="1"
@@ -347,7 +340,7 @@
                                         Binding="{Binding IsSelected}"
                                         TargetType="Border"
                                         Value="True">
-                                        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource AccentLight}, Dark={StaticResource AccentDark}}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource Accent}" />
                                         <Setter Property="StrokeThickness" Value="2" />
                                     </DataTrigger>
                                 </Border.Triggers>
@@ -358,8 +351,7 @@
                                         VerticalOptions="Center"
                                         WidthRequest="40">
                                         <Border
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                                              Dark={StaticResource AccentTintDark}}"
+                                            BackgroundColor="{DynamicResource AccentTint}"
                                             StrokeShape="RoundRectangle 20"
                                             StrokeThickness="0">
                                             <Border.Triggers>
@@ -375,8 +367,7 @@
                                                 HorizontalTextAlignment="Center"
                                                 Style="{StaticResource Icon}"
                                                 Text="{Binding Icon}"
-                                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                            Dark={StaticResource AccentDark}}">
+                                                TextColor="{DynamicResource Accent}">
                                                 <Label.Triggers>
                                                     <DataTrigger
                                                         Binding="{Binding IsUnknown}"
@@ -431,15 +422,13 @@
                                         Spacing="6"
                                         VerticalOptions="Center">
                                         <Border
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                                              Dark={StaticResource AccentTintDark}}"
+                                            BackgroundColor="{DynamicResource AccentTint}"
                                             IsVisible="{Binding HasRoleTag}"
                                             Style="{StaticResource Tag}">
                                             <Label
                                                 Style="{StaticResource TagText}"
                                                 Text="{Binding RoleTag}"
-                                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                            Dark={StaticResource AccentDark}}" />
+                                                TextColor="{DynamicResource Accent}" />
                                         </Border>
                                         <Border
                                             BackgroundColor="{AppThemeBinding Light={StaticResource NoticeTintLight},
@@ -493,8 +482,7 @@
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource Icon}"
                         Text="{x:Static util:MaterialIcon.DEVICES}"
-                        TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                    Dark={StaticResource AccentDark}}" />
+                        TextColor="{DynamicResource Accent}" />
                     <Label
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource TextTitle}"

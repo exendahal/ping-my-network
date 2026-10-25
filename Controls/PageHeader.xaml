@@ -45,8 +45,7 @@
             Grid.ColumnSpan="3"
             Margin="8,8,8,0"
             Padding="16,12"
-            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                              Dark={StaticResource AccentTintDark}}"
+            BackgroundColor="{DynamicResource AccentTint}"
             IsVisible="False"
             StrokeShape="RoundRectangle 12"
             StrokeThickness="0">
@@ -55,8 +54,7 @@
                     FontSize="20"
                     Style="{StaticResource Icon}"
                     Text="{x:Static util:MaterialIcon.INFO}"
-                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                Dark={StaticResource AccentDark}}"
+                    TextColor="{DynamicResource Accent}"
                     VerticalOptions="Start" />
                 <Label
                     x:Name="HelpLabel"

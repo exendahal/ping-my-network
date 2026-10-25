@@ -415,9 +415,9 @@
   <data name="SettingsBackupApple" xml:space="preserve"><value>Networks you mark as yours, with their device names, are saved to your iCloud and come back after a reinstall or on a new device.</value></data>
   <data name="SettingsBackupWindows" xml:space="preserve"><value>Networks and device names are saved on this PC.</value></data>
   <data name="SettingsSystemColorsRow" xml:space="preserve"><value>Use system colors</value></data>
-  <data name="SettingsSystemColorsAndroid" xml:space="preserve"><value>Uses the colors Android picks from your wallpaper (Material You) instead of the app's green. Applies the next time you open the app.</value></data>
-  <data name="SettingsSystemColorsWindows" xml:space="preserve"><value>Uses your Windows accent color instead of the app's green. Applies the next time you open the app.</value></data>
-  <data name="SettingsSystemColorsApple" xml:space="preserve"><value>Uses the system blue tint instead of the app's green. Applies the next time you open the app.</value></data>
+  <data name="SettingsSystemColorsAndroid" xml:space="preserve"><value>Uses the colors Android picks from your wallpaper (Material You) instead of the app's green.</value></data>
+  <data name="SettingsSystemColorsWindows" xml:space="preserve"><value>Uses your Windows accent color instead of the app's green.</value></data>
+  <data name="SettingsSystemColorsApple" xml:space="preserve"><value>Uses the system blue tint instead of the app's green.</value></data>
   <data name="OwnershipMine" xml:space="preserve"><value>My network</value></data>
   <data name="OwnershipGuest" xml:space="preserve"><value>Guest network</value></data>
   <data name="OwnershipQuestionFormat" xml:space="preserve"><value>Is {0} your network?</value></data>

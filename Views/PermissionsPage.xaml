@@ -30,8 +30,7 @@
                                     ColumnSpacing="{StaticResource SpaceL}"
                                     RowDefinitions="Auto,Auto">
                                     <Border
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
-                                                                          Dark={StaticResource AccentTintDark}}"
+                                        BackgroundColor="{DynamicResource AccentTint}"
                                         HeightRequest="40"
                                         StrokeShape="RoundRectangle 10"
                                         StrokeThickness="0"
@@ -42,8 +41,7 @@
                                             HorizontalOptions="Center"
                                             Style="{StaticResource Icon}"
                                             Text="{Binding Icon}"
-                                            TextColor="{AppThemeBinding Light={StaticResource AccentLight},
-                                                                        Dark={StaticResource AccentDark}}" />
+                                            TextColor="{DynamicResource Accent}" />
                                     </Border>
                                     <VerticalStackLayout Grid.Column="1" Spacing="2">
                                         <Label Style="{StaticResource TextHeadline}" Text="{Binding Title}" />
