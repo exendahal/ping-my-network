@@ -95,7 +95,7 @@ namespace PingMyNetwork.ViewModels
         /// <summary>
         /// The app's version, e.g. "1.0 (1)".
         /// </summary>
-        public string VersionText { get; } = $"{AppInfo.Current.VersionString} ({AppInfo.Current.BuildString})";
+        public string VersionText { get; } = $"{DisplayVersion(AppInfo.Current.Version)} ({AppInfo.Current.BuildString})";
 
         #endregion
 
@@ -193,6 +193,17 @@ namespace PingMyNetwork.ViewModels
             _IsApplyingAlerts = true;
             AreAlertsOn = isOn;
             _IsApplyingAlerts = false;
+        }
+
+        /// <summary>
+        /// The version as set in the project, e.g. "1.0". Windows reports four parts (1.0.0.1),
+        /// the last being the build number, which is shown on its own.
+        /// </summary>
+        /// <param name="version">The app's version.</param>
+        /// <returns>Major and minor, plus the patch number when there is one.</returns>
+        private static string DisplayVersion(Version version)
+        {
+            return version.Build > 0 ? version.ToString(3) : version.ToString(2);
         }
 
         /// <summary>
