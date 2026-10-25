@@ -264,7 +264,7 @@
 
                                     <Grid
                                         Grid.Column="1"
-                                        RowDefinitions="Auto,Auto"
+                                        RowDefinitions="Auto,Auto,Auto"
                                         VerticalOptions="Center">
                                         <Label
                                             FontFamily="OpenSansSemibold"
@@ -278,6 +278,12 @@
                                             LineBreakMode="TailTruncation"
                                             Style="{StaticResource TextLabel}"
                                             Text="{Binding Subtitle}" />
+                                        <Label
+                                            Grid.Row="2"
+                                            IsVisible="{Binding HasMac}"
+                                            LineBreakMode="TailTruncation"
+                                            Style="{StaticResource TextLabel}"
+                                            Text="{Binding MacText}" />
                                     </Grid>
 
                                     <HorizontalStackLayout

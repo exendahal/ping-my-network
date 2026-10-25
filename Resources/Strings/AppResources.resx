@@ -361,4 +361,6 @@
   <data name="SpeedPhaseUpload" xml:space="preserve"><value>Upload</value></data>
   <data name="SpeedUnit" xml:space="preserve"><value>Mbps</value></data>
   <data name="SpeedDownload" xml:space="preserve"><value>Download</value></data>
+  <data name="DeviceMacFormat" xml:space="preserve"><value>MAC {0}</value></data>
+  <data name="DeviceMacPrivateFormat" xml:space="preserve"><value>MAC {0} (private)</value></data>
 </root>

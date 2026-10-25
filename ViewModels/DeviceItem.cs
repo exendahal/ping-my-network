@@ -96,6 +96,18 @@ namespace PingMyNetwork.ViewModels
         public partial string Subtitle { get; set; } = string.Empty;
 
         /// <summary>
+        /// Its MAC address, e.g. "MAC 3C:22:FB:12:34:56", or empty when the platform hides it.
+        /// </summary>
+        [ObservableProperty]
+        public partial string MacText { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Whether the MAC address is known.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool HasMac { get; set; }
+
+        /// <summary>
         /// Icon for its kind.
         /// </summary>
         [ObservableProperty]
@@ -178,6 +190,11 @@ namespace PingMyNetwork.ViewModels
             IsNew = device.IsNew;
             RowOpacity = device.IsOnline ? 1 : OFFLINE_OPACITY;
             ToggleKnownText = device.IsKnown ? AppResources.ActionMarkUnknown : AppResources.ActionMarkKnown;
+
+            HasMac = device.MacAddress is not null;
+            MacText = device.MacAddress is null ? string.Empty
+                : device.IsRandomizedMac == true ? NetworkFormat.Text(AppResources.DeviceMacPrivateFormat, device.MacAddress)
+                : NetworkFormat.Text(AppResources.DeviceMacFormat, device.MacAddress);
 
             RoleTag = device.IsThisDevice ? AppResources.TagThisDevice
                 : device.IsGateway ? AppResources.TagRouter

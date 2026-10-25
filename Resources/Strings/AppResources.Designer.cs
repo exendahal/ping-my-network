@@ -3272,5 +3272,23 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("WifiUnsupportedTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC {0}.
+        /// </summary>
+        public static string DeviceMacFormat {
+            get {
+                return ResourceManager.GetString("DeviceMacFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC {0} (private).
+        /// </summary>
+        public static string DeviceMacPrivateFormat {
+            get {
+                return ResourceManager.GetString("DeviceMacPrivateFormat", resourceCulture);
+            }
+        }
     }
 }
