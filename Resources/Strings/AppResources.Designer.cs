@@ -3902,5 +3902,23 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("WhichNetworkDifferent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet.
+        /// </summary>
+        public static string DetailsSectionInternet {
+            get {
+                return ResourceManager.GetString("DetailsSectionInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IP address.
+        /// </summary>
+        public static string DetailsPublicIp {
+            get {
+                return ResourceManager.GetString("DetailsPublicIp", resourceCulture);
+            }
+        }
     }
 }

@@ -210,6 +210,10 @@ namespace PingMyNetwork.ViewModels
                 DetailSection.From(
                     AppResources.DetailsSectionIpv6,
                     (AppResources.DetailsIpv6Address, snapshot.Ipv6Address)),
+                DetailSection.From(
+                    AppResources.DetailsSectionInternet,
+                    (AppResources.DetailsPublicIp, snapshot.PublicIp),
+                    (AppResources.TileProvider, snapshot.Provider)),
                 new DetailSection(
                     AppResources.DetailsSectionDns,
                     snapshot.DnsServers.Select(server => new DetailRow(AppResources.DetailsSectionDns, server)).ToList()),

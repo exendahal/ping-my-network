@@ -431,4 +431,6 @@
   <data name="WhichNetworkBody" xml:space="preserve"><value>You're on an access point the app hasn't seen before. Two places can use the same Wi-Fi name, so pick the network it belongs to. Your answer is remembered.</value></data>
   <data name="WhichNetworkChoiceFormat" xml:space="preserve"><value>The one with {0} devices, last scanned {1:d}</value></data>
   <data name="WhichNetworkDifferent" xml:space="preserve"><value>A different place</value></data>
+  <data name="DetailsSectionInternet" xml:space="preserve"><value>Internet</value></data>
+  <data name="DetailsPublicIp" xml:space="preserve"><value>Public IP address</value></data>
 </root>
