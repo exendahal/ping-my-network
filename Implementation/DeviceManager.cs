@@ -851,7 +851,9 @@ namespace PingMyNetwork.Implementation
 
                 foreach (NetworkDevice device in record.Devices)
                 {
-                    device.IsOnline = false;
+                    // This device and the router are on the network while it is connected; they
+                    // should not flash "offline" while the sweep reaches them.
+                    device.IsOnline = (device.IpAddress == network.IpAddress) || (device.IpAddress == network.Gateway);
                     device.IsNew = false;
                     device.RoundTripMs = null;
                 }
