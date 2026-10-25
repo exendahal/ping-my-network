@@ -797,7 +797,8 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
-        /// Looks up the maker of every remembered device that has a MAC.
+        /// Looks up the maker of every remembered device that has a MAC, and drops error-page
+        /// titles saved before they were recognised.
         /// </summary>
         private void RefreshVendors()
         {
@@ -805,6 +806,9 @@ namespace PingMyNetwork.Implementation
             {
                 foreach (NetworkDevice device in _Networks!.SelectMany(network => network.Devices))
                 {
+                    // Error pages saved as titles before they were recognised as such.
+                    device.HttpTitle = DeviceDescriber.UsefulTitle(device.HttpTitle);
+
                     if (device.MacAddress is not null)
                     {
                         device.Vendor = MacVendor.Lookup(device.MacAddress);
