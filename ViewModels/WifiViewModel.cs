@@ -50,6 +50,7 @@ namespace PingMyNetwork.ViewModels
         private int? _ScanRssi;
         private DateTimeOffset _ScanRssiAt;
         private string? _SpotsNetwork;
+        private bool _IsChartBandPicked;
 
         #endregion
 
@@ -288,6 +289,7 @@ namespace PingMyNetwork.ViewModels
         private void ShowBand(BandOption option)
         {
             ChartBand = option.Band;
+            _IsChartBandPicked = true;
             Refresh();
         }
 
@@ -683,8 +685,12 @@ namespace PingMyNetwork.ViewModels
                 .Order()
                 .ToList();
 
-            // Start on the user's own band; keep the user's choice after that.
-            if (!bands.Contains(ChartBand) && (bands.Count > 0))
+            // Follow the user's own band until they pick one, then keep their choice.
+            if (!_IsChartBandPicked && bands.Contains(connection.Band))
+            {
+                ChartBand = connection.Band;
+            }
+            else if (!bands.Contains(ChartBand) && (bands.Count > 0))
             {
                 ChartBand = bands.Contains(connection.Band) ? connection.Band : bands[0];
             }
@@ -696,19 +702,23 @@ namespace PingMyNetwork.ViewModels
                 BandOptions = options;
             }
 
-            Curves = networks
+            List<NetworkData> shown = networks
                 .Where(network => (network.FrequencyBand == ChartBand) && (network.ChannelNumber is not null) && (network.RssiDbm is not null))
-                .Select(network =>
-                {
-                    bool isOwn = ChannelPlanner.IsOwn(network, family);
+                .ToList();
 
-                    return new ChannelCurve(
-                        network.ChannelNumber!.Value,
-                        network.RssiDbm!.Value,
-                        isOwn,
-                        isOwn ? network.Ssid : null,
-                        network.ChannelWidthMhz ?? 20);
-                })
+            // A mesh has several access points with one name; labelling each stacks the names.
+            HashSet<NetworkData> labelled = [.. shown
+                .Where(network => ChannelPlanner.IsOwn(network, family))
+                .GroupBy(network => network.Ssid)
+                .Select(group => group.MaxBy(network => network.RssiDbm)!)];
+
+            Curves = shown
+                .Select(network => new ChannelCurve(
+                    network.ChannelNumber!.Value,
+                    network.RssiDbm!.Value,
+                    ChannelPlanner.IsOwn(network, family),
+                    labelled.Contains(network) ? network.Ssid : null,
+                    network.ChannelWidthMhz ?? 20))
                 .ToList();
 
             ChannelScore? quietest = ChannelPlanner.Quietest(networks, ChartBand, family);
