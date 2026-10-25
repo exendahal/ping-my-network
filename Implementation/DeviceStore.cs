@@ -129,6 +129,7 @@ namespace PingMyNetwork.Implementation
     /// </summary>
     [JsonSourceGenerationOptions(WriteIndented = false, UseStringEnumConverter = true)]
     [JsonSerializable(typeof(List<NetworkRecord>))]
+    [JsonSerializable(typeof(List<SignalSpot>))]
     internal sealed partial class DeviceStoreJsonContext : JsonSerializerContext
     {
     }

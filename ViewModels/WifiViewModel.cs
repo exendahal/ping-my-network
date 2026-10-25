@@ -49,6 +49,7 @@ namespace PingMyNetwork.ViewModels
         private IDispatcherTimer? _WalkTimer;
         private int? _ScanRssi;
         private DateTimeOffset _ScanRssiAt;
+        private string? _SpotsNetwork;
 
         #endregion
 
@@ -377,29 +378,13 @@ namespace PingMyNetwork.ViewModels
                 ? NetworkFormat.Text(AppResources.SignalWalkSpotFormat, Spots.Count + 1)
                 : PlaceName.Trim();
 
-            // ponytail: spots live for the session. Saving them per network belongs with History
-            // (PRD 6.12), which does not exist yet.
             string valueText = rssi is int dbm
                 ? $"{NetworkFormat.Text(AppResources.PercentFormat, value)} · {NetworkFormat.Text(AppResources.DbmFormat, dbm)}"
                 : NetworkFormat.Text(AppResources.PercentFormat, value);
-            List<SignalSpot> spots = [.. Spots, new SignalSpot(name, value, rssi, NetworkFormat.SignalLevel(value), valueText)];
 
-            Spots.Clear();
-
-            foreach (SignalSpot spot in spots.OrderByDescending(spot => spot.Strength))
-            {
-                Spots.Add(spot);
-            }
-
+            ShowSpots([.. Spots, new SignalSpot(name, value, rssi, NetworkFormat.SignalLevel(value), valueText)]);
+            SaveSpots();
             PlaceName = string.Empty;
-            HasSpots = true;
-
-            SignalSpot best = Spots[0];
-            SignalSpot worst = Spots[^1];
-
-            SpotsSummary = Spots.Count < 2
-                ? string.Empty
-                : NetworkFormat.Text(AppResources.SignalWalkSpotsSummary, best.Name, best.ValueText, worst.Name, worst.ValueText);
         }
 
         /// <summary>
@@ -408,9 +393,93 @@ namespace PingMyNetwork.ViewModels
         [RelayCommand]
         private void ClearSpots()
         {
+            ShowSpots([]);
+            SaveSpots();
+        }
+
+        /// <summary>
+        /// Shows saved spots, strongest first, with the line comparing the best and the worst.
+        /// </summary>
+        /// <param name="spots">The spots.</param>
+        private void ShowSpots(List<SignalSpot> spots)
+        {
             Spots.Clear();
-            HasSpots = false;
-            SpotsSummary = string.Empty;
+
+            foreach (SignalSpot spot in spots.OrderByDescending(spot => spot.Strength))
+            {
+                Spots.Add(spot);
+            }
+
+            HasSpots = Spots.Count > 0;
+            SpotsSummary = Spots.Count < 2
+                ? string.Empty
+                : NetworkFormat.Text(AppResources.SignalWalkSpotsSummary, Spots[0].Name, Spots[0].ValueText, Spots[^1].Name, Spots[^1].ValueText);
+        }
+
+        /// <summary>
+        /// Shows the spots saved on this Wi-Fi network, when the network changed since last time.
+        /// </summary>
+        /// <param name="ssid">The connected network's name.</param>
+        private void LoadSpots(string? ssid)
+        {
+            if (ssid == _SpotsNetwork)
+            {
+                return;
+            }
+
+            _SpotsNetwork = ssid;
+
+            List<SignalSpot> spots = [];
+            string json = ssid is null ? string.Empty : Preferences.Default.Get(SpotsKey(ssid), string.Empty);
+
+            if (json.Length > 0)
+            {
+                try
+                {
+                    spots = System.Text.Json.JsonSerializer.Deserialize(json, DeviceStoreJsonContext.Default.ListSignalSpot) ?? [];
+                }
+                catch (System.Text.Json.JsonException)
+                {
+                    // An unreadable entry is dropped; the next save replaces it.
+                }
+            }
+
+            ShowSpots(spots);
+        }
+
+        /// <summary>
+        /// Remembers this network's spots, so a walk can be compared with one made days later.
+        /// </summary>
+        /// <remarks>
+        /// ponytail: kept in Preferences per network name, which Android Auto Backup and the iOS
+        /// backup carry with everything else. Moves into History (PRD 6.12) when that exists.
+        /// </remarks>
+        private void SaveSpots()
+        {
+            if (_SpotsNetwork is null)
+            {
+                return;
+            }
+
+            if (Spots.Count == 0)
+            {
+                Preferences.Default.Remove(SpotsKey(_SpotsNetwork));
+                return;
+            }
+
+            Preferences.Default.Set(
+                SpotsKey(_SpotsNetwork),
+                System.Text.Json.JsonSerializer.Serialize(Spots.ToList(), DeviceStoreJsonContext.Default.ListSignalSpot));
+        }
+
+        /// <summary>
+        /// Where one network's spots are kept.
+        /// </summary>
+        /// <param name="ssid">The network's name.</param>
+        /// <returns>The preference key.</returns>
+        private static string SpotsKey(string ssid)
+        {
+            return $"walk.spots.{ssid}";
         }
 
         /// <summary>
@@ -511,6 +580,7 @@ namespace PingMyNetwork.ViewModels
             List<NetworkData> networks = _Scanner.GetNetworks();
             string family = ChannelPlanner.FamilyOf(connection.Ssid);
 
+            LoadSpots(connection.Ssid);
             NoteScanReading(connection, networks);
             ApplyStatus();
             ApplySummary(connection, networks);
