@@ -130,6 +130,33 @@ namespace PingMyNetwork.ViewModels
         }
 
         /// <summary>
+        /// Opens a new bug report on GitHub with a template and the details a fix usually needs:
+        /// the app's version, the device and its system.
+        /// </summary>
+        /// <returns>A task that completes once the browser opens.</returns>
+        [RelayCommand]
+        private async Task ReportBugAsync()
+        {
+            string environment = NetworkFormat.Text(
+                AppResources.FeedbackEnvironmentFormat,
+                VersionText,
+                $"{DeviceInfo.Current.Manufacturer} {DeviceInfo.Current.Model}",
+                $"{DeviceInfo.Current.Platform} {DeviceInfo.Current.VersionString}");
+
+            await Launcher.Default.OpenAsync(PlatformLinks.NewIssue("bug", $"{AppResources.FeedbackBugTemplate}\n\n{environment}"));
+        }
+
+        /// <summary>
+        /// Opens a new feature request on GitHub.
+        /// </summary>
+        /// <returns>A task that completes once the browser opens.</returns>
+        [RelayCommand]
+        private async Task RequestFeatureAsync()
+        {
+            await Launcher.Default.OpenAsync(PlatformLinks.NewIssue("enhancement", AppResources.FeedbackFeatureTemplate));
+        }
+
+        /// <summary>
         /// Opens the permissions screen.
         /// </summary>
         /// <returns>A task that completes once navigation finishes.</returns>

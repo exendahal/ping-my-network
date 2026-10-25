@@ -43,6 +43,26 @@ namespace PingMyNetwork.Views
             _ViewModel.OpenPermissionsCommand.Execute(null);
         }
 
+        /// <summary>
+        /// Opens a bug report.
+        /// </summary>
+        /// <param name="sender">The row.</param>
+        /// <param name="e">The event data.</param>
+        private void OnReportBugTapped(object? sender, EventArgs e)
+        {
+            _ViewModel.ReportBugCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// Opens a feature request.
+        /// </summary>
+        /// <param name="sender">The row.</param>
+        /// <param name="e">The event data.</param>
+        private void OnRequestFeatureTapped(object? sender, EventArgs e)
+        {
+            _ViewModel.RequestFeatureCommand.Execute(null);
+        }
+
         #endregion
     }
 }

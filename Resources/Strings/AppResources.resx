@@ -437,4 +437,28 @@
   <data name="OverlapOne" xml:space="preserve"><value>1 overlapping network</value></data>
   <data name="OverlapManyFormat" xml:space="preserve"><value>{0} overlapping networks</value></data>
   <data name="DnsSummaryOneFormat" xml:space="preserve"><value>{0} record from {1} in {2} ms</value></data>
+  <data name="SettingsFeedback" xml:space="preserve"><value>Help and feedback</value></data>
+  <data name="SettingsReportBug" xml:space="preserve"><value>Report a bug</value></data>
+  <data name="SettingsRequestFeature" xml:space="preserve"><value>Request a feature</value></data>
+  <data name="SettingsFeedbackFooter" xml:space="preserve"><value>Opens the app's issues page on GitHub. Posting needs a free GitHub account. Bug reports include your app version and device, never anything about your network.</value></data>
+  <data name="FeedbackBugTemplate" xml:space="preserve"><value>**What happened**
+
+
+**What you expected**
+
+
+**Steps to reproduce**
+1. 
+2. 
+</value></data>
+  <data name="FeedbackFeatureTemplate" xml:space="preserve"><value>**What would you like the app to do?**
+
+
+**Why would it help you?**
+
+</value></data>
+  <data name="FeedbackEnvironmentFormat" xml:space="preserve"><value>---
+App: {0}
+Device: {1}
+System: {2}</value></data>
 </root>

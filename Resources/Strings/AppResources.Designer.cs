@@ -3956,5 +3956,68 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("DnsSummaryOneFormat", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help and feedback.
+        /// </summary>
+        public static string SettingsFeedback {
+            get {
+                return ResourceManager.GetString("SettingsFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a bug.
+        /// </summary>
+        public static string SettingsReportBug {
+            get {
+                return ResourceManager.GetString("SettingsReportBug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request a feature.
+        /// </summary>
+        public static string SettingsRequestFeature {
+            get {
+                return ResourceManager.GetString("SettingsRequestFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the app&apos;s issues page on GitHub. Posting needs a free GitHub account. Bug reports include your app version and device, never anything about your network..
+        /// </summary>
+        public static string SettingsFeedbackFooter {
+            get {
+                return ResourceManager.GetString("SettingsFeedbackFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to **What happened**   **What you expected**   **Steps to reproduce** 1.  2.  .
+        /// </summary>
+        public static string FeedbackBugTemplate {
+            get {
+                return ResourceManager.GetString("FeedbackBugTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to **What would you like the app to do?**   **Why would it help you?**  .
+        /// </summary>
+        public static string FeedbackFeatureTemplate {
+            get {
+                return ResourceManager.GetString("FeedbackFeatureTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --- App: {0} Device: {1} System: {2}.
+        /// </summary>
+        public static string FeedbackEnvironmentFormat {
+            get {
+                return ResourceManager.GetString("FeedbackEnvironmentFormat", resourceCulture);
+            }
+        }
     }
 }

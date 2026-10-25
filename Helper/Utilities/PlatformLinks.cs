@@ -21,6 +21,22 @@ namespace PingMyNetwork.Helper.Utilities
         /// </summary>
         public static Uri WindowsLocationSettings { get; } = new("ms-settings:privacy-location");
 
+        /// <summary>
+        /// Where bugs and ideas are reported: the project's GitHub issues.
+        /// </summary>
+        public const string NEW_ISSUE_URL = "https://github.com/exendahal/ping-my-network/issues/new";
+
+        /// <summary>
+        /// A new GitHub issue, already filled in.
+        /// </summary>
+        /// <param name="label">The issue's label, e.g. "bug"; GitHub drops it for people who cannot label.</param>
+        /// <param name="body">The text to start the issue with.</param>
+        /// <returns>The page that opens the issue.</returns>
+        public static Uri NewIssue(string label, string body)
+        {
+            return new Uri($"{NEW_ISSUE_URL}?labels={Uri.EscapeDataString(label)}&body={Uri.EscapeDataString(body)}");
+        }
+
         #endregion
     }
 }

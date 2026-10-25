@@ -96,6 +96,24 @@
                     </Grid>
                 </Border>
 
+                <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsFeedback}" />
+                <Border Style="{StaticResource GroupCard}">
+                    <VerticalStackLayout>
+                        <controls:SettingsRow
+                            Title="{x:Static res:AppResources.SettingsReportBug}"
+                            Icon="{x:Static util:MaterialIcon.BUG}"
+                            ShowChevron="True"
+                            Tapped="OnReportBugTapped" />
+                        <BoxView Style="{StaticResource RowSeparator}" />
+                        <controls:SettingsRow
+                            Title="{x:Static res:AppResources.SettingsRequestFeature}"
+                            Icon="{x:Static util:MaterialIcon.FEEDBACK}"
+                            ShowChevron="True"
+                            Tapped="OnRequestFeatureTapped" />
+                    </VerticalStackLayout>
+                </Border>
+                <Label Style="{StaticResource SectionFooter}" Text="{x:Static res:AppResources.SettingsFeedbackFooter}" />
+
                 <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAbout}" />
                 <Border Style="{StaticResource GroupCard}">
                     <controls:SettingsRow

@@ -91,6 +91,8 @@ namespace PingMyNetwork.Helper.Utilities
         public const string NEARBY = "\ue1b7";
         public const string PALETTE = "\ue40a";
         public const string GUEST = "\ue7fd";
+        public const string BUG = "\ue868";
+        public const string FEEDBACK = "\ue87f";
 
         #endregion
     }
