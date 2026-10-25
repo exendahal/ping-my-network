@@ -50,6 +50,15 @@ namespace PingMyNetwork.ViewModels
             _Monitor = monitor;
 
             _Manager.Changed += (_, _) => QueueRefresh();
+
+            // On another network the list starts over, so it scans that network straight away.
+            _Manager.NetworkSwitched += (_, _) =>
+            {
+                if (_HasScannedThisSession && _Monitor.Current.IsConnected)
+                {
+                    _ = _Manager.ScanAsync();
+                }
+            };
             _Monitor.SnapshotChanged += (_, _) => QueueRefresh();
         }
 

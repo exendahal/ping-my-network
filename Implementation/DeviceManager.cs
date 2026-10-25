@@ -37,7 +37,9 @@ namespace PingMyNetwork.Implementation
 
         private List<NetworkRecord>? _Networks;
         private NetworkRecord? _Network;
+        private string? _NetworkKey;
         private CancellationTokenSource? _ScanCancel;
+        private Task _ScanTask = Task.CompletedTask;
 
         #endregion
 
@@ -54,6 +56,8 @@ namespace PingMyNetwork.Implementation
             _Wifi = wifi;
             _Monitor = monitor;
             _Store = store;
+
+            _Monitor.SnapshotChanged += OnSnapshotChanged;
         }
 
         #endregion
@@ -64,6 +68,12 @@ namespace PingMyNetwork.Implementation
         /// Raised, on any thread, when a device or the scan state changes.
         /// </summary>
         public event EventHandler? Changed;
+
+        /// <summary>
+        /// Raised, on any thread, after the phone moved to another network and the list now shows
+        /// that network's devices.
+        /// </summary>
+        public event EventHandler? NetworkSwitched;
 
         #endregion
 
@@ -154,26 +164,7 @@ namespace PingMyNetwork.Implementation
             // reaches remembered devices too. Off the UI thread: the first lookup reads the registry.
             await Task.Run(RefreshVendors);
 
-            if (NetworkKey(_Monitor.Current) is not string key)
-            {
-                return;
-            }
-
-            NetworkSnapshot network = _Monitor.Current;
-
-            lock (_Gate)
-            {
-                _Network = _Networks!.FirstOrDefault(record => record.Key == key);
-
-                // Roles are not saved, since addresses change; mark them from today's connection
-                // so the router and this device are tagged before the scan confirms them.
-                foreach (NetworkDevice device in _Network?.Devices ?? [])
-                {
-                    device.IsThisDevice = device.IpAddress == network.IpAddress;
-                    device.IsGateway = device.IpAddress == network.Gateway;
-                }
-            }
-
+            SwitchTo(_Monitor.Current);
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
@@ -181,13 +172,22 @@ namespace PingMyNetwork.Implementation
         /// Scans the current network. Does nothing when a scan is already running.
         /// </summary>
         /// <returns>A task that completes when the scan and the details lookups are done.</returns>
-        public async Task ScanAsync()
+        public Task ScanAsync()
         {
             if (IsScanning)
             {
-                return;
+                return _ScanTask;
             }
 
+            return _ScanTask = ScanCoreAsync();
+        }
+
+        /// <summary>
+        /// Runs one scan: the sweep, then details for devices seen for the first time.
+        /// </summary>
+        /// <returns>A task that completes when the scan and the details lookups are done.</returns>
+        private async Task ScanCoreAsync()
+        {
             await EnsureLoadedAsync();
 
             NetworkSnapshot network = _Monitor.Current;
@@ -210,7 +210,7 @@ namespace PingMyNetwork.Implementation
             try
             {
                 WifiManagerResponse<List<LanDevice>> result = await _Wifi.DiscoverDevicesAsync(
-                    new SweepProgress(device => Merge(device, network)),
+                    new SweepProgress(device => Merge(device, network, record)),
                     cancel.Token);
 
                 if (result.ErrorCode != WifiErrorCodes.Success)
@@ -228,7 +228,7 @@ namespace PingMyNetwork.Implementation
                 // This device does not always answer its own ping, but it is certainly on the network.
                 if (!isSelfFound)
                 {
-                    Merge(new LanDevice { IpAddress = network.IpAddress }, network);
+                    Merge(new LanDevice { IpAddress = network.IpAddress }, network, record);
                 }
 
                 lock (_Gate)
@@ -384,6 +384,80 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Moves the list to the new network when the phone changes networks, so one network's
+        /// devices are never shown, or shown as online, while on another.
+        /// </summary>
+        /// <param name="sender">The monitor.</param>
+        /// <param name="snapshot">The new connection.</param>
+        private async void OnSnapshotChanged(object? sender, NetworkSnapshot snapshot)
+        {
+            string? key = NetworkKey(snapshot);
+
+            lock (_Gate)
+            {
+                // Not loaded yet: the first screen to appear loads the right network.
+                if ((_Networks is null) || (key == _NetworkKey))
+                {
+                    return;
+                }
+            }
+
+            // A sweep of the old network would only find nothing, slowly.
+            _ScanCancel?.Cancel();
+
+            try
+            {
+                await _ScanTask;
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected; the old scan stopped.
+            }
+
+            if (SwitchTo(_Monitor.Current))
+            {
+                Changed?.Invoke(this, EventArgs.Empty);
+                NetworkSwitched?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Shows the remembered devices of the network the phone is on.
+        /// </summary>
+        /// <param name="network">The connection.</param>
+        /// <returns>True when that is a different network from the one shown before.</returns>
+        private bool SwitchTo(NetworkSnapshot network)
+        {
+            string? key = NetworkKey(network);
+
+            lock (_Gate)
+            {
+                bool isSwitch = key != _NetworkKey;
+
+                _NetworkKey = key;
+                _Network = key is null ? null : _Networks!.FirstOrDefault(record => record.Key == key);
+
+                foreach (NetworkDevice device in _Network?.Devices ?? [])
+                {
+                    // What a scan learned earlier this session belongs to that visit, not this one.
+                    if (isSwitch)
+                    {
+                        device.IsOnline = false;
+                        device.IsNew = false;
+                        device.RoundTripMs = null;
+                    }
+
+                    // Roles are not saved, since addresses change; mark them from today's connection
+                    // so the router and this device are tagged before the scan confirms them.
+                    device.IsThisDevice = device.IpAddress == network.IpAddress;
+                    device.IsGateway = device.IpAddress == network.Gateway;
+                }
+
+                return isSwitch;
+            }
+        }
+
+        /// <summary>
         /// Looks up the maker of every remembered device that has a MAC.
         /// </summary>
         private void RefreshVendors()
@@ -424,6 +498,7 @@ namespace PingMyNetwork.Implementation
                 }
 
                 record.Name = network.Ssid ?? NetworkFormat.ConnectionType(network.ConnectionType);
+                _NetworkKey = key;
 
                 foreach (NetworkDevice device in record.Devices)
                 {
@@ -443,19 +518,16 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         /// <param name="answer">What the sweep reported.</param>
         /// <param name="network">The connection, for spotting this device and the router.</param>
-        private void Merge(LanDevice answer, NetworkSnapshot network)
+        /// <param name="record">The network being scanned. Answers arriving after a switch to
+        /// another network still land here, never in the new network's list.</param>
+        private void Merge(LanDevice answer, NetworkSnapshot network, NetworkRecord record)
         {
             NetworkDevice sighting = new() { IpAddress = answer.IpAddress, HostName = answer.HostName };
             DateTimeOffset now = DateTimeOffset.Now;
 
             lock (_Gate)
             {
-                if (_Network is null)
-                {
-                    return;
-                }
-
-                NetworkDevice? device = _Network.Devices.FirstOrDefault(known => DeviceIdentity.Matches(known, sighting));
+                NetworkDevice? device = record.Devices.FirstOrDefault(known => DeviceIdentity.Matches(known, sighting));
 
                 if (device is null)
                 {
@@ -464,9 +536,9 @@ namespace PingMyNetwork.Implementation
                         FirstSeen = now,
 
                         // The first scan of a network is the baseline: nothing on it is "new".
-                        IsNew = _Network.ScanCount > 0,
+                        IsNew = record.ScanCount > 0,
                     };
-                    _Network.Devices.Add(device);
+                    record.Devices.Add(device);
                 }
 
                 device.IpAddress = answer.IpAddress;
