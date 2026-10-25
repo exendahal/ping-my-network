@@ -85,6 +85,7 @@ namespace PingMyNetwork.Implementation
             _Store = store;
 
             _Monitor.SnapshotChanged += OnSnapshotChanged;
+            _Store.CloudRestored += OnCloudRestored;
         }
 
         #endregion
@@ -673,6 +674,38 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Takes the user's networks that iCloud delivered after the app started. Each replaces any
+        /// copy of the same network this device made meanwhile, which is a first scan the user has
+        /// not answered yet; the restored one carries their names and Known devices.
+        /// </summary>
+        /// <param name="sender">The store.</param>
+        /// <param name="restored">The user's networks from iCloud.</param>
+        private void OnCloudRestored(object? sender, List<NetworkRecord> restored)
+        {
+            lock (_Gate)
+            {
+                // Not loaded yet: loading reads the file the store has just written.
+                if (_Networks is null)
+                {
+                    return;
+                }
+
+                HashSet<string> keys = [.. restored.Select(record => record.Key)];
+
+                _Networks.RemoveAll(record => (record.IsMine != true) && keys.Contains(record.Key));
+                _Networks.AddRange(restored);
+
+                // Show the restored network if the phone is on it.
+                _NetworkKey = null;
+            }
+
+            SwitchTo(_Monitor.Current);
+            Changed?.Invoke(this, EventArgs.Empty);
+            NetworkSwitched?.Invoke(this, EventArgs.Empty);
+            _ = SaveAsync();
+        }
+
+        /// <summary>
         /// Shows the remembered devices of the network the phone is on.
         /// </summary>
         /// <param name="network">The connection.</param>
@@ -1185,6 +1218,7 @@ namespace PingMyNetwork.Implementation
         {
             byte[] mine;
             byte[] others;
+            bool hasMine;
 
             lock (_Gate)
             {
@@ -1193,11 +1227,14 @@ namespace PingMyNetwork.Implementation
                     return Task.CompletedTask;
                 }
 
-                mine = _Store.Serialize(_Networks.Where(network => network.IsMine == true).ToList());
+                List<NetworkRecord> own = _Networks.Where(network => network.IsMine == true).ToList();
+
+                hasMine = own.Count > 0;
+                mine = _Store.Serialize(own);
                 others = _Store.Serialize(_Networks.Where(network => network.IsMine != true).ToList());
             }
 
-            return _Store.SaveAsync(mine, others);
+            return _Store.SaveAsync(mine, others, hasMine);
         }
 
         #endregion

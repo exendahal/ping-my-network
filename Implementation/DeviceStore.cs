@@ -50,6 +50,13 @@ namespace PingMyNetwork.Implementation
         private readonly SemaphoreSlim _WriteGate = new(1, 1);
         private readonly ILogger<DeviceStore> _Logger;
 
+        /// <summary>
+        /// Whether this device has had networks of the user's own since it started. Until then an
+        /// empty list is never sent to iCloud: on a fresh install the iCloud copy can arrive after
+        /// the first save, and writing "no networks" first would wipe it.
+        /// </summary>
+        private bool _HasOwnNetworks;
+
         #endregion
 
         #region Constructor
@@ -61,7 +68,26 @@ namespace PingMyNetwork.Implementation
         public DeviceStore(ILogger<DeviceStore> logger)
         {
             _Logger = logger;
+
+#if IOS || MACCATALYST
+            // iCloud delivers its copy whenever it syncs, which on a new install is often after the
+            // app has started.
+            Foundation.NSNotificationCenter.DefaultCenter.AddObserver(
+                Foundation.NSUbiquitousKeyValueStore.DidChangeExternallyNotification,
+                notification => _ = RestoreLateCloudCopyAsync(),
+                Foundation.NSUbiquitousKeyValueStore.DefaultStore);
+#endif
         }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Raised, on any thread, when iCloud delivers the user's networks after the app started
+        /// with none of its own. Carries the restored networks.
+        /// </summary>
+        public event EventHandler<List<NetworkRecord>>? CloudRestored;
 
         #endregion
 
@@ -79,7 +105,11 @@ namespace PingMyNetwork.Implementation
                 await WriteAsync(_Path, restored);
             }
 
-            return [.. await ReadAsync(_Path), .. await ReadAsync(_LocalPath)];
+            List<NetworkRecord> mine = await ReadAsync(_Path);
+
+            _HasOwnNetworks = mine.Count > 0;
+
+            return [.. mine, .. await ReadAsync(_LocalPath)];
         }
 
         /// <summary>
@@ -98,17 +128,20 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         /// <param name="mine">The user's own networks, from <see cref="Serialize"/>.</param>
         /// <param name="others">Guest and undecided networks, from <see cref="Serialize"/>.</param>
+        /// <param name="hasMine">Whether <paramref name="mine"/> holds any network.</param>
         /// <returns>A task that completes when the files are written.</returns>
-        public async Task SaveAsync(byte[] mine, byte[] others)
+        public async Task SaveAsync(byte[] mine, byte[] others, bool hasMine)
         {
             await _WriteGate.WaitAsync();
 
             try
             {
-                if (await WriteAsync(_Path, mine))
+                if (await WriteAsync(_Path, mine) && (hasMine || _HasOwnNetworks))
                 {
                     WriteCloudCopy(mine);
                 }
+
+                _HasOwnNetworks |= hasMine;
 
                 if (await WriteAsync(_LocalPath, others))
                 {
@@ -119,6 +152,50 @@ namespace PingMyNetwork.Implementation
             {
                 _WriteGate.Release();
             }
+        }
+
+        /// <summary>
+        /// Takes the iCloud copy when it arrives after the app started, as long as this device has
+        /// no networks of the user's own yet: a reinstall or a new device catching up.
+        /// </summary>
+        /// <returns>A task that completes once restored, or at once when there is nothing to do.</returns>
+        private async Task RestoreLateCloudCopyAsync()
+        {
+            if (_HasOwnNetworks || (ReadCloudCopy() is not byte[] cloud))
+            {
+                return;
+            }
+
+            List<NetworkRecord> restored;
+
+            try
+            {
+                restored = JsonSerializer.Deserialize(cloud, DeviceStoreJsonContext.Default.ListNetworkRecord) ?? [];
+            }
+            catch (JsonException exception)
+            {
+                _Logger.LogError(exception, "The iCloud copy of the networks could not be read.");
+                return;
+            }
+
+            if (restored.Count == 0)
+            {
+                return;
+            }
+
+            await _WriteGate.WaitAsync();
+
+            try
+            {
+                await WriteAsync(_Path, cloud);
+                _HasOwnNetworks = true;
+            }
+            finally
+            {
+                _WriteGate.Release();
+            }
+
+            CloudRestored?.Invoke(this, restored);
         }
 
         /// <summary>
