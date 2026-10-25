@@ -114,6 +114,13 @@ namespace PingMyNetwork.ViewModels
         {
             await Clipboard.Default.SetTextAsync(row.Value);
 
+            // Android 13 and later show their own preview of what was copied; a second notice
+            // would only repeat it.
+            if (OperatingSystem.IsAndroidVersionAtLeast(33))
+            {
+                return;
+            }
+
             _CopiedCancel?.Cancel();
             _CopiedCancel = new CancellationTokenSource();
 
