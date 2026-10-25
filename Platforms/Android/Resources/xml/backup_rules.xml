@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 6 to 11. Everything is backed up except guest and undecided networks (DeviceStore). -->
+<full-backup-content>
+	<exclude domain="file" path="devices.local.json" />
+</full-backup-content>

@@ -28,6 +28,12 @@ namespace PingMyNetwork.Models
         public DateTimeOffset? LastScan { get; set; }
 
         /// <summary>
+        /// Whether the user says it is their own network (home, office) rather than a guest one:
+        /// null until they say. Only their own networks are backed up and send alerts.
+        /// </summary>
+        public bool? IsMine { get; set; }
+
+        /// <summary>
         /// Every device seen on this network.
         /// </summary>
         public List<NetworkDevice> Devices { get; set; } = [];

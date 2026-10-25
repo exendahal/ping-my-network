@@ -3670,7 +3670,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get a notification when a device you haven&apos;t marked as known joins your network..
+        ///   Looks up a localized string similar to Get a notification when a device you haven&apos;t marked as known joins one of your own networks..
         /// </summary>
         public static string PermissionAlertsBody {
             get {
@@ -3697,7 +3697,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checks every 2 minutes while the app is open, and about every 15 minutes in the background on unmetered Wi-Fi. Alerts aren&apos;t instant, and only work while this phone is on that network..
+        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi..
         /// </summary>
         public static string SettingsAlertsFooterAndroid {
             get {
@@ -3706,7 +3706,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checks every 2 minutes while the app is open, and each time you open it. iOS doesn&apos;t let apps scan the network in the background..
+        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and each time you open it..
         /// </summary>
         public static string SettingsAlertsFooterApple {
             get {
@@ -3724,7 +3724,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your networks, device names and Known devices are backed up to your Google account automatically, like other app data. They come back when you reinstall the app or set up a new phone from that backup..
+        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are backed up to your Google account and come back after a reinstall or on a new phone..
         /// </summary>
         public static string SettingsBackupAndroid {
             get {
@@ -3733,7 +3733,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your networks, device names and Known devices are saved to your iCloud. They come back when you reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID..
+        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are saved to your iCloud and come back after a reinstall or on a new device..
         /// </summary>
         public static string SettingsBackupApple {
             get {
@@ -3742,7 +3742,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your networks, device names and Known devices are saved on this PC..
+        ///   Looks up a localized string similar to Networks and device names are saved on this PC..
         /// </summary>
         public static string SettingsBackupWindows {
             get {
@@ -3783,6 +3783,87 @@ namespace PingMyNetwork.Resources.Strings {
         public static string SettingsSystemColorsApple {
             get {
                 return ResourceManager.GetString("SettingsSystemColorsApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My network.
+        /// </summary>
+        public static string OwnershipMine {
+            get {
+                return ResourceManager.GetString("OwnershipMine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guest network.
+        /// </summary>
+        public static string OwnershipGuest {
+            get {
+                return ResourceManager.GetString("OwnershipGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is {0} your network?.
+        /// </summary>
+        public static string OwnershipQuestionFormat {
+            get {
+                return ResourceManager.GetString("OwnershipQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your own networks are backed up and alert you to new devices. Guest networks stay on this phone..
+        /// </summary>
+        public static string OwnershipBody {
+            get {
+                return ResourceManager.GetString("OwnershipBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, it&apos;s mine.
+        /// </summary>
+        public static string OwnershipYes {
+            get {
+                return ResourceManager.GetString("OwnershipYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, guest network.
+        /// </summary>
+        public static string OwnershipNo {
+            get {
+                return ResourceManager.GetString("OwnershipNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches between my network and guest network.
+        /// </summary>
+        public static string OwnershipToggleHint {
+            get {
+                return ResourceManager.GetString("OwnershipToggleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make guest.
+        /// </summary>
+        public static string OwnershipMakeGuest {
+            get {
+                return ResourceManager.GetString("OwnershipMakeGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make mine.
+        /// </summary>
+        public static string OwnershipMakeMine {
+            get {
+                return ResourceManager.GetString("OwnershipMakeMine", resourceCulture);
             }
         }
     }

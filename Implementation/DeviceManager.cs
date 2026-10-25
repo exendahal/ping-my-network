@@ -150,6 +150,21 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Whether the user says the current network is theirs: true for "my network", false for
+        /// a guest network, null when not asked yet or nothing has been scanned.
+        /// </summary>
+        public bool? IsMine
+        {
+            get
+            {
+                lock (_Gate)
+                {
+                    return _Network?.IsMine;
+                }
+            }
+        }
+
+        /// <summary>
         /// Why the last scan could not run, or null.
         /// </summary>
         public WifiErrorCodes? LastError { get; private set; }
@@ -360,6 +375,40 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Marks the current network as the user's own or as a guest network. Only the user's own
+        /// networks are backed up and send new-device alerts.
+        /// </summary>
+        /// <remarks>
+        /// The first time a network is called "mine", everything already on it counts as known, so
+        /// turning alerts on does not announce the whole household.
+        /// </remarks>
+        /// <param name="isMine">True for "my network", false for a guest network.</param>
+        /// <returns>A task that completes once saved.</returns>
+        public async Task SetMineAsync(bool isMine)
+        {
+            lock (_Gate)
+            {
+                if (_Network is null)
+                {
+                    return;
+                }
+
+                if (isMine && (_Network.IsMine is null))
+                {
+                    foreach (NetworkDevice device in _Network.Devices)
+                    {
+                        device.IsKnown = true;
+                    }
+                }
+
+                _Network.IsMine = isMine;
+            }
+
+            Changed?.Invoke(this, EventArgs.Empty);
+            await SaveAsync();
+        }
+
+        /// <summary>
         /// Gives a device the user's own name, or clears it with an empty name.
         /// </summary>
         /// <param name="id">The device's id.</param>
@@ -553,6 +602,12 @@ namespace PingMyNetwork.Implementation
         private void AnnounceNewDevices(NetworkRecord record)
         {
             List<NetworkDevice> fresh;
+
+            // A guest network's devices are none of the user's business.
+            if (record.IsMine != true)
+            {
+                return;
+            }
 
             lock (_Gate)
             {
@@ -870,11 +925,14 @@ namespace PingMyNetwork.Implementation
 
         /// <summary>
         /// Saves a consistent copy of every network, taken under the lock and written outside it.
+        /// The user's own networks and the rest go to separate files, so only their own are backed
+        /// up.
         /// </summary>
         /// <returns>A task that completes once written.</returns>
         private Task SaveAsync()
         {
-            byte[] json;
+            byte[] mine;
+            byte[] others;
 
             lock (_Gate)
             {
@@ -883,10 +941,11 @@ namespace PingMyNetwork.Implementation
                     return Task.CompletedTask;
                 }
 
-                json = _Store.Serialize(_Networks);
+                mine = _Store.Serialize(_Networks.Where(network => network.IsMine == true).ToList());
+                others = _Store.Serialize(_Networks.Where(network => network.IsMine != true).ToList());
             }
 
-            return _Store.SaveAsync(json);
+            return _Store.SaveAsync(mine, others);
         }
 
         #endregion

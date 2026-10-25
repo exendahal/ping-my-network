@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+. Cloud backup and phone-to-phone transfer leave out guest and undecided networks (DeviceStore). -->
+<data-extraction-rules>
+	<cloud-backup>
+		<exclude domain="file" path="devices.local.json" />
+	</cloud-backup>
+	<device-transfer>
+		<exclude domain="file" path="devices.local.json" />
+	</device-transfer>
+</data-extraction-rules>

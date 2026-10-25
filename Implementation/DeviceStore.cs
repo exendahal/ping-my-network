@@ -6,23 +6,33 @@ using PingMyNetwork.Models;
 namespace PingMyNetwork.Implementation
 {
     /// <summary>
-    /// Saves the remembered networks and their devices as one JSON file in the app's data folder.
+    /// Saves the remembered networks and their devices as JSON in the app's data folder: the user's
+    /// own networks in one file, guest and undecided networks in another.
     /// </summary>
     /// <remarks>
     /// ponytail: one JSON file instead of the PRD's SQLite. A household network has tens of devices,
     /// so reading and writing the whole file costs less than a database dependency. Move to SQLite
     /// when history (PRD 6.12) makes the file large.
     ///
-    /// Backup (PRD 6.16), with no account and no server of our own: Android Auto Backup carries the
-    /// file to the user's Google account. On iOS and Mac a copy also goes to the user's iCloud
-    /// key-value store, which restores it on a reinstall or a new device signed in to the same
-    /// Apple ID, and the file is part of the normal iCloud device backup.
+    /// Backup (PRD 6.16), with no account and no server of our own, and only of the user's own
+    /// networks: Android Auto Backup carries devices.json to the user's Google account, while the
+    /// backup rules leave devices.local.json out. On iOS and Mac a copy of devices.json also goes
+    /// to the user's iCloud key-value store, which restores it on a reinstall or a new device
+    /// signed in to the same Apple ID; devices.local.json is excluded from the device backup.
     /// </remarks>
     public sealed class DeviceStore
     {
         #region Variables
 
+        /// <summary>
+        /// The user's own networks; backed up.
+        /// </summary>
         private const string FILE_NAME = "devices.json";
+
+        /// <summary>
+        /// Guest and undecided networks; stays on this device. Named in the Android backup rules.
+        /// </summary>
+        private const string LOCAL_FILE_NAME = "devices.local.json";
 
         /// <summary>
         /// Key of the iCloud copy.
@@ -36,6 +46,7 @@ namespace PingMyNetwork.Implementation
         private const int CLOUD_MAX_BYTES = 1_000_000;
 
         private readonly string _Path = Path.Combine(FileSystem.AppDataDirectory, FILE_NAME);
+        private readonly string _LocalPath = Path.Combine(FileSystem.AppDataDirectory, LOCAL_FILE_NAME);
         private readonly SemaphoreSlim _WriteGate = new(1, 1);
         private readonly ILogger<DeviceStore> _Logger;
 
@@ -59,38 +70,20 @@ namespace PingMyNetwork.Implementation
         /// <summary>
         /// Reads every remembered network.
         /// </summary>
-        /// <returns>The networks, or an empty list when there is no file or it cannot be read.</returns>
+        /// <returns>The networks, or an empty list when there are no files or they cannot be read.</returns>
         public async Task<List<NetworkRecord>> LoadAsync()
         {
             if (!File.Exists(_Path) && (ReadCloudCopy() is byte[] restored))
             {
                 // A reinstall or a new device: start from the iCloud copy.
-                await SaveAsync(restored);
+                await WriteAsync(_Path, restored);
             }
 
-            if (!File.Exists(_Path))
-            {
-                return [];
-            }
-
-            try
-            {
-                await using FileStream stream = File.OpenRead(_Path);
-
-                return await JsonSerializer.DeserializeAsync(stream, DeviceStoreJsonContext.Default.ListNetworkRecord) ?? [];
-            }
-            catch (Exception exception) when (exception is IOException or JsonException)
-            {
-                // A damaged file is kept aside rather than overwritten, so nothing the user named is lost for good.
-                _Logger.LogError(exception, "Could not read {Path}; starting with no remembered devices.", _Path);
-                TryMoveAside();
-
-                return [];
-            }
+            return [.. await ReadAsync(_Path), .. await ReadAsync(_LocalPath)];
         }
 
         /// <summary>
-        /// Turns the networks into the file's contents. Fast enough to call while holding a lock,
+        /// Turns the networks into a file's contents. Fast enough to call while holding a lock,
         /// which is how callers get a consistent copy of data a scan is still changing.
         /// </summary>
         /// <param name="networks">The networks to save; not modified.</param>
@@ -101,31 +94,100 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
-        /// Writes the file. It is replaced in one step, so a crash mid-write leaves the previous
-        /// version intact.
+        /// Writes both files, and the iCloud copy of the user's own networks.
         /// </summary>
-        /// <param name="json">Contents from <see cref="Serialize"/>.</param>
-        /// <returns>A task that completes when the file is written.</returns>
-        public async Task SaveAsync(byte[] json)
+        /// <param name="mine">The user's own networks, from <see cref="Serialize"/>.</param>
+        /// <param name="others">Guest and undecided networks, from <see cref="Serialize"/>.</param>
+        /// <returns>A task that completes when the files are written.</returns>
+        public async Task SaveAsync(byte[] mine, byte[] others)
         {
-            string temporary = $"{_Path}.tmp";
-
             await _WriteGate.WaitAsync();
 
             try
             {
-                await File.WriteAllBytesAsync(temporary, json);
-                File.Move(temporary, _Path, overwrite: true);
-                WriteCloudCopy(json);
-            }
-            catch (IOException exception)
-            {
-                _Logger.LogError(exception, "Could not save {Path}.", _Path);
+                if (await WriteAsync(_Path, mine))
+                {
+                    WriteCloudCopy(mine);
+                }
+
+                if (await WriteAsync(_LocalPath, others))
+                {
+                    ExcludeFromBackup(_LocalPath);
+                }
             }
             finally
             {
                 _WriteGate.Release();
             }
+        }
+
+        /// <summary>
+        /// Reads one file.
+        /// </summary>
+        /// <param name="path">The file.</param>
+        /// <returns>Its networks, or none when it is missing or cannot be read.</returns>
+        private async Task<List<NetworkRecord>> ReadAsync(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return [];
+            }
+
+            try
+            {
+                await using FileStream stream = File.OpenRead(path);
+
+                return await JsonSerializer.DeserializeAsync(stream, DeviceStoreJsonContext.Default.ListNetworkRecord) ?? [];
+            }
+            catch (Exception exception) when (exception is IOException or JsonException)
+            {
+                // A damaged file is kept aside rather than overwritten, so nothing the user named is lost for good.
+                _Logger.LogError(exception, "Could not read {Path}; starting without its networks.", path);
+                TryMoveAside(path);
+
+                return [];
+            }
+        }
+
+        /// <summary>
+        /// Writes one file. It is replaced in one step, so a crash mid-write leaves the previous
+        /// version intact.
+        /// </summary>
+        /// <param name="path">The file.</param>
+        /// <param name="json">Its contents.</param>
+        /// <returns>True once written.</returns>
+        private async Task<bool> WriteAsync(string path, byte[] json)
+        {
+            string temporary = $"{path}.tmp";
+
+            try
+            {
+                await File.WriteAllBytesAsync(temporary, json);
+                File.Move(temporary, path, overwrite: true);
+
+                return true;
+            }
+            catch (IOException exception)
+            {
+                _Logger.LogError(exception, "Could not save {Path}.", path);
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Keeps a file out of the iCloud device backup, on iOS and Mac. Android leaves it out
+        /// through its backup rules instead.
+        /// </summary>
+        /// <param name="path">The file.</param>
+        private static void ExcludeFromBackup(string path)
+        {
+#if IOS || MACCATALYST
+            Foundation.NSUrl.FromFilename(path).SetResource(
+                Foundation.NSUrl.IsExcludedFromBackupKey,
+                Foundation.NSNumber.FromBoolean(true),
+                out _);
+#endif
         }
 
         /// <summary>
@@ -167,11 +229,12 @@ namespace PingMyNetwork.Implementation
         /// <summary>
         /// Renames an unreadable file so the next save does not overwrite it.
         /// </summary>
-        private void TryMoveAside()
+        /// <param name="path">The file.</param>
+        private static void TryMoveAside(string path)
         {
             try
             {
-                File.Move(_Path, $"{_Path}.{DateTime.Now:yyyyMMddHHmmss}.bad", overwrite: true);
+                File.Move(path, $"{path}.{DateTime.Now:yyyyMMddHHmmss}.bad", overwrite: true);
             }
             catch (IOException)
             {

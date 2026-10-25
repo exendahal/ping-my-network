@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<!--
-		allowBackup: Android Auto Backup copies the app's files (devices.json: networks, device
-		names, Known status) and preferences (settings, signal walk places) to the user's Google
-		account, and restores them on reinstall or a new phone. Caches are left out by default.
+		allowBackup: Android Auto Backup copies the app's files (devices.json: the user's own
+		networks, device names, Known status) and preferences (settings, signal walk places) to the
+		user's Google account, and restores them on reinstall or a new phone. The backup rules leave
+		out devices.local.json, which holds guest networks. Caches are left out by default.
 
 		usesCleartextTraffic: device details read each device's own web page title and UPnP
 		description over plain http:// on the local network. Android's network security config cannot
@@ -13,6 +14,8 @@
 	-->
 	<application
 		android:allowBackup="true"
+		android:dataExtractionRules="@xml/data_extraction_rules"
+		android:fullBackupContent="@xml/backup_rules"
 		android:icon="@mipmap/appicon"
 		android:roundIcon="@mipmap/appicon_round"
 		android:supportsRtl="true"

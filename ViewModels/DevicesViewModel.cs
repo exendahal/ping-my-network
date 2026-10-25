@@ -179,6 +179,42 @@ namespace PingMyNetwork.ViewModels
         public partial bool ShowNoMatch { get; set; }
 
         /// <summary>
+        /// Whether to ask if this network is the user's own, after its first scan.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool AskOwnership { get; set; }
+
+        /// <summary>
+        /// The question, e.g. "Is flyoderr_5 your network?".
+        /// </summary>
+        [ObservableProperty]
+        public partial string OwnershipQuestion { get; set; } = string.Empty;
+
+        /// <summary>
+        /// "My network" or "Guest network", once the user has said.
+        /// </summary>
+        [ObservableProperty]
+        public partial string OwnershipText { get; set; } = string.Empty;
+
+        /// <summary>
+        /// A house for the user's own network, a person for a guest network.
+        /// </summary>
+        [ObservableProperty]
+        public partial string OwnershipIcon { get; set; } = MaterialIcon.HOME;
+
+        /// <summary>
+        /// The switch-over action: "Make guest" on the user's network, "Make mine" on a guest one.
+        /// </summary>
+        [ObservableProperty]
+        public partial string OwnershipChangeText { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Whether the user has said whose network this is.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool HasOwnership { get; set; }
+
+        /// <summary>
         /// Whether there are devices to act on in bulk.
         /// </summary>
         [ObservableProperty]
@@ -283,6 +319,36 @@ namespace PingMyNetwork.ViewModels
         private Task MarkAllKnownAsync()
         {
             return _Manager.MarkAllKnownAsync();
+        }
+
+        /// <summary>
+        /// Says this network is the user's own: backed up, and alerts when a device joins.
+        /// </summary>
+        /// <returns>A task that completes once saved.</returns>
+        [RelayCommand]
+        private Task MarkMineAsync()
+        {
+            return _Manager.SetMineAsync(true);
+        }
+
+        /// <summary>
+        /// Says this is a guest network: not backed up, no alerts.
+        /// </summary>
+        /// <returns>A task that completes once saved.</returns>
+        [RelayCommand]
+        private Task MarkGuestAsync()
+        {
+            return _Manager.SetMineAsync(false);
+        }
+
+        /// <summary>
+        /// Switches between "my network" and "guest network".
+        /// </summary>
+        /// <returns>A task that completes once saved.</returns>
+        [RelayCommand]
+        private Task ToggleOwnershipAsync()
+        {
+            return _Manager.SetMineAsync(_Manager.IsMine != true);
         }
 
         /// <summary>
@@ -563,6 +629,15 @@ namespace PingMyNetwork.ViewModels
             IsBusy = _Manager.IsScanning || _Manager.IsIdentifying;
             ScanButtonText = _Manager.IsScanning ? AppResources.DevicesStop : AppResources.DevicesScan;
             NetworkName = _Manager.NetworkName ?? _Monitor.Current.Ssid ?? string.Empty;
+
+            bool? isMine = _Manager.IsMine;
+
+            AskOwnership = (isMine is null) && (_Manager.LastScan is not null);
+            HasOwnership = isMine is not null;
+            OwnershipText = isMine == true ? AppResources.OwnershipMine : AppResources.OwnershipGuest;
+            OwnershipIcon = isMine == true ? MaterialIcon.HOME : MaterialIcon.GUEST;
+            OwnershipChangeText = isMine == true ? AppResources.OwnershipMakeGuest : AppResources.OwnershipMakeMine;
+            OwnershipQuestion = NetworkFormat.Text(AppResources.OwnershipQuestionFormat, NetworkName);
 
             Summary = _Manager.IsScanning ? NetworkFormat.Text(AppResources.DevicesScanningFormat, online)
                 : _Manager.IsIdentifying ? AppResources.DevicesIdentifying

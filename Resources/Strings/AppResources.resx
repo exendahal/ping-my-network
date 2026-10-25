@@ -405,17 +405,26 @@
   <data name="AlertNewDeviceTitle" xml:space="preserve"><value>New device on {0}</value></data>
   <data name="AlertNewDeviceBody" xml:space="preserve"><value>{0} ({1}) joined your network. Open the app to mark it as known.</value></data>
   <data name="PermissionAlertsTitle" xml:space="preserve"><value>New device alerts</value></data>
-  <data name="PermissionAlertsBody" xml:space="preserve"><value>Get a notification when a device you haven't marked as known joins your network.</value></data>
+  <data name="PermissionAlertsBody" xml:space="preserve"><value>Get a notification when a device you haven't marked as known joins one of your own networks.</value></data>
   <data name="SettingsAlerts" xml:space="preserve"><value>Notifications</value></data>
   <data name="SettingsAlertsRow" xml:space="preserve"><value>New device alerts</value></data>
-  <data name="SettingsAlertsFooterAndroid" xml:space="preserve"><value>Checks every 2 minutes while the app is open, and about every 15 minutes in the background on unmetered Wi-Fi. Alerts aren't instant, and only work while this phone is on that network.</value></data>
-  <data name="SettingsAlertsFooterApple" xml:space="preserve"><value>Checks every 2 minutes while the app is open, and each time you open it. iOS doesn't let apps scan the network in the background.</value></data>
+  <data name="SettingsAlertsFooterAndroid" xml:space="preserve"><value>Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi.</value></data>
+  <data name="SettingsAlertsFooterApple" xml:space="preserve"><value>Only on networks you mark as yours. Checks every 2 minutes while the app is open, and each time you open it.</value></data>
   <data name="SettingsBackup" xml:space="preserve"><value>Backup</value></data>
-  <data name="SettingsBackupAndroid" xml:space="preserve"><value>Your networks, device names and Known devices are backed up to your Google account automatically, like other app data. They come back when you reinstall the app or set up a new phone from that backup.</value></data>
-  <data name="SettingsBackupApple" xml:space="preserve"><value>Your networks, device names and Known devices are saved to your iCloud. They come back when you reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID.</value></data>
-  <data name="SettingsBackupWindows" xml:space="preserve"><value>Your networks, device names and Known devices are saved on this PC.</value></data>
+  <data name="SettingsBackupAndroid" xml:space="preserve"><value>Networks you mark as yours, with their device names, are backed up to your Google account and come back after a reinstall or on a new phone.</value></data>
+  <data name="SettingsBackupApple" xml:space="preserve"><value>Networks you mark as yours, with their device names, are saved to your iCloud and come back after a reinstall or on a new device.</value></data>
+  <data name="SettingsBackupWindows" xml:space="preserve"><value>Networks and device names are saved on this PC.</value></data>
   <data name="SettingsSystemColorsRow" xml:space="preserve"><value>Use system colors</value></data>
   <data name="SettingsSystemColorsAndroid" xml:space="preserve"><value>Uses the colors Android picks from your wallpaper (Material You) instead of the app's green. Applies the next time you open the app.</value></data>
   <data name="SettingsSystemColorsWindows" xml:space="preserve"><value>Uses your Windows accent color instead of the app's green. Applies the next time you open the app.</value></data>
   <data name="SettingsSystemColorsApple" xml:space="preserve"><value>Uses the system blue tint instead of the app's green. Applies the next time you open the app.</value></data>
+  <data name="OwnershipMine" xml:space="preserve"><value>My network</value></data>
+  <data name="OwnershipGuest" xml:space="preserve"><value>Guest network</value></data>
+  <data name="OwnershipQuestionFormat" xml:space="preserve"><value>Is {0} your network?</value></data>
+  <data name="OwnershipBody" xml:space="preserve"><value>Your own networks are backed up and alert you to new devices. Guest networks stay on this phone.</value></data>
+  <data name="OwnershipYes" xml:space="preserve"><value>Yes, it's mine</value></data>
+  <data name="OwnershipNo" xml:space="preserve"><value>No, guest network</value></data>
+  <data name="OwnershipToggleHint" xml:space="preserve"><value>Switches between my network and guest network</value></data>
+  <data name="OwnershipMakeGuest" xml:space="preserve"><value>Make guest</value></data>
+  <data name="OwnershipMakeMine" xml:space="preserve"><value>Make mine</value></data>
 </root>

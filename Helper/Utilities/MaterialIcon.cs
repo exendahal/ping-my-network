@@ -90,6 +90,7 @@ namespace PingMyNetwork.Helper.Utilities
         public const string BACKUP = "\ue864";
         public const string NEARBY = "\ue1b7";
         public const string PALETTE = "\ue40a";
+        public const string GUEST = "\ue7fd";
 
         #endregion
     }

@@ -37,6 +37,43 @@
                             Style="{StaticResource TextLabel}"
                             Text="{Binding Summary}" />
                     </HorizontalStackLayout>
+                    <!--
+                        Whose network this is: a label, not a button, so it never reads as one of
+                        the filter chips below. "Change" is the action, named as one.
+                    -->
+                    <HorizontalStackLayout
+                        Margin="0,6,0,0"
+                        IsVisible="{Binding HasOwnership}"
+                        Spacing="{StaticResource SpaceXs}">
+                        <Border
+                            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                              Dark={StaticResource AccentTintDark}}"
+                            Style="{StaticResource Tag}">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label
+                                    FontSize="14"
+                                    Style="{StaticResource Icon}"
+                                    Text="{Binding OwnershipIcon}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Style="{StaticResource TagText}"
+                                    Text="{Binding OwnershipText}"
+                                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                Dark={StaticResource AccentDark}}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Button
+                            Padding="8,0"
+                            Command="{Binding ToggleOwnershipCommand}"
+                            MinimumHeightRequest="32"
+                            SemanticProperties.Hint="{x:Static res:AppResources.OwnershipToggleHint}"
+                            Style="{StaticResource QuietButton}"
+                            Text="{Binding OwnershipChangeText}"
+                            ToolTipProperties.Text="{x:Static res:AppResources.OwnershipToggleHint}" />
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
                 <Button
                     Grid.Column="1"
@@ -125,51 +162,97 @@
             <!--  The list, and the states that stand in for it.  -->
             <Grid Grid.Row="3" RowDefinitions="Auto,*">
 
-                <!--
-                    One banner for everything unreviewed, instead of a tag on every row: when most
-                    rows are highlighted, the highlight stops meaning anything.
-                -->
-                <Border
-                    Margin="0,0,0,12"
-                    IsVisible="{Binding HasUnknown}"
-                    Style="{StaticResource NoticeBanner}">
-                    <Grid
-                        ColumnDefinitions="Auto,*"
-                        ColumnSpacing="{StaticResource SpaceM}"
-                        RowDefinitions="Auto,Auto,Auto">
-                        <Label
-                            FontSize="20"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.HELP}"
-                            TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
-                                                        Dark={StaticResource StatusNoticeDark}}"
-                            VerticalOptions="Start" />
-                        <Label
-                            Grid.Column="1"
-                            Style="{StaticResource TextHeadline}"
-                            Text="{Binding ReviewTitle}" />
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Style="{StaticResource TextBody}"
-                            Text="{x:Static res:AppResources.DevicesReviewBody}" />
-                        <HorizontalStackLayout
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Margin="-12,4,0,0">
-                            <Button
-                                Command="{Binding SetFilterCommand}"
-                                CommandParameter="Unknown"
-                                IsVisible="{Binding CanReview}"
-                                Style="{StaticResource QuietButton}"
-                                Text="{x:Static res:AppResources.ActionReview}" />
-                            <Button
-                                Command="{Binding MarkAllKnownCommand}"
-                                Style="{StaticResource QuietButton}"
-                                Text="{x:Static res:AppResources.DevicesMarkAllKnown}" />
-                        </HorizontalStackLayout>
-                    </Grid>
-                </Border>
+                <VerticalStackLayout>
+
+                    <!--  Asked once per network, after its first scan.  -->
+                    <Border
+                        Margin="0,0,0,12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                          Dark={StaticResource AccentTintDark}}"
+                        IsVisible="{Binding AskOwnership}"
+                        Style="{StaticResource NoticeBanner}">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            RowDefinitions="Auto,Auto,Auto">
+                            <Label
+                                FontSize="20"
+                                Style="{StaticResource Icon}"
+                                Text="{x:Static util:MaterialIcon.HOME}"
+                                TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                            Dark={StaticResource AccentDark}}"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Column="1"
+                                Style="{StaticResource TextHeadline}"
+                                Text="{Binding OwnershipQuestion}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource TextBody}"
+                                Text="{x:Static res:AppResources.OwnershipBody}" />
+                            <HorizontalStackLayout
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="-12,4,0,0">
+                                <Button
+                                    Command="{Binding MarkMineCommand}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.OwnershipYes}" />
+                                <Button
+                                    Command="{Binding MarkGuestCommand}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.OwnershipNo}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!--
+                        One banner for everything unreviewed, instead of a tag on every row: when most
+                        rows are highlighted, the highlight stops meaning anything.
+                    -->
+                    <Border
+                        Margin="0,0,0,12"
+                        IsVisible="{Binding HasUnknown}"
+                        Style="{StaticResource NoticeBanner}">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="{StaticResource SpaceM}"
+                            RowDefinitions="Auto,Auto,Auto">
+                            <Label
+                                FontSize="20"
+                                Style="{StaticResource Icon}"
+                                Text="{x:Static util:MaterialIcon.HELP}"
+                                TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                            Dark={StaticResource StatusNoticeDark}}"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Column="1"
+                                Style="{StaticResource TextHeadline}"
+                                Text="{Binding ReviewTitle}" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Style="{StaticResource TextBody}"
+                                Text="{x:Static res:AppResources.DevicesReviewBody}" />
+                            <HorizontalStackLayout
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="-12,4,0,0">
+                                <Button
+                                    Command="{Binding SetFilterCommand}"
+                                    CommandParameter="Unknown"
+                                    IsVisible="{Binding CanReview}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.ActionReview}" />
+                                <Button
+                                    Command="{Binding MarkAllKnownCommand}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.DevicesMarkAllKnown}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
 
                 <CollectionView
                     x:Name="DeviceList"
