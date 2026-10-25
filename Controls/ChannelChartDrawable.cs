@@ -69,9 +69,10 @@ namespace PingMyNetwork.Controls
         ];
 
         /// <summary>
-        /// Width of one channel label; labels closer than this would overlap, so some are skipped.
+        /// Width of one digit of a channel label at the axis font size, so "6" and "165" each take
+        /// the room they need: every 2.4 GHz label fits, and only crowded 5 GHz ones are skipped.
         /// </summary>
-        private const float LABEL_WIDTH = 22f;
+        private const float DIGIT_WIDTH = 6.5f;
 
         #endregion
 
@@ -296,20 +297,21 @@ namespace PingMyNetwork.Controls
             IEnumerable<int> order = slots
                 .OrderByDescending(channel => (channel == SuggestedChannel) || used.Contains(channel))
                 .ThenBy(channel => channel);
-            List<float> placed = [];
+            List<(float X, float Half)> placed = [];
 
             foreach (int channel in order)
             {
                 float x = XOf(plot, slots, channel);
+                float half = ((channel.ToString().Length * DIGIT_WIDTH) / 2f) + 2f;
 
-                if (placed.Any(other => Math.Abs(other - x) < LABEL_WIDTH))
+                if (placed.Any(other => Math.Abs(other.X - x) < (other.Half + half)))
                 {
                     continue;
                 }
 
                 bool isSuggested = channel == SuggestedChannel;
 
-                placed.Add(x);
+                placed.Add((x, half));
                 canvas.FontColor = isSuggested ? OwnColor : AxisColor;
                 canvas.Font = isSuggested ? Microsoft.Maui.Graphics.Font.DefaultBold : Microsoft.Maui.Graphics.Font.Default;
                 canvas.DrawString(channel.ToString(), x - 16f, plot.Bottom + 4f, 32f, 14f, HorizontalAlignment.Center, VerticalAlignment.Top);
