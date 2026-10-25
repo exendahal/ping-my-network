@@ -82,7 +82,7 @@
                     IsVisible="{Binding IsConnected}"
                     Style="{StaticResource PrimaryButton}"
                     Text="{Binding ScanButtonText}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Start" />
             </Grid>
 
             <!--  Search and sort.  -->
@@ -270,7 +270,7 @@
                     -->
                     <Border
                         Margin="0,0,0,12"
-                        IsVisible="{Binding HasUnknown}"
+                        IsVisible="{Binding ShowReview}"
                         Style="{StaticResource NoticeBanner}">
                         <Grid
                             ColumnDefinitions="Auto,*"

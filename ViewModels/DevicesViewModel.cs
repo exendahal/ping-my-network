@@ -240,6 +240,14 @@ namespace PingMyNetwork.ViewModels
         public partial bool HasUnknown { get; set; }
 
         /// <summary>
+        /// Whether to show the review banner. It waits while a question about the network is
+        /// showing: one banner at a time keeps the list on screen, and answering "mine" marks
+        /// every device as known anyway.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool ShowReview { get; set; }
+
+        /// <summary>
         /// The review banner heading, e.g. "5 devices to review".
         /// </summary>
         [ObservableProperty]
@@ -689,6 +697,7 @@ namespace PingMyNetwork.ViewModels
             OwnershipIcon = isMine == true ? MaterialIcon.HOME : MaterialIcon.GUEST;
             OwnershipChangeText = isMine == true ? AppResources.OwnershipMakeGuest : AppResources.OwnershipMakeMine;
             OwnershipQuestion = NetworkFormat.Text(AppResources.OwnershipQuestionFormat, NetworkName);
+            ShowReview = HasUnknown && !AskOwnership && !AskWhichNetwork;
 
             Summary = _Manager.IsScanning ? NetworkFormat.Text(AppResources.DevicesScanningFormat, online)
                 : _Manager.IsIdentifying ? AppResources.DevicesIdentifying
