@@ -8,7 +8,7 @@ using PingMyNetwork.Resources.Strings;
 namespace PingMyNetwork.ViewModels
 {
     /// <summary>
-    /// Settings: theme and the app's version.
+    /// Settings: theme, permissions and the app's version.
     /// </summary>
     public sealed partial class SettingsViewModel : ObservableObject
     {
@@ -53,6 +53,16 @@ namespace PingMyNetwork.ViewModels
             AppSettings.Theme = theme;
             AppSettings.ApplyTheme();
             ThemeOptions = BuildThemeOptions(theme);
+        }
+
+        /// <summary>
+        /// Opens the permissions screen.
+        /// </summary>
+        /// <returns>A task that completes once navigation finishes.</returns>
+        [RelayCommand]
+        private async Task OpenPermissionsAsync()
+        {
+            await Shell.Current.GoToAsync(Routes.PERMISSIONS);
         }
 
         /// <summary>

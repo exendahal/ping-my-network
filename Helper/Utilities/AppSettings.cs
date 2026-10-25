@@ -11,6 +11,7 @@ namespace PingMyNetwork.Helper.Utilities
         #region Variables
 
         private const string THEME_KEY = "settings.theme";
+        private const string ONBOARDED_KEY = "settings.onboarded";
 
         #endregion
 
@@ -23,6 +24,15 @@ namespace PingMyNetwork.Helper.Utilities
         {
             get => (ThemeChoice)Preferences.Default.Get(THEME_KEY, (int)ThemeChoice.System);
             set => Preferences.Default.Set(THEME_KEY, (int)value);
+        }
+
+        /// <summary>
+        /// Whether the first-run permissions screen has been through.
+        /// </summary>
+        public static bool IsOnboarded
+        {
+            get => Preferences.Default.Get(ONBOARDED_KEY, false);
+            set => Preferences.Default.Set(ONBOARDED_KEY, value);
         }
 
         #endregion

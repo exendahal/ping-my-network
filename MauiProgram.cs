@@ -59,6 +59,7 @@ namespace PingMyNetwork
             builder.Services.AddTransient<NetworkDetailsViewModel>();
             builder.Services.AddTransient<DeviceDetailsViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<PermissionsViewModel>();
 
             // Each tool opens fresh, and stops whatever it was doing when it closes.
             builder.Services.AddTransient<PingViewModel>();
@@ -85,6 +86,7 @@ namespace PingMyNetwork
             builder.Services.AddTransient<WakeOnLanPage>();
             builder.Services.AddTransient<SubnetPage>();
             builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<PermissionsPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

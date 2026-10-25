@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PingMyNetwork.Views.PermissionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PingMyNetwork.Controls"
+    xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
+    xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities"
+    xmlns:vm="clr-namespace:PingMyNetwork.ViewModels"
+    x:DataType="vm:PermissionsViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <controls:PageHeader Title="{x:Static res:AppResources.PermissionsTitle}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Padding="16,8,16,32"
+                MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+                Spacing="{StaticResource SpaceM}">
+
+                <Label Style="{StaticResource TextBody}" Text="{x:Static res:AppResources.PermissionsIntro}" />
+
+                <!--  One card per permission: why it is needed, and either "Allowed" or the button that asks.  -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" Spacing="{StaticResource SpaceM}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PermissionItem">
+                            <Border SemanticProperties.Description="{Binding SemanticDescription}" Style="{StaticResource Card}">
+                                <Grid
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="{StaticResource SpaceL}"
+                                    RowDefinitions="Auto,Auto">
+                                    <Border
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                                                          Dark={StaticResource AccentTintDark}}"
+                                        HeightRequest="40"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Start"
+                                        WidthRequest="40">
+                                        <Label
+                                            FontSize="20"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource Icon}"
+                                            Text="{Binding Icon}"
+                                            TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                                        Dark={StaticResource AccentDark}}" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Style="{StaticResource TextHeadline}" Text="{Binding Title}" />
+                                        <Label Style="{StaticResource TextBody}" Text="{Binding Body}" />
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,10,0,0"
+                                        IsVisible="{Binding IsGranted}"
+                                        Spacing="6">
+                                        <Label
+                                            FontSize="18"
+                                            Style="{StaticResource Icon}"
+                                            Text="{x:Static util:MaterialIcon.CHECK_CIRCLE}"
+                                            TextColor="{AppThemeBinding Light={StaticResource StatusGoodLight},
+                                                                        Dark={StaticResource StatusGoodDark}}" />
+                                        <Label
+                                            Style="{StaticResource TextLabel}"
+                                            Text="{Binding GrantedText}"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <Button
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,10,0,0"
+                                        Command="{Binding RequestCommand}"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding IsMissing}"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Text="{Binding ActionText}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Style="{StaticResource SectionFooter}" Text="{x:Static res:AppResources.PermissionsFooter}" />
+
+                <Button
+                    Command="{Binding ContinueCommand}"
+                    IsVisible="{Binding IsFirstRun}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{x:Static res:AppResources.ActionContinue}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

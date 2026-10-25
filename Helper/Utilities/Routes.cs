@@ -28,6 +28,11 @@ namespace PingMyNetwork.Helper.Utilities
         public const string SETTINGS = "settings";
 
         /// <summary>
+        /// Pushed on top of Home on first launch, and from Settings.
+        /// </summary>
+        public const string PERMISSIONS = "permissions";
+
+        /// <summary>
         /// The tools, each pushed on top of Tools.
         /// </summary>
         public const string TOOL_PING = "ping";

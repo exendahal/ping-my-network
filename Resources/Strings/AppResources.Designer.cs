@@ -3470,5 +3470,167 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("SettingsVersion", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permissions.
+        /// </summary>
+        public static string PermissionsTitle {
+            get {
+                return ResourceManager.GetString("PermissionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping My Network works without these, but it shows much more with them. Each one is used only for what it says here..
+        /// </summary>
+        public static string PermissionsIntro {
+            get {
+                return ResourceManager.GetString("PermissionsIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can change these at any time in Settings..
+        /// </summary>
+        public static string PermissionsFooter {
+            get {
+                return ResourceManager.GetString("PermissionsFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allowed.
+        /// </summary>
+        public static string PermissionAllowed {
+            get {
+                return ResourceManager.GetString("PermissionAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not allowed.
+        /// </summary>
+        public static string PermissionNotAllowed {
+            get {
+                return ResourceManager.GetString("PermissionNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string PermissionOn {
+            get {
+                return ResourceManager.GetString("PermissionOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location access.
+        /// </summary>
+        public static string PermissionLocationTitle {
+            get {
+                return ResourceManager.GetString("PermissionLocationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your phone shares the Wi-Fi name and nearby networks only with apps that have location access. The app never reads or stores where you are..
+        /// </summary>
+        public static string PermissionLocationBody {
+            get {
+                return ResourceManager.GetString("PermissionLocationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows shares the Wi-Fi name and nearby networks only with apps that may use location. Turn on "Let desktop apps access your location". The app never reads where you are..
+        /// </summary>
+        public static string PermissionLocationBodyWindows {
+            get {
+                return ResourceManager.GetString("PermissionLocationBodyWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location turned on.
+        /// </summary>
+        public static string PermissionLocationServiceTitle {
+            get {
+                return ResourceManager.GetString("PermissionLocationServiceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Even with access allowed, the Wi-Fi name and nearby networks stay hidden while location (GPS) is off..
+        /// </summary>
+        public static string PermissionLocationServiceBody {
+            get {
+                return ResourceManager.GetString("PermissionLocationServiceBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nearby Wi-Fi devices.
+        /// </summary>
+        public static string PermissionNearbyTitle {
+            get {
+                return ResourceManager.GetString("PermissionNearbyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lets the Wi-Fi tab scan for nearby networks and their channels..
+        /// </summary>
+        public static string PermissionNearbyBody {
+            get {
+                return ResourceManager.GetString("PermissionNearbyBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string ActionContinue {
+            get {
+                return ResourceManager.GetString("ActionContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open settings.
+        /// </summary>
+        public static string ActionOpenSettings {
+            get {
+                return ResourceManager.GetString("ActionOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on.
+        /// </summary>
+        public static string ActionTurnOn {
+            get {
+                return ResourceManager.GetString("ActionTurnOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string SettingsPrivacy {
+            get {
+                return ResourceManager.GetString("SettingsPrivacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything stays on this device. Your internet provider&apos;s name comes from Cloudflare, which also runs the speed test..
+        /// </summary>
+        public static string SettingsPrivacyFooter {
+            get {
+                return ResourceManager.GetString("SettingsPrivacyFooter", resourceCulture);
+            }
+        }
     }
 }

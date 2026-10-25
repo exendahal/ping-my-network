@@ -87,6 +87,18 @@ namespace PingMyNetwork
             window.Stopped += (_, _) => _Monitor.Stop();
             window.Resumed += (_, _) => _Monitor.Start();
 
+            // First launch: explain and ask for permissions before the screens need them.
+            if (!AppSettings.IsOnboarded)
+            {
+                async void ShowPermissions(object? sender, EventArgs e)
+                {
+                    shell.Loaded -= ShowPermissions;
+                    await shell.GoToAsync(Routes.PERMISSIONS, animate: false);
+                }
+
+                shell.Loaded += ShowPermissions;
+            }
+
 #if DEBUG
             // Lets design QA open a screen without clicking through the app:
             // set PMN_ROUTE=//tools/ping before launching.

@@ -383,4 +383,22 @@
   <data name="ThemeDark" xml:space="preserve"><value>Dark</value></data>
   <data name="SettingsAbout" xml:space="preserve"><value>About</value></data>
   <data name="SettingsVersion" xml:space="preserve"><value>Version</value></data>
+  <data name="PermissionsTitle" xml:space="preserve"><value>Permissions</value></data>
+  <data name="PermissionsIntro" xml:space="preserve"><value>Ping My Network works without these, but it shows much more with them. Each one is used only for what it says here.</value></data>
+  <data name="PermissionsFooter" xml:space="preserve"><value>You can change these at any time in Settings.</value></data>
+  <data name="PermissionAllowed" xml:space="preserve"><value>Allowed</value></data>
+  <data name="PermissionNotAllowed" xml:space="preserve"><value>Not allowed</value></data>
+  <data name="PermissionOn" xml:space="preserve"><value>On</value></data>
+  <data name="PermissionLocationTitle" xml:space="preserve"><value>Location access</value></data>
+  <data name="PermissionLocationBody" xml:space="preserve"><value>Your phone shares the Wi-Fi name and nearby networks only with apps that have location access. The app never reads or stores where you are.</value></data>
+  <data name="PermissionLocationBodyWindows" xml:space="preserve"><value>Windows shares the Wi-Fi name and nearby networks only with apps that may use location. Turn on "Let desktop apps access your location". The app never reads where you are.</value></data>
+  <data name="PermissionLocationServiceTitle" xml:space="preserve"><value>Location turned on</value></data>
+  <data name="PermissionLocationServiceBody" xml:space="preserve"><value>Even with access allowed, the Wi-Fi name and nearby networks stay hidden while location (GPS) is off.</value></data>
+  <data name="PermissionNearbyTitle" xml:space="preserve"><value>Nearby Wi-Fi devices</value></data>
+  <data name="PermissionNearbyBody" xml:space="preserve"><value>Lets the Wi-Fi tab scan for nearby networks and their channels.</value></data>
+  <data name="ActionContinue" xml:space="preserve"><value>Continue</value></data>
+  <data name="ActionOpenSettings" xml:space="preserve"><value>Open settings</value></data>
+  <data name="ActionTurnOn" xml:space="preserve"><value>Turn on</value></data>
+  <data name="SettingsPrivacy" xml:space="preserve"><value>Privacy</value></data>
+  <data name="SettingsPrivacyFooter" xml:space="preserve"><value>Everything stays on this device. Your internet provider's name comes from Cloudflare, which also runs the speed test.</value></data>
 </root>

@@ -97,6 +97,7 @@ namespace PingMyNetwork
             Routing.RegisterRoute(Routes.TOOL_WAKE, typeof(WakeOnLanPage));
             Routing.RegisterRoute(Routes.TOOL_SUBNET, typeof(SubnetPage));
             Routing.RegisterRoute(Routes.SETTINGS, typeof(SettingsPage));
+            Routing.RegisterRoute(Routes.PERMISSIONS, typeof(PermissionsPage));
 
             TabBar.RouteRequested += OnRouteRequested;
             Rail.RouteRequested += OnRouteRequested;

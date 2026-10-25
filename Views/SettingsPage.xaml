@@ -48,6 +48,16 @@
                     </HorizontalStackLayout>
                 </Border>
 
+                <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsPrivacy}" />
+                <Border Style="{StaticResource GroupCard}">
+                    <controls:SettingsRow
+                        Title="{x:Static res:AppResources.PermissionsTitle}"
+                        Icon="{x:Static util:MaterialIcon.LOCK}"
+                        ShowChevron="True"
+                        Tapped="OnPermissionsTapped" />
+                </Border>
+                <Label Style="{StaticResource SectionFooter}" Text="{x:Static res:AppResources.SettingsPrivacyFooter}" />
+
                 <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAbout}" />
                 <Border Style="{StaticResource GroupCard}">
                     <controls:SettingsRow
