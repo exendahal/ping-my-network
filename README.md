@@ -41,7 +41,7 @@ Each tool has a short built-in explanation of what it does and how to read the r
 ### Privacy and backup
 - No account, no server, no analytics. Everything stays on your device.
 - Only the speed test and the provider lookup contact a third party (Cloudflare), and the app says so.
-- Your own networks, device names and known devices are backed up to your Google account (Android) or iCloud (iOS, Mac) and come back after a reinstall or on a new device. Guest networks stay on the device.
+- Your own networks are backed up to your Google account or iCloud, and guest networks never leave the device. See [Backup and restore](#backup-and-restore).
 
 ## Platform support
 
@@ -53,6 +53,29 @@ Each tool has a short built-in explanation of what it does and how to read the r
 | Tools | ✅ | ✅ | ✅ | ✅ |
 | New-device alerts | ✅ including background | ✅ while open | ❌ | ✅ while open |
 | Backup | Google | iCloud | — | iCloud |
+
+## Backup and restore
+
+The app has no account and no server of its own. It uses the backup your phone already has, so the networks you set up come back after a reinstall or on a new device without signing in to anything.
+
+**What is backed up**
+- Networks you mark as **My network**, with their devices, the names you gave them, their types and Known status.
+- On Android, the app's settings and Signal walk places too.
+
+**What is not**
+- Guest networks and networks you have not answered for. They stay on the device.
+- Live scan results: which devices are online right now and their latency. The next scan finds those again.
+- Anything from the speed test or the tools.
+
+| | How | Comes back when |
+|---|---|---|
+| **Android** | Android's automatic backup to your Google account. Only your networks file and the app's settings are included, a few KB. | You reinstall the app, or set up a new phone from your Google backup. Android uploads the backup about once a day, while the phone is idle, charging and on Wi-Fi. |
+| **iOS, Mac** | A copy of your networks in iCloud key-value storage, updated whenever you change them. The app's files are also part of the normal iCloud device backup. | You reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID. The networks may appear a few seconds after the app opens, once iCloud has synced. Settings come back with a full device restore. |
+| **Windows** | Not backed up yet. | — |
+
+The backup goes only to storage you already own, and it never includes Wi-Fi passwords.
+
+To build the iOS or Mac app with backup working, the app's App ID needs the **iCloud** capability with **Key-value storage** turned on in your Apple developer account.
 
 ## Building
 
