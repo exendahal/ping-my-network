@@ -414,4 +414,8 @@
   <data name="SettingsBackupAndroid" xml:space="preserve"><value>Your networks, device names and Known devices are backed up to your Google account automatically, like other app data. They come back when you reinstall the app or set up a new phone from that backup.</value></data>
   <data name="SettingsBackupApple" xml:space="preserve"><value>Your networks, device names and Known devices are saved to your iCloud. They come back when you reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID.</value></data>
   <data name="SettingsBackupWindows" xml:space="preserve"><value>Your networks, device names and Known devices are saved on this PC.</value></data>
+  <data name="SettingsSystemColorsRow" xml:space="preserve"><value>Use system colors</value></data>
+  <data name="SettingsSystemColorsAndroid" xml:space="preserve"><value>Uses the colors Android picks from your wallpaper (Material You) instead of the app's green. Applies the next time you open the app.</value></data>
+  <data name="SettingsSystemColorsWindows" xml:space="preserve"><value>Uses your Windows accent color instead of the app's green. Applies the next time you open the app.</value></data>
+  <data name="SettingsSystemColorsApple" xml:space="preserve"><value>Uses the system blue tint instead of the app's green. Applies the next time you open the app.</value></data>
 </root>

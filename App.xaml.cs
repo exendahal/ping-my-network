@@ -47,6 +47,15 @@ namespace PingMyNetwork
 
             AppSettings.ApplyTheme(this);
 
+            // Styles and pages read the accent once, when they are built, so the system's accent
+            // goes in first and the styles are loaded after it.
+            if (AppSettings.UseSystemColors)
+            {
+                SystemAccent.Apply(this);
+            }
+
+            Resources.MergedDictionaries.Add(new Resources.Styles.AppStyles());
+
 #if DEBUG
             // Lets design QA capture both themes without changing the system setting:
             // set PMN_THEME=Light or PMN_THEME=Dark before launching.

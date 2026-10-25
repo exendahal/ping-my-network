@@ -3749,5 +3749,41 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("SettingsBackupWindows", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use system colors.
+        /// </summary>
+        public static string SettingsSystemColorsRow {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses the colors Android picks from your wallpaper (Material You) instead of the app&apos;s green. Applies the next time you open the app..
+        /// </summary>
+        public static string SettingsSystemColorsAndroid {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses your Windows accent color instead of the app&apos;s green. Applies the next time you open the app..
+        /// </summary>
+        public static string SettingsSystemColorsWindows {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses the system blue tint instead of the app&apos;s green. Applies the next time you open the app..
+        /// </summary>
+        public static string SettingsSystemColorsApple {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsApple", resourceCulture);
+            }
+        }
     }
 }

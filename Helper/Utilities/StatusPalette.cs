@@ -79,9 +79,12 @@ namespace PingMyNetwork.Helper.Utilities
         public static Color PageBackground => IsDark ? DARK_PAGE : LIGHT_PAGE;
 
         /// <summary>
-        /// The brand accent, used for selection and interactive elements.
+        /// The accent, used for selection and interactive elements: the app's green, or the
+        /// system's colour when "Use system colors" is on (SystemAccent).
         /// </summary>
-        public static Color Accent => IsDark ? DARK_ACCENT : LIGHT_ACCENT;
+        public static Color Accent => IsDark
+            ? ResourceLookup.Get("AccentDark", DARK_ACCENT)
+            : ResourceLookup.Get("AccentLight", LIGHT_ACCENT);
 
         /// <summary>
         /// The surface cards sit on.

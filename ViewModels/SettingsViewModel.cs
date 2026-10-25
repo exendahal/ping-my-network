@@ -50,6 +50,24 @@ namespace PingMyNetwork.ViewModels
         public partial IReadOnlyList<ChoiceOption> ThemeOptions { get; set; }
 
         /// <summary>
+        /// Whether the app follows the system's accent colour.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool UseSystemColors { get; set; } = AppSettings.UseSystemColors;
+
+        /// <summary>
+        /// Whether this device has a system accent to follow.
+        /// </summary>
+        public bool CanUseSystemColors { get; } = SystemAccent.IsAvailable();
+
+        /// <summary>
+        /// What "system colors" means on this platform.
+        /// </summary>
+        public string SystemColorsFooter { get; } = OperatingSystem.IsAndroid() ? AppResources.SettingsSystemColorsAndroid
+            : OperatingSystem.IsWindows() ? AppResources.SettingsSystemColorsWindows
+            : AppResources.SettingsSystemColorsApple;
+
+        /// <summary>
         /// Whether new-device alerts are on.
         /// </summary>
         [ObservableProperty]
@@ -95,6 +113,15 @@ namespace PingMyNetwork.ViewModels
             AppSettings.Theme = theme;
             AppSettings.ApplyTheme();
             ThemeOptions = BuildThemeOptions(theme);
+        }
+
+        /// <summary>
+        /// Remembers the colour choice; it applies on the next launch.
+        /// </summary>
+        /// <param name="value">The switch's new state.</param>
+        partial void OnUseSystemColorsChanged(bool value)
+        {
+            AppSettings.UseSystemColors = value;
         }
 
         /// <summary>

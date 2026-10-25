@@ -11,6 +11,7 @@ namespace PingMyNetwork.Helper.Utilities
         #region Variables
 
         private const string THEME_KEY = "settings.theme";
+        private const string SYSTEM_COLORS_KEY = "settings.systemColors";
         private const string ALERTS_KEY = "settings.alerts";
         private const string ONBOARDED_KEY = "settings.onboarded";
 
@@ -25,6 +26,16 @@ namespace PingMyNetwork.Helper.Utilities
         {
             get => (ThemeChoice)Preferences.Default.Get(THEME_KEY, (int)ThemeChoice.System);
             set => Preferences.Default.Set(THEME_KEY, (int)value);
+        }
+
+        /// <summary>
+        /// Whether to use the system's accent colour (Material You, the Windows accent) instead
+        /// of the app's green.
+        /// </summary>
+        public static bool UseSystemColors
+        {
+            get => Preferences.Default.Get(SYSTEM_COLORS_KEY, false);
+            set => Preferences.Default.Set(SYSTEM_COLORS_KEY, value);
         }
 
         /// <summary>

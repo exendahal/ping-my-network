@@ -47,6 +47,16 @@
                         </BindableLayout.ItemTemplate>
                     </HorizontalStackLayout>
                 </Border>
+                <VerticalStackLayout IsVisible="{Binding CanUseSystemColors}">
+                    <Border Margin="0,12,0,0" Style="{StaticResource GroupCard}">
+                        <controls:SettingsRow
+                            Title="{x:Static res:AppResources.SettingsSystemColorsRow}"
+                            Icon="{x:Static util:MaterialIcon.PALETTE}"
+                            IsToggled="{Binding UseSystemColors}"
+                            ShowSwitch="True" />
+                    </Border>
+                    <Label Style="{StaticResource SectionFooter}" Text="{Binding SystemColorsFooter}" />
+                </VerticalStackLayout>
 
                 <VerticalStackLayout IsVisible="{Binding CanAlert}">
                     <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAlerts}" />
