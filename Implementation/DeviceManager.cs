@@ -299,17 +299,21 @@ namespace PingMyNetwork.Implementation
                     LastError = result.ErrorCode;
                 }
 
-                bool isSelfFound;
-
-                lock (_Gate)
+                // This device does not always answer its own ping, and many routers ignore ping
+                // during a sweep, but while connected both are certainly on the network.
+                foreach (string? address in new[] { network.IpAddress, network.Gateway })
                 {
-                    isSelfFound = record.Devices.Any(device => device.IsOnline && (device.IpAddress == network.IpAddress));
-                }
+                    bool isFound;
 
-                // This device does not always answer its own ping, but it is certainly on the network.
-                if (!isSelfFound)
-                {
-                    Merge(new LanDevice { IpAddress = network.IpAddress }, network, record);
+                    lock (_Gate)
+                    {
+                        isFound = record.Devices.Any(device => device.IsOnline && (device.IpAddress == address));
+                    }
+
+                    if ((address is not null) && !isFound)
+                    {
+                        Merge(new LanDevice { IpAddress = address }, network, record);
+                    }
                 }
 
                 lock (_Gate)
