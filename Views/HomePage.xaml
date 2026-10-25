@@ -258,7 +258,7 @@
                         Grid.Column="0"
                         Padding="12,14"
                         SemanticProperties.Description="{x:Static res:AppResources.ToolSpeedTitle}"
-                        Style="{StaticResource TappableCard}">
+                        Style="{StaticResource ActionTile}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenToolCommand}" CommandParameter="{x:Static util:Routes.TOOL_SPEED}" />
                         </Border.GestureRecognizers>
@@ -284,7 +284,7 @@
                         Grid.Column="1"
                         Padding="12,14"
                         SemanticProperties.Description="{x:Static res:AppResources.QuickPingRouter}"
-                        Style="{StaticResource TappableCard}">
+                        Style="{StaticResource ActionTile}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenToolCommand}" CommandParameter="{x:Static util:Routes.TOOL_PING}" />
                         </Border.GestureRecognizers>
@@ -310,7 +310,7 @@
                         Grid.Column="2"
                         Padding="12,14"
                         SemanticProperties.Description="{x:Static res:AppResources.ToolTracerouteTitle}"
-                        Style="{StaticResource TappableCard}">
+                        Style="{StaticResource ActionTile}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenToolCommand}" CommandParameter="{x:Static util:Routes.TOOL_TRACEROUTE}" />
                         </Border.GestureRecognizers>
