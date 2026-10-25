@@ -153,6 +153,15 @@ namespace PingMyNetwork
 
                 handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
             });
+
+            // The Windows toggle keeps a column for its own "On"/"Off" text, which pushed every
+            // switch away from the right edge of its row. The row says what the switch does.
+            Microsoft.Maui.Handlers.SwitchHandler.Mapper.AppendToMapping("Compact", (handler, _) =>
+            {
+                handler.PlatformView.OnContent = null;
+                handler.PlatformView.OffContent = null;
+                handler.PlatformView.MinWidth = 0;
+            });
 #elif ANDROID
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("Flat", static (handler, _) =>
             {
