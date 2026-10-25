@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 	<!--
-		allowBackup: Android Auto Backup copies the app's files (devices.json: the user's own
-		networks, device names, Known status) and preferences (settings, signal walk places) to the
-		user's Google account, and restores them on reinstall or a new phone. The backup rules leave
-		out devices.local.json, which holds guest networks. Caches are left out by default.
+		allowBackup: Android Auto Backup copies devices.json (the user's own networks, device names,
+		Known status) and the preferences (settings, signal walk places) to the user's Google
+		account, and restores them on reinstall or a new phone. The backup rules name only those,
+		so guest networks (devices.local.json), caches and build files never count against the
+		25 MB limit.
 
 		usesCleartextTraffic: device details read each device's own web page title and UPnP
 		description over plain http:// on the local network. Android's network security config cannot

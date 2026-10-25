@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Android 6 to 11. Everything is backed up except guest and undecided networks (DeviceStore). -->
+<!--
+	Android 6 to 11. Only what a restore needs: the user's own networks (devices.json) and the
+	app's settings. Guest networks (devices.local.json), caches and build files stay out, which
+	keeps the backup far under Android's 25 MB limit.
+-->
 <full-backup-content>
-	<exclude domain="file" path="devices.local.json" />
+	<include domain="file" path="devices.json" />
+	<include domain="sharedpref" path="." />
 </full-backup-content>
