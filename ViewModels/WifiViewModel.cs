@@ -730,14 +730,14 @@ namespace PingMyNetwork.ViewModels
                 ChannelScore own = ChannelPlanner.Score(networks, ChartBand, channel, family);
 
                 ChannelSummary = (quietest is null) || (quietest.Channel == channel)
-                    ? NetworkFormat.Text(AppResources.ChannelsOnBestFormat, channel, own.Overlapping)
-                    : NetworkFormat.Text(AppResources.ChannelsSummaryFormat, channel, own.Overlapping, quietest.Channel, quietest.Overlapping);
+                    ? NetworkFormat.Text(AppResources.ChannelsOnBestFormat, channel, NetworkFormat.Overlapping(own.Overlapping))
+                    : NetworkFormat.Text(AppResources.ChannelsSummaryFormat, channel, NetworkFormat.Overlapping(own.Overlapping), quietest.Channel, NetworkFormat.Overlapping(quietest.Overlapping));
             }
             else
             {
                 ChannelSummary = quietest is null
                     ? string.Empty
-                    : NetworkFormat.Text(AppResources.ChannelsQuietestFormat, quietest.Channel, quietest.Overlapping);
+                    : NetworkFormat.Text(AppResources.ChannelsQuietestFormat, quietest.Channel, NetworkFormat.Overlapping(quietest.Overlapping));
             }
         }
 

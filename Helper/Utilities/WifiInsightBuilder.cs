@@ -60,7 +60,7 @@ namespace PingMyNetwork.Helper.Utilities
                 return insights;
             }
 
-            string family = ChannelPlanner.FamilyOf(ssid);
+            IReadOnlyCollection<string> family = ChannelPlanner.OwnFamilies(ssid, connection.Bssid, networks);
             SecurityLevel security = WifiSecurity.Classify(connection.Security);
 
             AddWeakSecurity(insights, ssid, security, connection.Security);
@@ -170,8 +170,8 @@ namespace PingMyNetwork.Helper.Utilities
         /// <param name="insights">The findings so far.</param>
         /// <param name="connection">The current connection.</param>
         /// <param name="networks">The latest scan.</param>
-        /// <param name="family">The user's network family.</param>
-        private static void AddCrowded(List<WifiInsight> insights, NetworkSnapshot connection, IReadOnlyList<NetworkData> networks, string family)
+        /// <param name="family">The user's networks.</param>
+        private static void AddCrowded(List<WifiInsight> insights, NetworkSnapshot connection, IReadOnlyList<NetworkData> networks, IReadOnlyCollection<string> family)
         {
             if (connection.Channel is not int channel)
             {
@@ -204,8 +204,8 @@ namespace PingMyNetwork.Helper.Utilities
         /// <param name="insights">The findings so far.</param>
         /// <param name="connection">The current connection.</param>
         /// <param name="networks">The latest scan.</param>
-        /// <param name="family">The user's network family.</param>
-        private static void AddOtherBand(List<WifiInsight> insights, NetworkSnapshot connection, IReadOnlyList<NetworkData> networks, string family)
+        /// <param name="family">The user's networks.</param>
+        private static void AddOtherBand(List<WifiInsight> insights, NetworkSnapshot connection, IReadOnlyList<NetworkData> networks, IReadOnlyCollection<string> family)
         {
             if (connection.Band != WifiFrequencyBand.Band2_4GHz)
             {

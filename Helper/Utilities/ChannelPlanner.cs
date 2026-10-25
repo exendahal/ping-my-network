@@ -106,16 +106,16 @@ namespace PingMyNetwork.Helper.Utilities
         /// <param name="networks">Scan results.</param>
         /// <param name="band">The band.</param>
         /// <param name="channel">The channel to score.</param>
-        /// <param name="ownFamily">The user's network family, from <see cref="FamilyOf"/>.</param>
+        /// <param name="ownFamilies">The user's networks, from <see cref="OwnFamilies"/>.</param>
         /// <returns>The score.</returns>
-        public static ChannelScore Score(IEnumerable<NetworkData> networks, WifiFrequencyBand band, int channel, string ownFamily)
+        public static ChannelScore Score(IEnumerable<NetworkData> networks, WifiFrequencyBand band, int channel, IReadOnlyCollection<string> ownFamilies)
         {
             double score = 0;
             int overlapping = 0;
 
             foreach (NetworkData network in networks)
             {
-                if ((network.FrequencyBand != band) || (network.ChannelNumber is not int other) || IsOwn(network, ownFamily))
+                if ((network.FrequencyBand != band) || (network.ChannelNumber is not int other) || IsOwn(network, ownFamilies))
                 {
                     continue;
                 }
@@ -138,9 +138,9 @@ namespace PingMyNetwork.Helper.Utilities
         /// </summary>
         /// <param name="networks">Scan results.</param>
         /// <param name="band">The band; only 2.4 and 5 GHz get suggestions.</param>
-        /// <param name="ownFamily">The user's network family.</param>
+        /// <param name="ownFamilies">The user's networks.</param>
         /// <returns>The quietest channel, or null for other bands.</returns>
-        public static ChannelScore? Quietest(IReadOnlyList<NetworkData> networks, WifiFrequencyBand band, string ownFamily)
+        public static ChannelScore? Quietest(IReadOnlyList<NetworkData> networks, WifiFrequencyBand band, IReadOnlyCollection<string> ownFamilies)
         {
             int[] candidates = band switch
             {
@@ -150,21 +150,58 @@ namespace PingMyNetwork.Helper.Utilities
             };
 
             return candidates
-                .Select(channel => Score(networks, band, channel, ownFamily))
+                .Select(channel => Score(networks, band, channel, ownFamilies))
                 .OrderBy(score => score.Score)
                 .ThenBy(score => score.Channel)
                 .FirstOrDefault();
         }
 
         /// <summary>
-        /// Whether a scan result belongs to the user's own network family.
+        /// Whether a scan result belongs to the user's own networks.
         /// </summary>
         /// <param name="network">The scan result.</param>
-        /// <param name="ownFamily">The user's network family.</param>
+        /// <param name="ownFamilies">The user's networks.</param>
         /// <returns>True for the user's own access points.</returns>
-        public static bool IsOwn(NetworkData network, string ownFamily)
+        public static bool IsOwn(NetworkData network, IReadOnlyCollection<string> ownFamilies)
         {
-            return (ownFamily.Length > 0) && (FamilyOf(network.Ssid) == ownFamily);
+            return (FamilyOf(network.Ssid) is { Length: > 0 } family) && ownFamilies.Contains(family);
+        }
+
+        /// <summary>
+        /// The user's networks, by family name: the one they are connected to, and any other name
+        /// the same router broadcasts, such as "flyoderr_2" beside "flyoderr_5". Those share
+        /// nothing in their names a rule could rely on, but the router gives its networks
+        /// neighbouring addresses.
+        /// </summary>
+        /// <param name="ssid">The connected network's name.</param>
+        /// <param name="bssid">The connected access point, when the platform reports it.</param>
+        /// <param name="networks">The latest scan.</param>
+        /// <returns>The family names; empty when not on a named Wi-Fi network.</returns>
+        public static IReadOnlyCollection<string> OwnFamilies(string? ssid, string? bssid, IEnumerable<NetworkData> networks)
+        {
+            HashSet<string> families = [];
+
+            if (FamilyOf(ssid) is { Length: > 0 } family)
+            {
+                families.Add(family);
+            }
+
+            if (bssid is null)
+            {
+                return families;
+            }
+
+            foreach (NetworkData network in networks)
+            {
+                if ((NetworkFormat.Bssid(network.Bssid) is string other)
+                    && DeviceIdentity.IsSameRouter(other, bssid)
+                    && (FamilyOf(network.Ssid) is { Length: > 0 } sibling))
+                {
+                    families.Add(sibling);
+                }
+            }
+
+            return families;
         }
 
         /// <summary>
@@ -192,11 +229,20 @@ namespace PingMyNetwork.Helper.Utilities
             ];
 
             // Our own network does not count against our channel.
-            ChannelScore own = Score(scan, WifiFrequencyBand.Band2_4GHz, 6, "home");
+            ChannelScore own = Score(scan, WifiFrequencyBand.Band2_4GHz, 6, ["home"]);
             Debug.Assert(own.Overlapping == 2);
 
             // Channel 1 has a strong neighbour and 11 only a partial overlap from 7, so 11 wins.
-            Debug.Assert(Quietest(scan, WifiFrequencyBand.Band2_4GHz, "home")?.Channel == 11);
+            Debug.Assert(Quietest(scan, WifiFrequencyBand.Band2_4GHz, ["home"])?.Channel == 11);
+
+            // The router's other network counts as the user's, whatever its name.
+            List<NetworkData> router =
+            [
+                new() { Ssid = "flyoderr_2", Bssid = "D8:B0:20:B7:0C:6C", FrequencyBand = WifiFrequencyBand.Band2_4GHz },
+                new() { Ssid = "Neighbour", Bssid = "10:20:30:40:50:60", FrequencyBand = WifiFrequencyBand.Band2_4GHz },
+            ];
+            IReadOnlyCollection<string> mine = OwnFamilies("flyoderr_5", "D8:B0:20:B7:0C:6D", router);
+            Debug.Assert(mine.Contains("flyoderr_5") && mine.Contains("flyoderr_2") && !mine.Contains("neighbour"));
         }
 
         #endregion
