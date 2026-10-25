@@ -158,6 +158,16 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
+        /// Takes a fresh snapshot and waits for every stage, for callers with no screen to fill in
+        /// as answers arrive, such as the background check.
+        /// </summary>
+        /// <returns>A task that completes once the snapshot is complete.</returns>
+        public Task RefreshNowAsync()
+        {
+            return RefreshAsync(debounce: false);
+        }
+
+        /// <summary>
         /// Refreshes after a change event, once the burst it belongs to has settled.
         /// </summary>
         /// <param name="sender">The Wi-Fi manager.</param>

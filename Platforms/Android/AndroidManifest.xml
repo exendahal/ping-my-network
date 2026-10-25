@@ -30,6 +30,9 @@
 	<!--  mDNS / Bonjour answers arrive as multicast.  -->
 	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
+	<!--  New-device alerts (Android 13+ asks the user).  -->
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 	<!--  Ping, speed test, device details.  -->
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

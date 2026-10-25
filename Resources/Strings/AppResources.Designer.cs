@@ -3632,5 +3632,86 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("SettingsPrivacyFooter", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New devices.
+        /// </summary>
+        public static string AlertChannelName {
+            get {
+                return ResourceManager.GetString("AlertChannelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device on {0}.
+        /// </summary>
+        public static string AlertNewDeviceTitle {
+            get {
+                return ResourceManager.GetString("AlertNewDeviceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}) joined your network. Open the app to mark it as known..
+        /// </summary>
+        public static string AlertNewDeviceBody {
+            get {
+                return ResourceManager.GetString("AlertNewDeviceBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device alerts.
+        /// </summary>
+        public static string PermissionAlertsTitle {
+            get {
+                return ResourceManager.GetString("PermissionAlertsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get a notification when a device you haven&apos;t marked as known joins your network..
+        /// </summary>
+        public static string PermissionAlertsBody {
+            get {
+                return ResourceManager.GetString("PermissionAlertsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string SettingsAlerts {
+            get {
+                return ResourceManager.GetString("SettingsAlerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device alerts.
+        /// </summary>
+        public static string SettingsAlertsRow {
+            get {
+                return ResourceManager.GetString("SettingsAlertsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks every 2 minutes while the app is open, and about every 15 minutes in the background on unmetered Wi-Fi. Alerts aren&apos;t instant, and only work while this phone is on that network..
+        /// </summary>
+        public static string SettingsAlertsFooterAndroid {
+            get {
+                return ResourceManager.GetString("SettingsAlertsFooterAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks every 2 minutes while the app is open, and each time you open it. iOS doesn&apos;t let apps scan the network in the background..
+        /// </summary>
+        public static string SettingsAlertsFooterApple {
+            get {
+                return ResourceManager.GetString("SettingsAlertsFooterApple", resourceCulture);
+            }
+        }
     }
 }

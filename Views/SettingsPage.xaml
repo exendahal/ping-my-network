@@ -48,6 +48,18 @@
                     </HorizontalStackLayout>
                 </Border>
 
+                <VerticalStackLayout IsVisible="{Binding CanAlert}">
+                    <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAlerts}" />
+                    <Border Style="{StaticResource GroupCard}">
+                        <controls:SettingsRow
+                            Title="{x:Static res:AppResources.SettingsAlertsRow}"
+                            Icon="{x:Static util:MaterialIcon.NOTIFICATIONS}"
+                            IsToggled="{Binding AreAlertsOn}"
+                            ShowSwitch="True" />
+                    </Border>
+                    <Label Style="{StaticResource SectionFooter}" Text="{Binding AlertsFooter}" />
+                </VerticalStackLayout>
+
                 <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsPrivacy}" />
                 <Border Style="{StaticResource GroupCard}">
                     <controls:SettingsRow

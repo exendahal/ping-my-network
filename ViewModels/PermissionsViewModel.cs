@@ -26,7 +26,8 @@ namespace PingMyNetwork.ViewModels
         /// </summary>
         /// <param name="monitor">The connection monitor, read again once access changes.</param>
         /// <param name="wifi">The Wi-Fi manager, which asks for everything scanning needs.</param>
-        public PermissionsViewModel(NetworkMonitor monitor, IWifiNetworkService wifi)
+        /// <param name="alerts">New-device alerts, turned on with the notification permission.</param>
+        public PermissionsViewModel(NetworkMonitor monitor, IWifiNetworkService wifi, DeviceAlerts alerts)
         {
             _Monitor = monitor;
 
@@ -79,6 +80,18 @@ namespace PingMyNetwork.ViewModels
                     AppResources.ActionAllow,
                     async () => await Permissions.CheckStatusAsync<Permissions.NearbyWifiDevices>() == PermissionStatus.Granted,
                     async () => await Permissions.RequestAsync<Permissions.NearbyWifiDevices>()));
+            }
+
+            if (Notifier.IsSupported)
+            {
+                items.Add(new PermissionItem(
+                    MaterialIcon.NOTIFICATIONS,
+                    AppResources.PermissionAlertsTitle,
+                    AppResources.PermissionAlertsBody,
+                    AppResources.ActionTurnOn,
+                    async () => AppSettings.AreAlertsOn && await Notifier.IsAllowedAsync(),
+                    () => alerts.SetEnabledAsync(true),
+                    AppResources.PermissionOn));
             }
 
             Items = items;

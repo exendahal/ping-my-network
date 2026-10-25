@@ -11,6 +11,7 @@ namespace PingMyNetwork.Helper.Utilities
         #region Variables
 
         private const string THEME_KEY = "settings.theme";
+        private const string ALERTS_KEY = "settings.alerts";
         private const string ONBOARDED_KEY = "settings.onboarded";
 
         #endregion
@@ -24,6 +25,16 @@ namespace PingMyNetwork.Helper.Utilities
         {
             get => (ThemeChoice)Preferences.Default.Get(THEME_KEY, (int)ThemeChoice.System);
             set => Preferences.Default.Set(THEME_KEY, (int)value);
+        }
+
+        /// <summary>
+        /// Whether to notify when an unknown device joins the network. Off until the user turns it
+        /// on, as the PRD's privacy rules ask.
+        /// </summary>
+        public static bool AreAlertsOn
+        {
+            get => Preferences.Default.Get(ALERTS_KEY, false);
+            set => Preferences.Default.Set(ALERTS_KEY, value);
         }
 
         /// <summary>

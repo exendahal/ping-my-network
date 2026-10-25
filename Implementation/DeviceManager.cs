@@ -101,6 +101,12 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         public event EventHandler? NetworkSwitched;
 
+        /// <summary>
+        /// Raised, on any thread, for each device that joined a network scanned before and that the
+        /// user has not marked as known.
+        /// </summary>
+        public event EventHandler<NetworkDevice>? NewDeviceFound;
+
         #endregion
 
         #region Properties
@@ -272,6 +278,7 @@ namespace PingMyNetwork.Implementation
             await NameFromMdnsAsync(record, cancel.Token);
             await SaveAsync();
             await IdentifyNewDevicesAsync(cancel.Token);
+            AnnounceNewDevices(record);
         }
 
         /// <summary>
@@ -537,6 +544,28 @@ namespace PingMyNetwork.Implementation
             }
 
             Changed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Tells listeners about each device that is new on this network and not known yet.
+        /// </summary>
+        /// <param name="record">The network just scanned.</param>
+        private void AnnounceNewDevices(NetworkRecord record)
+        {
+            List<NetworkDevice> fresh;
+
+            lock (_Gate)
+            {
+                fresh = record.Devices
+                    .Where(device => device.IsNew && !device.IsKnown && !device.IsThisDevice)
+                    .Select(device => device.Clone())
+                    .ToList();
+            }
+
+            foreach (NetworkDevice device in fresh)
+            {
+                NewDeviceFound?.Invoke(this, device);
+            }
         }
 
         /// <summary>

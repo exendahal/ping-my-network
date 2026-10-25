@@ -27,6 +27,7 @@ namespace PingMyNetwork
         private const string WINDOW_HEIGHT_KEY = "window.height";
 
         private readonly NetworkMonitor _Monitor;
+        private readonly DeviceAlerts _Alerts;
 
         #endregion
 
@@ -36,11 +37,13 @@ namespace PingMyNetwork
         /// Creates the application.
         /// </summary>
         /// <param name="monitor">The connection monitor, paused while the app is in the background.</param>
-        public App(NetworkMonitor monitor)
+        /// <param name="alerts">New-device alerts, which check the network while the app is open.</param>
+        public App(NetworkMonitor monitor, DeviceAlerts alerts)
         {
             InitializeComponent();
 
             _Monitor = monitor;
+            _Alerts = alerts;
 
             AppSettings.ApplyTheme(this);
 
@@ -84,8 +87,17 @@ namespace PingMyNetwork
             window.SizeChanged += (_, _) => shell.ApplyWindowWidth(window.Width);
 
             // Nothing polls while the app is in the background.
-            window.Stopped += (_, _) => _Monitor.Stop();
-            window.Resumed += (_, _) => _Monitor.Start();
+            window.Stopped += (_, _) =>
+            {
+                _Monitor.Stop();
+                _Alerts.Stop();
+            };
+            window.Resumed += (_, _) =>
+            {
+                _Monitor.Start();
+                _Alerts.Start();
+            };
+            window.Created += (_, _) => _Alerts.Start();
 
             // First launch: explain and ask for permissions before the screens need them.
             if (!AppSettings.IsOnboarded)

@@ -50,6 +50,7 @@ namespace PingMyNetwork
             builder.Services.AddSingleton<DeviceStore>();
             builder.Services.AddSingleton<DeviceManager>();
             builder.Services.AddSingleton<WifiScanner>();
+            builder.Services.AddSingleton<DeviceAlerts>();
 
             // Singletons so a tab comes back as it was left: Home with what it last knew, Devices
             // with its list, filter and any scan still running.

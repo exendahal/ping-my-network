@@ -401,4 +401,13 @@
   <data name="ActionTurnOn" xml:space="preserve"><value>Turn on</value></data>
   <data name="SettingsPrivacy" xml:space="preserve"><value>Privacy</value></data>
   <data name="SettingsPrivacyFooter" xml:space="preserve"><value>Everything stays on this device. Your internet provider's name comes from Cloudflare, which also runs the speed test.</value></data>
+  <data name="AlertChannelName" xml:space="preserve"><value>New devices</value></data>
+  <data name="AlertNewDeviceTitle" xml:space="preserve"><value>New device on {0}</value></data>
+  <data name="AlertNewDeviceBody" xml:space="preserve"><value>{0} ({1}) joined your network. Open the app to mark it as known.</value></data>
+  <data name="PermissionAlertsTitle" xml:space="preserve"><value>New device alerts</value></data>
+  <data name="PermissionAlertsBody" xml:space="preserve"><value>Get a notification when a device you haven't marked as known joins your network.</value></data>
+  <data name="SettingsAlerts" xml:space="preserve"><value>Notifications</value></data>
+  <data name="SettingsAlertsRow" xml:space="preserve"><value>New device alerts</value></data>
+  <data name="SettingsAlertsFooterAndroid" xml:space="preserve"><value>Checks every 2 minutes while the app is open, and about every 15 minutes in the background on unmetered Wi-Fi. Alerts aren't instant, and only work while this phone is on that network.</value></data>
+  <data name="SettingsAlertsFooterApple" xml:space="preserve"><value>Checks every 2 minutes while the app is open, and each time you open it. iOS doesn't let apps scan the network in the background.</value></data>
 </root>
