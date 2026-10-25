@@ -730,7 +730,7 @@ namespace PingMyNetwork.Implementation
                 device.FriendlyName = details.FriendlyName ?? device.FriendlyName;
                 device.Manufacturer = details.Manufacturer ?? device.Manufacturer;
                 device.ModelName = details.ModelName ?? device.ModelName;
-                device.HttpTitle = details.HttpTitle ?? device.HttpTitle;
+                device.HttpTitle = DeviceDescriber.UsefulTitle(details.HttpTitle) ?? device.HttpTitle;
                 device.OpenPorts = [.. details.OpenPorts];
                 device.DetailsFetchedAt = DateTimeOffset.Now;
 

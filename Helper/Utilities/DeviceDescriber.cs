@@ -18,6 +18,14 @@ namespace PingMyNetwork.Helper.Utilities
         private static readonly string[] LOCAL_SUFFIXES = [".lan", ".local", ".home", ".localdomain", ".home.arpa"];
 
         /// <summary>
+        /// Marks a web page title as an error or placeholder page rather than a name. Status codes
+        /// only count as whole words, so a model such as "EX5400" is kept.
+        /// </summary>
+        private static readonly System.Text.RegularExpressions.Regex ERROR_TITLE = new(
+            @"\b(error|not found|unauthori[sz]ed|forbidden|bad request|unavailable|moved|redirect|index of|it works|welcome to nginx|default page|access denied|(400|401|403|404|500|502|503))\b",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+        /// <summary>
         /// Words in a name or model that give the kind of device away, checked in order.
         /// </summary>
         private static readonly (string Word, DeviceKind Type)[] NAME_HINTS =
@@ -203,10 +211,27 @@ namespace PingMyNetwork.Helper.Utilities
                 device.NetBiosName,
                 ShortHostName(device.HostName),
                 model,
-                device.HttpTitle)
+                UsefulTitle(device.HttpTitle))
                 ?? (device.Type != DeviceKind.Unknown ? TypeName(device.Type)
                     : device.Vendor is not null ? NetworkFormat.Text(AppResources.DeviceVendorFormat, device.Vendor)
                     : AppResources.DeviceUnnamed);
+        }
+
+        /// <summary>
+        /// A web page title that names the device, or null for an error page. Many devices answer
+        /// http:// with a page like "Document Error: Not Found" or "401 Unauthorized", which says
+        /// nothing about what they are.
+        /// </summary>
+        /// <param name="title">The title of the device's web page.</param>
+        /// <returns>The title, or null.</returns>
+        public static string? UsefulTitle(string? title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return null;
+            }
+
+            return ERROR_TITLE.IsMatch(title) ? null : title.Trim();
         }
 
         /// <summary>
@@ -279,7 +304,7 @@ namespace PingMyNetwork.Helper.Utilities
                 device.MdnsModel,
                 device.Manufacturer,
                 device.ModelName,
-                device.HttpTitle).ToLowerInvariant();
+                UsefulTitle(device.HttpTitle)).ToLowerInvariant();
 
             foreach ((string word, DeviceKind type) in NAME_HINTS)
             {
@@ -405,6 +430,12 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(CleanServiceName("A1B2C3D4E5F6@Kitchen") == "Kitchen");
             Debug.Assert(CleanServiceName("Anna's iPhone") == "Anna's iPhone");
             Debug.Assert(CleanServiceName(" ") is null);
+            Debug.Assert(UsefulTitle("Document Error: Not Found") is null);
+            Debug.Assert(UsefulTitle("401 Unauthorized") is null);
+            Debug.Assert(UsefulTitle("Mi Router") == "Mi Router");
+            Debug.Assert(UsefulTitle("NETGEAR EX5400") == "NETGEAR EX5400");
+            Debug.Assert(UsefulTitle("TP-Link Login") == "TP-Link Login");
+            Debug.Assert(DisplayName(new NetworkDevice { HttpTitle = "Document Error: Not Found" }) != "Document Error: Not Found");
 
             Debug.Assert(GuessType(new NetworkDevice { HostName = "Galaxy-S24.lan" }) == DeviceKind.Phone);
             Debug.Assert(GuessType(new NetworkDevice { OpenPorts = [9100] }) == DeviceKind.Printer);
