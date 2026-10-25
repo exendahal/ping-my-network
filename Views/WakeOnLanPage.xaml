@@ -12,7 +12,7 @@
     x:DataType="vm:WakeOnLanViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolWakeTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolWakeTitle}" Help="{x:Static res:AppResources.ToolWakeHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout

@@ -3290,5 +3290,77 @@ namespace PingMyNetwork.Resources.Strings {
                 return ResourceManager.GetString("DeviceMacPrivateFormat", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About this tool.
+        /// </summary>
+        public static string ActionHelp {
+            get {
+                return ResourceManager.GetString("ActionHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping sends small test messages to a device or website and times the replies. Use it to check that something is reachable and how quickly it answers. High or jumpy times (jitter) cause lag in calls and games; lost replies mean the connection drops packets. Some devices and websites ignore ping on purpose, so no reply doesn&apos;t always mean they are down..
+        /// </summary>
+        public static string ToolPingHelp {
+            get {
+                return ResourceManager.GetString("ToolPingHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute lists every router your traffic passes through on its way to a website, with the time to each one. Use it to find where a slow or broken connection goes wrong: in your home network, at your provider, or further away. Rows with no reply are routers that ignore these requests, which is normal..
+        /// </summary>
+        public static string ToolTracerouteHelp {
+            get {
+                return ResourceManager.GetString("ToolTracerouteHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS turns names like example.com into the addresses computers use. Look up a name to check that it resolves, compare answers from different DNS servers, or see a domain&apos;s mail (MX) and text (TXT) records. If a website won&apos;t open but its address works, DNS is often the cause..
+        /// </summary>
+        public static string ToolDnsHelp {
+            get {
+                return ResourceManager.GetString("ToolDnsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port check tries to connect to a device&apos;s network ports to see which services it offers, such as a web page (80, 443), file sharing (445) or remote desktop (3389). Use it on your own devices to find services you didn&apos;t know were open. Only check devices you own or are allowed to test..
+        /// </summary>
+        public static string ToolPortsHelp {
+            get {
+                return ResourceManager.GetString("ToolPortsHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed test measures how fast your internet connection downloads and uploads, and its latency, using Cloudflare&apos;s servers. It uses about 30 MB of data. Results depend on your Wi-Fi signal too, so test close to the router to see what your provider delivers..
+        /// </summary>
+        public static string ToolSpeedHelp {
+            get {
+                return ResourceManager.GetString("ToolSpeedHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake-on-LAN turns on a sleeping or switched-off computer by sending it a special "magic packet". The computer must have Wake-on-LAN enabled in its settings or BIOS, be wired to the network in most cases, and be on the same network as this device. You need its MAC address..
+        /// </summary>
+        public static string ToolWakeHelp {
+            get {
+                return ResourceManager.GetString("ToolWakeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The subnet calculator works out a network&apos;s address range from an address and its mask or prefix (like /24): the first and last usable address, the broadcast address and how many devices fit. It starts with your current network, and works offline..
+        /// </summary>
+        public static string ToolSubnetHelp {
+            get {
+                return ResourceManager.GetString("ToolSubnetHelp", resourceCulture);
+            }
+        }
     }
 }

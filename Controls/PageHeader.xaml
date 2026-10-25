@@ -6,11 +6,15 @@
     xmlns:res="clr-namespace:PingMyNetwork.Resources.Strings"
     xmlns:util="clr-namespace:PingMyNetwork.Helper.Utilities">
 
-    <!--  Back and title for a screen pushed on top of a destination.  -->
+    <!--
+        Back and title for a screen pushed on top of a destination, and, when the screen has help,
+        a button that opens a short explanation of what the screen does and when to use it.
+    -->
     <Grid
         Padding="8,8,8,0"
-        ColumnDefinitions="Auto,*"
-        MaximumWidthRequest="{StaticResource ReadableMaxWidth}">
+        ColumnDefinitions="Auto,*,Auto"
+        MaximumWidthRequest="{StaticResource ReadableMaxWidth}"
+        RowDefinitions="Auto,Auto">
         <Button
             Clicked="OnBackClicked"
             SemanticProperties.Description="{x:Static res:AppResources.ActionBack}"
@@ -25,5 +29,40 @@
             SemanticProperties.HeadingLevel="Level1"
             Style="{StaticResource TextTitle}"
             VerticalOptions="Center" />
+        <Button
+            x:Name="HelpButton"
+            Grid.Column="2"
+            Clicked="OnHelpClicked"
+            IsVisible="False"
+            SemanticProperties.Description="{x:Static res:AppResources.ActionHelp}"
+            Style="{StaticResource IconButton}"
+            Text="{x:Static util:MaterialIcon.HELP}"
+            ToolTipProperties.Text="{x:Static res:AppResources.ActionHelp}" />
+
+        <Border
+            x:Name="HelpCard"
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="8,8,8,0"
+            Padding="16,12"
+            BackgroundColor="{AppThemeBinding Light={StaticResource AccentTintLight},
+                                              Dark={StaticResource AccentTintDark}}"
+            IsVisible="False"
+            StrokeShape="RoundRectangle 12"
+            StrokeThickness="0">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
+                <Label
+                    FontSize="20"
+                    Style="{StaticResource Icon}"
+                    Text="{x:Static util:MaterialIcon.INFO}"
+                    TextColor="{AppThemeBinding Light={StaticResource AccentLight},
+                                                Dark={StaticResource AccentDark}}"
+                    VerticalOptions="Start" />
+                <Label
+                    x:Name="HelpLabel"
+                    Grid.Column="1"
+                    Style="{StaticResource TextBody}" />
+            </Grid>
+        </Border>
     </Grid>
 </ContentView>

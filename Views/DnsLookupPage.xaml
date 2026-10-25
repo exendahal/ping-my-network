@@ -12,7 +12,7 @@
     x:DataType="vm:DnsLookupViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolDnsTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolDnsTitle}" Help="{x:Static res:AppResources.ToolDnsHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout

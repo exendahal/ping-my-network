@@ -11,7 +11,7 @@
     x:DataType="vm:SpeedTestViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolSpeedTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolSpeedTitle}" Help="{x:Static res:AppResources.ToolSpeedHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout

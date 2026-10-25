@@ -12,7 +12,7 @@
     x:DataType="vm:PingViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolPingTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolPingTitle}" Help="{x:Static res:AppResources.ToolPingHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout

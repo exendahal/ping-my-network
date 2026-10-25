@@ -11,7 +11,7 @@
     x:DataType="vm:SubnetViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolSubnetTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolSubnetTitle}" Help="{x:Static res:AppResources.ToolSubnetHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout

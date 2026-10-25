@@ -12,7 +12,7 @@
     x:DataType="vm:PortCheckViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <controls:PageHeader Title="{x:Static res:AppResources.ToolPortsTitle}" />
+        <controls:PageHeader Title="{x:Static res:AppResources.ToolPortsTitle}" Help="{x:Static res:AppResources.ToolPortsHelp}" />
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
