@@ -67,16 +67,6 @@ dotnet workload install maui
 dotnet build -f net10.0-android
 ```
 
-Debug builds use the library's source from a sibling checkout, so library changes can be tried in the app straight away. Clone both side by side:
-
-```
-Workspace/
-├── maui_wifi_manager/   https://github.com/exendahal/maui_wifi_manager
-└── ping-my-network/
-```
-
-Release builds use the published `WifiManager.Maui` package and need no sibling checkout.
-
 ## Reporting bugs and ideas
 
 Found a problem or have an idea? [Open an issue](https://github.com/exendahal/ping-my-network/issues). The app links there too, from **Settings → Help and feedback**, with your app version and device filled in.
