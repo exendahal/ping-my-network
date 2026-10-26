@@ -451,11 +451,14 @@
                         Grid.Row="1"
                         ItemsSource="{Binding Networks}"
                         SelectionMode="None">
+                        <!--  Row gap as a bottom margin, except on Windows, where it clips the row; see DevicesPage.  -->
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="{OnPlatform Default=0, WinUI=8}" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="vm:WifiNetworkItem">
-                                <!--  Row gap as a bottom margin; ItemSpacing stutters on Android.  -->
                                 <Border
-                                    Margin="0,0,0,8"
+                                    Margin="{OnPlatform Default='0,0,0,8', WinUI=0}"
                                     Padding="12,0"
                                     HeightRequest="64"
                                     SemanticProperties.Description="{Binding SemanticDescription}"

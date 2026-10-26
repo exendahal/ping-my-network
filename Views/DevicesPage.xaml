@@ -310,16 +310,20 @@
                     IsVisible="{Binding HasRows}"
                     ItemsSource="{Binding Devices}"
                     SelectionMode="None">
+                    <!--
+                        The gap between rows: a bottom margin on Android, where ItemSpacing made
+                        scrolling stutter, but ItemSpacing on Windows, which takes the margin out
+                        of the fixed row height and clips each row's bottom edge.
+                    -->
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="{OnPlatform Default=0, WinUI=8}" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <!--  Fixed height and a flat tree: rows stay cheap to recycle while scrolling.  -->
                         <DataTemplate x:DataType="vm:DeviceItem">
-                            <!--
-                                The gap between rows is the row's own bottom margin rather than
-                                LinearItemsLayout.ItemSpacing, which made scrolling stutter on Android.
-                            -->
                             <Border
                                 x:Name="Row"
-                                Margin="0,0,0,8"
+                                Margin="{OnPlatform Default='0,0,0,8', WinUI=0}"
                                 Padding="12,0"
                                 HeightRequest="68"
                                 Opacity="{Binding RowOpacity}"
