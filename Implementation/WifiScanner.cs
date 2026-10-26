@@ -1,5 +1,6 @@
 using MauiWifiManager;
 using MauiWifiManager.Abstractions;
+using PingMyNetwork.Helper.Utilities;
 
 namespace PingMyNetwork.Implementation
 {
@@ -97,6 +98,7 @@ namespace PingMyNetwork.Implementation
             _Wifi.ScanResultsAvailable += OnScanResults;
             _Wifi.DeviceDiscovered += OnDiscovered;
             _Wifi.DeviceLost += OnLost;
+            LocationAccess.Changed += OnLocationChanged;
 
             await RefreshAvailabilityAsync();
 
@@ -130,6 +132,7 @@ namespace PingMyNetwork.Implementation
             _Wifi.ScanResultsAvailable -= OnScanResults;
             _Wifi.DeviceDiscovered -= OnDiscovered;
             _Wifi.DeviceLost -= OnLost;
+            LocationAccess.Changed -= OnLocationChanged;
 
             _SessionCancel?.Cancel();
             _SessionCancel = null;
@@ -157,6 +160,29 @@ namespace PingMyNetwork.Implementation
 
             Availability = ready.ErrorCode == WifiErrorCodes.Success ? ready.Data : WifiScanAvailability.Ready;
             Changed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Checks readiness again when location is switched, and scans straight away once it is
+        /// back on instead of waiting for the next periodic scan.
+        /// </summary>
+        /// <param name="sender">Unused.</param>
+        /// <param name="e">Unused.</param>
+        private async void OnLocationChanged(object? sender, EventArgs e)
+        {
+            await RefreshAvailabilityAsync();
+
+            if ((Availability != WifiScanAvailability.Ready) || (_SessionCancel is not CancellationTokenSource cancel))
+            {
+                return;
+            }
+
+            WifiManagerResponse<List<NetworkData>> result = await _Wifi.ScanWifiNetworksAsync(cancel.Token);
+
+            if (result.Data is { } networks)
+            {
+                Replace(networks);
+            }
         }
 
         /// <summary>

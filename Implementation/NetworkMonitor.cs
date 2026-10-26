@@ -117,6 +117,9 @@ namespace PingMyNetwork.Implementation
             _Wifi.WifiNetworkChanged += OnConnectionChanged;
             _Wifi.WifiStateChanged += OnConnectionChanged;
 
+            // Location decides whether the Wi-Fi name and access point can be read at all.
+            LocationAccess.Changed += OnConnectionChanged;
+
             // Signal is the one reading that changes constantly, so it updates in place rather than
             // triggering a full refresh. On Windows subscribing starts a 5 s poll, which is why the
             // monitor stops when the app goes to the background.
@@ -140,6 +143,7 @@ namespace PingMyNetwork.Implementation
             _Wifi.ConnectionTypeChanged -= OnConnectionChanged;
             _Wifi.WifiNetworkChanged -= OnConnectionChanged;
             _Wifi.WifiStateChanged -= OnConnectionChanged;
+            LocationAccess.Changed -= OnConnectionChanged;
             _Wifi.SignalStrengthChanged -= OnSignalChanged;
 
             lock (_Gate)
@@ -170,7 +174,7 @@ namespace PingMyNetwork.Implementation
         /// <summary>
         /// Refreshes after a change event, once the burst it belongs to has settled.
         /// </summary>
-        /// <param name="sender">The Wi-Fi manager.</param>
+        /// <param name="sender">The Wi-Fi manager, or null for a location change.</param>
         /// <param name="e">Unused.</param>
         private void OnConnectionChanged(object? sender, EventArgs e)
         {

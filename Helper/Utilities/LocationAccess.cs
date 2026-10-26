@@ -12,7 +12,73 @@ namespace PingMyNetwork.Helper.Utilities
     /// </remarks>
     public static class LocationAccess
     {
+        #region Variables
+
+        private static bool _IsWatching;
+
+        /// <summary>
+        /// Windows only: whether Wi-Fi access was allowed at the last check, so focus changes that
+        /// change nothing raise nothing.
+        /// </summary>
+        private static bool? _WasAllowed;
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Raised, on any thread, when location services or the app's location access change, so
+        /// screens update without a manual refresh.
+        /// </summary>
+        public static event EventHandler? Changed;
+
+        #endregion
+
         #region Methods
+
+        /// <summary>
+        /// Starts listening for location changes. Android reports the location switch as it flips;
+        /// Windows has no such event, so access is checked again whenever the window comes back to
+        /// the front, typically from the Settings app. iOS sends the user to Settings, and the
+        /// app's resume already refreshes everything.
+        /// </summary>
+        /// <param name="window">The app's window.</param>
+        public static void Watch(Window window)
+        {
+            if (_IsWatching)
+            {
+                return;
+            }
+
+            _IsWatching = true;
+
+#if ANDROID
+            Android.Content.IntentFilter filter = new(Android.Locations.LocationManager.ModeChangedAction);
+            ModeReceiver receiver = new();
+
+            if (OperatingSystem.IsAndroidVersionAtLeast(33))
+            {
+                Platform.AppContext.RegisterReceiver(receiver, filter, Android.Content.ReceiverFlags.NotExported);
+            }
+            else
+            {
+                Platform.AppContext.RegisterReceiver(receiver, filter);
+            }
+#elif WINDOWS
+            window.Activated += async (_, _) =>
+            {
+                bool isAllowed = await Windows.Devices.WiFi.WiFiAdapter.RequestAccessAsync() == Windows.Devices.WiFi.WiFiAccessStatus.Allowed;
+                bool isChanged = (_WasAllowed is bool was) && (was != isAllowed);
+
+                _WasAllowed = isAllowed;
+
+                if (isChanged)
+                {
+                    Changed?.Invoke(null, EventArgs.Empty);
+                }
+            };
+#endif
+        }
 
         /// <summary>
         /// Finds out what, if anything, keeps the Wi-Fi name hidden.
@@ -115,5 +181,23 @@ namespace PingMyNetwork.Helper.Utilities
         }
 
         #endregion
+
+#if ANDROID
+        /// <summary>
+        /// Hears the location switch flip, from the quick settings panel or the Settings app.
+        /// </summary>
+        private sealed class ModeReceiver : Android.Content.BroadcastReceiver
+        {
+            /// <summary>
+            /// Passes the change on.
+            /// </summary>
+            /// <param name="context">Unused.</param>
+            /// <param name="intent">Unused.</param>
+            public override void OnReceive(Android.Content.Context? context, Android.Content.Intent? intent)
+            {
+                Changed?.Invoke(null, EventArgs.Empty);
+            }
+        }
+#endif
     }
 }

@@ -96,6 +96,8 @@ namespace PingMyNetwork
             // changes on every platform, including rotation on Android.
             window.SizeChanged += (_, _) => shell.ApplyWindowWidth(window.Width);
 
+            LocationAccess.Watch(window);
+
             // Nothing polls while the app is in the background.
             window.Stopped += (_, _) =>
             {
