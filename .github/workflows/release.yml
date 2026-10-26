@@ -55,11 +55,12 @@ jobs:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
-      # .NET for iOS needs the Xcode it was built against, so both are pinned together; the
-      # newest workload can need an Xcode the runner does not have yet. Bump them as a pair.
+      # .NET for iOS needs the exact Xcode major.minor it names (_RecommendedXcodeVersion in its
+      # pack; 26.5.10315 wants 26.6), and the newest workload can need an Xcode the runner does not
+      # have yet. So both are pinned. Bump them as a pair.
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.5'
+          xcode-version: '26.6'
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
