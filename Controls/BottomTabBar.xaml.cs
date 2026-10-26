@@ -1,3 +1,6 @@
+using PingMyNetwork.Helper.Utilities;
+using PingMyNetwork.Implementation;
+
 namespace PingMyNetwork.Controls
 {
     /// <summary>
@@ -51,6 +54,18 @@ namespace PingMyNetwork.Controls
         public BottomTabBar()
         {
             InitializeComponent();
+
+            // iOS does not let apps scan for Wi-Fi, so the analyzer gets no tab there.
+            if (!WifiScanner.IsSupported)
+            {
+                Items.Children.Remove(Items.Children.First(child => ((VisualElement)child).ClassId == Routes.WIFI));
+                Items.ColumnDefinitions.RemoveAt(0);
+
+                for (var i = 0; i < Items.Children.Count; i++)
+                {
+                    Items.SetColumn(Items.Children[i], i);
+                }
+            }
 
             Apply();
         }
