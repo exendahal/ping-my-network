@@ -10,11 +10,11 @@ namespace PingMyNetwork.Implementation
     /// own networks in one file, guest and undecided networks in another.
     /// </summary>
     /// <remarks>
-    /// ponytail: one JSON file instead of the PRD's SQLite. A household network has tens of devices,
+    /// ponytail: one JSON file instead of SQLite. A household network has tens of devices,
     /// so reading and writing the whole file costs less than a database dependency. Move to SQLite
-    /// when history (PRD 6.12) makes the file large.
+    /// when a device history makes the file large.
     ///
-    /// Backup (PRD 6.16), with no account and no server of our own, and only of the user's own
+    /// Backup, with no account and no server of our own, and only of the user's own
     /// networks: Android Auto Backup carries devices.json to the user's Google account, while the
     /// backup rules leave devices.local.json out. On iOS and Mac a copy of devices.json also goes
     /// to the user's iCloud key-value store, which restores it on a reinstall or a new device

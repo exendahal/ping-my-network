@@ -72,7 +72,7 @@ namespace PingMyNetwork.Views
 
         /// <summary>
         /// Hands over to the list's pane when the window becomes wide enough for one, so the same
-        /// device stays open (PRD 9.5: no state lost on resize).
+        /// device stays open: no state is lost on resize.
         /// </summary>
         /// <param name="sender">The page.</param>
         /// <param name="e">Unused.</param>

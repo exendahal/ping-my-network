@@ -454,7 +454,7 @@ namespace PingMyNetwork.ViewModels
         /// </summary>
         /// <remarks>
         /// ponytail: kept in Preferences per network name, which Android Auto Backup and the iOS
-        /// backup carry with everything else. Moves into History (PRD 6.12) when that exists.
+        /// backup carry with everything else. Moves into a history store when one exists.
         /// </remarks>
         private void SaveSpots()
         {

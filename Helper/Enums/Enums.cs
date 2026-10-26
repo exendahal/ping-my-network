@@ -26,7 +26,7 @@ namespace PingMyNetwork.Helper.Enums
     }
 
     /// <summary>
-    /// Width classes from the PRD's responsive layout section. Layouts follow window width, not
+    /// Width classes for responsive layout. Layouts follow window width, not
     /// device type, so a narrow desktop window gets the phone layout.
     /// </summary>
     public enum LayoutWidth

@@ -18,7 +18,7 @@ namespace PingMyNetwork.Views
         private const string CHART_ANIMATION = "ChartGrow";
 
         /// <summary>
-        /// The chart's entrance: curves grow from the axis (PRD 9.7).
+        /// The chart's entrance: curves grow from the axis.
         /// </summary>
         private const uint CHART_GROW_MS = 400;
 

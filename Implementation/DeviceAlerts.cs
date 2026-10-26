@@ -18,7 +18,7 @@ namespace PingMyNetwork.Implementation
         #region Variables
 
         /// <summary>
-        /// How often the network is checked while the app is open, from the PRD.
+        /// How often the network is checked while the app is open.
         /// </summary>
         private static readonly TimeSpan CHECK_INTERVAL = TimeSpan.FromMinutes(2);
 

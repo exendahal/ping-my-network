@@ -160,7 +160,7 @@
     <Color x:Key="PopupOnPrimaryDark">#16181A</Color>
 
     <!--
-        Status colours (PRD 9.1), the same values as StatusPalette in code. Light values are the
+        Status colours, the same values as StatusPalette in code. Light values are the
         accessible variants that reach 3:1 on a light surface.
     -->
     <Color x:Key="StatusGoodLight">#248A3D</Color>

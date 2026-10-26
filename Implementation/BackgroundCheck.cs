@@ -72,7 +72,7 @@ namespace PingMyNetwork.Implementation
         #region Variables
 
         /// <summary>
-        /// Longest a background scan may take, from the PRD.
+        /// Longest a background scan may take.
         /// </summary>
         private static readonly TimeSpan TIME_LIMIT = TimeSpan.FromSeconds(30);
 

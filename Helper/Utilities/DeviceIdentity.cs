@@ -8,12 +8,12 @@ namespace PingMyNetwork.Helper.Utilities
     /// status when its address changes.
     /// </summary>
     /// <remarks>
-    /// The strongest identifier both sightings have decides, in the PRD's order: MAC, then NetBIOS
+    /// The strongest identifier both sightings have decides, in this order: MAC, then NetBIOS
     /// name, then host name, then IP. A weaker identifier is only used when neither sighting has a
     /// stronger one; two devices that both report a MAC are never matched on their IP.
     ///
     /// ponytail: UPnP UDN and mDNS instance name belong between MAC and NetBIOS once the library
-    /// reports them (PRD 7.1).
+    /// reports them.
     /// </remarks>
     public static class DeviceIdentity
     {

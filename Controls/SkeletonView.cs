@@ -19,7 +19,7 @@ namespace PingMyNetwork.Controls
         private const string SWEEP_ANIMATION = "SkeletonSweep";
 
         /// <summary>
-        /// One pass of the highlight, matching the PRD's 1200 ms shimmer loop.
+        /// One pass of the highlight.
         /// </summary>
         private const uint SWEEP_MS = 1200;
 
@@ -180,7 +180,7 @@ namespace PingMyNetwork.Controls
             }
 
             // Reduce motion: flat blocks still communicate "content is coming", without the
-            // looping highlight the PRD says to drop.
+            // looping highlight.
             if (MotionSettings.PrefersReducedMotion)
             {
                 _Drawable.ShowHighlight = false;

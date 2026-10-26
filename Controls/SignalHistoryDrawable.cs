@@ -5,7 +5,7 @@ namespace PingMyNetwork.Controls
     /// </summary>
     /// <remarks>
     /// Readings are added and the view redrawn; points are never animated one by one, which keeps a
-    /// live chart inside the frame budget (PRD 9.7).
+    /// live chart inside the frame budget.
     /// </remarks>
     public sealed class SignalHistoryDrawable : IDrawable
     {

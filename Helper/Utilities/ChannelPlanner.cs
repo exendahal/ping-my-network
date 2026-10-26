@@ -16,7 +16,7 @@ namespace PingMyNetwork.Helper.Utilities
     /// Estimates channel congestion and suggests a quieter channel.
     /// </summary>
     /// <remarks>
-    /// A scan shows who is on a channel, not how busy they are, so this is an estimate (PRD 6.6.3):
+    /// A scan shows who is on a channel, not how busy they are, so this is an estimate:
     /// each other network counts by how much its channel overlaps, weighted by how strong it is
     /// here. On 2.4 GHz a 20 MHz channel spans five channel numbers, so neighbours overlap
     /// partially; on 5 and 6 GHz only the same channel is counted. Only 1, 6 and 11 are suggested on

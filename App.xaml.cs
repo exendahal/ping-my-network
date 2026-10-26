@@ -12,7 +12,7 @@ namespace PingMyNetwork
         #region Variables
 
         /// <summary>
-        /// Smallest usable window, from the PRD's responsive layout section.
+        /// Smallest usable window.
         /// </summary>
         private const double MIN_WINDOW_WIDTH = 360;
 

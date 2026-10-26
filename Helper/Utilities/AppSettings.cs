@@ -40,7 +40,7 @@ namespace PingMyNetwork.Helper.Utilities
 
         /// <summary>
         /// Whether to notify when an unknown device joins the network. Off until the user turns it
-        /// on, as the PRD's privacy rules ask.
+        /// on, for privacy.
         /// </summary>
         public static bool AreAlertsOn
         {
