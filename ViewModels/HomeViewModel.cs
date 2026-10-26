@@ -612,7 +612,8 @@ namespace PingMyNetwork.ViewModels
                 return;
             }
 
-            int toReview = devices.Count(device => !device.IsKnown && !device.IsThisDevice);
+            // A guest network is only looked at, never reviewed.
+            int toReview = _Devices.IsMine == false ? 0 : devices.Count(device => !device.IsKnown && !device.IsThisDevice);
             int fresh = devices.Count(device => device.IsNew);
             List<string> parts = [];
 

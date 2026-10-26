@@ -260,6 +260,12 @@ namespace PingMyNetwork.ViewModels
         public partial bool CanReview { get; set; }
 
         /// <summary>
+        /// Whether to offer the Unknown filter. Hidden on guest networks, which are not reviewed.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool ShowUnknownFilter { get; set; } = true;
+
+        /// <summary>
         /// Filter chip captions with counts, e.g. "Unknown 3".
         /// </summary>
         [ObservableProperty]
@@ -517,16 +523,25 @@ namespace PingMyNetwork.ViewModels
         {
             List<NetworkDevice> devices = _Manager.GetDevices();
             HashSet<string> ids = devices.Select(device => device.Id).ToHashSet();
+            bool isGuest = _Manager.IsMine == false;
+
+            // On a guest network there is nothing to review, so the Unknown filter goes with it.
+            ShowUnknownFilter = !isGuest;
+
+            if (isGuest && (Filter == DeviceFilter.Unknown))
+            {
+                Filter = DeviceFilter.All;
+            }
 
             foreach (NetworkDevice device in devices)
             {
                 if (_Items.TryGetValue(device.Id, out DeviceItem? item))
                 {
-                    item.Update(device);
+                    item.Update(device, isGuest);
                 }
                 else
                 {
-                    _Items[device.Id] = new DeviceItem(device, OpenDevice, ToggleKnownAsync, CopyAddressAsync);
+                    _Items[device.Id] = new DeviceItem(device, OpenDevice, ToggleKnownAsync, CopyAddressAsync, isGuest);
                 }
             }
 

@@ -145,6 +145,7 @@
                             ClassId="Unknown"
                             Command="{Binding SetFilterCommand}"
                             CommandParameter="Unknown"
+                            IsVisible="{Binding ShowUnknownFilter}"
                             Style="{StaticResource Chip}"
                             Text="{Binding UnknownCaption}" />
                         <Button

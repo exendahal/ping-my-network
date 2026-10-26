@@ -34,18 +34,20 @@ namespace PingMyNetwork.ViewModels
         /// <param name="open">Opens the device's details.</param>
         /// <param name="toggleKnown">Flips it between known and unknown.</param>
         /// <param name="copyAddress">Copies its address.</param>
+        /// <param name="isGuest">Whether it is on a guest network, where nothing needs review.</param>
         public DeviceItem(
             NetworkDevice device,
             Action<DeviceItem> open,
             Func<DeviceItem, Task> toggleKnown,
-            Func<DeviceItem, Task> copyAddress)
+            Func<DeviceItem, Task> copyAddress,
+            bool isGuest)
         {
             Id = device.Id;
             OpenCommand = new RelayCommand(() => open(this));
             ToggleKnownCommand = new AsyncRelayCommand(() => toggleKnown(this));
             CopyAddressCommand = new AsyncRelayCommand(() => copyAddress(this));
 
-            Update(device);
+            Update(device, isGuest);
         }
 
         #endregion
@@ -175,7 +177,8 @@ namespace PingMyNetwork.ViewModels
         /// Refreshes the row from the device's latest state.
         /// </summary>
         /// <param name="device">The device.</param>
-        public void Update(NetworkDevice device)
+        /// <param name="isGuest">Whether it is on a guest network, where nothing needs review.</param>
+        public void Update(NetworkDevice device, bool isGuest)
         {
             // A private (randomised) MAC has no maker; saying so explains the missing name.
             string? maker = device.Manufacturer ?? device.ModelName ?? device.Vendor
@@ -186,7 +189,7 @@ namespace PingMyNetwork.ViewModels
             Icon = DeviceDescriber.Icon(device.Type);
             IsOnline = device.IsOnline;
             IsKnown = device.IsKnown;
-            IsUnknown = !device.IsKnown && !device.IsThisDevice;
+            IsUnknown = !isGuest && !device.IsKnown && !device.IsThisDevice;
             IsNew = device.IsNew;
             RowOpacity = device.IsOnline ? 1 : OFFLINE_OPACITY;
             ToggleKnownText = device.IsKnown ? AppResources.ActionMarkUnknown : AppResources.ActionMarkKnown;
@@ -215,7 +218,7 @@ namespace PingMyNetwork.ViewModels
                     Subtitle,
                     RoleTag,
                     IsNew ? AppResources.TagNew : null,
-                    device.IsKnown ? AppResources.TagKnown : AppResources.TagUnknown,
+                    isGuest ? null : device.IsKnown ? AppResources.TagKnown : AppResources.TagUnknown,
                 }.Where(part => !string.IsNullOrEmpty(part)));
         }
 
