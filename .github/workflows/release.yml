@@ -52,16 +52,20 @@ jobs:
           path: PingMyNetwork-*.apk
 
   ios:
-    runs-on: macos-latest
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
+      # .NET for iOS needs the Xcode it was built against, so both are pinned together; the
+      # newest workload can need an Xcode the runner does not have yet. Bump them as a pair.
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: '26.5'
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
-      - run: dotnet workload install maui-ios
+      - run: |
+          echo '{ "microsoft.net.sdk.ios": "26.5.10315/10.0.100" }' > "$RUNNER_TEMP/rollback.json"
+          dotnet workload install maui-ios --from-rollback-file "$RUNNER_TEMP/rollback.json"
 
       # Unsigned: no paid Apple developer account. Sideloading tools sign it with the user's own Apple ID.
       - name: Build unsigned IPA
