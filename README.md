@@ -88,7 +88,7 @@ dotnet build -f net10.0-android
 
 ## Releases
 
-Pushing a version tag builds a signed Android APK, iOS IPA and Windows app and attaches them to a GitHub release (`.github/workflows/release.yml`):
+Pushing a version tag builds a signed Android APK, an unsigned iOS IPA and an unsigned Windows app, and attaches them to a GitHub release (`.github/workflows/release.yml`):
 
 ```sh
 git tag v1.0.0
@@ -97,9 +97,9 @@ git push origin v1.0.0
 
 The tag becomes the version shown in the app. The build number is the workflow's run number. A tag with a suffix, such as `v1.0.0_beta`, is published as a pre-release, and the app shows only the number (`1.0.0`).
 
-To install the IPA on an iPhone or iPad, see [Installing the iOS app](docs/install-ios.md).
+To install the IPA on an iPhone or iPad, see [Installing the iOS app](docs/install-ios.md). On Windows, unzip the app and run `ping-my-network.exe`. It is not code-signed, so SmartScreen asks first: choose **More info → Run anyway**.
 
-The workflow needs these repository secrets (**Settings → Secrets and variables → Actions**). Encode files with `base64 -i <file>` on a Mac, or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("<file>"))` in PowerShell.
+Signing the APK needs these repository secrets (**Settings → Secrets and variables → Actions**). Encode the keystore with `base64 -i <file>` on a Mac, or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("<file>"))` in PowerShell.
 
 | Secret | What it is |
 |---|---|
@@ -107,11 +107,6 @@ The workflow needs these repository secrets (**Settings → Secrets and variable
 | `ANDROID_KEYSTORE_PASSWORD` | Keystore password |
 | `ANDROID_KEY_ALIAS` | Alias of the signing key in the keystore |
 | `ANDROID_KEY_PASSWORD` | Password of that key |
-| `IOS_CERTIFICATE_P12_BASE64` | Apple Distribution (or Development) certificate with its private key, exported from Keychain Access as `.p12`, base64 |
-| `IOS_CERTIFICATE_PASSWORD` | Password of the `.p12` |
-| `IOS_PROVISIONING_PROFILE_BASE64` | Ad Hoc (or Development) profile for `com.exendahal.pingmynetwork` that lists the test devices, base64 |
-| `WINDOWS_CERTIFICATE_PFX_BASE64` | Code-signing certificate as `.pfx`, base64 |
-| `WINDOWS_CERTIFICATE_PASSWORD` | Password of the `.pfx` |
 
 Make a keystore once with `keytool -genkeypair -v -keystore release.keystore -alias pingmynetwork -keyalg RSA -keysize 2048 -validity 10000`, and keep it safe: Android updates must be signed with the same key.
 

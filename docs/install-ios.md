@@ -1,51 +1,43 @@
 # Installing the iOS app from an IPA
 
-Each [release](https://github.com/exendahal/ping-my-network/releases) includes `PingMyNetwork-<version>.ipa`. It is not from the App Store, so it installs only on iPhones and iPads that were added to the app's provisioning profile.
+Each [release](https://github.com/exendahal/ping-my-network/releases) includes `PingMyNetwork-<version>.ipa`. It is not from the App Store and it is **unsigned**, so iOS will not install it as it is. A sideloading tool signs it with your own Apple ID and installs it. A free Apple ID is enough.
 
-## 1. Get your device added
+## What you need
 
-The IPA is signed with an Ad Hoc or Development profile, which lists every device allowed to run it. If your device is not on the list, iOS refuses to install the app with "Unable to install".
+- An iPhone or iPad on iOS 15 or later, and a USB cable.
+- A Windows PC or a Mac.
+- An Apple ID. Using a spare one rather than your main account is a good idea, since the tool signs in with it.
 
-Send the maintainer your device's **UDID**:
+## Install with Sideloadly (Windows or Mac)
 
-- **Mac:** connect the device, open **Finder**, select the device in the sidebar, and click the grey text under its name until the UDID shows. Right-click it to copy.
-- **Windows:** connect the device, open the **Apple Devices** app (or iTunes), select the device, and click the serial number until the UDID shows.
+1. **Windows only:** install iTunes and iCloud from [apple.com](https://www.apple.com/itunes/download/) (the website versions, not the Microsoft Store ones). Sideloadly needs their drivers.
+2. Download and install [Sideloadly](https://sideloadly.io).
+3. Connect and unlock the device, and tap **Trust** if it asks.
+4. Open Sideloadly, drag the `.ipa` onto it, check that your device is selected, enter your Apple ID and click **Start**.
+5. Enter the verification code if Apple asks for one.
 
-The device is added in the Apple developer account, a new profile is made, and the app is signed again. Use the IPA from the next release after that.
+[AltStore](https://altstore.io) works the same way, and can refresh the app over Wi-Fi.
 
-## 2. Install the IPA
+## Open the app
 
-Use any one of these.
+1. On iOS 16 and later, turn on **Settings → Privacy & Security → Developer Mode** and restart when asked.
+2. Open **Settings → General → VPN & Device Management**, tap your Apple ID under **Developer App** and tap **Trust**.
 
-### Apple Configurator (Mac)
+## Keep it working
 
-1. Install [Apple Configurator](https://apps.apple.com/app/apple-configurator/id1037126344) from the Mac App Store.
-2. Connect and unlock the device, and tap **Trust** if it asks.
-3. Drag the `.ipa` file onto the device in Apple Configurator.
+- **Free Apple ID:** the app stops opening after **7 days**. Install it again with Sideloadly, or let AltStore refresh it. Your data is kept.
+- **Paid Apple developer account:** the signature lasts a year.
+- A free Apple ID can have at most 3 sideloaded apps installed at once.
 
-### Finder (Mac)
+## Not available in sideloaded builds
 
-1. Connect and unlock the device, and select it in the Finder sidebar.
-2. Drag the `.ipa` file onto the device's **General** tab.
-
-### Xcode (Mac)
-
-1. Connect the device and open **Window → Devices and Simulators**.
-2. Select the device, click **+** under **Installed Apps**, and choose the `.ipa` file.
-
-### Windows
-
-Apple has no tool for installing an IPA from Windows. Third-party tools such as [Sideloadly](https://sideloadly.io) can install it. They sign the app again with your own Apple ID, so the step 1 device list does not apply to them, but a free Apple ID's signature expires after 7 days.
-
-## 3. Open the app
-
-- **Development profile:** on iOS 16 and later, turn on **Settings → Privacy & Security → Developer Mode** and restart when asked. Ad Hoc builds do not need this.
-- If iOS says **Untrusted Developer**, go to **Settings → General → VPN & Device Management**, tap the developer's name and tap **Trust**.
+- **iCloud backup** of your networks. It needs the app's own iCloud setup, which a re-signed app does not have. Your networks stay on the device.
 
 ## Troubleshooting
 
-| Message | Cause |
+| Message | What to do |
 |---|---|
-| Unable to install "Ping My Network" | The device is not in the provisioning profile. See step 1. |
-| The app opens and closes straight away | The profile has expired or was revoked. Install the IPA from a newer release. |
-| Integrity could not be verified | The IPA was changed or signed for other devices. Download it again from the release. |
+| The app opens and closes straight away | The 7-day signature has expired. Install it again. |
+| Untrusted Developer | Trust your Apple ID in **VPN & Device Management** (see above). |
+| Sideloadly: "Your maximum App ID limit has been reached" | A free Apple ID can create 10 App IDs a week. Wait, or use another Apple ID. |
+| Sideloadly does not see the device | On Windows, reinstall iTunes from apple.com, then unplug and reconnect the device. |
