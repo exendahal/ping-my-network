@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="ping-my-network.csproj" />
+  <Project Path="ping-my-network.csproj">
+    <Deploy />
+  </Project>
 </Solution>

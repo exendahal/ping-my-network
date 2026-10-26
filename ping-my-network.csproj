@@ -70,20 +70,8 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="SimpleToolkit.SimpleShell" Version="6.0.1" />
 
-		<!-- Device makers. Published separately from the library, so every configuration uses the package. -->
+		<PackageReference Include="WifiManager.Maui" Version="10.3.2" />
 		<PackageReference Include="WifiManager.MacVendors" Version="1.0.0" />
-	</ItemGroup>
-
-	<!--
-		Debug builds use the library source next door, so a library change can be tried in the app
-		straight away. Release builds use the published package.
-	-->
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<ProjectReference Include="..\maui_wifi_manager\src\MAUIWifiManager\MauiWifiManager.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
-		<PackageReference Include="WifiManager.Maui" Version="10.2.0" />
 	</ItemGroup>
 
 	<!--
