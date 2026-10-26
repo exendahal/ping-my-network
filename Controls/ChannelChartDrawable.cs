@@ -74,6 +74,16 @@ namespace PingMyNetwork.Controls
         /// </summary>
         private const float DIGIT_WIDTH = 6.5f;
 
+        /// <summary>
+        /// Average width of one character of a network name at the label font size.
+        /// </summary>
+        private const float LABEL_CHAR_WIDTH = 6.5f;
+
+        /// <summary>
+        /// Height of one line of network name.
+        /// </summary>
+        private const float LABEL_HEIGHT = 14f;
+
         #endregion
 
         #region Properties
@@ -146,6 +156,8 @@ namespace PingMyNetwork.Controls
                 DrawCurve(canvas, plot, slots, curve);
             }
 
+            // After every curve, so no fill is painted over a name.
+            DrawLabels(canvas, dirtyRect, plot, slots);
             DrawChannelAxis(canvas, plot, slots);
             canvas.RestoreState();
         }
@@ -254,12 +266,16 @@ namespace PingMyNetwork.Controls
             float peak = YOf(plot, MIN_DBM + ((curve.RssiDbm - MIN_DBM) * Progress));
             Color colour = curve.IsOwn ? OwnColor : OtherColor;
 
+            // The bezier only reaches three quarters of its control height, so the controls sit
+            // higher for the top of the curve to land on the signal strength.
+            float control = plot.Bottom - ((plot.Bottom - peak) / 0.75f);
+
             PathF path = new();
 
             path.MoveTo(centre - halfWidth, plot.Bottom);
             path.CurveTo(
-                centre - (halfWidth * 0.55f), peak,
-                centre + (halfWidth * 0.55f), peak,
+                centre - (halfWidth * 0.55f), control,
+                centre + (halfWidth * 0.55f), control,
                 centre + halfWidth, plot.Bottom);
 
             canvas.FillColor = colour.WithAlpha(curve.IsOwn ? 0.22f : 0.08f);
@@ -268,16 +284,51 @@ namespace PingMyNetwork.Controls
             canvas.StrokeColor = colour.WithAlpha(curve.IsOwn ? 1f : 0.55f);
             canvas.StrokeSize = curve.IsOwn ? 2.5f : 1.5f;
             canvas.DrawPath(path);
+        }
 
-            if (curve.Label is string label && (Progress >= 1f))
+        /// <summary>
+        /// Names over the peaks, strongest first. A name that would cover another moves down a line,
+        /// into its curve, since strong peaks leave no room above; one that still has no room is left
+        /// out rather than drawn on top.
+        /// </summary>
+        /// <param name="canvas">The canvas.</param>
+        /// <param name="bounds">The whole area.</param>
+        /// <param name="plot">The plot area.</param>
+        /// <param name="slots">The channel positions.</param>
+        private void DrawLabels(ICanvas canvas, RectF bounds, RectF plot, List<int> slots)
+        {
+            if (Progress < 1f)
             {
-                canvas.FontColor = colour;
-                canvas.FontSize = 11f;
+                return;
+            }
 
-                // The bezier peaks at three quarters of its control height.
-                float labelY = plot.Bottom - ((plot.Bottom - peak) * 0.75f) - 16f;
+            canvas.FontSize = 11f;
+            canvas.Font = Microsoft.Maui.Graphics.Font.Default;
 
-                canvas.DrawString(label, centre - 80f, labelY, 160f, 14f, HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            List<RectF> placed = [];
+
+            foreach (ChannelCurve curve in Curves.Where(curve => curve.Label is not null).OrderByDescending(curve => curve.RssiDbm))
+            {
+                // ponytail: width estimated per character, measure with the canvas if names get clipped.
+                float width = Math.Min((curve.Label!.Length * LABEL_CHAR_WIDTH) + 4f, plot.Width);
+                float x = Math.Clamp(XOf(plot, slots, curve.Channel) - (width / 2f), bounds.X, bounds.Right - width);
+
+                float y = YOf(plot, curve.RssiDbm) - LABEL_HEIGHT - 2f;
+                RectF box = new(x, y, width, LABEL_HEIGHT);
+
+                while (placed.Any(other => other.IntersectsWith(box)) && (box.Bottom + LABEL_HEIGHT <= plot.Bottom))
+                {
+                    box.Y += LABEL_HEIGHT;
+                }
+
+                if (placed.Any(other => other.IntersectsWith(box)))
+                {
+                    continue;
+                }
+
+                placed.Add(box);
+                canvas.FontColor = curve.IsOwn ? OwnColor : OtherColor;
+                canvas.DrawString(curve.Label, box.X, box.Y, box.Width, box.Height, HorizontalAlignment.Center, VerticalAlignment.Bottom);
             }
         }
 
