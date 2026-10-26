@@ -44,6 +44,9 @@ namespace PingMyNetwork.Helper.Utilities
             ("laptop", DeviceKind.Computer),
             ("-pc", DeviceKind.Computer),
             ("thinkpad", DeviceKind.Computer),
+
+            // MSI desktop boards ("MS-7817"), which Linux puts in its default host name.
+            ("ms-7", DeviceKind.Computer),
             ("tv", DeviceKind.Tv),
             ("chromecast", DeviceKind.Tv),
             ("roku", DeviceKind.Tv),
@@ -189,6 +192,7 @@ namespace PingMyNetwork.Helper.Utilities
             ("nest labs", DeviceKind.SmartHome),
             ("irobot", DeviceKind.SmartHome),
             ("wiz connected", DeviceKind.SmartHome),
+            ("gd midea", DeviceKind.SmartHome),
         ];
 
         #endregion
@@ -466,6 +470,8 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(TypeOfVendor("Kyocera Wireless") == DeviceKind.Unknown);
             Debug.Assert(TypeOfVendor("Xiaomi Mobile Software") == DeviceKind.Unknown);
             Debug.Assert(TypeOfVendor("Apple") == DeviceKind.Unknown);
+            Debug.Assert(TypeOfVendor("GD Midea Air-Conditioning Equipment") == DeviceKind.SmartHome);
+            Debug.Assert(GuessType(new NetworkDevice { HostName = "user-MS-7817.local" }) == DeviceKind.Computer);
             Debug.Assert(TypeOfVendor(null) == DeviceKind.Unknown);
             Debug.Assert(DisplayName(new NetworkDevice { Vendor = "Arcadyan" }) == "Arcadyan device");
             Debug.Assert(GuessType(new NetworkDevice()) == DeviceKind.Unknown);
