@@ -129,13 +129,14 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
-        /// Posts one notification for a device that just joined.
+        /// Posts one notification for a device that just joined, or came back when return
+        /// reminders are on.
         /// </summary>
         /// <param name="sender">The device manager.</param>
         /// <param name="device">The device.</param>
         private void OnNewDeviceFound(object? sender, NetworkDevice device)
         {
-            if (!AppSettings.AreAlertsOn)
+            if (!AppSettings.AreAlertsOn || (!device.IsNew && !AppSettings.AreReturnAlertsOn))
             {
                 return;
             }
@@ -144,8 +145,11 @@ namespace PingMyNetwork.Implementation
 
             Notifier.Show(
                 device.Id.GetHashCode(),
-                NetworkFormat.Text(AppResources.AlertNewDeviceTitle, network),
-                NetworkFormat.Text(AppResources.AlertNewDeviceBody, DeviceDescriber.DisplayName(device), device.IpAddress));
+                NetworkFormat.Text(device.IsNew ? AppResources.AlertNewDeviceTitle : AppResources.AlertDeviceBackTitle, network),
+                NetworkFormat.Text(
+                    device.IsNew ? AppResources.AlertNewDeviceBody : AppResources.AlertDeviceBackBody,
+                    DeviceDescriber.DisplayName(device),
+                    device.IpAddress));
         }
 
         #endregion

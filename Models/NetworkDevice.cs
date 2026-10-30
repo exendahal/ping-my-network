@@ -138,6 +138,13 @@ namespace PingMyNetwork.Models
         public bool IsNew { get; set; }
 
         /// <summary>
+        /// True when a device not marked as known answered the latest scan after missing the one
+        /// before and being away for at least an hour.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsBack { get; set; }
+
+        /// <summary>
         /// True for the device running this app.
         /// </summary>
         [JsonIgnore]

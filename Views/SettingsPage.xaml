@@ -61,11 +61,20 @@
                 <VerticalStackLayout IsVisible="{Binding CanAlert}">
                     <Label Style="{StaticResource SectionHeader}" Text="{x:Static res:AppResources.SettingsAlerts}" />
                     <Border Style="{StaticResource GroupCard}">
-                        <controls:SettingsRow
-                            Title="{x:Static res:AppResources.SettingsAlertsRow}"
-                            Icon="{x:Static util:MaterialIcon.NOTIFICATIONS}"
-                            IsToggled="{Binding AreAlertsOn}"
-                            ShowSwitch="True" />
+                        <VerticalStackLayout>
+                            <controls:SettingsRow
+                                Title="{x:Static res:AppResources.SettingsAlertsRow}"
+                                Icon="{x:Static util:MaterialIcon.NOTIFICATIONS}"
+                                IsToggled="{Binding AreAlertsOn}"
+                                ShowSwitch="True" />
+                            <BoxView IsVisible="{Binding AreAlertsOn}" Style="{StaticResource RowSeparator}" />
+                            <controls:SettingsRow
+                                Title="{x:Static res:AppResources.SettingsReturnAlertsRow}"
+                                Icon="{x:Static util:MaterialIcon.LOGIN}"
+                                IsToggled="{Binding AreReturnAlertsOn}"
+                                IsVisible="{Binding AreAlertsOn}"
+                                ShowSwitch="True" />
+                        </VerticalStackLayout>
                     </Border>
                     <Label Style="{StaticResource SectionFooter}" Text="{Binding AlertsFooter}" />
                 </VerticalStackLayout>

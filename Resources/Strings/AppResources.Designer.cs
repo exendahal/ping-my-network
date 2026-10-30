@@ -106,6 +106,33 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown device back on {0}.
+        /// </summary>
+        public static string AlertDeviceBackTitle {
+            get {
+                return ResourceManager.GetString("AlertDeviceBackTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}) is back on your network. Open the app to mark it as known.
+        /// </summary>
+        public static string AlertDeviceBackBody {
+            get {
+                return ResourceManager.GetString("AlertDeviceBackBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown devices coming back.
+        /// </summary>
+        public static string SettingsReturnAlertsRow {
+            get {
+                return ResourceManager.GetString("SettingsReturnAlertsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow location access.
         /// </summary>
         public static string ActionAllowLocation {

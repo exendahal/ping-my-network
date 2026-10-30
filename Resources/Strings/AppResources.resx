@@ -404,6 +404,9 @@
   <data name="AlertChannelName" xml:space="preserve"><value>New devices</value></data>
   <data name="AlertNewDeviceTitle" xml:space="preserve"><value>New device on {0}</value></data>
   <data name="AlertNewDeviceBody" xml:space="preserve"><value>{0} ({1}) joined your network. Open the app to mark it as known.</value></data>
+  <data name="AlertDeviceBackTitle" xml:space="preserve"><value>Unknown device back on {0}</value></data>
+  <data name="AlertDeviceBackBody" xml:space="preserve"><value>{0} ({1}) is back on your network. Open the app to mark it as known.</value></data>
+  <data name="SettingsReturnAlertsRow" xml:space="preserve"><value>Unknown devices coming back</value></data>
   <data name="PermissionAlertsTitle" xml:space="preserve"><value>New device alerts</value></data>
   <data name="PermissionAlertsBody" xml:space="preserve"><value>Get a notification when a device you haven't marked as known joins one of your own networks.</value></data>
   <data name="SettingsAlerts" xml:space="preserve"><value>Notifications</value></data>

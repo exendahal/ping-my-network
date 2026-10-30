@@ -41,6 +41,12 @@ namespace PingMyNetwork.Implementation
         private static readonly TimeSpan MDNS_LISTEN = TimeSpan.FromSeconds(3);
 
         /// <summary>
+        /// How long an unknown device must be gone before its return is announced again. Phones
+        /// asleep skip the odd ping, so a single missed scan is not enough.
+        /// </summary>
+        private static readonly TimeSpan AWAY_TIME = TimeSpan.FromHours(1);
+
+        /// <summary>
         /// Services that phones, computers, TVs, speakers and printers commonly advertise. Their
         /// instance names ("Anna's iPhone", "Living Room TV") are the friendliest names a device gives.
         /// </summary>
@@ -104,8 +110,8 @@ namespace PingMyNetwork.Implementation
         public event EventHandler? NetworkSwitched;
 
         /// <summary>
-        /// Raised, on any thread, for each device that joined a network scanned before and that the
-        /// user has not marked as known.
+        /// Raised, on any thread, for each device that joined a network scanned before, or came
+        /// back to it after a while away (IsBack), and that the user has not marked as known.
         /// </summary>
         public event EventHandler<NetworkDevice>? NewDeviceFound;
 
@@ -746,6 +752,7 @@ namespace PingMyNetwork.Implementation
                     {
                         device.IsOnline = false;
                         device.IsNew = false;
+                        device.IsBack = false;
                         device.RoundTripMs = null;
                     }
 
@@ -815,7 +822,7 @@ namespace PingMyNetwork.Implementation
         }
 
         /// <summary>
-        /// Tells listeners about each device that is new on this network and not known yet.
+        /// Tells listeners about each device that is new or back on this network and not known yet.
         /// </summary>
         /// <param name="record">The network just scanned.</param>
         private void AnnounceNewDevices(NetworkRecord record)
@@ -831,7 +838,7 @@ namespace PingMyNetwork.Implementation
             lock (_Gate)
             {
                 fresh = record.Devices
-                    .Where(device => device.IsNew && !device.IsKnown && !device.IsThisDevice)
+                    .Where(device => (device.IsNew || device.IsBack) && !device.IsKnown && !device.IsThisDevice)
                     .Select(device => device.Clone())
                     .ToList();
             }
@@ -905,6 +912,7 @@ namespace PingMyNetwork.Implementation
                     // should not flash "offline" while the sweep reaches them.
                     device.IsOnline = (device.IpAddress == network.IpAddress) || (device.IpAddress == network.Gateway);
                     device.IsNew = false;
+                    device.IsBack = false;
                     device.RoundTripMs = null;
                 }
 
@@ -1003,6 +1011,15 @@ namespace PingMyNetwork.Implementation
                         IsNew = record.ScanCount > 0,
                     };
                     record.Devices.Add(device);
+                }
+                else
+                {
+                    // A scan ran without it (its own sighting lands a little before that scan's
+                    // end, hence the slack), so this is a return, not a gap in scanning while the
+                    // phone dozed. Or'd in: the router and this device can be merged twice a scan.
+                    device.IsBack |= !device.IsKnown
+                        && (record.LastScan - device.LastSeen > TimeSpan.FromMinutes(5))
+                        && (now - device.LastSeen >= AWAY_TIME);
                 }
 
                 device.IpAddress = answer.IpAddress;
@@ -1154,6 +1171,8 @@ namespace PingMyNetwork.Implementation
                 return;
             }
 
+            // Back on a new address after a while away counts as coming back.
+            older.IsBack |= !older.IsKnown && (device.LastSeen - older.LastSeen >= AWAY_TIME);
             older.IpAddress = device.IpAddress;
             older.HostName = device.HostName ?? older.HostName;
             older.NetBiosName = device.NetBiosName ?? older.NetBiosName;

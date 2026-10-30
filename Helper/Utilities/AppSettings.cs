@@ -13,6 +13,7 @@ namespace PingMyNetwork.Helper.Utilities
         private const string THEME_KEY = "settings.theme";
         private const string SYSTEM_COLORS_KEY = "settings.systemColors";
         private const string ALERTS_KEY = "settings.alerts";
+        private const string RETURN_ALERTS_KEY = "settings.returnAlerts";
         private const string ONBOARDED_KEY = "settings.onboarded";
 
         #endregion
@@ -46,6 +47,16 @@ namespace PingMyNetwork.Helper.Utilities
         {
             get => Preferences.Default.Get(ALERTS_KEY, false);
             set => Preferences.Default.Set(ALERTS_KEY, value);
+        }
+
+        /// <summary>
+        /// Whether to notify again when a device still not marked as known comes back after a
+        /// while away. Off by default: a family phone would alert every time it got home.
+        /// </summary>
+        public static bool AreReturnAlertsOn
+        {
+            get => Preferences.Default.Get(RETURN_ALERTS_KEY, false);
+            set => Preferences.Default.Set(RETURN_ALERTS_KEY, value);
         }
 
         /// <summary>

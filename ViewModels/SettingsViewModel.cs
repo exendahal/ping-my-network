@@ -74,6 +74,12 @@ namespace PingMyNetwork.ViewModels
         public partial bool AreAlertsOn { get; set; }
 
         /// <summary>
+        /// Whether unknown devices are announced again when they come back.
+        /// </summary>
+        [ObservableProperty]
+        public partial bool AreReturnAlertsOn { get; set; } = AppSettings.AreReturnAlertsOn;
+
+        /// <summary>
         /// Whether this platform can show alerts.
         /// </summary>
         public bool CanAlert { get; } = Notifier.IsSupported;
@@ -113,6 +119,15 @@ namespace PingMyNetwork.ViewModels
             AppSettings.Theme = theme;
             AppSettings.ApplyTheme();
             ThemeOptions = BuildThemeOptions(theme);
+        }
+
+        /// <summary>
+        /// Saves whether unknown devices are announced again when they come back.
+        /// </summary>
+        /// <param name="value">The switch's new state.</param>
+        partial void OnAreReturnAlertsOnChanged(bool value)
+        {
+            AppSettings.AreReturnAlertsOn = value;
         }
 
         /// <summary>
