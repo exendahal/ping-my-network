@@ -79,6 +79,33 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not now.
+        /// </summary>
+        public static string ActionNotNow {
+            get {
+                return ResourceManager.GetString("ActionNotNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check while the app is closed?.
+        /// </summary>
+        public static string BackgroundLocationTitle {
+            get {
+                return ResourceManager.GetString("BackgroundLocationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Android only shares the Wi-Fi name with apps that have location access. To alert you while Ping My Network is closed, it needs location &quot;Allow all the time&quot;, used only to recognise which of your networks the phone is on. Your location is never stored or sent anywhere. Without it, alerts still work while the app is open.
+        /// </summary>
+        public static string BackgroundLocationBody {
+            get {
+                return ResourceManager.GetString("BackgroundLocationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow location access.
         /// </summary>
         public static string ActionAllowLocation {
@@ -3697,7 +3724,7 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi..
+        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi when location is allowed all the time..
         /// </summary>
         public static string SettingsAlertsFooterAndroid {
             get {

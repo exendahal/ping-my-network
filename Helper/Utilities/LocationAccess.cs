@@ -1,4 +1,5 @@
 using PingMyNetwork.Helper.Enums;
+using PingMyNetwork.Resources.Strings;
 
 namespace PingMyNetwork.Helper.Utilities
 {
@@ -178,6 +179,37 @@ namespace PingMyNetwork.Helper.Utilities
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Asks for location "all the time" (Android 10+), so the background check can read the
+        /// Wi-Fi name. Explains why first, as Google Play requires; on Android 11+ the system then
+        /// opens the app's location settings page.
+        /// </summary>
+        /// <returns>True once granted, or where it is not needed.</returns>
+        public static async Task<bool> RequestBackgroundAsync()
+        {
+#if ANDROID
+            if (!OperatingSystem.IsAndroidVersionAtLeast(29)
+                || (await Permissions.CheckStatusAsync<Permissions.LocationAlways>() == PermissionStatus.Granted))
+            {
+                return true;
+            }
+
+            if ((Shell.Current is null) || !await Shell.Current.DisplayAlertAsync(
+                AppResources.BackgroundLocationTitle,
+                AppResources.BackgroundLocationBody,
+                AppResources.ActionContinue,
+                AppResources.ActionNotNow))
+            {
+                return false;
+            }
+
+            return await Permissions.RequestAsync<Permissions.LocationAlways>() == PermissionStatus.Granted;
+#else
+            await Task.CompletedTask;
+            return true;
+#endif
         }
 
         #endregion

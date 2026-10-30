@@ -70,7 +70,8 @@ namespace PingMyNetwork.Helper.Utilities
         {
             string? text = bssid?.ToString();
 
-            if (string.IsNullOrWhiteSpace(text) || !MacPattern().IsMatch(text))
+            // Android hands apps without location access a placeholder instead of the real one.
+            if (string.IsNullOrWhiteSpace(text) || !MacPattern().IsMatch(text) || (text == "02:00:00:00:00:00"))
             {
                 return null;
             }

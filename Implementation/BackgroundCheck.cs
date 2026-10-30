@@ -93,6 +93,11 @@ namespace PingMyNetwork.Implementation
                 {
                     await CheckAsync();
                 }
+                catch (Exception ex)
+                {
+                    // Nothing awaits this task, so say why the check failed rather than lose it.
+                    Android.Util.Log.Error("PingMyNetwork", $"Background check failed: {ex}");
+                }
                 finally
                 {
                     JobFinished(@params, false);
@@ -120,6 +125,13 @@ namespace PingMyNetwork.Implementation
         {
             IServiceProvider? services = IPlatformApplication.Current?.Services;
 
+            // UseMauiWifiManager hands the Wi-Fi library a context only when an activity starts;
+            // a check that starts the app in the background has none.
+            if (Platform.CurrentActivity is null)
+            {
+                MauiWifiManager.WifiNetworkService.Init(Platform.AppContext);
+            }
+
             // Resolving the alerts subscribes them to the scan's new-device reports.
             if ((services?.GetService(typeof(NetworkMonitor)) is not NetworkMonitor monitor)
                 || (services.GetService(typeof(DeviceManager)) is not DeviceManager manager)
@@ -130,7 +142,9 @@ namespace PingMyNetwork.Implementation
 
             await monitor.RefreshNowAsync();
 
-            if (!monitor.Current.IsConnected)
+            // Without the Wi-Fi name the network can't be told apart from a new one: a scan would
+            // file it as one, and a first scan never alerts.
+            if (!monitor.Current.IsConnected || (monitor.Current.Ssid is null))
             {
                 return;
             }

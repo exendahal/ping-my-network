@@ -91,6 +91,12 @@ namespace PingMyNetwork.Implementation
                 isOn = false;
             }
 
+            // Refused is fine: alerts still work while the app is open.
+            if (isOn)
+            {
+                await LocationAccess.RequestBackgroundAsync();
+            }
+
             AppSettings.AreAlertsOn = isOn;
             BackgroundCheck.Schedule(isOn);
 

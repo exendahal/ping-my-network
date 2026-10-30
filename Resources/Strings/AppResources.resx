@@ -408,7 +408,10 @@
   <data name="PermissionAlertsBody" xml:space="preserve"><value>Get a notification when a device you haven't marked as known joins one of your own networks.</value></data>
   <data name="SettingsAlerts" xml:space="preserve"><value>Notifications</value></data>
   <data name="SettingsAlertsRow" xml:space="preserve"><value>New device alerts</value></data>
-  <data name="SettingsAlertsFooterAndroid" xml:space="preserve"><value>Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi.</value></data>
+  <data name="SettingsAlertsFooterAndroid" xml:space="preserve"><value>Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi when location is allowed all the time.</value></data>
+  <data name="BackgroundLocationTitle" xml:space="preserve"><value>Check while the app is closed?</value></data>
+  <data name="BackgroundLocationBody" xml:space="preserve"><value>Android only shares the Wi-Fi name with apps that have location access. To alert you while Ping My Network is closed, it needs location "Allow all the time", used only to recognise which of your networks the phone is on. Your location is never stored or sent anywhere. Without it, alerts still work while the app is open.</value></data>
+  <data name="ActionNotNow" xml:space="preserve"><value>Not now</value></data>
   <data name="SettingsAlertsFooterApple" xml:space="preserve"><value>Only on networks you mark as yours. Checks every 2 minutes while the app is open, and each time you open it.</value></data>
   <data name="SettingsBackup" xml:space="preserve"><value>Backup</value></data>
   <data name="SettingsBackupAndroid" xml:space="preserve"><value>Networks you mark as yours, with their device names, are backed up to your Google account and come back after a reinstall or on a new phone.</value></data>
