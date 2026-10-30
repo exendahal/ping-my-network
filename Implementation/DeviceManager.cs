@@ -332,6 +332,19 @@ namespace PingMyNetwork.Implementation
             await NameFromMdnsAsync(record, cancel.Token);
             await SaveAsync();
             await IdentifyNewDevicesAsync(cancel.Token);
+
+            // Android hides MACs, so a device back on a new address is often only recognised by
+            // the name mDNS or the lookup gave it; fold those in before anything is announced.
+            lock (_Gate)
+            {
+                foreach (NetworkDevice device in record.Devices.Where(device => device.IsNew).ToList())
+                {
+                    FoldDuplicate(device, record);
+                }
+            }
+
+            Changed?.Invoke(this, EventArgs.Empty);
+            await SaveAsync();
             AnnounceNewDevices(record);
         }
 
@@ -1113,27 +1126,28 @@ namespace PingMyNetwork.Implementation
                     device.Type = DeviceDescriber.GuessType(device);
                 }
 
-                FoldDuplicate(device);
+                FoldDuplicate(device, _Network);
             }
 
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
-        /// When a newly learned MAC shows an older record is the same device (it came back on a new
-        /// address with no name), keeps the older record with today's details and drops the new one,
-        /// so the user's name and Known status carry over. Caller holds the lock.
+        /// When a MAC or name shows an older record is the same device (it came back on a new DHCP
+        /// address), keeps the older record with today's details and drops the new one, so the
+        /// user's name and Known status carry over. Caller holds the lock.
         /// </summary>
         /// <param name="device">The device that was just looked up.</param>
-        private void FoldDuplicate(NetworkDevice device)
+        /// <param name="network">The network it is on.</param>
+        private static void FoldDuplicate(NetworkDevice device, NetworkRecord? network)
         {
-            if ((device.MacAddress is null) || (_Network is null))
+            if (network is null)
             {
                 return;
             }
 
-            NetworkDevice? older = _Network.Devices.FirstOrDefault(other => (other != device)
-                && string.Equals(other.MacAddress, device.MacAddress, StringComparison.OrdinalIgnoreCase));
+            NetworkDevice? older = network.Devices.FirstOrDefault(other => (other != device)
+                && DeviceIdentity.IsSameDeviceMoved(other, device));
 
             if (older is null)
             {
@@ -1160,7 +1174,7 @@ namespace PingMyNetwork.Implementation
             older.IsGateway = device.IsGateway;
             older.IsNew = false;
 
-            _Network.Devices.Remove(device);
+            network.Devices.Remove(device);
         }
 
         /// <summary>

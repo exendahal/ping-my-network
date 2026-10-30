@@ -61,6 +61,19 @@ namespace PingMyNetwork.Helper.Utilities
         }
 
         /// <summary>
+        /// Whether an older record is the device that just turned up on another address. A MAC on
+        /// both decides; otherwise a shared name does, as long as the older record was not also
+        /// online this scan (two devices at once are two devices).
+        /// </summary>
+        /// <param name="older">The remembered record.</param>
+        /// <param name="newer">The device just found.</param>
+        /// <returns>True when they are one device.</returns>
+        public static bool IsSameDeviceMoved(NetworkDevice older, NetworkDevice newer)
+        {
+            return Decide(older.MacAddress, newer.MacAddress) ?? (!older.IsOnline && MatchesStrongly(older, newer));
+        }
+
+        /// <summary>
         /// Whether two access points are radios of the same router. A router's 2.4 and 5 GHz
         /// radios, and its extra networks, take neighbouring addresses: the same first five
         /// bytes, apart from the "locally administered" bit some routers set on extra networks.
@@ -157,6 +170,19 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(!Matches(
                 new NetworkDevice { IpAddress = "192.168.1.9", HostName = "tv", MacAddress = "AA:BB:CC:00:00:01" },
                 new NetworkDevice { IpAddress = "192.168.1.9", HostName = "tv", MacAddress = "AA:BB:CC:00:00:02" }));
+
+            // A phone back on a new DHCP address, known only by its mDNS name, is the same phone...
+            Debug.Assert(IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.20", MdnsName = "Anna's iPhone" },
+                new NetworkDevice { IpAddress = "192.168.1.47", MdnsName = "Anna's iPhone" }));
+
+            // ...unless the old record answered this scan too, or the MACs disagree.
+            Debug.Assert(!IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.20", MdnsName = "Anna's iPhone", IsOnline = true },
+                new NetworkDevice { IpAddress = "192.168.1.47", MdnsName = "Anna's iPhone" }));
+            Debug.Assert(!IsSameDeviceMoved(
+                new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:01" },
+                new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:02" }));
 
             // A name on one side only falls through to the address.
             Debug.Assert(Matches(
