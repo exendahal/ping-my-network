@@ -299,12 +299,13 @@ namespace PingMyNetwork.Helper.Utilities
                     : DeviceKind.Computer;
             }
 
+            // Default names say nothing of the kind: Android TVs and tablets answer as Android.local.
             string names = string.Join(
                 ' ',
-                device.HostName,
-                device.NetBiosName,
+                DeviceIdentity.OwnName(device.HostName),
+                DeviceIdentity.OwnName(device.NetBiosName),
                 device.FriendlyName,
-                device.MdnsName,
+                DeviceIdentity.OwnName(device.MdnsName),
                 device.MdnsModel,
                 device.Manufacturer,
                 device.ModelName,
@@ -442,6 +443,9 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(DisplayName(new NetworkDevice { HttpTitle = "Document Error: Not Found" }) != "Document Error: Not Found");
 
             Debug.Assert(GuessType(new NetworkDevice { HostName = "Galaxy-S24.lan" }) == DeviceKind.Phone);
+            Debug.Assert(GuessType(new NetworkDevice { HostName = "android-5f2c9e.lan" }) == DeviceKind.Phone);
+            Debug.Assert(GuessType(new NetworkDevice { HostName = "Android.local", MdnsName = "MiTV-AXSO0" }) == DeviceKind.Tv);
+            Debug.Assert(GuessType(new NetworkDevice { HostName = "Android.local" }) == DeviceKind.Unknown);
             Debug.Assert(GuessType(new NetworkDevice { OpenPorts = [9100] }) == DeviceKind.Printer);
             Debug.Assert(GuessType(new NetworkDevice { IsGateway = true, HostName = "iphone" }) == DeviceKind.Router);
             Debug.Assert(GuessType(new NetworkDevice { HttpTitle = "Mi Router" }) == DeviceKind.Router);

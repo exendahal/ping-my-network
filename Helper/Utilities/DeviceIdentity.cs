@@ -160,7 +160,7 @@ namespace PingMyNetwork.Helper.Utilities
         /// </summary>
         /// <param name="name">The name as reported.</param>
         /// <returns>The name, or null.</returns>
-        private static string? OwnName(string? name)
+        public static string? OwnName(string? name)
         {
             return GENERIC_NAMES.Contains(DeviceDescriber.ShortHostName(name) ?? string.Empty) ? null : name;
         }
