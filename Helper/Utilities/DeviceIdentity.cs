@@ -10,13 +10,26 @@ namespace PingMyNetwork.Helper.Utilities
     /// <remarks>
     /// The strongest identifier both sightings have decides, in this order: MAC, then NetBIOS
     /// name, then host name, then IP. A weaker identifier is only used when neither sighting has a
-    /// stronger one; two devices that both report a MAC are never matched on their IP.
+    /// stronger one; two devices that both report a MAC are never matched on their IP. Names that
+    /// many devices share out of the box (Android.local, iPhone, localhost) count as no name.
     ///
     /// ponytail: UPnP UDN and mDNS instance name belong between MAC and NetBIOS once the library
     /// reports them.
     /// </remarks>
     public static class DeviceIdentity
     {
+        #region Variables
+
+        /// <summary>
+        /// Default names, without the local domain, that whole product lines answer with.
+        /// </summary>
+        private static readonly HashSet<string> GENERIC_NAMES = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "android", "iphone", "ipad", "localhost", "espressif",
+        };
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -32,12 +45,12 @@ namespace PingMyNetwork.Helper.Utilities
                 return byMac;
             }
 
-            if (Decide(first.NetBiosName, second.NetBiosName) is bool byNetBios)
+            if (DecideName(first.NetBiosName, second.NetBiosName) is bool byNetBios)
             {
                 return byNetBios;
             }
 
-            if (Decide(first.HostName, second.HostName) is bool byHost)
+            if (DecideName(first.HostName, second.HostName) is bool byHost)
             {
                 return byHost;
             }
@@ -55,9 +68,21 @@ namespace PingMyNetwork.Helper.Utilities
         public static bool MatchesStrongly(NetworkDevice first, NetworkDevice second)
         {
             return (Decide(first.MacAddress, second.MacAddress) == true)
-                || (Decide(first.MdnsName, second.MdnsName) == true)
-                || (Decide(first.NetBiosName, second.NetBiosName) == true)
-                || (Decide(first.HostName, second.HostName) == true);
+                || (DecideName(first.MdnsName, second.MdnsName) == true)
+                || (DecideName(first.NetBiosName, second.NetBiosName) == true)
+                || (DecideName(first.HostName, second.HostName) == true);
+        }
+
+        /// <summary>
+        /// Whether a device has an identifier that names it alone: a MAC, or a name that is not
+        /// a product line's default.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <returns>True when it can be told apart from others by more than its address.</returns>
+        public static bool IsIdentifiable(NetworkDevice device)
+        {
+            return !string.IsNullOrWhiteSpace(device.MacAddress)
+                || (OwnName(device.MdnsName) ?? OwnName(device.NetBiosName) ?? OwnName(device.HostName)) is not null;
         }
 
         /// <summary>
@@ -117,6 +142,27 @@ namespace PingMyNetwork.Helper.Utilities
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Compares one name, when both sightings have one of their own.
+        /// </summary>
+        /// <param name="first">The first sighting's name.</param>
+        /// <param name="second">The second sighting's name.</param>
+        /// <returns>Whether they are equal, or null when either is missing or generic.</returns>
+        private static bool? DecideName(string? first, string? second)
+        {
+            return Decide(OwnName(first), OwnName(second));
+        }
+
+        /// <summary>
+        /// A name, or null when it is missing or a default many devices share.
+        /// </summary>
+        /// <param name="name">The name as reported.</param>
+        /// <returns>The name, or null.</returns>
+        private static string? OwnName(string? name)
+        {
+            return GENERIC_NAMES.Contains(DeviceDescriber.ShortHostName(name) ?? string.Empty) ? null : name;
         }
 
         /// <summary>
@@ -183,6 +229,24 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(!IsSameDeviceMoved(
                 new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:01" },
                 new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:02" }));
+
+            // Two Android devices both calling themselves Android.local are not the same device...
+            Debug.Assert(!Matches(
+                new NetworkDevice { IpAddress = "192.168.1.9", HostName = "Android.local" },
+                new NetworkDevice { IpAddress = "192.168.1.14", HostName = "android.local" }));
+            Debug.Assert(!IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.9", HostName = "Android.local" },
+                new NetworkDevice { IpAddress = "192.168.1.14", HostName = "Android.local", MdnsName = "Pixel 8" }));
+            Debug.Assert(!IsIdentifiable(new NetworkDevice { HostName = "iPhone.lan", NetBiosName = "localhost" }));
+
+            // ...but the generic name does not hide the address, nor a real name elsewhere.
+            Debug.Assert(Matches(
+                new NetworkDevice { IpAddress = "192.168.1.9", HostName = "Android.local" },
+                new NetworkDevice { IpAddress = "192.168.1.9", HostName = "Android.local" }));
+            Debug.Assert(IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.9", HostName = "Android.local", MdnsName = "MiTV-AXSO0" },
+                new NetworkDevice { IpAddress = "192.168.1.14", HostName = "Android.local", MdnsName = "MiTV-AXSO0" }));
+            Debug.Assert(IsIdentifiable(new NetworkDevice { HostName = "android-5f2c9e.lan" }));
 
             // A name on one side only falls through to the address.
             Debug.Assert(Matches(

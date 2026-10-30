@@ -570,7 +570,7 @@ namespace PingMyNetwork.Implementation
             lock (_Gate)
             {
                 List<NetworkDevice> named = probe.Devices
-                    .Where(device => !device.IsThisDevice && !device.IsGateway && MatchesAnyStrongly(device))
+                    .Where(device => !device.IsThisDevice && !device.IsGateway && DeviceIdentity.IsIdentifiable(device))
                     .ToList();
                 List<(NetworkRecord Record, int Shared)> overlap = candidates
                     .Select(candidate => (candidate, named.Count(device => candidate.Devices.Any(known => DeviceIdentity.MatchesStrongly(known, device)))))
@@ -590,11 +590,6 @@ namespace PingMyNetwork.Implementation
                 }
 
                 return null;
-            }
-
-            static bool MatchesAnyStrongly(NetworkDevice device)
-            {
-                return (device.MacAddress ?? device.MdnsName ?? device.NetBiosName ?? device.HostName) is not null;
             }
         }
 
