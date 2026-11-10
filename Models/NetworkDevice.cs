@@ -85,6 +85,12 @@ namespace PingMyNetwork.Models
         public List<int> OpenPorts { get; set; } = [];
 
         /// <summary>
+        /// SHA-256 of the certificate its HTTPS port serves. Cameras and routers make their own on
+        /// first boot, so it tells a nameless device apart where the MAC is hidden (Android).
+        /// </summary>
+        public string? CertThumbprint { get; set; }
+
+        /// <summary>
         /// Name the user gave it, which wins over every discovered name.
         /// </summary>
         public string? CustomName { get; set; }

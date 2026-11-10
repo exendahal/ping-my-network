@@ -64,10 +64,15 @@ namespace PingMyNetwork.Helper.Utilities
         /// </summary>
         /// <param name="first">One sighting.</param>
         /// <param name="second">The other.</param>
-        /// <returns>True when a MAC, mDNS, NetBIOS or host name is equal.</returns>
+        /// <returns>True when a MAC, HTTPS certificate, mDNS, NetBIOS or host name is equal.</returns>
+        /// <remarks>
+        /// ponytail: trusts the certificate to be per device; firmware that ships one certificate on
+        /// every unit would fold two such devices together. Skip known shared certs if one turns up.
+        /// </remarks>
         public static bool MatchesStrongly(NetworkDevice first, NetworkDevice second)
         {
             return (Decide(first.MacAddress, second.MacAddress) == true)
+                || (Decide(first.CertThumbprint, second.CertThumbprint) == true)
                 || (DecideName(first.MdnsName, second.MdnsName) == true)
                 || (DecideName(first.NetBiosName, second.NetBiosName) == true)
                 || (DecideName(first.HostName, second.HostName) == true);
@@ -82,6 +87,7 @@ namespace PingMyNetwork.Helper.Utilities
         public static bool IsIdentifiable(NetworkDevice device)
         {
             return !string.IsNullOrWhiteSpace(device.MacAddress)
+                || !string.IsNullOrWhiteSpace(device.CertThumbprint)
                 || (OwnName(device.MdnsName) ?? OwnName(device.NetBiosName) ?? OwnName(device.HostName)) is not null;
         }
 
@@ -229,6 +235,16 @@ namespace PingMyNetwork.Helper.Utilities
             Debug.Assert(!IsSameDeviceMoved(
                 new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:01" },
                 new NetworkDevice { HostName = "tv", MacAddress = "AA:BB:CC:00:00:02" }));
+
+            // A nameless camera with no MAC (Android) on a new address, known by its certificate...
+            Debug.Assert(IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.65", CertThumbprint = "1D68FD3A" },
+                new NetworkDevice { IpAddress = "192.168.1.70", CertThumbprint = "1d68fd3a" }));
+
+            // ...but not its twin of the same model, which has its own.
+            Debug.Assert(!IsSameDeviceMoved(
+                new NetworkDevice { IpAddress = "192.168.1.64", CertThumbprint = "950290B2" },
+                new NetworkDevice { IpAddress = "192.168.1.70", CertThumbprint = "1D68FD3A" }));
 
             // Two Android devices both calling themselves Android.local are not the same device...
             Debug.Assert(!Matches(

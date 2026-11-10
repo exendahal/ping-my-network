@@ -384,10 +384,66 @@ namespace PingMyNetwork.Implementation
                 return null;
             }
 
-            Apply(id, details.Data);
+            (string? thumbprint, string? maker) = await ReadCertificateAsync(address, details.Data.OpenPorts, token);
+
+            Apply(id, details.Data, thumbprint, maker);
             await SaveAsync();
 
             return details.Data.Ping;
+        }
+
+        /// <summary>
+        /// Reads the certificate a device's HTTPS port serves, without trusting it: only its
+        /// fingerprint and the organisation it names are kept.
+        /// </summary>
+        /// <param name="address">The device's IP address.</param>
+        /// <param name="openPorts">Ports the lookup found open; 443, then 8443, is tried.</param>
+        /// <param name="token">Cancels the read.</param>
+        /// <returns>The SHA-256 thumbprint and the subject's O=, each null when unavailable.</returns>
+        private static async Task<(string? Thumbprint, string? Maker)> ReadCertificateAsync(string address, IEnumerable<int> openPorts, CancellationToken token)
+        {
+            int port = openPorts.Contains(443) ? 443 : openPorts.Contains(8443) ? 8443 : 0;
+
+            if (port == 0)
+            {
+                return (null, null);
+            }
+
+            try
+            {
+                using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(token);
+                timeout.CancelAfter(TimeSpan.FromSeconds(3));
+
+                using System.Net.Sockets.TcpClient client = new();
+                await client.ConnectAsync(address, port, timeout.Token);
+
+                // Self-signed by design on a LAN device; nothing is sent, so nothing is trusted.
+                using System.Net.Security.SslStream tls = new(client.GetStream());
+                await tls.AuthenticateAsClientAsync(
+                    new System.Net.Security.SslClientAuthenticationOptions
+                    {
+                        TargetHost = address,
+                        RemoteCertificateValidationCallback = (_, _, _, _) => true,
+                    },
+                    timeout.Token);
+
+                if (tls.RemoteCertificate is not { } remote)
+                {
+                    return (null, null);
+                }
+
+                using System.Security.Cryptography.X509Certificates.X509Certificate2 certificate = new(remote);
+                string? maker = certificate.SubjectName.EnumerateRelativeDistinguishedNames()
+                    .FirstOrDefault(name => name.GetSingleElementType().Value == "2.5.4.10")
+                    ?.GetSingleElementValue();
+
+                return (certificate.GetCertHashString(System.Security.Cryptography.HashAlgorithmName.SHA256), maker);
+            }
+            catch (Exception exception) when (exception is not OperationCanceledException || !token.IsCancellationRequested)
+            {
+                // Old TLS, a reset or a timeout: the device simply has no certificate to go by.
+                return (null, null);
+            }
         }
 
         /// <summary>
@@ -1057,7 +1113,12 @@ namespace PingMyNetwork.Implementation
             lock (_Gate)
             {
                 pending = _Network?.Devices
-                    .Where(device => device.IsOnline && (device.DetailsFetchedAt is null))
+                    // Also HTTPS devices with no certificate yet: those looked up before it was read.
+                    // ponytail: a device whose TLS always fails is re-looked-up every scan; remember the
+                    // failure if that ever costs noticeable scan time.
+                    .Where(device => device.IsOnline
+                        && ((device.DetailsFetchedAt is null)
+                            || ((device.CertThumbprint is null) && (device.OpenPorts.Contains(443) || device.OpenPorts.Contains(8443)))))
                     .Select(device => device.Id)
                     .ToList() ?? [];
             }
@@ -1105,7 +1166,9 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         /// <param name="id">The device's id.</param>
         /// <param name="details">The lookup result.</param>
-        private void Apply(string id, LanDeviceDetails details)
+        /// <param name="thumbprint">Its HTTPS certificate's thumbprint, or null.</param>
+        /// <param name="maker">The organisation its certificate names, or null.</param>
+        private void Apply(string id, LanDeviceDetails details, string? thumbprint, string? maker)
         {
             lock (_Gate)
             {
@@ -1121,6 +1184,15 @@ namespace PingMyNetwork.Implementation
                 device.MacAddress = details.MacAddress?.ToUpperInvariant() ?? device.MacAddress;
                 device.IsRandomizedMac = details.IsRandomizedMac ?? device.IsRandomizedMac;
                 device.Vendor = details.Vendor ?? device.Vendor;
+                device.CertThumbprint = thumbprint ?? device.CertThumbprint;
+
+                // No MAC (Android): the certificate's maker stands in, but only one we recognise;
+                // many certificates carry a placeholder such as "Internet Widgits Pty Ltd".
+                if ((device.Vendor is null) && (DeviceDescriber.TypeOfVendor(maker) != DeviceKind.Unknown))
+                {
+                    device.Vendor = maker;
+                }
+
                 device.FriendlyName = details.FriendlyName ?? device.FriendlyName;
                 device.Manufacturer = details.Manufacturer ?? device.Manufacturer;
                 device.ModelName = details.ModelName ?? device.ModelName;
@@ -1176,6 +1248,7 @@ namespace PingMyNetwork.Implementation
             older.MdnsModel = device.MdnsModel ?? older.MdnsModel;
             older.Manufacturer = device.Manufacturer ?? older.Manufacturer;
             older.Vendor = device.Vendor ?? older.Vendor;
+            older.CertThumbprint = device.CertThumbprint ?? older.CertThumbprint;
             older.ModelName = device.ModelName ?? older.ModelName;
             older.HttpTitle = device.HttpTitle ?? older.HttpTitle;
             older.OpenPorts = device.OpenPorts;
