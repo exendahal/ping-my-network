@@ -1,3 +1,8 @@
+---
+title: Install on iPhone or iPad · Ping My Network
+description: How to install the Ping My Network IPA with Sideloadly or AltStore.
+---
+
 # Installing the iOS app from an IPA
 
 Each [release](https://github.com/exendahal/ping-my-network/releases) includes `PingMyNetwork-<version>.ipa`. It is not from the App Store and it is **unsigned**, so iOS will not install it as it is. A sideloading tool signs it with your own Apple ID and installs it. A free Apple ID is enough.

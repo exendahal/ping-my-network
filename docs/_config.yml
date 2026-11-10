@@ -1,0 +1,16 @@
+# GitHub Pages site for Ping My Network: the privacy policy the store listings link to, and the
+# iOS install guide. Published by the "pages" job in .github/workflows/release.yml on every tag.
+title: Ping My Network
+description: A free network utility. See who's on your Wi-Fi, check your connection and fix slow Wi-Fi.
+repository: exendahal/ping-my-network
+
+# Every page uses the site's own layout (_layouts/default.html), not the default theme's.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Store art sources and notes live elsewhere; keep the site to what visitors need.
+exclude:
+  - README.md

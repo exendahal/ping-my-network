@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#248A3D" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="{{ '/assets/icon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <img src="{{ '/assets/icon.svg' | relative_url }}" alt="" width="36" height="36">
+        <span>{{ site.title }}</span>
+      </a>
+      <nav aria-label="Site">
+        <a href="{{ '/privacy-policy/' | relative_url }}"{% if page.url == '/privacy-policy/' %} aria-current="page"{% endif %}>Privacy</a>
+        <a href="https://github.com/{{ site.repository }}/releases">Download</a>
+        <a href="https://github.com/{{ site.repository }}">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap content">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        {{ site.title }} is free and open source under the MIT license.
+        <a href="https://github.com/{{ site.repository }}/issues">Report a problem</a> ·
+        <a href="{{ '/privacy-policy/' | relative_url }}">Privacy policy</a> ·
+        <a href="{{ '/install-ios.html' | relative_url }}">Install on iPhone</a>
+      </p>
+      <p>© {{ 'now' | date: '%Y' }} Santosh Dahal</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -2,6 +2,7 @@
 # pushed, and attaches them to a GitHub release for that tag. Secrets are listed in the README.
 # A suffix (v1.0.0-beta, v1.0.0_beta) names the files and marks a pre-release; the app itself
 # gets the numeric part, since iOS and Windows versions must be numbers.
+# The same tag also publishes docs/ (the privacy policy and install guide) to GitHub Pages.
 name: Release
 
 on:
@@ -130,3 +131,27 @@ jobs:
         run: |
           PRERELEASE=$([[ "$GITHUB_REF_NAME" == *[-_]* ]] && echo --prerelease || true)
           gh release create "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes $PRERELEASE
+
+  # The privacy policy the store listings link to (https://exendahal.github.io/ping-my-network/privacy-policy/)
+  # goes out with every release. Independent of the app builds, so a failed build never leaves the
+  # policy behind. Needs Settings → Pages → Source: GitHub Actions, and tags allowed to deploy to
+  # the github-pages environment (see store/README.md).
+  pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+      - uses: actions/upload-pages-artifact@v3
+      - id: deploy
+        uses: actions/deploy-pages@v4
