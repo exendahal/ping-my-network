@@ -1,3 +1,4 @@
+using PingMyNetwork.Helper.Utilities;
 using PingMyNetwork.Models;
 
 namespace PingMyNetwork.Controls
@@ -163,7 +164,7 @@ namespace PingMyNetwork.Controls
             canvas.StrokeSize = 1.5f;
             canvas.StrokeColor = TickColor;
             canvas.FontColor = TickColor;
-            canvas.FontSize = 11f;
+            canvas.FontSize = (float)ResourceLookup.Get("FontCaption", 11d);
 
             foreach (GaugeTick tick in Ticks)
             {

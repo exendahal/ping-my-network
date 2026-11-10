@@ -1,3 +1,4 @@
+using PingMyNetwork.Helper.Utilities;
 using MauiWifiManager.Abstractions;
 using PingMyNetwork.Resources.Strings;
 
@@ -234,7 +235,7 @@ namespace PingMyNetwork.Controls
             canvas.StrokeColor = AxisColor.WithAlpha(0.25f);
             canvas.StrokeSize = 1f;
             canvas.FontColor = AxisColor;
-            canvas.FontSize = 10f;
+            canvas.FontSize = (float)ResourceLookup.Get("FontCaption", 11d);
 
             foreach (float dbm in GRID_DBM)
             {
@@ -302,7 +303,7 @@ namespace PingMyNetwork.Controls
                 return;
             }
 
-            canvas.FontSize = 11f;
+            canvas.FontSize = (float)ResourceLookup.Get("FontCaption", 11d);
             canvas.Font = Microsoft.Maui.Graphics.Font.Default;
 
             List<RectF> placed = [];
@@ -340,7 +341,7 @@ namespace PingMyNetwork.Controls
         /// <param name="slots">The channel positions.</param>
         private void DrawChannelAxis(ICanvas canvas, RectF plot, List<int> slots)
         {
-            canvas.FontSize = 10f;
+            canvas.FontSize = (float)ResourceLookup.Get("FontCaption", 11d);
 
             // Channels with a network, and the suggestion, are labelled first; the empty ones fill
             // in wherever a label still fits, so a narrow phone shows every other one.

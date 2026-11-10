@@ -37,7 +37,7 @@
                                         VerticalOptions="Start"
                                         WidthRequest="40">
                                         <Label
-                                            FontSize="20"
+                                            FontSize="{StaticResource IconL}"
                                             HorizontalOptions="Center"
                                             Style="{StaticResource Icon}"
                                             Text="{Binding Icon}"
@@ -55,7 +55,7 @@
                                         IsVisible="{Binding IsGranted}"
                                         Spacing="6">
                                         <Label
-                                            FontSize="18"
+                                            FontSize="{StaticResource IconM}"
                                             Style="{StaticResource Icon}"
                                             Text="{x:Static util:MaterialIcon.CHECK_CIRCLE}"
                                             TextColor="{AppThemeBinding Light={StaticResource StatusGoodLight},

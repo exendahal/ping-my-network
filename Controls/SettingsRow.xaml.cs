@@ -186,7 +186,10 @@ namespace PingMyNetwork.Controls
             }
             else
             {
-                TitleLabel.SetAppThemeColor(Label.TextColorProperty, Colors.Black, Colors.White);
+                TitleLabel.SetAppThemeColor(
+                    Label.TextColorProperty,
+                    ResourceLookup.Get("OnSurfaceLight", Colors.Black),
+                    ResourceLookup.Get("OnSurfaceDark", Colors.White));
             }
 
             // The live accent, so the icons change as soon as "Use system colors" is flipped.

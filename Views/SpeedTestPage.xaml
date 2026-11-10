@@ -79,7 +79,7 @@
                                 Spacing="2"
                                 HorizontalOptions="Center">
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource IconM}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.DOWNLOAD}"
@@ -106,7 +106,7 @@
                                 Spacing="2"
                                 HorizontalOptions="Center">
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource IconM}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.UPLOAD}"
@@ -133,7 +133,7 @@
                                 Spacing="2"
                                 HorizontalOptions="Center">
                                 <Label
-                                    FontSize="18"
+                                    FontSize="{StaticResource IconM}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.TIMER}"
@@ -165,7 +165,7 @@
                     Style="{StaticResource NoticeBanner}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
                         <Label
-                            FontSize="20"
+                            FontSize="{StaticResource IconL}"
                             Style="{StaticResource Icon}"
                             Text="{x:Static util:MaterialIcon.ERROR}"
                             TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},

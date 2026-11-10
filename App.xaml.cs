@@ -176,7 +176,7 @@ namespace PingMyNetwork
             {
                 Text = MaterialIcon.LAN,
                 FontFamily = MaterialIcon.FONT_FAMILY,
-                FontSize = 18,
+                FontSize = ResourceLookup.Get("IconM", 18d),
                 Margin = new Thickness(16, 0, 0, 0),
                 VerticalOptions = LayoutOptions.Center,
             };

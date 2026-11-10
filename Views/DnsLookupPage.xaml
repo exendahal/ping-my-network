@@ -99,7 +99,7 @@
                     Style="{StaticResource NoticeBanner}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceM}">
                         <Label
-                            FontSize="20"
+                            FontSize="{StaticResource IconL}"
                             Style="{StaticResource Icon}"
                             Text="{x:Static util:MaterialIcon.ERROR}"
                             TextColor="{AppThemeBinding Light={StaticResource StatusBadLight},

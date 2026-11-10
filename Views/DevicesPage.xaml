@@ -51,7 +51,7 @@
                             Style="{StaticResource Tag}">
                             <HorizontalStackLayout Spacing="4">
                                 <Label
-                                    FontSize="14"
+                                    FontSize="{StaticResource IconXs}"
                                     Style="{StaticResource Icon}"
                                     Text="{Binding OwnershipIcon}"
                                     TextColor="{DynamicResource Accent}"
@@ -106,7 +106,7 @@
                             ColumnSpacing="{StaticResource SpaceM}"
                             RowDefinitions="Auto,Auto,Auto">
                             <Label
-                                FontSize="20"
+                                FontSize="{StaticResource IconL}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.WIFI_FIND}"
                                 TextColor="{DynamicResource Accent}"
@@ -157,7 +157,7 @@
                             ColumnSpacing="{StaticResource SpaceM}"
                             RowDefinitions="Auto,Auto,Auto">
                             <Label
-                                FontSize="20"
+                                FontSize="{StaticResource IconL}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.HOME}"
                                 TextColor="{DynamicResource Accent}"
@@ -257,7 +257,7 @@
                                                 </DataTrigger>
                                             </Border.Triggers>
                                             <Label
-                                                FontSize="20"
+                                                FontSize="{StaticResource IconL}"
                                                 HorizontalTextAlignment="Center"
                                                 Style="{StaticResource Icon}"
                                                 Text="{Binding Icon}"
@@ -292,7 +292,7 @@
                                         RowDefinitions="Auto,Auto,Auto"
                                         VerticalOptions="Center">
                                         <Label
-                                            FontFamily="OpenSansSemibold"
+                                            FontFamily="{StaticResource FontSemibold}"
                                             FontSize="{StaticResource FontBody}"
                                             LineBreakMode="TailTruncation"
                                             Text="{Binding Name}"
@@ -336,7 +336,7 @@
                                                                             Dark={StaticResource StatusNoticeDark}}" />
                                         </Border>
                                         <Label
-                                            FontSize="18"
+                                            FontSize="{StaticResource IconM}"
                                             Style="{StaticResource Icon}"
                                             Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                             TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -373,7 +373,7 @@
                     Spacing="{StaticResource SpaceM}"
                     VerticalOptions="Center">
                     <Label
-                        FontSize="44"
+                        FontSize="{StaticResource IconHero}"
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource Icon}"
                         Text="{x:Static util:MaterialIcon.DEVICES}"
@@ -427,7 +427,7 @@
                             <Border Padding="12,0" Style="{StaticResource GroupCard}">
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
                                     <Label
-                                        FontSize="18"
+                                        FontSize="{StaticResource IconM}"
                                         Style="{StaticResource Icon}"
                                         Text="{x:Static util:MaterialIcon.SEARCH}" />
                                     <Entry
@@ -445,7 +445,7 @@
                                 Style="{StaticResource GroupCard}">
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceXs}">
                                     <Label
-                                        FontSize="18"
+                                        FontSize="{StaticResource IconM}"
                                         Style="{StaticResource Icon}"
                                         Text="{x:Static util:MaterialIcon.SORT}" />
                                     <Picker
@@ -507,7 +507,7 @@
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.HELP}"
                                     TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
@@ -515,7 +515,7 @@
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{Binding ReviewTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -541,7 +541,7 @@
                 Spacing="{StaticResource SpaceM}"
                 VerticalOptions="Center">
                 <Label
-                    FontSize="44"
+                    FontSize="{StaticResource IconHero}"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource Icon}"
                     Text="{x:Static util:MaterialIcon.WIFI_OFF}" />

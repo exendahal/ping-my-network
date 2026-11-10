@@ -59,7 +59,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.NETWORK_PING}"
@@ -70,7 +70,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolPingTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -79,7 +79,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -104,7 +104,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.ROUTE}"
@@ -115,7 +115,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolTracerouteTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -124,7 +124,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -149,7 +149,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.DNS}"
@@ -160,7 +160,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolDnsTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -169,7 +169,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -194,7 +194,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.RADAR}"
@@ -205,7 +205,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolPortsTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -214,7 +214,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -254,7 +254,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.SPEED}"
@@ -265,7 +265,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolSpeedTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -274,7 +274,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -299,7 +299,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.POWER}"
@@ -310,7 +310,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolWakeTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -319,7 +319,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},
@@ -344,7 +344,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <Label
-                                    FontSize="20"
+                                    FontSize="{StaticResource IconL}"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.CALCULATE}"
@@ -355,7 +355,7 @@
                                 Spacing="1"
                                 VerticalOptions="Center">
                                 <Label
-                                    FontFamily="OpenSansSemibold"
+                                    FontFamily="{StaticResource FontSemibold}"
                                     FontSize="{StaticResource FontBody}"
                                     Text="{x:Static res:AppResources.ToolSubnetTitle}"
                                     TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
@@ -364,7 +364,7 @@
                             </VerticalStackLayout>
                             <Label
                                 Grid.Column="2"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
                                 TextColor="{AppThemeBinding Light={StaticResource CaptionLight},

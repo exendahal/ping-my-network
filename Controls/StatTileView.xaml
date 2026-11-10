@@ -28,7 +28,7 @@
                 <Label
                     x:Name="IconLabel"
                     FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
-                    FontSize="15"
+                    FontSize="{StaticResource IconS}"
                     IsVisible="False"
                     TextColor="{DynamicResource Accent}"
                     VerticalOptions="Center" />

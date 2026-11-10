@@ -109,7 +109,7 @@
                                     WidthRequest="104">
                                     <Label
                                         x:Name="TransportIcon"
-                                        FontSize="48"
+                                        FontSize="{StaticResource IconHero}"
                                         HorizontalTextAlignment="Center"
                                         Style="{StaticResource Icon}"
                                         Text="{Binding ConnectionIcon}" />
@@ -137,12 +137,12 @@
                                         <HorizontalStackLayout Spacing="6">
                                             <Label
                                                 x:Name="StatusIconLabel"
-                                                FontSize="16"
+                                                FontSize="{StaticResource IconS}"
                                                 Style="{StaticResource Icon}"
                                                 Text="{Binding StatusIcon}" />
                                             <Label
                                                 x:Name="StatusTitleLabel"
-                                                FontFamily="OpenSansSemibold"
+                                                FontFamily="{StaticResource FontSemibold}"
                                                 FontSize="{StaticResource FontLabel}"
                                                 Text="{Binding StatusTitle}"
                                                 VerticalTextAlignment="Center" />
@@ -157,7 +157,7 @@
                                         StrokeThickness="1">
                                         <HorizontalStackLayout Spacing="6">
                                             <Label
-                                                FontSize="16"
+                                                FontSize="{StaticResource IconS}"
                                                 Style="{StaticResource Icon}"
                                                 Text="{x:Static util:MaterialIcon.METERED}" />
                                             <Label
@@ -221,7 +221,7 @@
                                 StrokeShape="RoundRectangle 24"
                                 StrokeThickness="0">
                                 <Label
-                                    FontSize="24"
+                                    FontSize="{StaticResource IconXxl}"
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{x:Static util:MaterialIcon.DEVICES}"
@@ -247,7 +247,7 @@
                         </VerticalStackLayout>
                         <Label
                             Grid.Column="2"
-                            FontSize="20"
+                            FontSize="{StaticResource IconL}"
                             Style="{StaticResource Icon}"
                             Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}" />
                     </Grid>
@@ -268,13 +268,13 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="6">
                             <Label
-                                FontSize="22"
+                                FontSize="{StaticResource IconXl}"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.SPEED}"
                                 TextColor="{DynamicResource Accent}" />
                             <Label
-                                FontFamily="OpenSansSemibold"
+                                FontFamily="{StaticResource FontSemibold}"
                                 FontSize="{StaticResource FontLabel}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="TailTruncation"
@@ -293,13 +293,13 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="6">
                             <Label
-                                FontSize="22"
+                                FontSize="{StaticResource IconXl}"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.NETWORK_PING}"
                                 TextColor="{DynamicResource Accent}" />
                             <Label
-                                FontFamily="OpenSansSemibold"
+                                FontFamily="{StaticResource FontSemibold}"
                                 FontSize="{StaticResource FontLabel}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="TailTruncation"
@@ -318,13 +318,13 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="6">
                             <Label
-                                FontSize="22"
+                                FontSize="{StaticResource IconXl}"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource Icon}"
                                 Text="{x:Static util:MaterialIcon.ROUTE}"
                                 TextColor="{DynamicResource Accent}" />
                             <Label
-                                FontFamily="OpenSansSemibold"
+                                FontFamily="{StaticResource FontSemibold}"
                                 FontSize="{StaticResource FontLabel}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="TailTruncation"

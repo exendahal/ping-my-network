@@ -15,7 +15,7 @@
         ColumnDefinitions="Auto,*,Auto"
         ColumnSpacing="{StaticResource SpaceM}">
         <Label
-            FontFamily="OpenSansSemibold"
+            FontFamily="{StaticResource FontSemibold}"
             FontSize="{StaticResource FontLabel}"
             IsVisible="{Binding HasLeading}"
             LineBreakMode="TailTruncation"
@@ -43,7 +43,7 @@
         <Label
             x:Name="TrailingLabel"
             Grid.Column="2"
-            FontFamily="OpenSansSemibold"
+            FontFamily="{StaticResource FontSemibold}"
             FontSize="{StaticResource FontLabel}"
             Text="{Binding Trailing}"
             TextColor="{AppThemeBinding Light={StaticResource CaptionLight},

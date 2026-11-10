@@ -222,15 +222,8 @@ namespace PingMyNetwork.Controls
         /// </summary>
         private void ApplyTheme()
         {
-            bool dark = StatusPalette.IsDark;
-
-            _Drawable.BaseColor = dark
-                ? Color.FromArgb("#2C2C2E")
-                : Color.FromArgb("#E5E5EA");
-
-            _Drawable.HighlightColor = dark
-                ? Color.FromArgb("#3A3A3C")
-                : Color.FromArgb("#F2F2F7");
+            _Drawable.BaseColor = StatusPalette.Track;
+            _Drawable.HighlightColor = StatusPalette.Themed("Shimmer");
         }
 
         /// <summary>

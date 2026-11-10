@@ -30,7 +30,7 @@
                                 VerticalOptions="Center"
                                 WidthRequest="56">
                                 <Label
-                                    FontSize="28"
+                                    FontSize="{StaticResource IconXxl}"
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource Icon}"
                                     Text="{Binding Icon}"
@@ -50,7 +50,7 @@
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
                             <Label
                                 x:Name="KnownIcon"
-                                FontSize="18"
+                                FontSize="{StaticResource IconM}"
                                 Style="{StaticResource Icon}"
                                 VerticalOptions="Start" />
                             <Label
@@ -167,7 +167,7 @@
             Spacing="{StaticResource SpaceS}"
             VerticalOptions="Center">
             <Label
-                FontSize="40"
+                FontSize="{StaticResource IconHero}"
                 HorizontalTextAlignment="Center"
                 Style="{StaticResource Icon}"
                 Text="{x:Static util:MaterialIcon.DEVICES}" />

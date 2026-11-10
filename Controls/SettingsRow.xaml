@@ -24,7 +24,7 @@
             x:Name="IconLabel"
             Grid.Column="0"
             FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
-            FontSize="19"
+            FontSize="{StaticResource IconL}"
             IsVisible="False"
             VerticalOptions="Center"
             WidthRequest="26" />
@@ -33,13 +33,13 @@
             x:Name="TitleLabel"
             Grid.Column="1"
             Margin="0,12"
-            FontSize="17"
+            FontSize="{StaticResource FontHeadline}"
             VerticalOptions="Center" />
 
         <Label
             x:Name="ValueLabel"
             Grid.Column="2"
-            FontSize="17"
+            FontSize="{StaticResource FontHeadline}"
             IsVisible="False"
             LineBreakMode="TailTruncation"
             TextColor="{AppThemeBinding Light={StaticResource MutedLight},
@@ -50,7 +50,7 @@
             x:Name="ChevronLabel"
             Grid.Column="3"
             FontFamily="{x:Static util:MaterialIcon.FONT_FAMILY}"
-            FontSize="18"
+            FontSize="{StaticResource IconM}"
             IsVisible="False"
             Text="{x:Static util:MaterialIcon.CHEVRON_RIGHT}"
             TextColor="{AppThemeBinding Light={StaticResource CaptionLight},

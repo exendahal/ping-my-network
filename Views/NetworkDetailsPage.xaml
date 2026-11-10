@@ -70,7 +70,7 @@
             VerticalOptions="End">
             <HorizontalStackLayout Spacing="{StaticResource SpaceS}">
                 <Label
-                    FontSize="16"
+                    FontSize="{StaticResource IconS}"
                     Style="{StaticResource Icon}"
                     Text="{x:Static util:MaterialIcon.CHECK_CIRCLE}"
                     TextColor="{AppThemeBinding Light={StaticResource AccentDark},
@@ -78,8 +78,7 @@
                 <Label
                     FontSize="{StaticResource FontLabel}"
                     Text="{Binding CopiedText}"
-                    TextColor="{AppThemeBinding Light={StaticResource White},
-                                                Dark={StaticResource OnSurfaceDark}}"
+                    TextColor="{StaticResource OnSurfaceDark}"
                     VerticalTextAlignment="Center" />
             </HorizontalStackLayout>
         </Border>

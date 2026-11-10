@@ -7,60 +7,11 @@ namespace PingMyNetwork.Helper.Utilities
     /// tints and the navigation chrome.
     /// </summary>
     /// <remarks>
-    /// Carried over from sill_app's BandPalette. Light values are Apple's accessible variants, which
-    /// reach at least 3:1 on a light surface; dark values are the standard system colours.
+    /// Every value comes from Colors.xaml, so the palette has one source; the fallback only shows
+    /// if a key goes missing.
     /// </remarks>
     public static class StatusPalette
     {
-        #region Variables
-
-        private static readonly Color[] LIGHT_LEVELS =
-        [
-            // accessibleSystemGreen
-            Color.FromArgb("#248A3D"),
-
-            // A darkened systemYellow; the standard one cannot reach 3:1 on a light surface.
-            Color.FromArgb("#8A6D00"),
-
-            // accessibleSystemOrange
-            Color.FromArgb("#B25000"),
-
-            // accessibleSystemRed
-            Color.FromArgb("#D70015"),
-
-            // accessibleSystemPurple
-            Color.FromArgb("#A05A00"),
-        ];
-
-        private static readonly Color[] DARK_LEVELS =
-        [
-            Color.FromArgb("#30D158"),
-            Color.FromArgb("#FFD60A"),
-            Color.FromArgb("#FF9F0A"),
-            Color.FromArgb("#FF453A"),
-            Color.FromArgb("#FFB340"),
-        ];
-
-        private static readonly Color NEUTRAL = Color.FromArgb("#8E8E93");
-
-        private static readonly Color LIGHT_PAGE = Color.FromArgb("#F2F2F7");
-
-        private static readonly Color DARK_PAGE = Color.FromArgb("#000000");
-
-        private static readonly Color LIGHT_CARD = Color.FromArgb("#FFFFFF");
-
-        private static readonly Color DARK_CARD = Color.FromArgb("#1C1C1E");
-
-        private static readonly Color LIGHT_TRACK = Color.FromArgb("#E5E5EA");
-
-        private static readonly Color DARK_TRACK = Color.FromArgb("#2C2C2E");
-
-        private static readonly Color LIGHT_ACCENT = Color.FromArgb("#248A3D");
-
-        private static readonly Color DARK_ACCENT = Color.FromArgb("#30D158");
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -71,30 +22,33 @@ namespace PingMyNetwork.Helper.Utilities
         /// <summary>
         /// Inactive icons, captions and the "no data" state.
         /// </summary>
-        public static Color Neutral => NEUTRAL;
+        public static Color Neutral => Themed("Caption");
 
         /// <summary>
         /// The page background.
         /// </summary>
-        public static Color PageBackground => IsDark ? DARK_PAGE : LIGHT_PAGE;
+        public static Color PageBackground => Themed("Page");
 
         /// <summary>
         /// The accent, used for selection and interactive elements: the app's green, or the
         /// system's colour when "Use system colors" is on (SystemAccent).
         /// </summary>
-        public static Color Accent => IsDark
-            ? ResourceLookup.Get("AccentDark", DARK_ACCENT)
-            : ResourceLookup.Get("AccentLight", LIGHT_ACCENT);
+        public static Color Accent => Themed("Accent");
 
         /// <summary>
         /// The surface cards sit on.
         /// </summary>
-        public static Color CardBackground => IsDark ? DARK_CARD : LIGHT_CARD;
+        public static Color CardBackground => Themed("Surface");
 
         /// <summary>
         /// The unfilled part of a gauge or meter.
         /// </summary>
-        public static Color Track => IsDark ? DARK_TRACK : LIGHT_TRACK;
+        public static Color Track => Themed("Track");
+
+        /// <summary>
+        /// Primary text.
+        /// </summary>
+        public static Color Text => Themed("OnSurface");
 
         #endregion
 
@@ -104,12 +58,20 @@ namespace PingMyNetwork.Helper.Utilities
         /// The colour for a status level in the current theme.
         /// </summary>
         /// <param name="level">The level to colour.</param>
-        /// <returns>The status colour.</returns>
+        /// <returns>The status colour, e.g. StatusGoodDark.</returns>
         public static Color For(StatusLevel level)
         {
-            int index = Math.Clamp((int)level, 0, LIGHT_LEVELS.Length - 1);
+            return Themed($"Status{(Enum.IsDefined(level) ? level : StatusLevel.Notice)}");
+        }
 
-            return IsDark ? DARK_LEVELS[index] : LIGHT_LEVELS[index];
+        /// <summary>
+        /// A Colors.xaml colour in the current theme.
+        /// </summary>
+        /// <param name="name">The key without its Light or Dark suffix, e.g. "Surface".</param>
+        /// <returns>The colour.</returns>
+        public static Color Themed(string name)
+        {
+            return ResourceLookup.Get(name + (IsDark ? "Dark" : "Light"), Colors.Gray);
         }
 
         /// <summary>

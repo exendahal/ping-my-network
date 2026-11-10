@@ -93,7 +93,7 @@
                 <Border Padding="16,12" Style="{StaticResource GroupCard}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <Label
-                            FontSize="19"
+                            FontSize="{StaticResource IconL}"
                             Style="{StaticResource Icon}"
                             Text="{x:Static util:MaterialIcon.BACKUP}"
                             VerticalOptions="Start"
