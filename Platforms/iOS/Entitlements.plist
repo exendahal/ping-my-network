@@ -8,5 +8,12 @@
         -->
         <key>com.apple.developer.ubiquity-kvstore-identifier</key>
         <string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+
+        <!--
+            Reading the Wi-Fi name (NEHotspotNetwork.FetchCurrent): without it the name is always
+            empty. The App ID needs the "Access Wi-Fi Information" capability.
+        -->
+        <key>com.apple.developer.networking.wifi-info</key>
+        <true/>
     </dict>
 </plist>

@@ -32,6 +32,7 @@ Each [release](https://github.com/exendahal/ping-my-network/releases) includes `
 ## Not available in sideloaded builds
 
 - **iCloud backup** of your networks. It needs the app's own iCloud setup, which a re-signed app does not have. Your networks stay on the device.
+- **Device names from Bonjour (mDNS)** and **Wake-on-LAN**. Both send to multicast or broadcast addresses, which iOS only allows for apps Apple has approved for the multicast networking entitlement. Devices are still found and named in other ways.
 
 ## Troubleshooting
 
