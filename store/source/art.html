@@ -1,0 +1,163 @@
+<!doctype html>
+<!--
+    Store art for Ping My Network, rendered by render.ps1 with headless Edge at each asset's exact
+    pixel size. ?kind= picks the asset; phone and desktop frames also take ?shot= and ?caption=.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<title>Store art</title>
+<style>
+    @font-face { font-family: "Open Sans"; src: url("../../Resources/Fonts/OpenSans-Regular.ttf"); font-weight: 400; }
+    @font-face { font-family: "Open Sans"; src: url("../../Resources/Fonts/OpenSans-Semibold.ttf"); font-weight: 600; }
+
+    :root {
+        --brand: #248A3D;       /* AccentLight, the icon background */
+        --brand-bright: #30D158; /* AccentDark */
+        --deep: #0B2E16;
+        --ink: #FFFFFF;
+        --ink-soft: rgba(255, 255, 255, 0.78);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--deep); }
+    body { font-family: "Open Sans", sans-serif; color: var(--ink); }
+
+    /* The brand field: green that deepens downwards, with a soft glow behind the subject. */
+    .field {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+            radial-gradient(ellipse 70% 55% at 50% 38%, rgba(48, 209, 88, 0.30), transparent 70%),
+            linear-gradient(165deg, #2B9B48 0%, #1C6E33 45%, #0F3F1E 100%);
+    }
+
+    /* Concentric arcs echoing the icon's Wi-Fi waves, very faint. */
+    .waves { position: absolute; left: 50%; transform: translateX(-50%); opacity: 0.10; }
+
+    .icon { display: block; border-radius: 22.5%; background: var(--brand); box-shadow: 0 0.04em 0.18em rgba(0, 0, 0, 0.35); }
+    .title { font-weight: 600; letter-spacing: -0.01em; line-height: 1.05; }
+    .tagline { color: var(--ink-soft); line-height: 1.3; }
+
+    .shot { display: block; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08); }
+    .phone { border-radius: 52px; overflow: hidden; background: #000; }
+    .window { border-radius: 14px; overflow: hidden; background: #000; }
+
+    .caption { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
+    .sub { display: block; font-weight: 400; color: var(--ink-soft); margin-top: 0.35em; font-size: 0.5em; letter-spacing: 0; }
+</style>
+</head>
+<body>
+<div class="field" id="root"></div>
+<script>
+    const q = new URLSearchParams(location.search);
+    const kind = q.get("kind");
+    const root = document.getElementById("root");
+
+    // The app mark (Resources/AppIcon/appiconfg.svg) on its 100-unit grid: a router whose status
+    // lights are a heartbeat, under two Wi-Fi waves. The pulse is cut out of the router body.
+    function mark(size, color = "#FFFFFF") {
+        const id = "pulse" + Math.random().toString(36).slice(2);
+        return `<svg width="${size}" height="${size}" viewBox="4 6 92 92" xmlns="http://www.w3.org/2000/svg">
+            <defs><mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+                <rect width="100" height="100" fill="#fff"/>
+                <path d="M20 71 H37 L43 62 L50 80 L56 64 L61 71 H80" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </mask></defs>
+            <rect x="10" y="56" width="80" height="30" rx="10" fill="${color}" mask="url(#${id})"/>
+            <g fill="none" stroke="${color}" stroke-width="6.5" stroke-linecap="round">
+                <path d="M40 40 A14 14 0 0 1 60 40"/><path d="M30 30 A28 28 0 0 1 70 30"/>
+            </g></svg>`;
+    }
+
+    // The app icon: the mark on brand green, in a rounded square.
+    function icon(size) {
+        return `<div class="icon" style="width:${size}px;height:${size}px;display:grid;place-items:center">${mark(size * 0.66)}</div>`;
+    }
+
+    function waves(size, top) {
+        return `<svg class="waves" style="top:${top}px" width="${size}" height="${size / 2}" viewBox="0 0 200 100">
+            <g fill="none" stroke="#fff" stroke-width="1.2">
+                ${[30, 50, 70, 90].map(r => `<path d="M${100 - r} 100 A${r} ${r} 0 0 1 ${100 + r} 100"/>`).join("")}
+            </g></svg>`;
+    }
+
+    function place(html, style) {
+        const el = document.createElement("div");
+        el.style.cssText = "position:absolute;" + style;
+        el.innerHTML = html;
+        root.appendChild(el);
+        return el;
+    }
+
+    const shot = q.get("shot");
+    const caption = q.get("caption") || "";
+    const sub = q.get("sub") || "";
+
+    switch (kind) {
+        // Full-bleed squares: Play applies its own mask; the Store shows the tile as is.
+        case "icon":
+        case "tile": {
+            root.style.background = "var(--brand)";
+            const s = innerWidth;
+            place(mark(s * 0.58), `left:${s * 0.21}px;top:${s * 0.21}px`);
+            break;
+        }
+
+        // Google Play feature graphic, 1024x500: name and promise on the left, the app on the right.
+        case "feature": {
+            root.innerHTML += waves(900, 120);
+            place(icon(112), "left:64px;top:96px");
+            place(`<div class="title" style="font-size:58px">Ping My Network</div>
+                   <div class="tagline" style="font-size:25px;margin-top:14px;max-width:470px">See every device on your Wi-Fi, spot newcomers and fix slow Wi-Fi.</div>`,
+                  "left:64px;top:234px");
+            place(`<img class="shot phone" src="screenshots/android/devices.png" style="width:260px;border-radius:28px">`,
+                  "left:600px;top:60px;transform:rotate(-5deg)");
+            place(`<img class="shot phone" src="screenshots/android/home.png" style="width:260px;border-radius:28px">`,
+                  "left:790px;top:110px;transform:rotate(5deg)");
+            break;
+        }
+
+        // Microsoft Store 16:9 super hero art, 1920x1080: no text (the Store lays the name over it).
+        case "hero": {
+            root.innerHTML += waves(1700, 160);
+            place(`<img class="shot window" src="screenshots/windows/devices.png" style="width:1180px">`, "left:110px;top:150px");
+            place(`<img class="shot phone" src="screenshots/android/home.png" style="width:330px;border-radius:40px">`, "left:1400px;top:250px;transform:rotate(4deg)");
+            break;
+        }
+
+        // Microsoft Store 1:1 box art, 2160x2160.
+        case "boxart": {
+            root.innerHTML += waves(2000, 420);
+            place(icon(760), "left:700px;top:520px");
+            place(`<div class="title" style="font-size:150px;text-align:center;width:2160px">Ping My Network</div>`, "left:0;top:1420px");
+            break;
+        }
+
+        // Microsoft Store 2:3 poster art, 1440x2160.
+        case "poster": {
+            root.innerHTML += waves(1400, 260);
+            place(icon(300), "left:570px;top:190px");
+            place(`<div class="title" style="font-size:104px;text-align:center;width:1440px">Ping My Network</div>
+                   <div class="tagline" style="font-size:46px;text-align:center;width:1440px;margin-top:22px">Know what's on your network</div>`, "left:0;top:560px");
+            place(`<img class="shot phone" src="screenshots/android/devices.png" style="width:640px">`, "left:400px;top:900px");
+            break;
+        }
+
+        // Phone screenshot, 1080x1920: caption on top, the app below, running off the bottom edge.
+        case "phone": {
+            root.innerHTML += waves(1300, 40);
+            place(`${caption}${sub ? `<span class="sub">${sub}</span>` : ""}`, "left:70px;right:70px;top:110px;text-align:center;font-weight:600;font-size:74px;line-height:1.12;letter-spacing:-0.01em");
+            place(`<img class="shot phone" src="${shot}" style="width:780px">`, "left:150px;top:480px");
+            break;
+        }
+
+        // Desktop screenshot, 1920x1080: caption on top, the window below.
+        case "desktop": {
+            root.innerHTML += waves(1800, 60);
+            place(`${caption}${sub ? `<span class="sub" style="font-size:30px">${sub}</span>` : ""}`, "left:0;right:0;top:56px;text-align:center;font-weight:600;font-size:58px;line-height:1.12;letter-spacing:-0.01em");
+            place(`<img class="shot window" src="${shot}" style="width:1376px">`, "left:272px;top:236px");
+            break;
+        }
+    }
+</script>
+</body>
+</html>
