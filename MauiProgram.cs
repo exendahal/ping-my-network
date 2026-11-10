@@ -45,7 +45,11 @@ namespace PingMyNetwork
             MacVendor.SetLookup(MacVendorRegistry.Lookup);
 
             // The library's own interface, so a fake can stand in for demo mode and tests later.
-            builder.Services.AddSingleton<IWifiNetworkService>(_ => CrossWifiManager.Current);
+    #if DEBUG
+        builder.Services.AddSingleton<IWifiNetworkService>(_ => DemoWifiService.IsOn ? DemoWifiService.Wrap(CrossWifiManager.Current) : CrossWifiManager.Current);
+#else
+        builder.Services.AddSingleton<IWifiNetworkService>(_ => CrossWifiManager.Current);
+#endif
             builder.Services.AddSingleton<NetworkMonitor>();
             builder.Services.AddSingleton<DeviceStore>();
             builder.Services.AddSingleton<DeviceManager>();

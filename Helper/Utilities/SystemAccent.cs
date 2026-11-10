@@ -43,7 +43,14 @@ namespace PingMyNetwork.Helper.Utilities
                 app.Resources.Remove(key);
             }
 
-            if (AppSettings.UseSystemColors && (Read() is (Color light, Color dark)))
+            bool useSystem = AppSettings.UseSystemColors;
+
+#if DEBUG
+            // Store screenshots show the brand green, whatever this PC's accent is.
+            useSystem &= !Implementation.DemoWifiService.IsOn;
+#endif
+
+            if (useSystem && (Read() is (Color light, Color dark)))
             {
                 app.Resources["AccentLight"] = light;
                 app.Resources["AccentDark"] = dark;

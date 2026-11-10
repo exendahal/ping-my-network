@@ -45,8 +45,14 @@ namespace PingMyNetwork.Implementation
         /// </summary>
         private const int CLOUD_MAX_BYTES = 1_000_000;
 
+#if DEBUG
+        // Demo devices live in their own files, never mixed into (or backed up with) real ones.
+        private readonly string _Path = Path.Combine(FileSystem.AppDataDirectory, DemoWifiService.IsOn ? "demo.devices.json" : FILE_NAME);
+        private readonly string _LocalPath = Path.Combine(FileSystem.AppDataDirectory, DemoWifiService.IsOn ? "demo.devices.local.json" : LOCAL_FILE_NAME);
+#else
         private readonly string _Path = Path.Combine(FileSystem.AppDataDirectory, FILE_NAME);
         private readonly string _LocalPath = Path.Combine(FileSystem.AppDataDirectory, LOCAL_FILE_NAME);
+#endif
         private readonly SemaphoreSlim _WriteGate = new(1, 1);
         private readonly ILogger<DeviceStore> _Logger;
 

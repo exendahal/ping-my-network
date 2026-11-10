@@ -576,6 +576,15 @@ namespace PingMyNetwork.Implementation
         {
             string network = $"{snapshot.ConnectionType}|{snapshot.Ssid}|{snapshot.Gateway}";
 
+#if DEBUG
+            // Store screenshots: the real provider and public address stay out of them.
+            if (DemoWifiService.IsOn)
+            {
+                Update(current => current with { Provider = "Example Broadband", PublicIp = "203.0.113.42" }, token);
+                return;
+            }
+#endif
+
             if (_ProviderCache is not { } cached || (cached.Network != network))
             {
                 try

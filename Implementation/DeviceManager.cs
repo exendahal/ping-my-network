@@ -1089,7 +1089,12 @@ namespace PingMyNetwork.Implementation
 
                 if (device.IsThisDevice)
                 {
-                    device.FriendlyName ??= DeviceInfo.Current.Name;
+    #if DEBUG
+                // Store screenshots: never the real device's name.
+                device.FriendlyName ??= DemoWifiService.IsOn ? DemoWifiService.ThisDeviceName : DeviceInfo.Current.Name;
+#else
+                device.FriendlyName ??= DeviceInfo.Current.Name;
+#endif
                 }
 
                 // Your own router and this device are known by definition; asking would be noise.

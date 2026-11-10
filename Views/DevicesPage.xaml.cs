@@ -109,6 +109,14 @@ namespace PingMyNetwork.Views
                 {
                     System.Diagnostics.Debug.WriteLine($"Devices page failed to start: {exception}");
                 }
+
+#if DEBUG
+                // Lets store screenshots open a device: set PMN_SELECT=Front Door Camera.
+                if (Environment.GetEnvironmentVariable("PMN_SELECT") is { Length: > 0 } name)
+                {
+                    _ViewModel.Devices.FirstOrDefault(device => device.Name == name)?.OpenCommand.Execute(null);
+                }
+#endif
             }
         }
 
