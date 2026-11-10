@@ -29,6 +29,7 @@ namespace PingMyNetwork.Views
         /// </summary>
         private const double TAB_BAR_CLEARANCE = 112;
 
+
         private readonly DevicesViewModel _ViewModel;
         private readonly DeviceDetailsViewModel _PaneViewModel;
 
@@ -63,6 +64,7 @@ namespace PingMyNetwork.Views
 
             _PaneViewModel.Forgotten += (_, _) => _ViewModel.SelectedDevice = null;
             SizeChanged += (_, _) => ApplyLayout();
+            Toolbar.SizeChanged += (_, _) => FitListToToolbar();
 
             PaintChips();
         }
@@ -157,6 +159,58 @@ namespace PingMyNetwork.Views
             {
                 PaintChips();
             }
+
+            // A shorter list may not scroll at all, which would leave no way to bring it back.
+            if (e.PropertyName is nameof(DevicesViewModel.Filter) or nameof(DevicesViewModel.HasRows))
+            {
+                ShowToolbar();
+            }
+        }
+
+        /// <summary>
+        /// Moves the toolbar with the list, finger for finger: up and away while scrolling down,
+        /// back down on the way up, and always fully shown at the top of the list.
+        /// </summary>
+        /// <remarks>
+        /// ponytail: it can stop half shown when a scroll ends there, as Chrome's address bar can;
+        /// snap to the nearer end once scrolling settles if that bothers anyone.
+        /// </remarks>
+        /// <param name="sender">The list.</param>
+        /// <param name="e">The scroll position and step.</param>
+        private void OnListScrolled(object? sender, ItemsViewScrolledEventArgs e)
+        {
+            // Height is -1 until the toolbar is first measured, and the list scrolls during its own
+            // first layout, before that.
+            if (_IsWide || SearchEntry.IsFocused || (Toolbar.Height <= 0))
+            {
+                return;
+            }
+
+            double shift = Math.Clamp(Toolbar.TranslationY - e.VerticalDelta, -Toolbar.Height, 0);
+
+            // Never further up than the list has scrolled: at the top, the toolbar is all there.
+            Toolbar.TranslationY = Math.Max(shift, -Math.Max(e.VerticalOffset, 0));
+        }
+
+        /// <summary>
+        /// Brings the toolbar fully back, for when the list may no longer scroll far enough to.
+        /// </summary>
+        private void ShowToolbar()
+        {
+            Toolbar.TranslationY = 0;
+        }
+
+        /// <summary>
+        /// Leaves room at the top of the list and its stand-in states for the floating toolbar.
+        /// </summary>
+        private void FitListToToolbar()
+        {
+            double inset = Toolbar.Height;
+
+            ListInset.HeightRequest = inset;
+            SkeletonRows.Margin = new Thickness(0, inset, 0, 0);
+            EmptyState.Margin = new Thickness(0, inset, 0, 0);
+            NoMatchState.Margin = new Thickness(0, inset, 0, 0);
         }
 
         /// <summary>
@@ -198,6 +252,7 @@ namespace PingMyNetwork.Views
 
             _IsWide = isWide;
             _ViewModel.IsSelectionShown = isWide;
+            ShowToolbar();
 
             Split.ColumnDefinitions = isWide
                 ? [new ColumnDefinition(new GridLength(5, GridUnitType.Star)), new ColumnDefinition(new GridLength(6, GridUnitType.Star))]

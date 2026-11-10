@@ -17,7 +17,7 @@
         <Grid
             x:Name="ListColumn"
             Padding="{StaticResource PagePaddingCompact}"
-            RowDefinitions="Auto,Auto,Auto,*"
+            RowDefinitions="Auto,*"
             RowSpacing="{StaticResource SpaceM}">
 
             <!--  Title, summary and the scan button.  -->
@@ -82,84 +82,13 @@
                     VerticalOptions="Start" />
             </Grid>
 
-            <!--  Search and sort.  -->
-            <Grid
-                Grid.Row="1"
-                ColumnDefinitions="*,Auto"
-                ColumnSpacing="{StaticResource SpaceS}"
-                IsVisible="{Binding IsConnected}">
-                <Border Padding="12,0" Style="{StaticResource GroupCard}">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
-                        <Label
-                            FontSize="18"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.SEARCH}" />
-                        <Entry
-                            x:Name="SearchEntry"
-                            Grid.Column="1"
-                            BackgroundColor="Transparent"
-                            ClearButtonVisibility="WhileEditing"
-                            Placeholder="{x:Static res:AppResources.DevicesSearchPlaceholder}"
-                            Text="{Binding SearchText}" />
-                    </Grid>
-                </Border>
-                <Border
-                    Grid.Column="1"
-                    Padding="12,0,4,0"
-                    Style="{StaticResource GroupCard}">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceXs}">
-                        <Label
-                            FontSize="18"
-                            Style="{StaticResource Icon}"
-                            Text="{x:Static util:MaterialIcon.SORT}" />
-                        <Picker
-                            Grid.Column="1"
-                            BackgroundColor="Transparent"
-                            ItemsSource="{Binding SortOptions}"
-                            MinimumWidthRequest="110"
-                            SelectedIndex="{Binding SortIndex}"
-                            SemanticProperties.Description="{x:Static res:AppResources.SortLabel}"
-                            ToolTipProperties.Text="{x:Static res:AppResources.SortLabel}"
-                            VerticalOptions="Center" />
-                    </Grid>
-                </Border>
-            </Grid>
-
-            <!--  Filters and bulk action.  -->
-            <Grid Grid.Row="2" IsVisible="{Binding IsConnected}">
-                <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
-                    <HorizontalStackLayout x:Name="Chips" Spacing="{StaticResource SpaceS}">
-                        <Button
-                            ClassId="All"
-                            Command="{Binding SetFilterCommand}"
-                            CommandParameter="All"
-                            Style="{StaticResource Chip}"
-                            Text="{Binding AllCaption}" />
-                        <Button
-                            ClassId="Online"
-                            Command="{Binding SetFilterCommand}"
-                            CommandParameter="Online"
-                            Style="{StaticResource Chip}"
-                            Text="{Binding OnlineCaption}" />
-                        <Button
-                            ClassId="Unknown"
-                            Command="{Binding SetFilterCommand}"
-                            CommandParameter="Unknown"
-                            IsVisible="{Binding ShowUnknownFilter}"
-                            Style="{StaticResource Chip}"
-                            Text="{Binding UnknownCaption}" />
-                        <Button
-                            ClassId="New"
-                            Command="{Binding SetFilterCommand}"
-                            CommandParameter="New"
-                            Style="{StaticResource Chip}"
-                            Text="{Binding NewCaption}" />
-                    </HorizontalStackLayout>
-                </ScrollView>
-            </Grid>
 
             <!--  The list, and the states that stand in for it.  -->
-            <Grid Grid.Row="3" RowDefinitions="Auto,*">
+            <!--  Clipped, so the toolbar sliding away disappears under the title rather than over it.  -->
+            <Grid
+                Grid.Row="1"
+                IsClippedToBounds="True"
+                RowDefinitions="Auto,*">
 
                 <VerticalStackLayout>
 
@@ -257,52 +186,6 @@
                             </HorizontalStackLayout>
                         </Grid>
                     </Border>
-
-                    <!--
-                        One banner for everything unreviewed, instead of a tag on every row: when most
-                        rows are highlighted, the highlight stops meaning anything.
-                    -->
-                    <Border
-                        Margin="0,0,0,12"
-                        IsVisible="{Binding ShowReview}"
-                        Style="{StaticResource NoticeBanner}">
-                        <Grid
-                            ColumnDefinitions="Auto,*"
-                            ColumnSpacing="{StaticResource SpaceM}"
-                            RowDefinitions="Auto,Auto,Auto">
-                            <Label
-                                FontSize="20"
-                                Style="{StaticResource Icon}"
-                                Text="{x:Static util:MaterialIcon.HELP}"
-                                TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
-                                                            Dark={StaticResource StatusNoticeDark}}"
-                                VerticalOptions="Start" />
-                            <Label
-                                Grid.Column="1"
-                                Style="{StaticResource TextHeadline}"
-                                Text="{Binding ReviewTitle}" />
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Style="{StaticResource TextBody}"
-                                Text="{x:Static res:AppResources.DevicesReviewBody}" />
-                            <HorizontalStackLayout
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Margin="-12,4,0,0">
-                                <Button
-                                    Command="{Binding SetFilterCommand}"
-                                    CommandParameter="Unknown"
-                                    IsVisible="{Binding CanReview}"
-                                    Style="{StaticResource QuietButton}"
-                                    Text="{x:Static res:AppResources.ActionReview}" />
-                                <Button
-                                    Command="{Binding MarkAllKnownCommand}"
-                                    Style="{StaticResource QuietButton}"
-                                    Text="{x:Static res:AppResources.DevicesMarkAllKnown}" />
-                            </HorizontalStackLayout>
-                        </Grid>
-                    </Border>
                 </VerticalStackLayout>
 
                 <CollectionView
@@ -310,6 +193,7 @@
                     Grid.Row="1"
                     IsVisible="{Binding HasRows}"
                     ItemsSource="{Binding Devices}"
+                    Scrolled="OnListScrolled"
                     SelectionMode="None">
                     <!--
                         The gap between rows: a bottom margin on Android, where ItemSpacing made
@@ -319,6 +203,11 @@
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="{OnPlatform Default=0, WinUI=8}" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
+                    <!--  Room for the floating toolbar; sized to it in code.  -->
+                    <CollectionView.Header>
+                        <BoxView x:Name="ListInset" Color="Transparent" />
+                    </CollectionView.Header>
+
                     <CollectionView.ItemTemplate>
                         <!--  Fixed height and a flat tree: rows stay cheap to recycle while scrolling.  -->
                         <DataTemplate x:DataType="vm:DeviceItem">
@@ -477,6 +366,7 @@
 
                 <!--  Nothing scanned yet.  -->
                 <VerticalStackLayout
+                    x:Name="EmptyState"
                     Grid.Row="1"
                     IsVisible="{Binding ShowEmpty}"
                     MaximumWidthRequest="420"
@@ -500,6 +390,7 @@
 
                 <!--  Devices exist, but none pass the filter.  -->
                 <VerticalStackLayout
+                    x:Name="NoMatchState"
                     Grid.Row="1"
                     IsVisible="{Binding ShowNoMatch}"
                     Spacing="{StaticResource SpaceS}"
@@ -513,13 +404,138 @@
                         Style="{StaticResource TextBody}"
                         Text="{x:Static res:AppResources.DevicesNoMatchBody}" />
                 </VerticalStackLayout>
+
+                <!--
+                    Search, sort, filters and the review banner, floating over the top of the list.
+                    It moves with the scroll, finger for finger, sliding away going down and back on
+                    the way up (OnListScrolled). It only translates and never resizes, so the list
+                    never re-lays out mid-scroll. The list's header leaves room for it.
+                -->
+                <Grid
+                    Grid.Row="1"
+                    IsVisible="{Binding IsConnected}"
+                    VerticalOptions="Start">
+                    <VerticalStackLayout
+                        x:Name="Toolbar"
+                        Padding="0,0,0,12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PageLight},
+                                                          Dark={StaticResource PageDark}}"
+                        Spacing="{StaticResource SpaceM}">
+
+                        <!--  Search and sort.  -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource SpaceS}">
+                            <Border Padding="12,0" Style="{StaticResource GroupCard}">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceS}">
+                                    <Label
+                                        FontSize="18"
+                                        Style="{StaticResource Icon}"
+                                        Text="{x:Static util:MaterialIcon.SEARCH}" />
+                                    <Entry
+                                        x:Name="SearchEntry"
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        ClearButtonVisibility="WhileEditing"
+                                        Placeholder="{x:Static res:AppResources.DevicesSearchPlaceholder}"
+                                        Text="{Binding SearchText}" />
+                                </Grid>
+                            </Border>
+                            <Border
+                                Grid.Column="1"
+                                Padding="12,0,4,0"
+                                Style="{StaticResource GroupCard}">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource SpaceXs}">
+                                    <Label
+                                        FontSize="18"
+                                        Style="{StaticResource Icon}"
+                                        Text="{x:Static util:MaterialIcon.SORT}" />
+                                    <Picker
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        ItemsSource="{Binding SortOptions}"
+                                        MinimumWidthRequest="110"
+                                        SelectedIndex="{Binding SortIndex}"
+                                        SemanticProperties.Description="{x:Static res:AppResources.SortLabel}"
+                                        ToolTipProperties.Text="{x:Static res:AppResources.SortLabel}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!--  Filters.  -->
+                        <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                            <HorizontalStackLayout x:Name="Chips" Spacing="{StaticResource SpaceS}">
+                                <Button
+                                    ClassId="All"
+                                    Command="{Binding SetFilterCommand}"
+                                    CommandParameter="All"
+                                    Style="{StaticResource Chip}"
+                                    Text="{Binding AllCaption}" />
+                                <Button
+                                    ClassId="Online"
+                                    Command="{Binding SetFilterCommand}"
+                                    CommandParameter="Online"
+                                    Style="{StaticResource Chip}"
+                                    Text="{Binding OnlineCaption}" />
+                                <Button
+                                    ClassId="Unknown"
+                                    Command="{Binding SetFilterCommand}"
+                                    CommandParameter="Unknown"
+                                    IsVisible="{Binding ShowUnknownFilter}"
+                                    Style="{StaticResource Chip}"
+                                    Text="{Binding UnknownCaption}" />
+                                <Button
+                                    ClassId="New"
+                                    Command="{Binding SetFilterCommand}"
+                                    CommandParameter="New"
+                                    Style="{StaticResource Chip}"
+                                    Text="{Binding NewCaption}" />
+                            </HorizontalStackLayout>
+                        </ScrollView>
+
+                        <!--
+                            One banner for everything unreviewed, instead of a tag on every row: when
+                            most rows are highlighted, the highlight stops meaning anything. One line,
+                            as the Unknown chip above already reviews; tapping it does the same.
+                        -->
+                        <Border
+                            Padding="16,4,4,4"
+                            IsVisible="{Binding ShowReview}"
+                            SemanticProperties.Hint="{x:Static res:AppResources.DevicesReviewBody}"
+                            Style="{StaticResource NoticeBanner}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetFilterCommand}" CommandParameter="Unknown" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource SpaceM}">
+                                <Label
+                                    FontSize="20"
+                                    Style="{StaticResource Icon}"
+                                    Text="{x:Static util:MaterialIcon.HELP}"
+                                    TextColor="{AppThemeBinding Light={StaticResource StatusNoticeLight},
+                                                                Dark={StaticResource StatusNoticeDark}}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="OpenSansSemibold"
+                                    FontSize="{StaticResource FontBody}"
+                                    Text="{Binding ReviewTitle}"
+                                    TextColor="{AppThemeBinding Light={StaticResource OnSurfaceLight},
+                                                                Dark={StaticResource OnSurfaceDark}}"
+                                    VerticalOptions="Center" />
+                                <Button
+                                    Grid.Column="2"
+                                    Command="{Binding MarkAllKnownCommand}"
+                                    Style="{StaticResource QuietButton}"
+                                    Text="{x:Static res:AppResources.DevicesMarkAllKnown}" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
             </Grid>
 
             <!--  No network at all.  -->
             <VerticalStackLayout
                 x:Name="OfflineState"
                 Grid.Row="1"
-                Grid.RowSpan="3"
                 IsVisible="{Binding IsOffline}"
                 MaximumWidthRequest="420"
                 Spacing="{StaticResource SpaceM}"

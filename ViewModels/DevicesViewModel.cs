@@ -254,12 +254,6 @@ namespace PingMyNetwork.ViewModels
         public partial string ReviewTitle { get; set; } = string.Empty;
 
         /// <summary>
-        /// Whether the banner offers "Review", which is pointless once the list shows only those.
-        /// </summary>
-        [ObservableProperty]
-        public partial bool CanReview { get; set; }
-
-        /// <summary>
         /// Whether to offer the Unknown filter. Hidden on guest networks, which are not reviewed.
         /// </summary>
         [ObservableProperty]
@@ -677,7 +671,6 @@ namespace PingMyNetwork.ViewModels
             UnknownCaption = Caption(AppResources.FilterUnknown, unknown);
             NewCaption = Caption(AppResources.FilterNew, fresh);
             HasUnknown = unknown > 0;
-            CanReview = HasUnknown && (Filter != DeviceFilter.Unknown);
             ReviewTitle = unknown == 1
                 ? AppResources.DevicesReviewOneTitle
                 : NetworkFormat.Text(AppResources.DevicesReviewTitleFormat, unknown);
