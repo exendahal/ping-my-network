@@ -29,7 +29,7 @@ namespace PingMyNetwork.Helper.Utilities
             Color.FromArgb("#D70015"),
 
             // accessibleSystemPurple
-            Color.FromArgb("#8944AB"),
+            Color.FromArgb("#A05A00"),
         ];
 
         private static readonly Color[] DARK_LEVELS =
@@ -38,7 +38,7 @@ namespace PingMyNetwork.Helper.Utilities
             Color.FromArgb("#FFD60A"),
             Color.FromArgb("#FF9F0A"),
             Color.FromArgb("#FF453A"),
-            Color.FromArgb("#BF5AF2"),
+            Color.FromArgb("#FFB340"),
         ];
 
         private static readonly Color NEUTRAL = Color.FromArgb("#8E8E93");

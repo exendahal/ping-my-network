@@ -171,12 +171,12 @@
     <Color x:Key="StatusPoorDark">#FF9F0A</Color>
     <Color x:Key="StatusBadLight">#D70015</Color>
     <Color x:Key="StatusBadDark">#FF453A</Color>
-    <Color x:Key="StatusNoticeLight">#8944AB</Color>
-    <Color x:Key="StatusNoticeDark">#BF5AF2</Color>
+    <Color x:Key="StatusNoticeLight">#A05A00</Color>
+    <Color x:Key="StatusNoticeDark">#FFB340</Color>
 
     <!--  Soft fills behind status text: mostly the card colour, tinted towards the status.  -->
-    <Color x:Key="NoticeTintLight">#F3ECF6</Color>
-    <Color x:Key="NoticeTintDark">#2C2232</Color>
+    <Color x:Key="NoticeTintLight">#F8EEDF</Color>
+    <Color x:Key="NoticeTintDark">#3A2E1A</Color>
     <!--  Pointer-over fill for tappable cards and rows on desktop.  -->
     <Color x:Key="HoverLight">#F2F2F7</Color>
     <Color x:Key="HoverDark">#2C2C2E</Color>
