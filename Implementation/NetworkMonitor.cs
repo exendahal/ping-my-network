@@ -354,9 +354,10 @@ namespace PingMyNetwork.Implementation
                 adapter = adapters.FirstOrDefault(candidate => IsRoutable(candidate) && MatchesType(candidate, type))
                     ?? adapters.FirstOrDefault(IsRoutable);
             }
-            catch (NetworkInformationException)
+            catch (Exception exception) when (exception is NetworkInformationException or PlatformNotSupportedException)
             {
-                // Some Android versions refuse the interface list; the transport alone still shows.
+                // Some Android versions refuse the interface list, and Android has no gateway list
+                // at all (GatewayAddresses throws there); the transport alone still shows.
                 return snapshot;
             }
 

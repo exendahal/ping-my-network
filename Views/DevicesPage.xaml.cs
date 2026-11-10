@@ -100,7 +100,15 @@ namespace PingMyNetwork.Views
 
             if (_IsShowing)
             {
-                await _ViewModel.AppearAsync();
+                // async void: a scan that throws must not take the app down with it.
+                try
+                {
+                    await _ViewModel.AppearAsync();
+                }
+                catch (Exception exception)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Devices page failed to start: {exception}");
+                }
             }
         }
 

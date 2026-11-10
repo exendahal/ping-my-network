@@ -111,7 +111,10 @@ namespace PingMyNetwork.Implementation
 
             Android.Content.Intent? launch = context.PackageManager?.GetLaunchIntentForPackage(context.PackageName!);
             Android.App.PendingIntent? open = launch is null ? null : Android.App.PendingIntent.GetActivity(
-                context, 0, launch, Android.App.PendingIntentFlags.Immutable | Android.App.PendingIntentFlags.UpdateCurrent);
+                context,
+                0,
+                launch,
+                (OperatingSystem.IsAndroidVersionAtLeast(23) ? Android.App.PendingIntentFlags.Immutable : 0) | Android.App.PendingIntentFlags.UpdateCurrent);
 
             AndroidX.Core.App.NotificationCompat.Builder builder = new(context, CHANNEL_ID);
 

@@ -89,7 +89,16 @@ namespace PingMyNetwork.Views
             if (_IsShowing)
             {
                 UpdateChart();
-                await _ViewModel.AppearAsync();
+
+                // async void: a scan that throws must not take the app down with it.
+                try
+                {
+                    await _ViewModel.AppearAsync();
+                }
+                catch (Exception exception)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Wi-Fi page failed to start: {exception}");
+                }
             }
         }
 
@@ -103,7 +112,15 @@ namespace PingMyNetwork.Views
             _IsShowing = false;
             this.AbortAnimation(CHART_ANIMATION);
             _ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
-            await _ViewModel.DisappearAsync();
+
+            try
+            {
+                await _ViewModel.DisappearAsync();
+            }
+            catch (Exception exception)
+            {
+                System.Diagnostics.Debug.WriteLine($"Wi-Fi page failed to stop: {exception}");
+            }
         }
 
         /// <summary>

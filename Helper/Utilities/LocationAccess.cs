@@ -17,11 +17,13 @@ namespace PingMyNetwork.Helper.Utilities
 
         private static bool _IsWatching;
 
+#if WINDOWS
         /// <summary>
         /// Windows only: whether Wi-Fi access was allowed at the last check, so focus changes that
         /// change nothing raise nothing.
         /// </summary>
         private static bool? _WasAllowed;
+#endif
 
         #endregion
 

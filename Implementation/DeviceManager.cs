@@ -735,6 +735,12 @@ namespace PingMyNetwork.Implementation
             {
                 // Expected; the old scan stopped.
             }
+            catch (Exception exception)
+            {
+                // A scan that failed is over all the same; an async void handler that rethrows
+                // here would take the app down, now and on every later network change.
+                System.Diagnostics.Debug.WriteLine($"Scan failed before a network switch: {exception}");
+            }
 
             if (SwitchTo(_Monitor.Current))
             {

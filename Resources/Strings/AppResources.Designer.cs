@@ -79,60 +79,6 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not now.
-        /// </summary>
-        public static string ActionNotNow {
-            get {
-                return ResourceManager.GetString("ActionNotNow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check while the app is closed?.
-        /// </summary>
-        public static string BackgroundLocationTitle {
-            get {
-                return ResourceManager.GetString("BackgroundLocationTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Android only shares the Wi-Fi name with apps that have location access. To alert you while Ping My Network is closed, it needs location &quot;Allow all the time&quot;, used only to recognise which of your networks the phone is on. Your location is never stored or sent anywhere. Without it, alerts still work while the app is open.
-        /// </summary>
-        public static string BackgroundLocationBody {
-            get {
-                return ResourceManager.GetString("BackgroundLocationBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown device back on {0}.
-        /// </summary>
-        public static string AlertDeviceBackTitle {
-            get {
-                return ResourceManager.GetString("AlertDeviceBackTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} ({1}) is back on your network. Open the app to mark it as known.
-        /// </summary>
-        public static string AlertDeviceBackBody {
-            get {
-                return ResourceManager.GetString("AlertDeviceBackBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown devices coming back.
-        /// </summary>
-        public static string SettingsReturnAlertsRow {
-            get {
-                return ResourceManager.GetString("SettingsReturnAlertsRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Allow location access.
         /// </summary>
         public static string ActionAllowLocation {
@@ -147,6 +93,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ActionBack {
             get {
                 return ResourceManager.GetString("ActionBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string ActionContinue {
+            get {
+                return ResourceManager.GetString("ActionContinue", resourceCulture);
             }
         }
         
@@ -178,6 +133,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About this tool.
+        /// </summary>
+        public static string ActionHelp {
+            get {
+                return ResourceManager.GetString("ActionHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mark as known.
         /// </summary>
         public static string ActionMarkKnown {
@@ -205,6 +169,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not now.
+        /// </summary>
+        public static string ActionNotNow {
+            get {
+                return ResourceManager.GetString("ActionNotNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open details.
         /// </summary>
         public static string ActionOpenDetails {
@@ -219,6 +192,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ActionOpenDevices {
             get {
                 return ResourceManager.GetString("ActionOpenDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open settings.
+        /// </summary>
+        public static string ActionOpenSettings {
+            get {
+                return ResourceManager.GetString("ActionOpenSettings", resourceCulture);
             }
         }
         
@@ -268,15 +250,6 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review.
-        /// </summary>
-        public static string ActionReview {
-            get {
-                return ResourceManager.GetString("ActionReview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to See channels.
         /// </summary>
         public static string ActionSeeChannels {
@@ -304,11 +277,92 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turn on.
+        /// </summary>
+        public static string ActionTurnOn {
+            get {
+                return ResourceManager.GetString("ActionTurnOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn on location.
+        /// </summary>
+        public static string ActionTurnOnLocation {
+            get {
+                return ResourceManager.GetString("ActionTurnOnLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New devices.
+        /// </summary>
+        public static string AlertChannelName {
+            get {
+                return ResourceManager.GetString("AlertChannelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}) is back on your network. Open the app to mark it as known..
+        /// </summary>
+        public static string AlertDeviceBackBody {
+            get {
+                return ResourceManager.GetString("AlertDeviceBackBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown device back on {0}.
+        /// </summary>
+        public static string AlertDeviceBackTitle {
+            get {
+                return ResourceManager.GetString("AlertDeviceBackTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ({1}) joined your network. Open the app to mark it as known..
+        /// </summary>
+        public static string AlertNewDeviceBody {
+            get {
+                return ResourceManager.GetString("AlertNewDeviceBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device on {0}.
+        /// </summary>
+        public static string AlertNewDeviceTitle {
+            get {
+                return ResourceManager.GetString("AlertNewDeviceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping My Network.
         /// </summary>
         public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Android only shares the Wi-Fi name with apps that have location access. To alert you while Ping My Network is closed, it needs location &quot;Allow all the time&quot;, used only to recognise which of your networks the phone is on. Your location is never stored or sent anywhere. Without it, alerts still work while the app is open..
+        /// </summary>
+        public static string BackgroundLocationBody {
+            get {
+                return ResourceManager.GetString("BackgroundLocationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check while the app is closed?.
+        /// </summary>
+        public static string BackgroundLocationTitle {
+            get {
+                return ResourceManager.GetString("BackgroundLocationTitle", resourceCulture);
             }
         }
         
@@ -583,20 +637,20 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No DNS servers reported.
-        /// </summary>
-        public static string DetailsNoDns {
-            get {
-                return ResourceManager.GetString("DetailsNoDns", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Prefix length.
         /// </summary>
         public static string DetailsPrefix {
             get {
                 return ResourceManager.GetString("DetailsPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IP address.
+        /// </summary>
+        public static string DetailsPublicIp {
+            get {
+                return ResourceManager.GetString("DetailsPublicIp", resourceCulture);
             }
         }
         
@@ -624,6 +678,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string DetailsSectionDns {
             get {
                 return ResourceManager.GetString("DetailsSectionDns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet.
+        /// </summary>
+        public static string DetailsSectionInternet {
+            get {
+                return ResourceManager.GetString("DetailsSectionInternet", resourceCulture);
             }
         }
         
@@ -781,11 +844,29 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MAC {0}.
+        /// </summary>
+        public static string DeviceMacFormat {
+            get {
+                return ResourceManager.GetString("DeviceMacFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} (private address).
         /// </summary>
         public static string DeviceMacPrivate {
             get {
                 return ResourceManager.GetString("DeviceMacPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC {0} (private).
+        /// </summary>
+        public static string DeviceMacPrivateFormat {
+            get {
+                return ResourceManager.GetString("DeviceMacPrivateFormat", resourceCulture);
             }
         }
         
@@ -1330,6 +1411,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} record from {1} in {2} ms.
+        /// </summary>
+        public static string DnsSummaryOneFormat {
+            get {
+                return ResourceManager.GetString("DnsSummaryOneFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TTL {0}.
         /// </summary>
         public static string DnsTtlFormat {
@@ -1371,6 +1461,50 @@ namespace PingMyNetwork.Resources.Strings {
         public static string DurationSecondsFormat {
             get {
                 return ResourceManager.GetString("DurationSecondsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to **What happened**
+        ///
+        ///
+        ///**What you expected**
+        ///
+        ///
+        ///**Steps to reproduce**
+        ///1. 
+        ///2. 
+        ///.
+        /// </summary>
+        public static string FeedbackBugTemplate {
+            get {
+                return ResourceManager.GetString("FeedbackBugTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ---
+        ///App: {0}
+        ///Device: {1}
+        ///System: {2}.
+        /// </summary>
+        public static string FeedbackEnvironmentFormat {
+            get {
+                return ResourceManager.GetString("FeedbackEnvironmentFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to **What would you like the app to do?**
+        ///
+        ///
+        ///**Why would it help you?**
+        ///
+        ///.
+        /// </summary>
+        public static string FeedbackFeatureTemplate {
+            get {
+                return ResourceManager.GetString("FeedbackFeatureTemplate", resourceCulture);
             }
         }
         
@@ -1488,6 +1622,33 @@ namespace PingMyNetwork.Resources.Strings {
         public static string FilterUnknown {
             get {
                 return ResourceManager.GetString("FilterUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location is turned off, so your phone hides the Wi-Fi name and nearby networks from apps. Your location itself is never used..
+        /// </summary>
+        public static string HiddenNameLocationOff {
+            get {
+                return ResourceManager.GetString("HiddenNameLocationOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The app needs location access to read the Wi-Fi name. Your location itself is never used..
+        /// </summary>
+        public static string HiddenNameNoPermission {
+            get {
+                return ResourceManager.GetString("HiddenNameNoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The system didn&apos;t share the Wi-Fi name..
+        /// </summary>
+        public static string HiddenNameUnknown {
+            get {
+                return ResourceManager.GetString("HiddenNameUnknown", resourceCulture);
             }
         }
         
@@ -1816,11 +1977,254 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} overlapping networks.
+        /// </summary>
+        public static string OverlapManyFormat {
+            get {
+                return ResourceManager.GetString("OverlapManyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no overlapping networks.
+        /// </summary>
+        public static string OverlapNone {
+            get {
+                return ResourceManager.GetString("OverlapNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 overlapping network.
+        /// </summary>
+        public static string OverlapOne {
+            get {
+                return ResourceManager.GetString("OverlapOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your own networks are backed up and alert you to new devices. Guest networks stay on this device..
+        /// </summary>
+        public static string OwnershipBody {
+            get {
+                return ResourceManager.GetString("OwnershipBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guest network.
+        /// </summary>
+        public static string OwnershipGuest {
+            get {
+                return ResourceManager.GetString("OwnershipGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make guest.
+        /// </summary>
+        public static string OwnershipMakeGuest {
+            get {
+                return ResourceManager.GetString("OwnershipMakeGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make mine.
+        /// </summary>
+        public static string OwnershipMakeMine {
+            get {
+                return ResourceManager.GetString("OwnershipMakeMine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My network.
+        /// </summary>
+        public static string OwnershipMine {
+            get {
+                return ResourceManager.GetString("OwnershipMine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, guest network.
+        /// </summary>
+        public static string OwnershipNo {
+            get {
+                return ResourceManager.GetString("OwnershipNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is {0} your network?.
+        /// </summary>
+        public static string OwnershipQuestionFormat {
+            get {
+                return ResourceManager.GetString("OwnershipQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches between my network and guest network.
+        /// </summary>
+        public static string OwnershipToggleHint {
+            get {
+                return ResourceManager.GetString("OwnershipToggleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, it&apos;s mine.
+        /// </summary>
+        public static string OwnershipYes {
+            get {
+                return ResourceManager.GetString("OwnershipYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}%.
         /// </summary>
         public static string PercentFormat {
             get {
                 return ResourceManager.GetString("PercentFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get a notification when a device you haven&apos;t marked as known joins one of your own networks..
+        /// </summary>
+        public static string PermissionAlertsBody {
+            get {
+                return ResourceManager.GetString("PermissionAlertsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device alerts.
+        /// </summary>
+        public static string PermissionAlertsTitle {
+            get {
+                return ResourceManager.GetString("PermissionAlertsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allowed.
+        /// </summary>
+        public static string PermissionAllowed {
+            get {
+                return ResourceManager.GetString("PermissionAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your phone shares the Wi-Fi name and nearby networks only with apps that have location access. The app never reads or stores where you are..
+        /// </summary>
+        public static string PermissionLocationBody {
+            get {
+                return ResourceManager.GetString("PermissionLocationBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows shares the Wi-Fi name and nearby networks only with apps that may use location. Turn on &quot;Let desktop apps access your location&quot;. The app never reads where you are..
+        /// </summary>
+        public static string PermissionLocationBodyWindows {
+            get {
+                return ResourceManager.GetString("PermissionLocationBodyWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Even with access allowed, the Wi-Fi name and nearby networks stay hidden while location (GPS) is off..
+        /// </summary>
+        public static string PermissionLocationServiceBody {
+            get {
+                return ResourceManager.GetString("PermissionLocationServiceBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location turned on.
+        /// </summary>
+        public static string PermissionLocationServiceTitle {
+            get {
+                return ResourceManager.GetString("PermissionLocationServiceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location access.
+        /// </summary>
+        public static string PermissionLocationTitle {
+            get {
+                return ResourceManager.GetString("PermissionLocationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lets the Wi-Fi tab scan for nearby networks and their channels..
+        /// </summary>
+        public static string PermissionNearbyBody {
+            get {
+                return ResourceManager.GetString("PermissionNearbyBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nearby Wi-Fi devices.
+        /// </summary>
+        public static string PermissionNearbyTitle {
+            get {
+                return ResourceManager.GetString("PermissionNearbyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not allowed.
+        /// </summary>
+        public static string PermissionNotAllowed {
+            get {
+                return ResourceManager.GetString("PermissionNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string PermissionOn {
+            get {
+                return ResourceManager.GetString("PermissionOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can change these at any time in Settings..
+        /// </summary>
+        public static string PermissionsFooter {
+            get {
+                return ResourceManager.GetString("PermissionsFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping My Network works without these, but it shows much more with them. Each one is used only for what it says here..
+        /// </summary>
+        public static string PermissionsIntro {
+            get {
+                return ResourceManager.GetString("PermissionsIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permissions.
+        /// </summary>
+        public static string PermissionsTitle {
+            get {
+                return ResourceManager.GetString("PermissionsTitle", resourceCulture);
             }
         }
         
@@ -2104,6 +2508,213 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SettingsAbout {
+            get {
+                return ResourceManager.GetString("SettingsAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string SettingsAlerts {
+            get {
+                return ResourceManager.GetString("SettingsAlerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi when location is allowed all the time..
+        /// </summary>
+        public static string SettingsAlertsFooterAndroid {
+            get {
+                return ResourceManager.GetString("SettingsAlertsFooterAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and each time you open it..
+        /// </summary>
+        public static string SettingsAlertsFooterApple {
+            get {
+                return ResourceManager.GetString("SettingsAlertsFooterApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New device alerts.
+        /// </summary>
+        public static string SettingsAlertsRow {
+            get {
+                return ResourceManager.GetString("SettingsAlertsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string SettingsAppearance {
+            get {
+                return ResourceManager.GetString("SettingsAppearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup.
+        /// </summary>
+        public static string SettingsBackup {
+            get {
+                return ResourceManager.GetString("SettingsBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are backed up to your Google account and come back after a reinstall or on a new phone..
+        /// </summary>
+        public static string SettingsBackupAndroid {
+            get {
+                return ResourceManager.GetString("SettingsBackupAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are saved to your iCloud and come back after a reinstall or on a new device..
+        /// </summary>
+        public static string SettingsBackupApple {
+            get {
+                return ResourceManager.GetString("SettingsBackupApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Networks and device names are saved on this PC..
+        /// </summary>
+        public static string SettingsBackupWindows {
+            get {
+                return ResourceManager.GetString("SettingsBackupWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help and feedback.
+        /// </summary>
+        public static string SettingsFeedback {
+            get {
+                return ResourceManager.GetString("SettingsFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the app&apos;s issues page on GitHub. Posting needs a free GitHub account. Bug reports include your app version and device, never anything about your network..
+        /// </summary>
+        public static string SettingsFeedbackFooter {
+            get {
+                return ResourceManager.GetString("SettingsFeedbackFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string SettingsPrivacy {
+            get {
+                return ResourceManager.GetString("SettingsPrivacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everything stays on this device. Your internet provider&apos;s name comes from Cloudflare, which also runs the speed test..
+        /// </summary>
+        public static string SettingsPrivacyFooter {
+            get {
+                return ResourceManager.GetString("SettingsPrivacyFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a bug.
+        /// </summary>
+        public static string SettingsReportBug {
+            get {
+                return ResourceManager.GetString("SettingsReportBug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request a feature.
+        /// </summary>
+        public static string SettingsRequestFeature {
+            get {
+                return ResourceManager.GetString("SettingsRequestFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown devices coming back.
+        /// </summary>
+        public static string SettingsReturnAlertsRow {
+            get {
+                return ResourceManager.GetString("SettingsReturnAlertsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses the colors Android picks from your wallpaper (Material You) instead of the app&apos;s green..
+        /// </summary>
+        public static string SettingsSystemColorsAndroid {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsAndroid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses the system blue tint instead of the app&apos;s green..
+        /// </summary>
+        public static string SettingsSystemColorsApple {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsApple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use system colors.
+        /// </summary>
+        public static string SettingsSystemColorsRow {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses your Windows accent color instead of the app&apos;s green..
+        /// </summary>
+        public static string SettingsSystemColorsWindows {
+            get {
+                return ResourceManager.GetString("SettingsSystemColorsWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string SettingsVersion {
+            get {
+                return ResourceManager.GetString("SettingsVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network details.
         /// </summary>
         public static string ShareTitle {
@@ -2145,15 +2756,6 @@ namespace PingMyNetwork.Resources.Strings {
         public static string SignalGood {
             get {
                 return ResourceManager.GetString("SignalGood", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Signal {0}, {1} percent.
-        /// </summary>
-        public static string SignalSemanticFormat {
-            get {
-                return ResourceManager.GetString("SignalSemanticFormat", resourceCulture);
             }
         }
         
@@ -2815,6 +3417,33 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string ThemeDark {
+            get {
+                return ResourceManager.GetString("ThemeDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string ThemeLight {
+            get {
+                return ResourceManager.GetString("ThemeLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string ThemeSystem {
+            get {
+                return ResourceManager.GetString("ThemeSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Band · channel.
         /// </summary>
         public static string TileBandChannel {
@@ -2851,6 +3480,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internet provider.
+        /// </summary>
+        public static string TileProvider {
+            get {
+                return ResourceManager.GetString("TileProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wi-Fi standard.
         /// </summary>
         public static string TileWifiStandard {
@@ -2865,6 +3503,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ToolDnsBody {
             get {
                 return ResourceManager.GetString("ToolDnsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS turns names like example.com into the addresses computers use. Look up a name to check that it resolves, compare answers from different DNS servers, or see a domain&apos;s mail (MX) and text (TXT) records. If a website won&apos;t open but its address works, DNS is often the cause..
+        /// </summary>
+        public static string ToolDnsHelp {
+            get {
+                return ResourceManager.GetString("ToolDnsHelp", resourceCulture);
             }
         }
         
@@ -2914,6 +3561,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping sends small test messages to a device or website and times the replies. Use it to check that something is reachable and how quickly it answers. High or jumpy times (jitter) cause lag in calls and games; lost replies mean the connection drops packets. Some devices and websites ignore ping on purpose, so no reply doesn&apos;t always mean they are down..
+        /// </summary>
+        public static string ToolPingHelp {
+            get {
+                return ResourceManager.GetString("ToolPingHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping.
         /// </summary>
         public static string ToolPingTitle {
@@ -2928,6 +3584,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ToolPortsBody {
             get {
                 return ResourceManager.GetString("ToolPortsBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port check tries to connect to a device&apos;s network ports to see which services it offers, such as a web page (80, 443), file sharing (445) or remote desktop (3389). Use it on your own devices to find services you didn&apos;t know were open. Only check devices you own or are allowed to test..
+        /// </summary>
+        public static string ToolPortsHelp {
+            get {
+                return ResourceManager.GetString("ToolPortsHelp", resourceCulture);
             }
         }
         
@@ -2955,6 +3620,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ToolSpeedBody {
             get {
                 return ResourceManager.GetString("ToolSpeedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed test measures how fast your internet connection downloads and uploads, and its latency, using Cloudflare&apos;s servers. It uses about 30 MB of data. Results depend on your Wi-Fi signal too, so test close to the router to see what your provider delivers..
+        /// </summary>
+        public static string ToolSpeedHelp {
+            get {
+                return ResourceManager.GetString("ToolSpeedHelp", resourceCulture);
             }
         }
         
@@ -3013,6 +3687,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The subnet calculator works out a network&apos;s address range from an address and its mask or prefix (like /24): the first and last usable address, the broadcast address and how many devices fit. It starts with your current network, and works offline..
+        /// </summary>
+        public static string ToolSubnetHelp {
+            get {
+                return ResourceManager.GetString("ToolSubnetHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subnet calculator.
         /// </summary>
         public static string ToolSubnetTitle {
@@ -3040,6 +3723,15 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Traceroute lists every router your traffic passes through on its way to a website, with the time to each one. Use it to find where a slow or broken connection goes wrong: in your home network, at your provider, or further away. Rows with no reply are routers that ignore these requests, which is normal..
+        /// </summary>
+        public static string ToolTracerouteHelp {
+            get {
+                return ResourceManager.GetString("ToolTracerouteHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Traceroute.
         /// </summary>
         public static string ToolTracerouteTitle {
@@ -3054,6 +3746,15 @@ namespace PingMyNetwork.Resources.Strings {
         public static string ToolWakeBody {
             get {
                 return ResourceManager.GetString("ToolWakeBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake-on-LAN turns on a sleeping or switched-off computer by sending it a special &quot;magic packet&quot;. The computer must have Wake-on-LAN enabled in its settings or BIOS, be wired to the network in most cases, and be on the same network as this device. You need its MAC address..
+        /// </summary>
+        public static string ToolWakeHelp {
+            get {
+                return ResourceManager.GetString("ToolWakeHelp", resourceCulture);
             }
         }
         
@@ -3202,6 +3903,42 @@ namespace PingMyNetwork.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re on an access point the app hasn&apos;t seen before. Two places can use the same Wi-Fi name, so pick the network it belongs to. Your answer is remembered..
+        /// </summary>
+        public static string WhichNetworkBody {
+            get {
+                return ResourceManager.GetString("WhichNetworkBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The one with {0} devices, last scanned {1:d}.
+        /// </summary>
+        public static string WhichNetworkChoiceFormat {
+            get {
+                return ResourceManager.GetString("WhichNetworkChoiceFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A different place.
+        /// </summary>
+        public static string WhichNetworkDifferent {
+            get {
+                return ResourceManager.GetString("WhichNetworkDifferent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which {0} is this?.
+        /// </summary>
+        public static string WhichNetworkQuestionFormat {
+            get {
+                return ResourceManager.GetString("WhichNetworkQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Turn on location. Android only shows nearby networks while it&apos;s on..
         /// </summary>
         public static string WifiLocationOff {
@@ -3324,753 +4061,6 @@ namespace PingMyNetwork.Resources.Strings {
         public static string WifiUnsupportedTitle {
             get {
                 return ResourceManager.GetString("WifiUnsupportedTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MAC {0}.
-        /// </summary>
-        public static string DeviceMacFormat {
-            get {
-                return ResourceManager.GetString("DeviceMacFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MAC {0} (private).
-        /// </summary>
-        public static string DeviceMacPrivateFormat {
-            get {
-                return ResourceManager.GetString("DeviceMacPrivateFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About this tool.
-        /// </summary>
-        public static string ActionHelp {
-            get {
-                return ResourceManager.GetString("ActionHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ping sends small test messages to a device or website and times the replies. Use it to check that something is reachable and how quickly it answers. High or jumpy times (jitter) cause lag in calls and games; lost replies mean the connection drops packets. Some devices and websites ignore ping on purpose, so no reply doesn&apos;t always mean they are down..
-        /// </summary>
-        public static string ToolPingHelp {
-            get {
-                return ResourceManager.GetString("ToolPingHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Traceroute lists every router your traffic passes through on its way to a website, with the time to each one. Use it to find where a slow or broken connection goes wrong: in your home network, at your provider, or further away. Rows with no reply are routers that ignore these requests, which is normal..
-        /// </summary>
-        public static string ToolTracerouteHelp {
-            get {
-                return ResourceManager.GetString("ToolTracerouteHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DNS turns names like example.com into the addresses computers use. Look up a name to check that it resolves, compare answers from different DNS servers, or see a domain&apos;s mail (MX) and text (TXT) records. If a website won&apos;t open but its address works, DNS is often the cause..
-        /// </summary>
-        public static string ToolDnsHelp {
-            get {
-                return ResourceManager.GetString("ToolDnsHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port check tries to connect to a device&apos;s network ports to see which services it offers, such as a web page (80, 443), file sharing (445) or remote desktop (3389). Use it on your own devices to find services you didn&apos;t know were open. Only check devices you own or are allowed to test..
-        /// </summary>
-        public static string ToolPortsHelp {
-            get {
-                return ResourceManager.GetString("ToolPortsHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The speed test measures how fast your internet connection downloads and uploads, and its latency, using Cloudflare&apos;s servers. It uses about 30 MB of data. Results depend on your Wi-Fi signal too, so test close to the router to see what your provider delivers..
-        /// </summary>
-        public static string ToolSpeedHelp {
-            get {
-                return ResourceManager.GetString("ToolSpeedHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wake-on-LAN turns on a sleeping or switched-off computer by sending it a special "magic packet". The computer must have Wake-on-LAN enabled in its settings or BIOS, be wired to the network in most cases, and be on the same network as this device. You need its MAC address..
-        /// </summary>
-        public static string ToolWakeHelp {
-            get {
-                return ResourceManager.GetString("ToolWakeHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The subnet calculator works out a network&apos;s address range from an address and its mask or prefix (like /24): the first and last usable address, the broadcast address and how many devices fit. It starts with your current network, and works offline..
-        /// </summary>
-        public static string ToolSubnetHelp {
-            get {
-                return ResourceManager.GetString("ToolSubnetHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internet provider.
-        /// </summary>
-        public static string TileProvider {
-            get {
-                return ResourceManager.GetString("TileProvider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Turn on location.
-        /// </summary>
-        public static string ActionTurnOnLocation {
-            get {
-                return ResourceManager.GetString("ActionTurnOnLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Location is turned off, so your phone hides the Wi-Fi name and nearby networks from apps. Your location itself is never used..
-        /// </summary>
-        public static string HiddenNameLocationOff {
-            get {
-                return ResourceManager.GetString("HiddenNameLocationOff", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The app needs location access to read the Wi-Fi name. Your location itself is never used..
-        /// </summary>
-        public static string HiddenNameNoPermission {
-            get {
-                return ResourceManager.GetString("HiddenNameNoPermission", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The system didn&apos;t share the Wi-Fi name..
-        /// </summary>
-        public static string HiddenNameUnknown {
-            get {
-                return ResourceManager.GetString("HiddenNameUnknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        public static string SettingsTitle {
-            get {
-                return ResourceManager.GetString("SettingsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Appearance.
-        /// </summary>
-        public static string SettingsAppearance {
-            get {
-                return ResourceManager.GetString("SettingsAppearance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to System.
-        /// </summary>
-        public static string ThemeSystem {
-            get {
-                return ResourceManager.GetString("ThemeSystem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Light.
-        /// </summary>
-        public static string ThemeLight {
-            get {
-                return ResourceManager.GetString("ThemeLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dark.
-        /// </summary>
-        public static string ThemeDark {
-            get {
-                return ResourceManager.GetString("ThemeDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string SettingsAbout {
-            get {
-                return ResourceManager.GetString("SettingsAbout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version.
-        /// </summary>
-        public static string SettingsVersion {
-            get {
-                return ResourceManager.GetString("SettingsVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Permissions.
-        /// </summary>
-        public static string PermissionsTitle {
-            get {
-                return ResourceManager.GetString("PermissionsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ping My Network works without these, but it shows much more with them. Each one is used only for what it says here..
-        /// </summary>
-        public static string PermissionsIntro {
-            get {
-                return ResourceManager.GetString("PermissionsIntro", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can change these at any time in Settings..
-        /// </summary>
-        public static string PermissionsFooter {
-            get {
-                return ResourceManager.GetString("PermissionsFooter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Allowed.
-        /// </summary>
-        public static string PermissionAllowed {
-            get {
-                return ResourceManager.GetString("PermissionAllowed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not allowed.
-        /// </summary>
-        public static string PermissionNotAllowed {
-            get {
-                return ResourceManager.GetString("PermissionNotAllowed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On.
-        /// </summary>
-        public static string PermissionOn {
-            get {
-                return ResourceManager.GetString("PermissionOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Location access.
-        /// </summary>
-        public static string PermissionLocationTitle {
-            get {
-                return ResourceManager.GetString("PermissionLocationTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your phone shares the Wi-Fi name and nearby networks only with apps that have location access. The app never reads or stores where you are..
-        /// </summary>
-        public static string PermissionLocationBody {
-            get {
-                return ResourceManager.GetString("PermissionLocationBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Windows shares the Wi-Fi name and nearby networks only with apps that may use location. Turn on "Let desktop apps access your location". The app never reads where you are..
-        /// </summary>
-        public static string PermissionLocationBodyWindows {
-            get {
-                return ResourceManager.GetString("PermissionLocationBodyWindows", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Location turned on.
-        /// </summary>
-        public static string PermissionLocationServiceTitle {
-            get {
-                return ResourceManager.GetString("PermissionLocationServiceTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Even with access allowed, the Wi-Fi name and nearby networks stay hidden while location (GPS) is off..
-        /// </summary>
-        public static string PermissionLocationServiceBody {
-            get {
-                return ResourceManager.GetString("PermissionLocationServiceBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nearby Wi-Fi devices.
-        /// </summary>
-        public static string PermissionNearbyTitle {
-            get {
-                return ResourceManager.GetString("PermissionNearbyTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lets the Wi-Fi tab scan for nearby networks and their channels..
-        /// </summary>
-        public static string PermissionNearbyBody {
-            get {
-                return ResourceManager.GetString("PermissionNearbyBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Continue.
-        /// </summary>
-        public static string ActionContinue {
-            get {
-                return ResourceManager.GetString("ActionContinue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open settings.
-        /// </summary>
-        public static string ActionOpenSettings {
-            get {
-                return ResourceManager.GetString("ActionOpenSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Turn on.
-        /// </summary>
-        public static string ActionTurnOn {
-            get {
-                return ResourceManager.GetString("ActionTurnOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy.
-        /// </summary>
-        public static string SettingsPrivacy {
-            get {
-                return ResourceManager.GetString("SettingsPrivacy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Everything stays on this device. Your internet provider&apos;s name comes from Cloudflare, which also runs the speed test..
-        /// </summary>
-        public static string SettingsPrivacyFooter {
-            get {
-                return ResourceManager.GetString("SettingsPrivacyFooter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New devices.
-        /// </summary>
-        public static string AlertChannelName {
-            get {
-                return ResourceManager.GetString("AlertChannelName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New device on {0}.
-        /// </summary>
-        public static string AlertNewDeviceTitle {
-            get {
-                return ResourceManager.GetString("AlertNewDeviceTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} ({1}) joined your network. Open the app to mark it as known..
-        /// </summary>
-        public static string AlertNewDeviceBody {
-            get {
-                return ResourceManager.GetString("AlertNewDeviceBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New device alerts.
-        /// </summary>
-        public static string PermissionAlertsTitle {
-            get {
-                return ResourceManager.GetString("PermissionAlertsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get a notification when a device you haven&apos;t marked as known joins one of your own networks..
-        /// </summary>
-        public static string PermissionAlertsBody {
-            get {
-                return ResourceManager.GetString("PermissionAlertsBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Notifications.
-        /// </summary>
-        public static string SettingsAlerts {
-            get {
-                return ResourceManager.GetString("SettingsAlerts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New device alerts.
-        /// </summary>
-        public static string SettingsAlertsRow {
-            get {
-                return ResourceManager.GetString("SettingsAlertsRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and about every 15 minutes in the background on Wi-Fi when location is allowed all the time..
-        /// </summary>
-        public static string SettingsAlertsFooterAndroid {
-            get {
-                return ResourceManager.GetString("SettingsAlertsFooterAndroid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Only on networks you mark as yours. Checks every 2 minutes while the app is open, and each time you open it..
-        /// </summary>
-        public static string SettingsAlertsFooterApple {
-            get {
-                return ResourceManager.GetString("SettingsAlertsFooterApple", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Backup.
-        /// </summary>
-        public static string SettingsBackup {
-            get {
-                return ResourceManager.GetString("SettingsBackup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are backed up to your Google account and come back after a reinstall or on a new phone..
-        /// </summary>
-        public static string SettingsBackupAndroid {
-            get {
-                return ResourceManager.GetString("SettingsBackupAndroid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Networks you mark as yours, with their device names, are saved to your iCloud and come back after a reinstall or on a new device..
-        /// </summary>
-        public static string SettingsBackupApple {
-            get {
-                return ResourceManager.GetString("SettingsBackupApple", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Networks and device names are saved on this PC..
-        /// </summary>
-        public static string SettingsBackupWindows {
-            get {
-                return ResourceManager.GetString("SettingsBackupWindows", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use system colors.
-        /// </summary>
-        public static string SettingsSystemColorsRow {
-            get {
-                return ResourceManager.GetString("SettingsSystemColorsRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uses the colors Android picks from your wallpaper (Material You) instead of the app&apos;s green..
-        /// </summary>
-        public static string SettingsSystemColorsAndroid {
-            get {
-                return ResourceManager.GetString("SettingsSystemColorsAndroid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uses your Windows accent color instead of the app&apos;s green..
-        /// </summary>
-        public static string SettingsSystemColorsWindows {
-            get {
-                return ResourceManager.GetString("SettingsSystemColorsWindows", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uses the system blue tint instead of the app&apos;s green..
-        /// </summary>
-        public static string SettingsSystemColorsApple {
-            get {
-                return ResourceManager.GetString("SettingsSystemColorsApple", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to My network.
-        /// </summary>
-        public static string OwnershipMine {
-            get {
-                return ResourceManager.GetString("OwnershipMine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Guest network.
-        /// </summary>
-        public static string OwnershipGuest {
-            get {
-                return ResourceManager.GetString("OwnershipGuest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is {0} your network?.
-        /// </summary>
-        public static string OwnershipQuestionFormat {
-            get {
-                return ResourceManager.GetString("OwnershipQuestionFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your own networks are backed up and alert you to new devices. Guest networks stay on this device..
-        /// </summary>
-        public static string OwnershipBody {
-            get {
-                return ResourceManager.GetString("OwnershipBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yes, it&apos;s mine.
-        /// </summary>
-        public static string OwnershipYes {
-            get {
-                return ResourceManager.GetString("OwnershipYes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No, guest network.
-        /// </summary>
-        public static string OwnershipNo {
-            get {
-                return ResourceManager.GetString("OwnershipNo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Switches between my network and guest network.
-        /// </summary>
-        public static string OwnershipToggleHint {
-            get {
-                return ResourceManager.GetString("OwnershipToggleHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Make guest.
-        /// </summary>
-        public static string OwnershipMakeGuest {
-            get {
-                return ResourceManager.GetString("OwnershipMakeGuest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Make mine.
-        /// </summary>
-        public static string OwnershipMakeMine {
-            get {
-                return ResourceManager.GetString("OwnershipMakeMine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Which {0} is this?.
-        /// </summary>
-        public static string WhichNetworkQuestionFormat {
-            get {
-                return ResourceManager.GetString("WhichNetworkQuestionFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You&apos;re on an access point the app hasn&apos;t seen before. Two places can use the same Wi-Fi name, so pick the network it belongs to. Your answer is remembered..
-        /// </summary>
-        public static string WhichNetworkBody {
-            get {
-                return ResourceManager.GetString("WhichNetworkBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The one with {0} devices, last scanned {1:d}.
-        /// </summary>
-        public static string WhichNetworkChoiceFormat {
-            get {
-                return ResourceManager.GetString("WhichNetworkChoiceFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A different place.
-        /// </summary>
-        public static string WhichNetworkDifferent {
-            get {
-                return ResourceManager.GetString("WhichNetworkDifferent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internet.
-        /// </summary>
-        public static string DetailsSectionInternet {
-            get {
-                return ResourceManager.GetString("DetailsSectionInternet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Public IP address.
-        /// </summary>
-        public static string DetailsPublicIp {
-            get {
-                return ResourceManager.GetString("DetailsPublicIp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to no overlapping networks.
-        /// </summary>
-        public static string OverlapNone {
-            get {
-                return ResourceManager.GetString("OverlapNone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1 overlapping network.
-        /// </summary>
-        public static string OverlapOne {
-            get {
-                return ResourceManager.GetString("OverlapOne", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} overlapping networks.
-        /// </summary>
-        public static string OverlapManyFormat {
-            get {
-                return ResourceManager.GetString("OverlapManyFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} record from {1} in {2} ms.
-        /// </summary>
-        public static string DnsSummaryOneFormat {
-            get {
-                return ResourceManager.GetString("DnsSummaryOneFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Help and feedback.
-        /// </summary>
-        public static string SettingsFeedback {
-            get {
-                return ResourceManager.GetString("SettingsFeedback", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Report a bug.
-        /// </summary>
-        public static string SettingsReportBug {
-            get {
-                return ResourceManager.GetString("SettingsReportBug", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request a feature.
-        /// </summary>
-        public static string SettingsRequestFeature {
-            get {
-                return ResourceManager.GetString("SettingsRequestFeature", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Opens the app&apos;s issues page on GitHub. Posting needs a free GitHub account. Bug reports include your app version and device, never anything about your network..
-        /// </summary>
-        public static string SettingsFeedbackFooter {
-            get {
-                return ResourceManager.GetString("SettingsFeedbackFooter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to **What happened**   **What you expected**   **Steps to reproduce** 1.  2.  .
-        /// </summary>
-        public static string FeedbackBugTemplate {
-            get {
-                return ResourceManager.GetString("FeedbackBugTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to **What would you like the app to do?**   **Why would it help you?**  .
-        /// </summary>
-        public static string FeedbackFeatureTemplate {
-            get {
-                return ResourceManager.GetString("FeedbackFeatureTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to --- App: {0} Device: {1} System: {2}.
-        /// </summary>
-        public static string FeedbackEnvironmentFormat {
-            get {
-                return ResourceManager.GetString("FeedbackEnvironmentFormat", resourceCulture);
             }
         }
     }

@@ -244,7 +244,7 @@ namespace PingMyNetwork.Implementation
 
                 return true;
             }
-            catch (IOException exception)
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
             {
                 _Logger.LogError(exception, "Could not save {Path}.", path);
 

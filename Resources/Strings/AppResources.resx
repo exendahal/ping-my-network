@@ -49,7 +49,6 @@
   <data name="DbmFormat" xml:space="preserve"><value>{0} dBm</value></data>
   <data name="PercentFormat" xml:space="preserve"><value>{0}%</value></data>
   <data name="BandChannelFormat" xml:space="preserve"><value>{0} · ch {1}</value></data>
-  <data name="SignalSemanticFormat" xml:space="preserve"><value>Signal {0}, {1} percent</value></data>
   <data name="LastCheckedFormat" xml:space="preserve"><value>Checked at {0:t}</value></data>
   <data name="DetailsTitle" xml:space="preserve"><value>Network details</value></data>
   <data name="DetailsSectionConnection" xml:space="preserve"><value>Connection</value></data>
@@ -73,7 +72,6 @@
   <data name="DetailsGateway" xml:space="preserve"><value>Router (gateway)</value></data>
   <data name="DetailsDhcp" xml:space="preserve"><value>DHCP server</value></data>
   <data name="DetailsIpv6Address" xml:space="preserve"><value>Address</value></data>
-  <data name="DetailsNoDns" xml:space="preserve"><value>No DNS servers reported</value></data>
   <data name="DetailsCopyHint" xml:space="preserve"><value>Tap a value to copy it.</value></data>
   <data name="DetailsCopied" xml:space="preserve"><value>Copied {0}</value></data>
   <data name="ActionShare" xml:space="preserve"><value>Share</value></data>
@@ -185,7 +183,6 @@
   <data name="DevicesReviewTitleFormat" xml:space="preserve"><value>{0} devices to review</value></data>
   <data name="DevicesReviewOneTitle" xml:space="preserve"><value>1 device to review</value></data>
   <data name="DevicesReviewBody" xml:space="preserve"><value>Mark the ones you recognise, so anything new stands out.</value></data>
-  <data name="ActionReview" xml:space="preserve"><value>Review</value></data>
   <data name="DevicePrivateAddress" xml:space="preserve"><value>Private address</value></data>
   <data name="LatencyUnderOne" xml:space="preserve"><value>&lt; 1 ms</value></data>
   <data name="DeviceThisDeviceBody" xml:space="preserve"><value>This is the device you're using now.</value></data>

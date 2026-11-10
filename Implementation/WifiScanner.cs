@@ -170,18 +170,27 @@ namespace PingMyNetwork.Implementation
         /// <param name="e">Unused.</param>
         private async void OnLocationChanged(object? sender, EventArgs e)
         {
-            await RefreshAvailabilityAsync();
-
-            if ((Availability != WifiScanAvailability.Ready) || (_SessionCancel is not CancellationTokenSource cancel))
+            // An event handler: anything thrown here would end the app, so a failed scan is dropped
+            // and the next periodic one tries again.
+            try
             {
-                return;
+                await RefreshAvailabilityAsync();
+
+                if ((Availability != WifiScanAvailability.Ready) || (_SessionCancel is not CancellationTokenSource cancel))
+                {
+                    return;
+                }
+
+                WifiManagerResponse<List<NetworkData>> result = await _Wifi.ScanWifiNetworksAsync(cancel.Token);
+
+                if (result.Data is { } networks)
+                {
+                    Replace(networks);
+                }
             }
-
-            WifiManagerResponse<List<NetworkData>> result = await _Wifi.ScanWifiNetworksAsync(cancel.Token);
-
-            if (result.Data is { } networks)
+            catch (Exception exception)
             {
-                Replace(networks);
+                System.Diagnostics.Debug.WriteLine($"Wi-Fi scan after a location change failed: {exception}");
             }
         }
 
