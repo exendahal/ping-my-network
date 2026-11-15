@@ -158,13 +158,15 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
-      # Creates the release, or on a re-run replaces the files on the existing one.
+      # Creates the release, or on a re-run replaces the files on the existing one and publishes it
+      # (deleting and re-pushing a tag turns its release into a draft).
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false
           else
             PRERELEASE=$([[ "$GITHUB_REF_NAME" == *[-_]* ]] && echo --prerelease || true)
             gh release create "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes $PRERELEASE
