@@ -2,6 +2,7 @@
 # pushed, and attaches them to a GitHub release for that tag. Secrets are listed in the README.
 # A suffix (v1.0.0-beta, v1.0.0_beta) names the files and marks a pre-release; the app itself
 # gets the numeric part, since iOS and Windows versions must be numbers.
+# It also builds the Microsoft Store MSIX packages as a workflow artifact (not on the release).
 # The same tag also publishes docs/ (the privacy policy and install guide) to GitHub Pages.
 name: Release
 
@@ -117,6 +118,35 @@ jobs:
         with:
           name: windows
           path: PingMyNetwork-*.zip
+
+  # Unsigned MSIX packages for Partner Center (the Store signs them). Kept as a workflow artifact,
+  # not on the release, since an unsigned MSIX won't install anywhere else. The Store wants the
+  # last version part to be 0, and MAUI puts ApplicationVersion there, so it is 0 here: every
+  # Store submission needs a new tag.
+  microsoft-store:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet workload install maui-windows
+      - name: Publish
+        shell: pwsh
+        run: |
+          $version = ($env:GITHUB_REF_NAME.TrimStart('v') -split '[-_]')[0]
+          foreach ($arch in 'x64', 'arm64') {
+            dotnet publish ping-my-network.csproj -c Release -f net10.0-windows10.0.19041.0 `
+              -r win-$arch -p:TargetFrameworks=net10.0-windows10.0.19041.0 `
+              -p:WindowsPackageType=MSIX -p:AppxPackageSigningEnabled=false `
+              -p:ApplicationDisplayVersion="$version" -p:ApplicationVersion=0 `
+              -p:AppxPackageDir="$PWD\msix\"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: microsoft-store
+          path: msix/*/ping-my-network_*.msix
 
   release:
     needs: [android, ios, windows]

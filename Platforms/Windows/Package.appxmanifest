@@ -6,13 +6,13 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0" />
+  <Identity Name="exendahal.PingMyNetwork" Publisher="CN=86791A25-5979-4EC0-AF5A-8DAE940541B9" Version="0.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="FEB4A0E2-750C-4DB9-B15B-A622EB2E19CB" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <PublisherDisplayName>exendahal</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
 
@@ -41,6 +41,10 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="wiFiControl" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 
 </Package>
