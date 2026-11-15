@@ -58,17 +58,6 @@ Each tool has a short built-in explanation of what it does and how to read the r
 
 No account, no ads, no analytics, and no server of its own. The networks you mark as yours are backed up only to your own Google account or iCloud. Only the speed test and the provider lookup contact a third party (Cloudflare). See the [privacy policy](docs/privacy-policy.md).
 
-## Building
-
-Needs the .NET 10 SDK (see `global.json`) with the MAUI workload:
-
-```sh
-dotnet workload install maui
-dotnet build -f net10.0-android
-```
-
-Pushing a version tag (`v1.2.3`) builds the release; see `.github/workflows/release.yml`. Store listings and assets are in [`store/`](store/README.md).
-
 ## Reporting bugs and ideas
 
 Found a problem or have an idea? [Open an issue](https://github.com/exendahal/ping-my-network/issues). The app links there too, from **Settings → Help and feedback**, with your app version and device filled in.

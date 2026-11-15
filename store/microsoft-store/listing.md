@@ -98,7 +98,7 @@ The in-app tiles and taskbar icons are not listed here. MAUI generates them into
 ## Before you submit
 
 1. **Reserve the name** "Ping My Network" in Partner Center. **Product management → Product identity** shows the **Package/Identity/Name**, **Publisher** (`CN=…`) and **Publisher display name**. They are already set in `Platforms/Windows/Package.appxmanifest`.
-2. **Build the MSIX packages.** Pushing a version tag builds unsigned x64 and arm64 packages and attaches them to the workflow run as the `microsoft-store` artifact (`.github/workflows/release.yml`). To build one locally:
+2. **Build the MSIX packages.** Pushing a version tag builds unsigned x64 and arm64 packages and attaches them to the GitHub release as `PingMyNetwork-<version>-store-upload-x64.msix` and `-arm64.msix` (`.github/workflows/release.yml`). To build one locally:
 
    ```powershell
    dotnet publish ping-my-network.csproj -c Release -f net10.0-windows10.0.19041.0 `
@@ -108,6 +108,6 @@ The in-app tiles and taskbar icons are not listed here. MAUI generates them into
    ```
 
    The package version is `ApplicationDisplayVersion` plus `ApplicationVersion` as the last part, so `1.0.0` and `0` give `1.0.0.0`. The Store needs the last part to be 0, and each submission needs a higher version. MAUI does not regenerate the manifest when only the version changes, so delete `obj\Release\net10.0-windows10.0.19041.0\win-x64\resizetizer\m` after changing it.
-3. **Upload** both `ping-my-network_<version>_x64.msix` and `_arm64.msix` under **Submission → Packages**. Partner Center signs them for Store installs, so you don't need a certificate of your own.
+3. **Upload** both packages under **Submission → Packages**. Partner Center signs them for Store installs, so you don't need a certificate of your own.
 
 Only the Store build is packaged. Debug runs and the GitHub release zip stay unpackaged, so zip users keep their saved devices. A packaged app keeps its data in a different folder, so someone moving from the zip to the Store version starts with an empty device list.

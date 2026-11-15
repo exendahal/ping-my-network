@@ -5,7 +5,7 @@
 # keystore safe: Android updates must be signed with the same key.
 # A suffix (v1.0.0-beta, v1.0.0_beta) names the files and marks a pre-release; the app itself
 # gets the numeric part, since iOS and Windows versions must be numbers.
-# It also builds the Microsoft Store MSIX packages as a workflow artifact (not on the release).
+# The release also carries the unsigned Microsoft Store MSIX packages, for upload to Partner Center.
 # The same tag also publishes docs/ (the privacy policy and install guide) to GitHub Pages.
 name: Release
 
@@ -122,10 +122,9 @@ jobs:
           name: windows
           path: PingMyNetwork-*.zip
 
-  # Unsigned MSIX packages for Partner Center (the Store signs them). Kept as a workflow artifact,
-  # not on the release, since an unsigned MSIX won't install anywhere else. The Store wants the
-  # last version part to be 0, and MAUI puts ApplicationVersion there, so it is 0 here: every
-  # Store submission needs a new tag.
+  # Unsigned MSIX packages for Partner Center (the Store signs them). Named "store-upload" since an
+  # unsigned MSIX won't install outside the Store. The Store wants the last version part to be 0,
+  # and MAUI puts ApplicationVersion there, so it is 0 here: every Store submission needs a new tag.
   microsoft-store:
     runs-on: windows-latest
     steps:
@@ -145,25 +144,31 @@ jobs:
               -p:ApplicationDisplayVersion="$version" -p:ApplicationVersion=0 `
               -p:AppxPackageDir="$PWD\msix\"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            Move-Item msix\*\ping-my-network_*_$arch.msix "PingMyNetwork-$($env:GITHUB_REF_NAME.TrimStart('v'))-store-upload-$arch.msix"
           }
       - uses: actions/upload-artifact@v4
         with:
           name: microsoft-store
-          path: msix/*/ping-my-network_*.msix
+          path: PingMyNetwork-*.msix
 
   release:
-    needs: [android, ios, windows]
+    needs: [android, ios, windows, microsoft-store]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
+      # Creates the release, or on a re-run replaces the files on the existing one.
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          PRERELEASE=$([[ "$GITHUB_REF_NAME" == *[-_]* ]] && echo --prerelease || true)
-          gh release create "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes $PRERELEASE
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            PRERELEASE=$([[ "$GITHUB_REF_NAME" == *[-_]* ]] && echo --prerelease || true)
+            gh release create "$GITHUB_REF_NAME" PingMyNetwork-* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes $PRERELEASE
+          fi
 
   # The privacy policy the store listings link to (https://exendahal.github.io/ping-my-network/privacy-policy/)
   # goes out with every release. Independent of the app builds, so a failed build never leaves the
