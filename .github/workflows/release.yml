@@ -1,5 +1,8 @@
 # Builds a signed Android APK and unsigned iOS IPA and Windows app when a version tag (v1.2.3) is
-# pushed, and attaches them to a GitHub release for that tag. Secrets are listed in the README.
+# pushed, and attaches them to a GitHub release for that tag.
+# APK signing needs these repository secrets: ANDROID_KEYSTORE_BASE64 (the upload keystore,
+# base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS and ANDROID_KEY_PASSWORD. Keep the
+# keystore safe: Android updates must be signed with the same key.
 # A suffix (v1.0.0-beta, v1.0.0_beta) names the files and marks a pre-release; the app itself
 # gets the numeric part, since iOS and Windows versions must be numbers.
 # It also builds the Microsoft Store MSIX packages as a workflow artifact (not on the release).

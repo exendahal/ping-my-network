@@ -2,6 +2,12 @@
 
 A free network utility for Android, iOS, Windows and Mac. It answers the questions people ask about their network: *Who is on my Wi-Fi? Is my internet actually working? Why is it slow? Which channel should my router use?*
 
+## Download
+
+Get the Android APK, the iOS IPA and the Windows app from the [latest release](https://github.com/exendahal/ping-my-network/releases/latest).
+- **iOS:** the IPA is unsigned; see [Installing the iOS app](docs/install-ios.md).
+- **Windows:** unzip and run `ping-my-network.exe`. It isn't code-signed, so SmartScreen asks first: choose **More info → Run anyway**.
+
 ## Features
 
 ### Connection health
@@ -38,11 +44,6 @@ Each tool has a short built-in explanation of what it does and how to read the r
 - **Wake-on-LAN**
 - **Subnet calculator**
 
-### Privacy and backup
-- No account, no server, no analytics. Everything stays on your device.
-- Only the speed test and the provider lookup contact a third party (Cloudflare), and the app says so.
-- Your own networks are backed up to your Google account or iCloud, and guest networks never leave the device. See [Backup and restore](#backup-and-restore).
-
 ## Platform support
 
 | | Android | iOS | Windows | Mac |
@@ -52,63 +53,21 @@ Each tool has a short built-in explanation of what it does and how to read the r
 | Nearby networks, channels, signal walk | ✅ | ❌ (iOS does not allow scanning) | ✅ | ❌ |
 | Tools | ✅ | ✅ | ✅ | ✅ |
 | New-device alerts | ✅ including background | ✅ while open | ❌ | ✅ while open |
-| Backup | Google | iCloud | — | iCloud |
 
-## Backup and restore
+## Privacy
 
-The app has no account and no server of its own. It uses the backup your phone already has, so the networks you set up come back after a reinstall or on a new device without signing in to anything.
-
-**What is backed up**
-- Networks you mark as **My network**, with their devices, the names you gave them, their types and Known status.
-- On Android, the app's settings and Signal walk places too.
-
-**What is not**
-- Guest networks and networks you have not answered for. They stay on the device.
-- Live scan results: which devices are online right now and their latency. The next scan finds those again.
-- Anything from the speed test or the tools.
-
-| | How | Comes back when |
-|---|---|---|
-| **Android** | Android's automatic backup to your Google account. Only your networks file and the app's settings are included, a few KB. | You reinstall the app, or set up a new phone from your Google backup. Android uploads the backup about once a day, while the phone is idle, charging and on Wi-Fi. |
-| **iOS, Mac** | A copy of your networks in iCloud key-value storage, updated whenever you change them. The app's files are also part of the normal iCloud device backup. | You reinstall the app or sign in to a new iPhone, iPad or Mac with the same Apple ID. The networks may appear a few seconds after the app opens, once iCloud has synced. Settings come back with a full device restore. |
-| **Windows** | Not backed up yet. | — |
-
-The backup goes only to storage you already own, and it never includes Wi-Fi passwords.
-
-To build the iOS or Mac app with backup working, the app's App ID needs the **iCloud** capability with **Key-value storage** turned on in your Apple developer account.
+No account, no ads, no analytics, and no server of its own. The networks you mark as yours are backed up only to your own Google account or iCloud. Only the speed test and the provider lookup contact a third party (Cloudflare). See the [privacy policy](docs/privacy-policy.md).
 
 ## Building
 
-Requirements: the .NET 10 SDK (see `global.json`) with the MAUI workload, and the Android, iOS or Windows tooling for the platform you build.
+Needs the .NET 10 SDK (see `global.json`) with the MAUI workload:
 
 ```sh
 dotnet workload install maui
 dotnet build -f net10.0-android
 ```
 
-## Releases
-
-Pushing a version tag builds a signed Android APK, an unsigned iOS IPA and an unsigned Windows app, and attaches them to a GitHub release (`.github/workflows/release.yml`):
-
-```sh
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-The tag becomes the version shown in the app. The build number is the workflow's run number. A tag with a suffix, such as `v1.0.0_beta`, is published as a pre-release, and the app shows only the number (`1.0.0`).
-
-To install the IPA on an iPhone or iPad, see [Installing the iOS app](docs/install-ios.md). On Windows, unzip the app and run `ping-my-network.exe`. It is not code-signed, so SmartScreen asks first: choose **More info → Run anyway**.
-
-Signing the APK needs these repository secrets (**Settings → Secrets and variables → Actions**). Encode the keystore with `base64 -i <file>` on a Mac, or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("<file>"))` in PowerShell.
-
-| Secret | What it is |
-|---|---|
-| `ANDROID_KEYSTORE_BASE64` | The upload keystore (`.keystore` / `.jks`), base64 |
-| `ANDROID_KEYSTORE_PASSWORD` | Keystore password |
-| `ANDROID_KEY_ALIAS` | Alias of the signing key in the keystore |
-| `ANDROID_KEY_PASSWORD` | Password of that key |
-
-Make a keystore once with `keytool -genkeypair -v -keystore release.keystore -alias pingmynetwork -keyalg RSA -keysize 2048 -validity 10000`, and keep it safe: Android updates must be signed with the same key.
+Pushing a version tag (`v1.2.3`) builds the release; see `.github/workflows/release.yml`. Store listings and assets are in [`store/`](store/README.md).
 
 ## Reporting bugs and ideas
 
